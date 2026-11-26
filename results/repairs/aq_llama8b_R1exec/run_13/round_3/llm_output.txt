@@ -1,0 +1,86 @@
+The issue is that the `preprocess_data` function is trying to split the data into features (X) and target (y) before dropping the 'Anomaly' column. This is causing a KeyError because the 'Anomaly' column is being referenced before it is dropped.
+
+Here are the corrected files:
+
+```python
+# pipeline.py
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    try:
+        # Convert categorical features to numerical
+        data['Hour'] = pd.Categorical(data['Hour']).codes
+        data['DayOfWeek'] = pd.Categorical(data['DayOfWeek']).codes
+        data['Month'] = pd.Categorical(data['Month']).codes
+        
+        # Drop unnecessary columns
+        data.drop(['PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'AH'], axis=1, inplace=True)
+        
+        # Scale features
+        scaler = StandardScaler()
+        X = scaler.fit_transform(data[['PT08.S1(CO)', 'T', 'RH', 'Hour', 'DayOfWeek', 'Month']])
+        
+        # Drop 'Anomaly' column
+        data.drop('Anomaly', axis=1, inplace=True)
+        
+        # Split data into features (X) and target (y)
+        y = data['Anomaly']
+        X = data.drop('Anomaly', axis=1)
+        
+        return X, y
+    except Exception as e:
+        print(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        # Train RandomForest model
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        
+        # Log model to MLflow
+        mlflow.sklearn.log_model(model, "random_forest_model")
+        
+        return model
+    except Exception as e:
+        print(f"Error training model: {e}")
+        raise
+```
+
+```python
+# test_pipeline.py
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/air_quality.csv')
+    assert data is not None
+
+def test_preprocess_data():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    assert X is not None
+    assert y is not None
+
+def test_train_model():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert model is not None
+```
+
+I corrected the `preprocess_data` function to drop the 'Anomaly' column before splitting the data into features (X) and target (y). This should fix the KeyError issue.

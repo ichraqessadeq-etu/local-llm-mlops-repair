@@ -1,0 +1,97 @@
+The error you're encountering is due to the presence of non-numeric values in the dataset, specifically in the `weather_main` column. The `RandomForestClassifier` expects numeric data, and it cannot handle string values directly.
+
+To resolve this, you need to preprocess the categorical variables in your dataset. One common approach is to use one-hot encoding for categorical variables.
+
+Here's the corrected version of `pipeline.py` and `test_pipeline.py`:
+
+### 1. Python Module `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import OneHotEncoder
+from mlflow import log_param, log_metric
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess data to split into features and target."""
+    # Separate features and target
+    X = data.drop(columns=['Congestion'])
+    y = data['Congestion']
+    
+    # One-hot encode categorical features
+    categorical_features = ['weather_main', 'IsHoliday']
+    encoder = OneHotEncoder(sparse=False)
+    encoded_features = encoder.fit_transform(X[categorical_features])
+    encoded_feature_names = encoder.get_feature_names_out(categorical_features)
+    
+    # Drop categorical features and concatenate encoded features
+    X = X.drop(columns=categorical_features)
+    X_encoded = pd.DataFrame(encoded_features, columns=encoded_feature_names)
+    X = pd.concat([X, X_encoded], axis=1)
+    
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier model."""
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
+    
+    # Log model parameters and metrics
+    log_param("n_estimators", model.n_estimators)
+    log_param("random_state", model.random_state)
+    
+    y_pred = model.predict(X_train)
+    accuracy = accuracy_score(y_train, y_pred)
+    log_metric("train_accuracy", accuracy)
+    
+    # Save the model to a file
+    model_path = "random_forest_model.pkl"
+    model.save(model_path)
+    
+    return model
+```
+
+### 2. Pytest File `test_pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/traffic.csv')
+    assert not data.empty
+    assert 'Congestion' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert not X.empty
+    assert not y.empty
+    assert len(X) == len(y)
+
+def test_train_model():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+    assert model.__class__.__name__ == 'RandomForestClassifier'
+```
+
+### Explanation:
+
+1. **Python Module `pipeline.py`**:
+   - Added one-hot encoding for the categorical features (`weather_main` and `IsHoliday`) using `OneHotEncoder`.
+   - Concatenated the encoded features with the remaining numeric features.
+
+2. **Pytest File `test_pipeline.py`**:
+   - No changes are needed here.
+
+This should resolve the `ValueError` and ensure that your tests pass. The dataset is now properly preprocessed, and the `RandomForestClassifier` can handle the data correctly.

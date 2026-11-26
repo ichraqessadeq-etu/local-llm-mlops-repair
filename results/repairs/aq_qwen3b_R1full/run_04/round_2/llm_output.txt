@@ -1,0 +1,99 @@
+The issue in the `test_train_model` function is due to the fact that the `RandomForestClassifier` class is not imported from the `sklearn.ensemble` module. Let's ensure that the necessary imports are included at the beginning of the `pipeline.py` file.
+
+### Updated `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from the specified CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except FileNotFoundError:
+        raise ValueError("File not found.")
+    except pd.errors.ParserError:
+        raise ValueError("Error parsing the CSV file.")
+
+def preprocess_data(data):
+    """Preprocess the data by splitting it into features and target."""
+    try:
+        X = data.drop('Anomaly', axis=1)
+        y = data['Anomaly']
+        return X, y
+    except KeyError:
+        raise ValueError("Target column 'Anomaly' not found in the data.")
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model and log it using MLflow."""
+    try:
+        with mlflow.start_run():
+            model = RandomForestClassifier(n_estimators=100, random_state=42)
+            model.fit(X_train, y_train)
+            mlflow.sklearn.log_model(model, 'random_forest_model')
+            return model
+    except Exception as e:
+        mlflow.log_exception(e)
+        raise
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model and log the accuracy."""
+    try:
+        y_pred = model.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        mlflow.log_metric('accuracy', accuracy)
+        return accuracy
+    except Exception as e:
+        mlflow.log_exception(e)
+        raise
+```
+
+### Updated `test_pipeline.py`
+
+```python
+import pytest
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model, evaluate_model
+
+def test_load_data():
+    data = load_data('data/air_quality.csv')
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    data = pd.DataFrame({
+        'PT08.S1(CO)': [1, 2, 3],
+        'PT08.S2(NMHC)': [4, 5, 6],
+        'Anomaly': [0, 1, 0]
+    })
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+
+def test_train_model():
+    data = pd.DataFrame({
+        'PT08.S1(CO)': [1, 2, 3],
+        'PT08.S2(NMHC)': [4, 5, 6],
+        'Anomaly': [0, 1, 0]
+    })
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert isinstance(model, RandomForestClassifier)
+
+def test_evaluate_model():
+    data = pd.DataFrame({
+        'PT08.S1(CO)': [1, 2, 3],
+        'PT08.S2(NMHC)': [4, 5, 6],
+        'Anomaly': [0, 1, 0]
+    })
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    accuracy = evaluate_model(model, X, y)
+    assert isinstance(accuracy, float)
+```
+
+These updates ensure that the `RandomForestClassifier` class is imported from the `sklearn.ensemble` module, which resolves the `NameError` and allows the tests to run successfully.

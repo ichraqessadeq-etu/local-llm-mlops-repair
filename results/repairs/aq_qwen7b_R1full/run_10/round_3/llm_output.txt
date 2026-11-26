@@ -1,0 +1,83 @@
+The error indicates that the number of features in the dataset is not as expected. Let's investigate the dataset and ensure that the preprocessing step is correctly handling the data.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess data to separate features and target."""
+    X = data.drop(columns=['Anomaly'])
+    y = data['Anomaly']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier model."""
+    with mlflow.start_run():
+        mlflow.log_param("model", "RandomForestClassifier")
+        model = RandomForestClassifier(random_state=42)  # Add random_state for reproducibility
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "model")
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+        return model
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test data loading."""
+    data = load_data('data/air_quality.csv')
+    assert not data.empty
+
+def test_preprocess_data():
+    """Test data preprocessing."""
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    assert X.shape[1] == 19  # 18 features + 1 target
+    assert y.shape[0] == X.shape[0]
+
+def test_train_model():
+    """Test model training."""
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+```
+
+### Additional Steps:
+1. **Inspect the Dataset**: Ensure that the dataset has the expected number of features.
+   ```python
+   data = load_data('data/air_quality.csv')
+   print(data.columns)
+   ```
+
+2. **Check for Missing Values**: Ensure that there are no missing values in the dataset.
+   ```python
+   print(data.isnull().sum())
+   ```
+
+3. **Verify Feature Names**: Ensure that the feature names match the expected names.
+   ```python
+   expected_features = ['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'PT08.S6(NO)', 'PT08.S7(NO2)', 'PT08.S8(O3)', 'C6H6(GT)', 'T', 'RH', 'AH', 'NOx(GT)', 'NO2(GT)', 'O3(GT)', 'Analogical']
+   actual_features = data.columns.tolist()
+   assert set(expected_features) == set(actual_features)
+   ```
+
+By inspecting the dataset and ensuring that the preprocessing step is correctly handling the data, the number of features should match the expected value, and the test should pass.

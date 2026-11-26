@@ -1,0 +1,23 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.exceptions import ConvergenceWarning
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps here
+    return data, data['Amount']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        try:
+            model = RandomForestClassifier(random_state=42)
+            model.fit(X_train, y_train)
+            mlflow.log_artifact(f"model_{mlflow.active_run().info.run_id}.pkl", artifact_location="models")
+            return model
+        except ConvergenceWarning:
+            mlflow.log_warning("ConvergenceWarning during model training.")
+

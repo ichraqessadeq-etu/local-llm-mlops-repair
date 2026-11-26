@@ -1,0 +1,141 @@
+{
+  "run": 21,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: Training error: Input contains NaN, infinity or a value too large for dtype('float32')."
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:11: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test training the model.\"\"\"\n>       data = pd.DataFrame({\n            'temp': [20, 22, 18],\n            'rain_1h': [0.1, 0.2, 0.0],\n            'snow_1h': [0.0, 0.0, 0.1],\n            'clouds_all': [50, 70, 30],\n            'weather_main': ['sunny', 'rainy', 'snowy'],\n            'IsHoliday': [True, False, True],\n            'Hour': [10, 14, 18],\n            'DayOfWeek': ['Monday', 'Wednesday', 'Friday'],\n            'Month': [1, 4, 7],\n            'Congestion': [1, 0, 1]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:28: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\n3 failed in 3.92s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Training error: Input contains NaN, infinity or a value too large for dtype('float32')."
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 1 import(s): import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\n    def test_train_model():\n        \"\"\"Test training the model.\"\"\"\n        data = pd.DataFrame({\n            'temp': [20, 22, 18],\n            'rain_1h': [0.1, 0.2, 0.0],\n            'snow_1h': [0.0, 0.0, 0.1],\n            'clouds_all': [50, 70, 30],\n            'weather_main': ['sunny', 'rainy', 'snowy'],\n            'IsHoliday': [True, False, True],\n            'Hour': [10, 14, 18],\n            'DayOfWeek': ['Monday', 'Wednesday', 'Friday'],\n            'Month': [1, 4, 7],\n            'Congestion': [1, 0, 1]\n        })\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       assert isinstance(model, RandomForestRegressor)\nE       NameError: name 'RandomForestRegressor' is not defined\n\ntest_pipeline.py:43: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - ValueError: Preprocessing err...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestRegr...\n2 failed, 1 passed in 10.10s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Training error: Input contains NaN, infinity or a value too large for dtype('float32')."
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\n    def test_train_model():\n        \"\"\"Test training the model.\"\"\"\n        data = pd.DataFrame({\n            'temp': [20, 22, 18],\n            'rain_1h': [0.1, 0.2, 0.0],\n            'snow_1h': [0.0, 0.0, 0.1],\n            'clouds_all': [50, 70, 30],\n            'weather_main': ['sunny', 'rainy', 'snowy'],\n            'IsHoliday': [True, False, True],\n            'Hour': [10, 14, 18],\n            'DayOfWeek': ['Monday', 'Wednesday', 'Friday'],\n            'Month': [1, 4, 7],\n            'Congestion': [1, 0, 1]\n        })\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       assert isinstance(model, RandomForestRegressor)\nE       NameError: name 'RandomForestRegressor' is not defined\n\ntest_pipeline.py:43: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - ValueError: Preprocessing err...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestRegr...\n2 failed, 1 passed in 10.10s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Training error: Input contains NaN, infinity or a value too large for dtype('float32')."
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

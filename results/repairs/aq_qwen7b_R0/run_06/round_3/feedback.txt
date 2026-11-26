@@ -1,0 +1,2 @@
+The pipeline you generated does not work. Fix it.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

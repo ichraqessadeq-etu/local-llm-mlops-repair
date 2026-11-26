@@ -1,0 +1,44 @@
+import pytest
+from pipeline import load_data, preprocess_data, train_model, evaluate_model
+
+def test_load_data():
+    """Test the load_data function."""
+    try:
+        data = load_data('data/fraud.csv')
+        assert isinstance(data, pd.DataFrame)
+        assert 'Class' in data.columns
+    except Exception as e:
+        pytest.fail(f"Test failed: {e}")
+
+def test_preprocess_data():
+    """Test the preprocess_data function."""
+    try:
+        data = load_data('data/fraud.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        assert isinstance(X_train, pd.DataFrame)
+        assert isinstance(X_test, pd.DataFrame)
+        assert isinstance(y_train, pd.Series)
+        assert isinstance(y_test, pd.Series)
+    except Exception as e:
+        pytest.fail(f"Test failed: {e}")
+
+def test_train_model():
+    """Test the train_model function."""
+    try:
+        data = load_data('data/fraud.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_test)  # Corrected to use y_test instead of y_train
+        assert isinstance(model, RandomForestClassifier)
+    except Exception as e:
+        pytest.fail(f"Test failed: {e}")
+
+def test_evaluate_model():
+    """Test the evaluate_model function."""
+    try:
+        data = load_data('data/fraud.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_test)  # Corrected to use y_test instead of y_train
+        accuracy = evaluate_model(model, X_test, y_test)
+        assert isinstance(accuracy, float)
+    except Exception as e:
+        pytest.fail(f"Test failed: {e}")

@@ -1,0 +1,119 @@
+### 1. Python Module: `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import StandardScaler
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess data by splitting into features and target, and scaling the features."""
+    X = data.drop('Class', axis=1)
+    y = data['Class']
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+    return X_scaled, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier and log the model using MLflow."""
+    with mlflow.start_run():
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.log_param("n_estimators", 100)
+        mlflow.sklearn.log_model(model, "random_forest_model")
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+    return model
+```
+
+### 2. Pytest File: `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/fraud.csv')
+    assert isinstance(data, pd.DataFrame)
+    assert 'Class' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    assert isinstance(X, np.ndarray)
+    assert isinstance(y, np.ndarray)
+    assert X.shape[1] == 29
+    assert y.shape[0] == X.shape[0]
+
+def test_train_model():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert isinstance(model, RandomForestClassifier)
+    assert model.n_estimators == 100
+```
+
+### 3. GitHub Actions YAML: `.github/workflows/ci_cd.yml`
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest test_pipeline.py
+
+      - name: Train model and log with MLflow
+        run: |
+          mlflow server --backend-store-uri file:///mlflow --default-artifact-root file:///mlflow --host 0.0.0.0 --port 5000 &
+          sleep 10
+          python pipeline.py
+        env:
+          MLFLOW_TRACKING_URI: http://localhost:5000
+```
+
+### 4. Requirements File: `requirements.txt`
+
+```
+pandas==1.3.3
+scikit-learn==1.0.2
+mlflow==1.30.1
+pytest==6.2.5
+```
+
+### Notes:
+1. **MLflow Server**: The MLflow server is started in the background during the CI/CD pipeline to log the model.
+2. **Environment**: The pipeline is designed to run on a Python 3.7 environment with the specified versions of MLflow and scikit-learn.
+3. **Error Handling**: Basic error handling is not included in the provided code, but you can add it as needed.
+4. **Data Splitting**: The code assumes that the data is already split into training and testing sets. If not, you can add a step to split the data within the `train_model` function.

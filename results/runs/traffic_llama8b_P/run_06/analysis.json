@@ -1,0 +1,52 @@
+{
+  "run": 6,
+  "cost": {
+    "prompt_tokens": 221,
+    "completion_tokens": 984,
+    "truncated": false,
+    "seconds": 260.8
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 0
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 3,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float32').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: Input contains NaN, infinity or a value too large for dtype('float32').\n============================== warnings summary ===============================\ntest_pipeline.py::TestPipeline::test_preprocess_data\ntest_pipeline.py::TestPipeline::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\runs\\traffic_llama8b_P\\run_06\\pipeline.py:20: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - AssertionError: Tuple...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - AssertionError:...\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: Input c...\n3 failed, 2 warnings in 3.98s",
+    "all_pass": false,
+    "failure_hint": "assertion"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

@@ -1,0 +1,255 @@
+{
+  "run": 5,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": false,
+  "hint_round0": "other",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "TypeError: expected str, bytes or os.PathLike object, not RandomForestClassifier"
+  },
+  "repair_seconds": 725.5,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 15
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\fluent.py:780: in log_artifact\n    MlflowClient().log_artifact(run_id, local_path, artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\client.py:1136: in log_artifact\n    self._tracking_client.log_artifact(run_id, local_path, artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\_tracking_service\\client.py:460: in log_artifact\n    artifact_repo.log_artifact(local_path, artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\store\\artifact\\local_artifact_repo.py:27: in log_artifact\n    verify_artifact_path(artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\store\\artifact\\artifact_repo.py:303: in verify_artifact_path\n    if artifact_path and path_not_unique(artifact_path):\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\utils\\validation.py:83: in path_not_unique\n    norm = posixpath.normpath(name)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\npath = RandomForestClassifier()\n\n    def normpath(path):\n        \"\"\"Normalize path, eliminating double slashes, etc.\"\"\"\n>       path = os.fspath(path)\nE       TypeError: expected str, bytes or os.PathLike object, not RandomForestClassifier\n\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\posixpath.py:340: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - TypeError: expected...\n1 failed in 4.34s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: expected str, bytes or os.PathLike object, not RandomForestClassifier"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 0,
+      "phase": "R2",
+      "step": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\fluent.py:780: in log_artifact\n    MlflowClient().log_artifact(run_id, local_path, artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\client.py:1136: in log_artifact\n    self._tracking_client.log_artifact(run_id, local_path, artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\_tracking_service\\client.py:460: in log_artifact\n    artifact_repo.log_artifact(local_path, artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\store\\artifact\\local_artifact_repo.py:27: in log_artifact\n    verify_artifact_path(artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\store\\artifact\\artifact_repo.py:303: in verify_artifact_path\n    if artifact_path and path_not_unique(artifact_path):\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\utils\\validation.py:83: in path_not_unique\n    norm = posixpath.normpath(name)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\npath = RandomForestClassifier(random_state=42)\n\n    def normpath(path):\n        \"\"\"Normalize path, eliminating double slashes, etc.\"\"\"\n>       path = os.fspath(path)\nE       TypeError: expected str, bytes or os.PathLike object, not RandomForestClassifier\n\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\posixpath.py:340: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - TypeError: expected...\n1 failed in 4.36s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: expected str, bytes or os.PathLike object, not RandomForestClassifier"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1343,
+        "completion_tokens": 438,
+        "truncated": false,
+        "seconds": 182.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\fluent.py:780: in log_artifact\n    MlflowClient().log_artifact(run_id, local_path, artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\client.py:1136: in log_artifact\n    self._tracking_client.log_artifact(run_id, local_path, artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\_tracking_service\\client.py:460: in log_artifact\n    artifact_repo.log_artifact(local_path, artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\store\\artifact\\local_artifact_repo.py:27: in log_artifact\n    verify_artifact_path(artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\store\\artifact\\artifact_repo.py:303: in verify_artifact_path\n    if artifact_path and path_not_unique(artifact_path):\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\utils\\validation.py:83: in path_not_unique\n    norm = posixpath.normpath(name)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\npath = RandomForestClassifier(random_state=42)\n\n    def normpath(path):\n        \"\"\"Normalize path, eliminating double slashes, etc.\"\"\"\n>       path = os.fspath(path)\nE       TypeError: expected str, bytes or os.PathLike object, not RandomForestClassifier\n\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\posixpath.py:340: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - TypeError: expected...\n1 failed in 4.24s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: expected str, bytes or os.PathLike object, not RandomForestClassifier"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2544,
+        "completion_tokens": 439,
+        "truncated": false,
+        "seconds": 267.9
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n>       model = model\nE       UnboundLocalError: local variable 'model' referenced before assignment\n\ntest_pipeline.py:11: UnboundLocalError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - UnboundLocalError: ...\n1 failed in 3.05s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: expected str, bytes or os.PathLike object, not RandomForestClassifier"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3290,
+        "completion_tokens": 450,
+        "truncated": false,
+        "seconds": 275.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def setUp(self):\n        self.data = load_data('data/air_quality.csv')\n        self.X, self.y = preprocess_data(self.data)\n>       self.model = model\nE       NameError: name 'model' is not defined\n\ntest_pipeline.py:9: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'mo...\n1 failed in 3.06s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: expected str, bytes or os.PathLike object, not RandomForestClassifier"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

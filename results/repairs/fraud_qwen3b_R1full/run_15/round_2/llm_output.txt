@@ -1,0 +1,35 @@
+It seems there might be an issue with the environment setup or the way the files are being executed. Let's ensure that all necessary packages are installed and that the environment is correctly configured. Here's a step-by-step guide to resolve the issue:
+
+1. **Install Required Packages**: Ensure that all the required packages are installed in your Python environment. You can do this by running the following command in your terminal:
+
+   ```bash
+   pip install pandas scikit-learn mlflow pytest
+   ```
+
+2. **Check Python Version**: Ensure that you are using Python 3.7.7. You can check the Python version by running:
+
+   ```bash
+   python --version
+   ```
+
+3. **Run pytest**: Make sure you are running pytest in the correct directory where your files are located. You can run pytest by executing:
+
+   ```bash
+   pytest
+   ```
+
+4. **Check Environment Variables**: Ensure that your environment variables are set correctly. You can check the environment variables by running:
+
+   ```bash
+   env
+   ```
+
+5. **Check File Paths**: Ensure that the file path `'data/fraud.csv'` is correct and that the file exists in the specified directory.
+
+6. **Check MLflow Configuration**: Ensure that MLflow is configured correctly. You can check the MLflow configuration by running:
+
+   ```bash
+   mlflow config get tracking-uri
+   ```
+
+If you have followed these steps and the issue persists, please provide more details about your environment setup and any additional error messages you might be seeing.

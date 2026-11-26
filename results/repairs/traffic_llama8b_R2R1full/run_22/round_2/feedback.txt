@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+            Objects that will be checked for consistent length.
+        """
+    
+        lengths = [_num_samples(X) for X in arrays if X is not None]
+        uniques = np.unique(lengths)
+        if len(uniques) > 1:
+            raise ValueError(
+                "Found input variables with inconsistent numbers of samples: %r"
+>               % [int(l) for l in lengths]
+            )
+E           ValueError: Found input variables with inconsistent numbers of samples: [35544, 40564]
+
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\sklearn\utils\validation.py:334: ValueError
+---------------------------- Captured stdout call -----------------------------
+Error training model: Found input variables with inconsistent numbers of samples: [35544, 40564]
+============================== warnings summary ===============================
+test_pipeline.py::test_preprocess_data
+test_pipeline.py::test_train_model
+  C:\Users\ADMIN\Desktop\maThese\REVUE_SelfHealing_Local\code\repairs\traffic_llama8b_R2R1full\run_22\round_1\pipeline.py:20: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.
+    data.fillna(data.mean(), inplace=True)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_train_model - ValueError: Found input variables...
+1 failed, 2 passed, 2 warnings in 3.74s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

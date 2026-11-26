@@ -1,0 +1,59 @@
+{
+  "run": 5,
+  "cost": {
+    "prompt_tokens": 299,
+    "completion_tokens": 843,
+    "truncated": false,
+    "seconds": 213.6
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": true,
+      "rvh_violations": [
+        {
+          "kind": "RVH",
+          "rule": "unseeded_estimator",
+          "detail": "RandomForestClassifier(...) called without random_state",
+          "lineno": 32
+        }
+      ],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 6
+  },
+  "pytest": {
+    "passed": 2,
+    "failed": 1,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "         0.05457244,  0.08385537]])\ny_train = 9254    0\n1561    0\n1670    0\n6087    0\n6669    0\n       ..\n5734    0\n5191    0\n5390    0\n860     0\n7270    0\nName: Class, Length: 8000, dtype: int64\n\n    def train_model(X_train, y_train):\n        try:\n>           mlflow.sklearn.log_param(\"n_estimators\", 100)\nE           AttributeError: module 'mlflow.sklearn' has no attribute 'log_param'\n\npipeline.py:30: AttributeError\n---------------------------- Captured stdout call -----------------------------\nError training model: module 'mlflow.sklearn' has no attribute 'log_param'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow.sk...\n1 failed, 2 passed in 4.06s",
+    "all_pass": false,
+    "failure_hint": "other"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": true,
+  "is_iih": false
+}

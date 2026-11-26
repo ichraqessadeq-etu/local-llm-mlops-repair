@@ -1,0 +1,157 @@
+Here are the corrected files:
+
+```python
+# pipeline.py
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow
+import logging
+from sklearn.metrics import accuracy_score, classification_report
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        logging.error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    try:
+        # Drop unnecessary columns
+        data.drop(columns=['Hour', 'DayOfWeek', 'Month'], inplace=True)
+        
+        # Scale features using StandardScaler
+        scaler = StandardScaler()
+        X = scaler.fit_transform(data.drop('Anomaly', axis=1))
+        
+        # Encode target variable
+        y = data['Anomaly'].map({'Normal': 0, 'Anomaly': 1})
+        
+        return X, y
+    except Exception as e:
+        logging.error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X, y):
+    try:
+        # Split data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        # Train RandomForest model
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        
+        # Make predictions on test set
+        y_pred = model.predict(X_test)
+        
+        # Evaluate model performance
+        accuracy = accuracy_score(y_test, y_pred)
+        report = classification_report(y_test, y_pred)
+        
+        # Log model with MLflow
+        mlflow.sklearn.log_model(model, "random_forest_model")
+        
+        # Log metrics with MLflow
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.log_metric("classification_report", report)
+        
+        return model, accuracy, report
+    except Exception as e:
+        logging.error(f"Error training model: {e}")
+        raise
+
+def main():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    model, accuracy, report = train_model(X, y)
+    
+    print(f"Model accuracy: {accuracy}")
+    print(f"Classification report:\n{report}")
+
+if __name__ == "__main__":
+    main()
+```
+
+```python
+# test_pipeline.py
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/air_quality.csv')
+    assert data.shape[0] > 0
+
+def test_preprocess_data():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    assert X.shape[0] > 0
+    assert y.shape[0] > 0
+
+def test_train_model():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    model, accuracy, report = train_model(X, y)
+    assert model is not None
+    assert accuracy > 0.5
+    assert report is not None
+```
+
+```yml
+# .github/workflows/ci_cd.yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install mlflow
+
+      - name: Run tests
+        run: |
+          pytest test_pipeline.py
+
+      - name: Train model
+        run: |
+          python pipeline.py
+
+      - name: Log model with MLflow
+        run: |
+          mlflow sklog -r pipeline.py
+
+      - name: Deploy model
+        uses: actions/deploy@v1
+        with:
+          deployment-name: air-quality-model
+          deployment-type: mlflow
+          deployment-params: |
+            {
+              "model-name": "random_forest_model",
+              "model-version": 1
+            }
+```
+
+I made the following changes:
+
+* Added `pip install mlflow` in the `Install dependencies` step to install the MLflow library.
+* Modified the `train_model` function to return the model, accuracy, and report.
+* Modified the `main` function to call the `train_model` function and log the model with MLflow.
+* Modified the `.github/workflows/ci_cd.yml` file to run the `main` function in `pipeline.py` instead of calling the `train_model` function directly.

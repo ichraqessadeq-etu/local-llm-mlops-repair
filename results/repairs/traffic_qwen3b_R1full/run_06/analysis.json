@@ -1,0 +1,201 @@
+{
+  "run": 6,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": "other",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 600.7,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ">       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Rain'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_train_model():\n        try:\n            data = load_data('data/traffic.csv')\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            model = train_model(X_train, y_train)\n            assert isinstance(model, RandomForestClassifier)\n        except Exception as e:\n>           pytest.fail(f\"Test failed: {e}\")\nE           Failed: Test failed: could not convert string to float: 'Rain'\n\ntest_pipeline.py:30: Failed\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:41 Failed to train model: could not convert string to float: 'Rain'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: Test failed: name 'pd' is n...\nFAILED test_pipeline.py::test_preprocess_data - Failed: Test failed: name 'pd...\nFAILED test_pipeline.py::test_train_model - Failed: Test failed: could not co...\n3 failed in 3.88s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1827,
+        "completion_tokens": 1001,
+        "truncated": false,
+        "seconds": 176.9
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        try:\n            data = load_data('data/traffic.csv')\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            model = train_model(X_train, y_train)\n            assert isinstance(model, RandomForestClassifier)\n        except Exception as e:\n>           pytest.fail(f\"Test failed: {e}\")\nE           Failed: Test failed: could not convert string to float: 'Rain'\n\ntest_pipeline.py:33: Failed\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:50 Failed to train model: could not convert string to float: 'Rain'\n============================== warnings summary ===============================\ntest_pipeline.py::test_load_data\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_qwen3b_R1full\\run_06\\round_1\\pipeline.py:23: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: Test failed: name 'pd' is n...\nFAILED test_pipeline.py::test_preprocess_data - Failed: Test failed: name 'pd...\nFAILED test_pipeline.py::test_train_model - Failed: Test failed: could not co...\n3 failed, 3 warnings in 4.32s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3324,
+        "completion_tokens": 1035,
+        "truncated": false,
+        "seconds": 170.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        try:\n            data = load_data('data/traffic.csv')\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            model = train_model(X_train, y_train)\n            assert isinstance(model, RandomForestClassifier)\n        except Exception as e:\n>           pytest.fail(f\"Test failed: {e}\")\nE           Failed: Test failed: could not convert string to float: 'Rain'\n\ntest_pipeline.py:33: Failed\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:53 Failed to train model: could not convert string to float: 'Rain'\n============================== warnings summary ===============================\ntest_pipeline.py::test_load_data\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_qwen3b_R1full\\run_06\\round_2\\pipeline.py:23: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: Test failed: name 'pd' is n...\nFAILED test_pipeline.py::test_preprocess_data - Failed: Test failed: name 'pd...\nFAILED test_pipeline.py::test_train_model - Failed: Test failed: could not co...\n3 failed, 3 warnings in 4.32s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3460,
+        "completion_tokens": 1035,
+        "truncated": false,
+        "seconds": 253.8
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        try:\n            data = load_data('data/traffic.csv')\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            model = train_model(X_train, y_train)\n            assert isinstance(model, RandomForestClassifier)\n        except Exception as e:\n>           pytest.fail(f\"Test failed: {e}\")\nE           Failed: Test failed: could not convert string to float: 'Rain'\n\ntest_pipeline.py:33: Failed\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:53 Failed to train model: could not convert string to float: 'Rain'\n============================== warnings summary ===============================\ntest_pipeline.py::test_load_data\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_qwen3b_R1full\\run_06\\round_3\\pipeline.py:23: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: Test failed: name 'pd' is n...\nFAILED test_pipeline.py::test_preprocess_data - Failed: Test failed: name 'pd...\nFAILED test_pipeline.py::test_train_model - Failed: Test failed: could not co...\n3 failed, 3 warnings in 4.23s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

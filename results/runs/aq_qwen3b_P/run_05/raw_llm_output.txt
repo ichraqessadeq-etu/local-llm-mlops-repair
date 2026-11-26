@@ -1,0 +1,173 @@
+To create a production-ready CI/CD pipeline for a RandomForest anomaly detector, we need to set up a pipeline that includes data loading, preprocessing, model training, and deployment. Below is the implementation of the pipeline and the corresponding test file. Additionally, I'll provide a GitHub Actions YAML file to automate the pipeline.
+
+### pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        logging.info("Data loaded successfully.")
+        return data
+    except Exception as e:
+        logging.error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    try:
+        # Select features and target
+        X = data[['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH', 'AH', 'Hour', 'DayOfWeek', 'Month']]
+        y = data['Anomaly']
+        
+        # Split the data
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        logging.info("Data preprocessed successfully.")
+        return X_train, X_test, y_train, y_test
+    except Exception as e:
+        logging.error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model."""
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        logging.info("Model trained successfully.")
+        return model
+    except Exception as e:
+        logging.error(f"Error training model: {e}")
+        raise
+
+def save_model(model, experiment_name, run_name):
+    """Save the model using MLflow."""
+    try:
+        mlflow.set_experiment(experiment_name)
+        with mlflow.start_run(run_name=run_name):
+            mlflow.sklearn.log_model(model, "model")
+            logging.info("Model saved successfully.")
+    except Exception as e:
+        logging.error(f"Error saving model: {e}")
+        raise
+```
+
+### test_pipeline.py
+
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model, save_model
+import pandas as pd
+
+@pytest.fixture
+def data():
+    # Load a sample dataset
+    data = pd.DataFrame({
+        'PT08.S1(CO)': [10, 20, 30, 40, 50],
+        'PT08.S2(NMHC)': [15, 25, 35, 45, 55],
+        'PT08.S3(NOx)': [20, 30, 40, 50, 60],
+        'PT08.S4(NO2)': [25, 35, 45, 55, 65],
+        'PT08.S5(O3)': [30, 40, 50, 60, 70],
+        'NOx(GT)': [35, 45, 55, 65, 75],
+        'C6H6(GT)': [40, 50, 60, 70, 80],
+        'T': [45, 55, 65, 75, 85],
+        'RH': [50, 60, 70, 80, 90],
+        'AH': [55, 65, 75, 85, 95],
+        'Hour': [6, 7, 8, 9, 10],
+        'DayOfWeek': [1, 2, 3, 4, 5],
+        'Month': [1, 2, 3, 4, 5],
+        'Anomaly': [0, 1, 0, 1, 0]
+    })
+    return data
+
+def test_load_data(data):
+    """Test the load_data function."""
+    try:
+        loaded_data = load_data(data)
+        assert loaded_data.equals(data), "Data loading failed."
+        logging.info("Data loading test passed.")
+    except Exception as e:
+        logging.error(f"Data loading test failed: {e}")
+
+def test_preprocess_data(data):
+    """Test the preprocess_data function."""
+    try:
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        assert len(X_train) == len(y_train), "Data preprocessing failed."
+        logging.info("Data preprocessing test passed.")
+    except Exception as e:
+        logging.error(f"Data preprocessing test failed: {e}")
+
+def test_train_model(data):
+    """Test the train_model function."""
+    try:
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_train)
+        y_pred = model.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        assert accuracy > 0.8, "Model training failed."
+        logging.info("Model training test passed.")
+    except Exception as e:
+        logging.error(f"Model training test failed: {e}")
+
+def test_save_model(data):
+    """Test the save_model function."""
+    try:
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_train)
+        save_model(model, "air_quality_experiment", "air_quality_run")
+        logging.info("Model saving test passed.")
+    except Exception as e:
+        logging.error(f"Model saving test failed: {e}")
+```
+
+### GitHub Actions YAML
+
+```yaml
+name: ML Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7'
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    - name: Run tests
+      run: |
+        pytest
+    - name: MLflow tracking
+      run: |
+        mlflow log-artifact ./model -n air_quality_model
+```
+
+### requirements.txt
+
+```
+pandas==1.0.2
+scikit-learn==1.0.2
+mlflow==1.30.1
+pytest==7.1.2
+```
+
+This setup includes a CI/CD pipeline that loads data, preprocesses

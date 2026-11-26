@@ -1,0 +1,201 @@
+{
+  "run": 17,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": "assertion",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: Specifying the columns using strings is only supported for pandas DataFrames"
+  },
+  "repair_seconds": 1175.8,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        try:\n            X = self._validate_data(\n                X,\n                reset=in_fit,\n                accept_sparse=\"csc\",\n                dtype=dtype,\n                force_all_finite=force_all_finite,\n                copy=self.copy,\n            )\n        except ValueError as ve:\n            if \"could not convert\" in str(ve):\n                new_ve = ValueError(\n                    \"Cannot use {} strategy with non-numeric data:\\n{}\".format(\n                        self.strategy, ve\n                    )\n                )\n>               raise new_ve from None\nE               ValueError: Cannot use mean strategy with non-numeric data:\nE               could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\impute\\_base.py:285: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - ValueError: Cannot use mean s...\nFAILED test_pipeline.py::test_train_model - ValueError: Cannot use mean strat...\n2 failed, 1 passed in 3.45s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Cannot use mean strategy with non-numeric data:\ncould not convert string to float: 'Clouds'"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1623,
+        "completion_tokens": 752,
+        "truncated": false,
+        "seconds": 285.9
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        try:\n            X = self._validate_data(\n                X,\n                reset=in_fit,\n                accept_sparse=\"csc\",\n                dtype=dtype,\n                force_all_finite=force_all_finite,\n                copy=self.copy,\n            )\n        except ValueError as ve:\n            if \"could not convert\" in str(ve):\n                new_ve = ValueError(\n                    \"Cannot use {} strategy with non-numeric data:\\n{}\".format(\n                        self.strategy, ve\n                    )\n                )\n>               raise new_ve from None\nE               ValueError: Cannot use mean strategy with non-numeric data:\nE               could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\impute\\_base.py:285: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - ValueError: Cannot use mean s...\nFAILED test_pipeline.py::test_train_model - ValueError: Cannot use mean strat...\n2 failed, 1 passed in 3.73s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Cannot use mean strategy with non-numeric data:\ncould not convert string to float: 'Clouds'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2740,
+        "completion_tokens": 1141,
+        "truncated": false,
+        "seconds": 370.2
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\n    def test_preprocess_data():\n        \"\"\"Test data preprocessing function.\"\"\"\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n        assert X.shape[0] == y.shape[0]\n>       assert X.shape[1] == len(['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month'])\nE       AssertionError: assert 20 == 9\nE        +  where 9 = len(['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', ...])\n\ntest_pipeline.py:15: AssertionError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test model training function.\"\"\"\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:21: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert 20 == 9\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n2 failed, 1 passed in 3.83s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Specifying the columns using strings is only supported for pandas DataFrames"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3093,
+        "completion_tokens": 1038,
+        "truncated": false,
+        "seconds": 519.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "                idx = _safe_indexing(np.arange(n_columns), key)\n            except IndexError as e:\n                raise ValueError(\n                    \"all features must be in [0, {}] or [-{}, 0]\".format(\n                        n_columns - 1, n_columns\n                    )\n                ) from e\n            return np.atleast_1d(idx).tolist()\n        elif key_dtype == \"str\":\n            try:\n                all_columns = X.columns\n            except AttributeError:\n                raise ValueError(\n>                   \"Specifying the columns using strings is only \"\n                    \"supported for pandas DataFrames\"\n                )\nE               ValueError: Specifying the columns using strings is only supported for pandas DataFrames\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\__init__.py:412: ValueError\n---------------------------- Captured stderr call -----------------------------\n2026/11/24 03:24:43 INFO mlflow.tracking.fluent: Experiment with name 'traffic-congestion-pipeline' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert 20 == 9\nFAILED test_pipeline.py::test_train_model - ValueError: Specifying the column...\n2 failed, 1 passed in 4.09s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Specifying the columns using strings is only supported for pandas DataFrames"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

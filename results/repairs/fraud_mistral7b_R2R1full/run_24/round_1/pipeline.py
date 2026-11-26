@@ -1,0 +1,22 @@
+# pipeline.py
+import mlflow
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    X = data.drop('Class', axis=1)
+    y = data['Class']
+    return (X, y)
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.pyfunc.log_model(model, 'model')
+        mlflow.log_artifact('model.pkl', 'model')
+        mlflow.log_metric('training loss', model.loss_)
+        mlflow.log_metric('training accuracy', model.score(X_train, y_train))

@@ -1,0 +1,52 @@
+{
+  "run": 18,
+  "cost": {
+    "prompt_tokens": 262,
+    "completion_tokens": 1373,
+    "truncated": false,
+    "seconds": 192.1
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 4,
+    "asserts": 4
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 4,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "\ndata =    PT08.S1(CO)  PT08.S2(NMHC)  PT08.S3(NOx)  ...  DayOfWeek  Month  Anomaly\n0           10             15            2...   3      4        1\n4           50             55            60  ...          4      5        0\n\n[5 rows x 14 columns]\n\n    def test_save_model(data):\n        \"\"\"Test the save_model function.\"\"\"\n        try:\n            X, y = preprocess_data(data)\n            model = train_model(X, y)\n            save_model(model, 'model.pkl')\n            logging.info(\"Model saving test passed.\")\n        except Exception as e:\n>           logging.error(f\"Model saving test failed: {e}\")\nE           NameError: name 'logging' is not defined\n\ntest_pipeline.py:63: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'logging' is not de...\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'logging' is ...\nFAILED test_pipeline.py::test_train_model - NameError: name 'logging' is not ...\nFAILED test_pipeline.py::test_save_model - NameError: name 'logging' is not d...\n4 failed in 10.36s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

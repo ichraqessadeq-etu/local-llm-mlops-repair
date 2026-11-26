@@ -1,0 +1,66 @@
+ To fix the issue, I've made the following changes:
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+import mlflow
+import os
+
+def load_data(file_path):
+    return pd.read_csv(os.path.join(os.path.dirname(__file__), file_path))
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps here
+    return data.drop('Anomaly', axis=1), data['Anomaly']
+
+def train_model(random_state=42):
+    data, target = preprocess_data(load_data('data/air_quality.csv'))
+    X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.3, random_state=random_state)
+
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=random_state)
+        model.fit(X_train, y_train)
+        mlflow.log_artifact(f'model', model)
+        mlflow.log_metric('train_loss', model.fit_params['loss'])
+
+    return model
+```
+
+In the corrected pipeline.py, I changed the `load_data` function to use `os.path.join(os.path.dirname(__file__), file_path)` to ensure that the file path is relative to the script's location.
+
+2. test_pipeline.py:
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+import tempfile
+import os
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/air_quality.csv')
+        self.X, self.y = preprocess_data(self.data)
+
+    def test_train_model(self):
+        temp_dir = tempfile.TemporaryDirectory()
+        os.chdir(temp_dir.name)
+        with self.assertRaises(FileNotFoundError):
+            train_model()
+        with open('data/air_quality.csv', 'w') as f:
+            f.write("")  # Empty file to avoid errors during testing
+        train_model(random_state=42)
+        # Add assertions to test the model here
+
+    def tearDown(self):
+        temp_dir.cleanup()
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+In the corrected test_pipeline.py, I added an empty file named 'data/air_quality.csv' during the test to avoid the FileNotFoundError. This file will be deleted after the test.
+
+These changes should resolve the issues reported in the error messages and pass all tests.

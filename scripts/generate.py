@@ -1,0 +1,141 @@
+# -*- coding: utf-8 -*-
+"""Generation for the journal study: M2 task on two domains, with an optional preventive prompt (strategy P).
+
+Same protocol as ICISTA (icista_m2_benchmark.py: same system prompt, temperature 0.3, 1,500 tokens, same
+extraction, same pinned pytest environment), and the oracles of repair_loop.py (pytest, RVH/IIH, test
+strength, independent functional check). The output folder has the layout of icista_m2_benchmark.py, so
+repair_loop.py can be run on it.
+
+  --task aq      UCI Air Quality, prompt identical to ICISTA (byte-identical when --variant base)
+  --task fraud   ULB credit-card fraud (OpenML 1597), stratified subsample prepared by prepare_fraud.py
+  --task traffic UCI Metro Interstate Traffic Volume, Congestion label, prepared by prepare_traffic.py
+  --variant base | preventive   (preventive = base prompt + two sentences targeting the two dominant failures)
+
+Examples (from REVUE_SelfHealing_Local/code):
+  py -3.13 generate.py --backend fake --task fraud --n 2 --out runs_dry_fraud
+  py -3.13 generate.py --backend ollama --model llama3.1:8b --task fraud --n 30 --out runs/fraud_llama8b
+  py -3.13 generate.py --backend ollama --model llama3.1:8b --task aq --variant preventive --n 30 --out runs/aq_llama8b_P
+"""
+from __future__ import annotations
+import argparse, datetime, hashlib, json, os, platform, shutil, subprocess, sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+import icista_m2_benchmark as m2
+from repair_loop import run_round, sha256_file
+
+FRAUD_FEAT = ["Time"] + [f"V{i}" for i in range(1, 29)] + ["Amount"]
+TRAFFIC_FEAT = ["temp", "rain_1h", "snow_1h", "clouds_all", "weather_main", "IsHoliday", "Hour", "DayOfWeek", "Month"]
+PROMPTS = {
+    "aq": (m2.PROMPT, "air_quality.csv"),
+    "fraud": ("You are an MLOps engineer for a financial fraud detection system. Generate a production-ready CI/CD "
+              "pipeline for a RandomForest fraud detector. Features=%s, target column 'Class', data at "
+              "'data/fraud.csv'. Provide: (1) a Python module pipeline.py with functions load_data(file_path), "
+              "preprocess_data(data) -> (X,y), train_model(X_train,y_train); (2) a pytest file test_pipeline.py importing "
+              "from pipeline; (3) a GitHub Actions YAML. Use MLflow and error handling." % FRAUD_FEAT, "fraud.csv"),
+    "traffic": ("You are an MLOps engineer for a smart city traffic management system. Generate a production-ready "
+                "CI/CD pipeline for a RandomForest congestion detector. Features=%s, target column 'Congestion', data at "
+                "'data/traffic.csv'. Provide: (1) a Python module pipeline.py with functions load_data(file_path), "
+                "preprocess_data(data) -> (X,y), train_model(X_train,y_train); (2) a pytest file test_pipeline.py importing "
+                "from pipeline; (3) a GitHub Actions YAML. Use MLflow and error handling." % TRAFFIC_FEAT, "traffic.csv"),
+}
+PREVENTIVE = (" The test file is a separate module: it must import every name it uses. The target environment is "
+              "Python 3.7 with MLflow 1.30.1 and scikit-learn 1.0.2: use only functions that exist in these versions.")
+
+
+def main(a):
+    out = Path(a.out)
+    if out.exists() and any(out.iterdir()) and not a.resume:
+        sys.exit(f"'{out}' already contains results; choose another --out (or --resume), nothing was overwritten.")
+    if a.resume and (out / "results.json").exists():
+        sys.exit(f"'{out}' is already complete (results.json exists).")
+    if not Path(a.pytest_python).exists():
+        sys.exit(f"pytest interpreter not found: {a.pytest_python}")
+    prompt, data_name = PROMPTS[a.task]
+    if a.variant == "preventive":
+        prompt += PREVENTIVE
+    data_src = Path(a.data) if a.data else (HERE.parent / "data" / data_name if a.task in ("fraud", "traffic")
+                                            else HERE.parents[1] / "ICISTA" / "code" / "runs_llama31_8b" / data_name)
+    if not data_src.exists():
+        sys.exit(f"data file not found: {data_src} (fraud: run prepare_fraud.py first)")
+    llm = m2.OllamaLLM(a.model) if a.backend == "ollama" else m2.FakeLLM()
+    extra = llm.check()
+    out.mkdir(parents=True, exist_ok=a.resume)
+    # Lock: refuse to run if another live process is already generating into this folder
+    # (two windows launched on the same night write the same run_XX folders and distort the timings).
+    lock = out / ".lock"
+    if lock.exists():
+        try:
+            other = int(lock.read_text().strip())
+            alive = subprocess.run(["tasklist", "/FI", f"PID eq {other}", "/NH"], capture_output=True,
+                                   text=True).stdout.find(str(other)) >= 0 if os.name == "nt" else \
+                os.path.exists(f"/proc/{other}")
+        except ValueError:
+            alive = False
+        if alive:
+            sys.exit(f"{out} is already being generated by process {other}: close the other window first")
+    lock.write_text(str(os.getpid()))
+    import atexit
+    atexit.register(lambda: lock.exists() and lock.read_text().strip() == str(os.getpid()) and lock.unlink())
+    shutil.copy(data_src, out / data_name)
+    env = subprocess.run([a.pytest_python, "-c", "import sys,pytest,mlflow,sklearn,pandas,numpy;"
+                          "print(sys.version.split()[0],pytest.__version__,mlflow.__version__,"
+                          "sklearn.__version__,pandas.__version__,numpy.__version__)"],
+                         capture_output=True, text=True).stdout.split()
+    meta = {"utc": datetime.datetime.now(datetime.timezone.utc).isoformat(), "backend": a.backend,
+            "model": a.model if a.backend == "ollama" else "fake", "task": a.task, "variant": a.variant,
+            "temperature": m2.TEMPERATURE, "max_tokens": m2.MAX_TOKENS, "system": m2.SYSTEM,
+            "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
+            "data": {"file": data_name, "sha256": sha256_file(out / data_name)},
+            "script_sha256": sha256_file(__file__), "m2_sha256": sha256_file(m2.__file__),
+            "generator_python": platform.python_version(), "resumed": bool(a.resume),
+            "pytest_env": dict(zip(["python", "pytest", "mlflow", "sklearn", "pandas", "numpy"], env)), **extra}
+    (out / "prompt.txt").write_text(prompt, encoding="utf-8")
+    runs = []
+    for k in range(1, a.n + 1):
+        rd = out / f"run_{k:02d}"
+        if a.resume and (rd / "analysis.json").exists():          # finished before the interruption
+            runs.append(json.loads((rd / "analysis.json").read_text(encoding="utf-8")))
+            print(f"run {k:2d}/{a.n}: already done, kept", flush=True)
+            continue
+        if a.resume and rd.exists():                              # interrupted: generate it again
+            shutil.rmtree(rd)
+        text, cost = llm(prompt)
+        rd.mkdir()
+        (rd / "raw_llm_output.txt").write_text(text, encoding="utf-8")
+        pipe, test, parsed = m2.extract(text)
+        rec = {"run": k, "cost": cost, "extraction": parsed,
+               **run_round(rd, pipe, test, out / data_name, data_name, a.pytest_python)}
+        (rd / "analysis.json").write_text(json.dumps(rec, indent=2), encoding="utf-8")
+        runs.append(rec)
+        pt, f = rec["pytest"], rec["functional"]
+        print(f"run {k:2d}/{a.n}: pass={pt.get('all_pass')} ({pt.get('passed')} passed, {pt.get('failed')} failed) "
+              f"{pt.get('failure_hint', '')} | RVH={rec['is_rvh']} | tests={rec['strength']['tests']} "
+              f"asserts={rec['strength']['asserts']} | AUPRC={f.get('auprc', '-')} | "
+              f"{cost.get('completion_tokens', '-')} tok, {cost.get('seconds', '-')} s"
+              f"{' TRUNCATED' if cost.get('truncated') else ''}", flush=True)
+    summary = {"n": a.n, "all_pass": sum(bool(r["pytest"].get("all_pass")) for r in runs),
+               "functional_ok": sum(bool(r["functional"].get("functional_ok")) for r in runs),
+               "rvh": sum(r["is_rvh"] for r in runs), "iih": sum(r["is_iih"] for r in runs),
+               "truncated": sum(bool(r["cost"].get("truncated")) for r in runs),
+               "failure_hints": {h: sum(r["pytest"].get("failure_hint") == h for r in runs)
+                                 for h in sorted({r["pytest"].get("failure_hint") for r in runs} - {None})}}
+    (out / "results.json").write_text(json.dumps({"meta": meta, "summary": summary, "runs": runs}, indent=2),
+                                      encoding="utf-8")
+    print(json.dumps(summary, indent=2)); print(f"saved -> {out / 'results.json'}")
+
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--backend", choices=["ollama", "fake"], required=True)
+    ap.add_argument("--model", default="llama3.1:8b")
+    ap.add_argument("--task", choices=list(PROMPTS), required=True)
+    ap.add_argument("--variant", choices=["base", "preventive"], default="base")
+    ap.add_argument("--n", type=int, default=30)
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--data", help="override the data file")
+    ap.add_argument("--pytest-python", default=m2.DEFAULT_PYTEST_PY)
+    ap.add_argument("--resume", action="store_true",
+                    help="continue an interrupted --out: keep finished runs, generate the missing ones")
+    main(ap.parse_args())

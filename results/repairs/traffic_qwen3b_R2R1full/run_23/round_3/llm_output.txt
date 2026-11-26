@@ -1,0 +1,112 @@
+The error you're encountering is due to the fact that the `y_test` variable is not defined within the scope of the `train_model` function. This is because the `y_test` variable is created in the `preprocess_data` function, which is called within the `train_model` function. To fix this, you need to ensure that `y_test` is passed as an argument to the `train_model` function.
+
+Here's the corrected version of the files:
+
+### pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except FileNotFoundError:
+        raise ValueError(f"File not found: {file_path}")
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    # Convert categorical variables to numerical
+    data['weather_main'] = data['weather_main'].map({'Clear': 0, 'Clouds': 1, 'Rain': 2, 'Snow': 3})
+    data['IsHoliday'] = data['IsHoliday'].map({False: 0, True: 1})
+    
+    # Define features and target
+    X = data.drop('Congestion', axis=1)
+    y = data['Congestion']
+    
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    return X_train, X_test, y_train, y_test
+
+def train_model(X_train, y_train, X_test, y_test):
+    """Train the RandomForest model."""
+    try:
+        with mlflow.start_run():
+            model = RandomForestClassifier(n_estimators=100, random_state=42)
+            model.fit(X_train, y_train)
+            
+            # Log the model
+            mlflow.sklearn.log_model(model, "congestion_detector")
+            
+            # Evaluate the model
+            y_pred = model.predict(X_test)
+            accuracy = accuracy_score(y_test, y_pred)
+            mlflow.log_metric("accuracy", accuracy)
+            
+            return model
+    except Exception as e:
+        mlflow.log_metric("exception", str(e))
+        raise e
+```
+
+### test_pipeline.py
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+import pandas as pd
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test loading data."""
+    file_path = 'data/traffic.csv'
+    data = load_data(file_path)
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    """Test preprocessing data."""
+    data = pd.DataFrame({
+        'temp': [10, 20, 30],
+        'rain_1h': [0, 1, 0],
+        'snow_1h': [0, 0, 1],
+        'clouds_all': [50, 60, 70],
+        'weather_main': ['Clear', 'Clouds', 'Snow'],
+        'IsHoliday': [False, True, False],
+        'Hour': [1, 2, 3],
+        'DayOfWeek': [1, 2, 3],
+        'Month': [1, 2, 3],
+        'Congestion': [0, 1, 0]
+    })
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    assert isinstance(X_train, pd.DataFrame)
+    assert isinstance(X_test, pd.DataFrame)
+    assert isinstance(y_train, pd.Series)
+    assert isinstance(y_test, pd.Series)
+
+def test_train_model():
+    """Test training the model."""
+    data = pd.DataFrame({
+        'temp': [10, 20, 30],
+        'rain_1h': [0, 1, 0],
+        'snow_1h': [0, 0, 1],
+        'clouds_all': [50, 60, 70],
+        'weather_main': ['Clear', 'Clouds', 'Snow'],
+        'IsHoliday': [False, True, False],
+        'Hour': [1, 2, 3],
+        'DayOfWeek': [1, 2, 3],
+        'Month': [1, 2, 3],
+        'Congestion': [0, 1, 0]
+    })
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train, X_test, y_test)
+    assert isinstance(model, RandomForestClassifier)
+```
+
+In this corrected version, the `y_test` variable is passed as an argument to the `train_model` function, ensuring that it is defined and available for use within the `train_model` function. This should resolve the error you encountered.

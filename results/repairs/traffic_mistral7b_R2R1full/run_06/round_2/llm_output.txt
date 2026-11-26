@@ -1,0 +1,50 @@
+ ```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+
+def load_data(file_path):
+    return pd.read_csv(file_path, index_col=False)
+
+def preprocess_data(data):
+    data = data.copy()
+    data = data.rename(columns={'Features': 'X', 'Congestion': 'y'})
+    return (data['X'], data['y'])
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.log_artifact(f'model', local_model=model)
+        mlflow.log_param('num_trees', model.n_estimators)
+        mlflow.log_metric('train_loss', model.fit_score(X_train, y_train))
+        return model
+```
+
+```python
+import pandas as pd
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/traffic.csv')
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        model = train_model(X, y)
+        # Add more assertions here
+
+```
+
+By renaming the columns in the DataFrame returned by `load_data` and adding the `copy()` method, we ensure that the index is not affected, and the `preprocess_data` function can access the columns correctly. Additionally, I added a test for the `train_model` function to ensure that it does not raise any errors.
+
+In this case, the issue was that the `X` variable was not defined in the `train_model` function, so I removed it from the function signature and added it as an argument.

@@ -1,0 +1,201 @@
+{
+  "run": 18,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 637.9,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest classifier.\"\"\"\n        try:\n            # Initialize the model\n            model = RandomForestClassifier(random_state=42)\n    \n            # Train the model\n            model.fit(X_train, y_train)\n    \n            # Log the model to MLflow\n            mlflow.sklearn.log_model(model, \"anomaly_detector\")\n    \n            return model\n        except Exception as e:\n>           raise ValueError(f\"An error occurred during model training: {e}\")\nE           ValueError: An error occurred during model training: Found input variables with inconsistent numbers of samples: [5806, 1452]\n\npipeline.py:50: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_predict_anomalies - ValueError: An error occurr...\n4 failed in 8.23s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=no"
+      ],
+      "cost": {
+        "prompt_tokens": 1822,
+        "completion_tokens": 1185,
+        "truncated": false,
+        "seconds": 187.9
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest classifier.\"\"\"\n        try:\n            # Initialize the model\n            model = RandomForestClassifier(random_state=42)\n    \n            # Train the model\n            model.fit(X_train, y_train)\n    \n            # Log the model to MLflow\n            mlflow.sklearn.log_model(model, \"anomaly_detector\")\n    \n            return model\n        except Exception as e:\n>           raise ValueError(f\"An error occurred during model training: {e}\")\nE           ValueError: An error occurred during model training: Found input variables with inconsistent numbers of samples: [5806, 1452]\n\npipeline.py:51: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_predict_anomalies - ValueError: An error occurr...\n4 failed in 7.93s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=no"
+      ],
+      "cost": {
+        "prompt_tokens": 3389,
+        "completion_tokens": 1195,
+        "truncated": false,
+        "seconds": 181.4
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest classifier.\"\"\"\n        try:\n            # Initialize the model\n            model = RandomForestClassifier(random_state=42)\n    \n            # Train the model\n            model.fit(X_train, y_train)\n    \n            # Log the model to MLflow\n            mlflow.sklearn.log_model(model, \"anomaly_detector\")\n    \n            return model\n        except Exception as e:\n>           raise ValueError(f\"An error occurred during model training: {e}\")\nE           ValueError: An error occurred during model training: Found input variables with inconsistent numbers of samples: [5806, 1452]\n\npipeline.py:51: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_predict_anomalies - ValueError: An error occurr...\n4 failed in 8.00s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=no"
+      ],
+      "cost": {
+        "prompt_tokens": 3538,
+        "completion_tokens": 1195,
+        "truncated": false,
+        "seconds": 268.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest classifier.\"\"\"\n        try:\n            # Initialize the model\n            model = RandomForestClassifier(random_state=42)\n    \n            # Train the model\n            model.fit(X_train, y_train)\n    \n            # Log the model to MLflow\n            mlflow.sklearn.log_model(model, \"anomaly_detector\")\n    \n            return model\n        except Exception as e:\n>           raise ValueError(f\"An error occurred during model training: {e}\")\nE           ValueError: An error occurred during model training: Found input variables with inconsistent numbers of samples: [5806, 1452]\n\npipeline.py:51: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_predict_anomalies - ValueError: An error occurr...\n4 failed in 7.97s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

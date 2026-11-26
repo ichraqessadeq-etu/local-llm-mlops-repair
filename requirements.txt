@@ -1,0 +1,6 @@
+# analysis (no model call)
+numpy
+pandas
+scipy
+statsmodels
+# generation and repair: Ollama (https://ollama.com) + a pinned execution environment, see README

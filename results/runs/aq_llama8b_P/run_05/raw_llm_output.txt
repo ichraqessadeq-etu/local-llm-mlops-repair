@@ -1,0 +1,137 @@
+Here is the solution:
+
+**pipeline.py**
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow.sklearn
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    try:
+        # Select relevant features
+        X = data[['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH', 'AH', 'Hour', 'DayOfWeek', 'Month']]
+        
+        # Define target variable
+        y = data['Anomaly']
+        
+        # Split data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        # Scale features using StandardScaler
+        scaler = StandardScaler()
+        X_train_scaled = scaler.fit_transform(X_train)
+        X_test_scaled = scaler.transform(X_test)
+        
+        return X_train_scaled, X_test_scaled, y_train, y_test
+    except Exception as e:
+        print(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        # Train RandomForest classifier
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        
+        # Log model with MLflow
+        mlflow.sklearn.log_model(model, "random_forest")
+        
+        return model
+    except Exception as e:
+        print(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/air_quality.csv')
+        self.assertIsInstance(data, pd.DataFrame)
+        
+    def test_preprocess_data(self):
+        data = load_data('data/air_quality.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        self.assertIsInstance(X_train, np.ndarray)
+        self.assertIsInstance(y_train, np.ndarray)
+        
+    def test_train_model(self):
+        data = load_data('data/air_quality.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_train)
+        self.assertIsInstance(model, RandomForestClassifier)
+        
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+          
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          
+      - name: Train model
+        run: |
+          python pipeline.py train
+          
+      - name: Test pipeline
+        run: |
+          python test_pipeline.py
+          
+      - name: Deploy model
+        uses: actions/upload-artifact@v2
+        with:
+          name: model
+          path: model.pkl
+          
+      - name: Deploy to MLflow
+        uses: actions/mlflow@v1
+        with:
+          mlflow-tracking-uri: 'https://your-mlflow-tracking-uri.com'
+          mlflow-model-uri: 'https://your-mlflow-model-uri.com'
+```
+
+**requirements.txt**
+```python
+mlflow==1.30.1
+scikit-learn==1.0.2
+pandas==1.0.5
+numpy==1.19.5
+```
+
+Note that you need to replace `https://your-mlflow-tracking-uri.com` and `https://your-mlflow-model-uri.com` with your actual MLflow tracking and model URIs.
+
+This pipeline assumes that the `air_quality.csv` file is in the `data` directory. The pipeline loads the data, preprocesses it, trains a RandomForest classifier, and logs the model with MLflow. The test pipeline checks that the data is loaded correctly, that the data is preprocessed correctly, and that the model is trained correctly. The CI/CD pipeline trains the model, tests the pipeline, and deploys the model to MLflow.

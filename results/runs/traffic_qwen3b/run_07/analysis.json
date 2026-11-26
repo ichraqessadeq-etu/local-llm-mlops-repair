@@ -1,0 +1,52 @@
+{
+  "run": 7,
+  "cost": {
+    "prompt_tokens": 164,
+    "completion_tokens": 1464,
+    "truncated": false,
+    "seconds": 185.9
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 6
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 3,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "\ntest_pipeline.py:11: NameError\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        # Create a mock DataFrame\n        data = make_classification(n_samples=100, n_features=8, n_informative=4, n_redundant=4, random_state=42)\n>       df = pd.DataFrame(data, columns=['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month'])\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:22: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        # Create a mock DataFrame\n        data = make_classification(n_samples=100, n_features=8, n_informative=4, n_redundant=4, random_state=42)\n>       df = pd.DataFrame(data, columns=['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month'])\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:40: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\n3 failed in 7.77s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

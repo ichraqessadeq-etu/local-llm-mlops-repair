@@ -1,0 +1,201 @@
+{
+  "run": 2,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ImportError: cannot import name 'preprocess_data' from 'pipeline' (.\\pipeline.py)"
+  },
+  "repair_seconds": 1922.5,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 3
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/air_quality.csv')\n>       X_train, X_test, y_train, y_test = preprocess_data(data)\nE       TypeError: cannot unpack non-iterable NoneType object\n\ntest_pipeline.py:10: TypeError\n---------------------------- Captured stdout call -----------------------------\nError preprocessing data: \"['PT08.S1(CO)_mean' 'PT08.S2(NMHC)_mean' 'PT08.S3(NOx)_mean'\\n 'PT08.S4(NO2)_mean' 'PT08.S5(O3)_mean' 'NOx(GT)_mean' 'C6H6(GT)_mean'\\n 'T_mean' 'RH_mean' 'AH_mean'] not found in axis\"\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/air_quality.csv')\n>       X_train, X_test, y_train, y_test = preprocess_data(data)\nE       TypeError: cannot unpack non-iterable NoneType object\n\ntest_pipeline.py:15: TypeError\n---------------------------- Captured stdout call -----------------------------\nError preprocessing data: \"['PT08.S1(CO)_mean' 'PT08.S2(NMHC)_mean' 'PT08.S3(NOx)_mean'\\n 'PT08.S4(NO2)_mean' 'PT08.S5(O3)_mean' 'NOx(GT)_mean' 'C6H6(GT)_mean'\\n 'T_mean' 'RH_mean' 'AH_mean'] not found in axis\"\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - TypeError: cannot unpack non-...\nFAILED test_pipeline.py::test_train_model - TypeError: cannot unpack non-iter...\n2 failed, 1 passed in 8.46s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: cannot unpack non-iterable NoneType object"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1736,
+        "completion_tokens": 706,
+        "truncated": false,
+        "seconds": 466.1
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 3
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n>       assert X_train is not None and X_test is not None and y_train is not None and y_test is not None\nE       assert (None is not None)\n\ntest_pipeline.py:12: AssertionError\n---------------------------- Captured stdout call -----------------------------\nError preprocessing data: \"['PT08.S1(CO)_mean' 'PT08.S2(NMHC)_mean' 'PT08.S3(NOx)_mean'\\n 'PT08.S4(NO2)_mean' 'PT08.S5(O3)_mean' 'NOx(GT)_mean' 'C6H6(GT)_mean'\\n 'T_mean' 'RH_mean' 'AH_mean'] not found in axis\"\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert model is not None\nE       assert None is not None\n\ntest_pipeline.py:18: AssertionError\n---------------------------- Captured stdout call -----------------------------\nError preprocessing data: \"['PT08.S1(CO)_mean' 'PT08.S2(NMHC)_mean' 'PT08.S3(NOx)_mean'\\n 'PT08.S4(NO2)_mean' 'PT08.S5(O3)_mean' 'NOx(GT)_mean' 'C6H6(GT)_mean'\\n 'T_mean' 'RH_mean' 'AH_mean'] not found in axis\"\nError training model: This RandomForestClassifier estimator requires y to be passed, but the target y is None.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert (None is not None)\nFAILED test_pipeline.py::test_train_model - assert None is not None\n2 failed, 1 passed in 7.91s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2987,
+        "completion_tokens": 758,
+        "truncated": false,
+        "seconds": 455.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 3
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def test_preprocess_data():\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n>       assert X_train is not None and X_test is not None and y_train is not None and y_test is not None\nE       assert (None is not None)\n\ntest_pipeline.py:12: AssertionError\n---------------------------- Captured stdout call -----------------------------\nError preprocessing data: \"['PT08.S1(CO)_mean' 'PT08.S2(NMHC)_mean' 'PT08.S3(NOx)_mean'\\n 'PT08.S4(NO2)_mean' 'PT08.S5(O3)_mean' 'NOx(GT)_mean' 'C6H6(GT)_mean'\\n 'T_mean' 'RH_mean' 'AH_mean'] not found in axis\"\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert model is not None\nE       assert None is not None\n\ntest_pipeline.py:18: AssertionError\n---------------------------- Captured stdout call -----------------------------\nError preprocessing data: \"['PT08.S1(CO)_mean' 'PT08.S2(NMHC)_mean' 'PT08.S3(NOx)_mean'\\n 'PT08.S4(NO2)_mean' 'PT08.S5(O3)_mean' 'NOx(GT)_mean' 'C6H6(GT)_mean'\\n 'T_mean' 'RH_mean' 'AH_mean'] not found in axis\"\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert (None is not None)\nFAILED test_pipeline.py::test_train_model - assert None is not None\n2 failed, 1 passed in 7.29s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 4091,
+        "completion_tokens": 1146,
+        "truncated": false,
+        "seconds": 1001.4
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 3
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_llama8b_R1exec\\run_02\\round_3\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:3: in <module>\n    from pipeline import load_data, preprocess_data, train_model\nE   ImportError: cannot import name 'preprocess_data' from 'pipeline' (C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_llama8b_R1exec\\run_02\\round_3\\pipeline.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.12s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ImportError: cannot import name 'preprocess_data' from 'pipeline' (.\\pipeline.py)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

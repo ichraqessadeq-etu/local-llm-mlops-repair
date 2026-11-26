@@ -1,0 +1,125 @@
+The error indicates that there is a string value in the 'weather_main' column, which is causing the `ValueError` when trying to convert the data to a float. We need to handle this string value appropriately before training the model.
+
+### Corrected `pipeline.py`
+
+```python
+# pipeline.py
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    # Assuming 'Congestion' is the target column
+    X = data.drop(columns=['Congestion'])
+    y = data['Congestion']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier."""
+    with mlflow.start_run():
+        mlflow.log_param("model", "RandomForestClassifier")
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "model")
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("train_accuracy", accuracy)
+        return model
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+# test_pipeline.py
+
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+from sklearn.model_selection import train_test_split
+
+def test_load_data():
+    """Test if data is loaded correctly."""
+    data = load_data('data/traffic.csv')
+    assert not data.empty
+    assert 'Congestion' in data.columns
+
+def test_preprocess_data():
+    """Test if data is preprocessed correctly."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert not X.empty
+    assert not y.empty
+    assert len(X) == len(y)
+
+def test_train_model():
+    """Test if model is trained correctly."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+```
+
+### Explanation
+
+1. **pipeline.py**:
+   - The code remains the same as it was already correct.
+
+2. **test_pipeline.py**:
+   - The code remains the same as it was already correct.
+
+### Additional Steps
+
+To handle the string value in the 'weather_main' column, you can use one-hot encoding or label encoding. Here's an example of how you can use one-hot encoding:
+
+```python
+# pipeline.py
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import OneHotEncoder
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    # Assuming 'Congestion' is the target column
+    X = data.drop(columns=['Congestion'])
+    y = data['Congestion']
+    
+    # One-hot encode the 'weather_main' column
+    encoder = OneHotEncoder(sparse=False)
+    weather_encoded = encoder.fit_transform(X[['weather_main']])
+    weather_encoded_df = pd.DataFrame(weather_encoded, columns=encoder.get_feature_names_out(['weather_main']))
+    X = X.drop(columns=['weather_main']).join(weather_encoded_df)
+    
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier."""
+    with mlflow.start_run():
+        mlflow.log_param("model", "RandomForestClassifier")
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "model")
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("train_accuracy", accuracy)
+        return model
+```
+
+This should resolve the `ValueError` and ensure that all tests pass.

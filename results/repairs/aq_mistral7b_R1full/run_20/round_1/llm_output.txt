@@ -1,0 +1,58 @@
+ I apologize for the oversight in my previous response. Here are the corrected versions of `pipeline.py` and `test_pipeline.py` that should address the issues you've mentioned:
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps here
+    return data, data['Anomaly']
+
+def train_model(X_train, y_train, random_state=42):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=random_state)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "anomaly_detector")
+
+    return model
+```
+
+2. test_pipeline.py:
+
+```python
+import unittest
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/air_quality.csv')
+
+    def test_load_data(self):
+        self.assertIsInstance(self.data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        X, y = preprocess_data(self.data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        X, y = preprocess_data(self.data)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        model = train_model(X_train, y_train)
+        # Add assertions to check model performance here
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+In the corrected `pipeline.py`, I've added the necessary imports for `numpy` and modified the `train_model` function to accept a `random_state` parameter to address the reproducibility violation. In `test_pipeline.py`, I've added a `setUp` method to load the data once before each test, and I've moved the imports to the top of the file. This should ensure that all necessary modules are imported before they are used in the tests.

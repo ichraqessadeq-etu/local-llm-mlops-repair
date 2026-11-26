@@ -1,0 +1,54 @@
+ It appears that the issue is caused by the usage of the `track` function from `mlflow` which is not available in the version of MLflow you are using (1.30.1). Instead, you can use the `mlflow.log_param` function to log parameters. Here's the corrected `pipeline.py` and `test_pipeline.py` files:
+
+```python
+# pipeline.py
+import mlflow
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    data.dropna(inplace=True)
+    X = data.drop('Class', axis=1)
+    y = data['Class']
+    return (X, y)
+
+def train_model(X_train, y_train):
+    model = RandomForestClassifier(random_state=42)
+    model.fit(X_train, y_train)
+    mlflow.log_params({'feature_importances': model.feature_importances_})
+    mlflow.sklearn.log_model(model, 'model')
+```
+
+```python
+# test_pipeline.py
+import pandas as pd
+from sklearn.model_selection import train_test_split
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data("data/fraud.csv")
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        data = load_data("data/fraud.csv")
+        X, y = preprocess_data(data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        data = load_data("data/fraud.csv")
+        X, y = preprocess_data(data)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+        train_model(X_train, y_train)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+Now, the tests should pass without any errors.

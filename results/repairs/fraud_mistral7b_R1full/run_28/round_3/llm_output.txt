@@ -1,0 +1,68 @@
+ I apologize for the oversight. Here are the corrected versions of the files:
+
+1. pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Perform necessary preprocessing like filling missing values, encoding categorical variables, etc.
+    # For simplicity, I'll assume there are no missing values and no need for encoding
+    return data[['Time', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20', 'V21', 'V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28', 'Amount']], data['Class']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random-forest")
+```
+
+2. test_pipeline.py
+
+```python
+from pipeline import load_data, preprocess_data, train_model
+import pytest
+import pandas as pd
+import numpy as np
+
+def test_load_data():
+    data = load_data("data/fraud.csv")
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    data = load_data("data/fraud.csv")
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+
+def test_train_model():
+    data = load_data("data/fraud.csv")
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+    train_model(X_train, y_train)
+    predictions = train_model.get_predictions(X_test)
+    assert_array_equal(y_test, predictions)
+```
+
+In the corrected pipeline.py, I added the `load_data` function definition. In test_pipeline.py, I imported pandas and numpy for using pandas.DataFrame and numpy.testing.assert_array_equal() to test the model's predictions against the actual values.
+
+```python
+from numpy.testing import assert_array_equal
+
+def test_train_model():
+    data = load_data("data/fraud.csv")
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+    train_model(X_train, y_train)
+    predictions = train_model.get_predictions(X_test)
+    assert_array_equal(y_test, predictions)
+```
+
+This test checks that the model's predictions match the actual values for the test set.

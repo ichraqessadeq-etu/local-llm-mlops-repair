@@ -1,0 +1,133 @@
+Here are the requested files:
+
+**pipeline.py**
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import StandardScaler
+import mlflow
+import mlflow.sklearn
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+def load_data(file_path):
+    """Load data from CSV file"""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        logging.error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    """Preprocess data by encoding categorical features and scaling numerical features"""
+    try:
+        # One-hot encode categorical features
+        data = pd.get_dummies(data, columns=['weather_main', 'IsHoliday', 'DayOfWeek', 'Month'])
+        
+        # Scale numerical features
+        scaler = StandardScaler()
+        data[['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'Hour']] = scaler.fit_transform(data[['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'Hour']])
+        
+        # Split data into features (X) and target (y)
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+        
+        return X, y
+    except Exception as e:
+        logging.error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier model"""
+    try:
+        # Train model
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        
+        # Log model to MLflow
+        mlflow.sklearn.log_model(model, "random_forest")
+        
+        return model
+    except Exception as e:
+        logging.error(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/traffic.csv')
+        self.assertIsInstance(data, pd.DataFrame)
+        
+    def test_preprocess_data(self):
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+        
+    def test_train_model(self):
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        model = train_model(X, y)
+        self.assertIsInstance(model, RandomForestClassifier)
+        
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**.github/workflows/cicd.yml**
+```yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+          
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          
+      - name: Train model
+        run: |
+          python pipeline.py --file data/traffic.csv --output model.pkl
+          
+      - name: Test pipeline
+        run: |
+          pytest test_pipeline.py
+          
+      - name: Deploy model
+        uses: actions/upload-artifact@v2
+        with:
+          name: model.pkl
+          path: model.pkl
+```
+
+**requirements.txt**
+```bash
+mlflow==1.30.1
+scikit-learn==1.0.2
+pandas==1.3.5
+numpy==1.21.2
+```
+
+Note that you'll need to replace `data/traffic.csv` with the actual path to your data file. Also, this pipeline assumes that the `Congestion` column is the target variable, and that the features are the other columns in the dataset. You may need to adjust the pipeline to match your specific dataset.

@@ -1,0 +1,145 @@
+Sure, here's a production-ready CI/CD pipeline for a RandomForest congestion detector. The pipeline includes a Python module `pipeline.py` with functions for loading and preprocessing data, training the model, and a pytest file `test_pipeline.py` for testing. Additionally, a GitHub Actions YAML file is provided to automate the pipeline.
+
+### 1. `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from mlflow import log_param, log_metric, log_model
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        raise Exception(f"Error loading data: {e}")
+
+def preprocess_data(data):
+    """Preprocess data for model training."""
+    try:
+        # Select features and target
+        X = data[Features]
+        y = data['Congestion']
+        
+        # Split data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        return X_train, X_test, y_train, y_test
+    except Exception as e:
+        raise Exception(f"Error preprocessing data: {e}")
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model."""
+    try:
+        # Initialize and train the model
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        
+        # Log model parameters and metrics
+        log_param("n_estimators", 100)
+        y_pred = model.predict(X_train)
+        log_metric("accuracy", accuracy_score(y_train, y_pred))
+        
+        # Log the model
+        log_model(model, "random_forest_model")
+        
+        return model
+    except Exception as e:
+        raise Exception(f"Error training model: {e}")
+
+# Example usage
+if __name__ == "__main__":
+    data = load_data("data/traffic.csv")
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+```
+
+### 2. `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test data loading function."""
+    data = load_data("data/traffic.csv")
+    assert isinstance(data, pd.DataFrame)
+    assert not data.empty
+
+def test_preprocess_data():
+    """Test data preprocessing function."""
+    data = load_data("data/traffic.csv")
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    assert isinstance(X_train, pd.DataFrame)
+    assert isinstance(X_test, pd.DataFrame)
+    assert isinstance(y_train, pd.Series)
+    assert isinstance(y_test, pd.Series)
+    assert not X_train.empty
+    assert not X_test.empty
+    assert not y_train.empty
+    assert not y_test.empty
+
+def test_train_model():
+    """Test model training function."""
+    data = load_data("data/traffic.csv")
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+    assert model.n_estimators == 100
+```
+
+### 3. GitHub Actions YAML (`github/workflows/ci_cd.yml`)
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas scikit-learn mlflow pytest
+
+    - name: Run tests
+      run: pytest test_pipeline.py
+
+    - name: Train model and log to MLflow
+      run: |
+        python pipeline.py
+```
+
+### Explanation:
+
+1. **`pipeline.py`**:
+   - `load_data`: Loads the data from a CSV file.
+   - `preprocess_data`: Preprocesses the data by selecting features and target, and splitting it into training and testing sets.
+   - `train_model`: Trains a RandomForest model and logs the model parameters and metrics using MLflow.
+
+2. **`test_pipeline.py`**:
+   - Contains unit tests for data loading, preprocessing, and model training.
+
+3. **GitHub Actions YAML**:
+   - Defines a workflow that runs on push or pull request to the `main` branch.
+   - Checks out the code, sets up Python 3.8, installs dependencies, runs tests, and trains the model using MLflow.
+
+This setup ensures that your model is trained and tested automatically, and the model is logged to MLflow for version control and monitoring.

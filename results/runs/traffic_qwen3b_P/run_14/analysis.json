@@ -1,0 +1,40 @@
+{
+  "run": 14,
+  "cost": {
+    "prompt_tokens": 220,
+    "completion_tokens": 1500,
+    "truncated": true,
+    "seconds": 213.3
+  },
+  "extraction": {
+    "n_blocks": 1,
+    "python_parse": [
+      "OK"
+    ],
+    "yaml_parses": null
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": null
+  },
+  "strength": {
+    "tests": 0,
+    "asserts": 0
+  },
+  "pytest": {
+    "all_pass": false,
+    "failure_hint": "blocks_not_extracted"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "blocks_not_extracted"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

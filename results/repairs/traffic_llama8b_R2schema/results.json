@@ -1,0 +1,2829 @@
+{
+  "meta": {
+    "utc": "2026-11-24T20:09:45.155907+00:00",
+    "strategy": "R2schema",
+    "backend": "none",
+    "repair_model": "none",
+    "generation_model": "llama3.1:8b",
+    "src": "C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\runs\\traffic_llama8b",
+    "max_rounds": 5,
+    "temperature": 0.3,
+    "max_tokens": 1500,
+    "tail_lines": 40,
+    "script_sha256": "34ec48f147063e2c58d905c719936232481bbe831a9d42bcb4278240f7771446",
+    "m2_sha256": "ceb5a1c16afff4a83321f817eea84c9b7c325a65a55f4cdc856a227b2179cb50",
+    "data_sha256": "d103536ecf9a56daf03252d1bca19d269f6ba11738177885fa586932c1898299",
+    "generator_python": "3.13.0",
+    "resumed": true,
+    "schema": {
+      "columns": [
+        "temp",
+        "rain_1h",
+        "snow_1h",
+        "clouds_all",
+        "weather_main",
+        "IsHoliday",
+        "Hour",
+        "DayOfWeek",
+        "Month",
+        "Congestion"
+      ],
+      "categories": {
+        "weather_main": [
+          "Clear",
+          "Clouds",
+          "Drizzle",
+          "Fog",
+          "Haze",
+          "Mist",
+          "Rain",
+          "Smoke",
+          "Snow",
+          "Squall",
+          "Thunderstorm"
+        ]
+      }
+    },
+    "schema_script": "c1b6f74e7c580721c7f774086cc2d29c653ab1d25062dbfa09fba4364cb453d8"
+  },
+  "summary": {
+    "n": 30,
+    "pass_round0": 14,
+    "failing_round0": 16,
+    "repaired": 11,
+    "repaired_by_round": {
+      "1": 10,
+      "2": 1,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    },
+    "repaired_weakened": 0,
+    "pass_final": 25,
+    "functional_ok_final": 23,
+    "rvh_round0": 1,
+    "rvh_final": 0,
+    "repair_seconds_total": 0.0
+  },
+  "runs": [
+    {
+      "run": 1,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8287,
+        "f1": 0.7633,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        is_float = X.dtype.kind in \"fc\"\n        if is_float and (np.isfinite(_safe_accumulator_op(np.sum, X))):\n            pass\n        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float32').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: Input contains NaN, infinity or a value too large for dtype('float32').\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\n1 failed, 2 passed in 9.78s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 25.94s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8287,
+            "f1": 0.7633,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8006,
+        "f1": 0.711,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:17: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 10.13s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8006,
+            "f1": 0.711,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 26.06s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8006,
+            "f1": 0.711,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.4843,
+        "f1": 0.4669,
+        "n_test": 8113
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_llama8b_R2schema\\run_03\\round_0\\pipeline.py:20: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 2 warnings in 25.83s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.4843,
+            "f1": 0.4669,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 4,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8285,
+        "f1": 0.7402,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    \n        >>> non_monotonic_index = pd.Index(list('abcb'))\n        >>> non_monotonic_index.get_loc('b')\n        array([False,  True, False,  True])\n        \"\"\"\n        if method is None:\n            if tolerance is not None:\n                raise ValueError(\n                    \"tolerance argument only valid if using pad, \"\n                    \"backfill or nearest lookups\"\n                )\n            casted_key = self._maybe_cast_indexer(key)\n            try:\n                return self._engine.get_loc(casted_key)\n            except KeyError as err:\n>               raise KeyError(key) from err\nE               KeyError: 'Holiday'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\indexes\\base.py:3363: KeyError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:36 Error preprocessing data: 'Holiday'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - KeyError: 'Holiday'\nFAILED test_pipeline.py::test_train_model - KeyError: 'Holiday'\n2 failed, 1 passed in 10.52s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "KeyError: 'Holiday'"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipe: column 'Holiday' -> 'IsHoliday' (schema)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 16.65s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8285,
+            "f1": 0.7402,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 5,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8287,
+        "f1": 0.7633,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        is_float = X.dtype.kind in \"fc\"\n        if is_float and (np.isfinite(_safe_accumulator_op(np.sum, X))):\n            pass\n        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float32').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: Input contains NaN, infinity or a value too large for dtype('float32').\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\n1 failed, 2 passed in 10.48s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 27.35s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8287,
+            "f1": 0.7633,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 6,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8182,
+        "f1": 0.7609,
+        "n_test": 8113
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_llama8b_R2schema\\run_06\\round_0\\pipeline.py:20: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 2 warnings in 29.91s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8182,
+            "f1": 0.7609,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 7,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8282,
+        "f1": 0.7617,
+        "n_test": 8113
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 26.82s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8282,
+            "f1": 0.7617,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 8,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Morning'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =            temp   rain_1h   snow_1h  ...       Hour  DayOfWeek  Month\n0      0.526580 -0.099196 -0.020671  ...  Aftern...Night          6      8\n40563  0.056092 -0.099196 -0.020671  ...      Night          6      8\n\n[40564 rows x 9 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Afternoon'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: could not convert string to float: 'Afternoon'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: could not convert str...\n1 failed, 2 passed in 10.25s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Morning'"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =            temp   rain_1h   snow_1h  ...       Hour  DayOfWeek  Month\n0      0.526580 -0.099196 -0.020671  ...  Aftern...Night          6      8\n40563  0.056092 -0.099196 -0.020671  ...      Night          6      8\n\n[40564 rows x 9 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Afternoon'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: could not convert string to float: 'Afternoon'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: could not convert str...\n1 failed, 2 passed in 10.30s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Morning'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =            temp   rain_1h   snow_1h  ...       Hour  DayOfWeek  Month\n0      0.526580 -0.099196 -0.020671  ...  Aftern...Night          6      8\n40563  0.056092 -0.099196 -0.020671  ...      Night          6      8\n\n[40564 rows x 9 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Afternoon'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: could not convert string to float: 'Afternoon'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: could not convert str...\n1 failed, 2 passed in 10.30s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Morning'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 9,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'log_error'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "            data.fillna(data.mean(), inplace=True)\n    \n            # Scale features\n            scaler = StandardScaler()\n            X = scaler.fit_transform(data.drop('Congestion', axis=1))\n    \n            # Split data into features (X) and target (y)\n            y = data['Congestion']\n            return X, y\n        except Exception as e:\n>           mlflow.log_error(f\"Error preprocessing data: {str(e)}\")\nE           AttributeError: module 'mlflow' has no attribute 'log_error'\n\npipeline.py:29: AttributeError\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_llama8b_R2schema\\run_09\\round_0\\pipeline.py:19: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AttributeError: module 'mlflo...\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n2 failed, 1 passed, 2 warnings in 11.24s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_error'"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "            data.fillna(data.mean(), inplace=True)\n    \n            # Scale features\n            scaler = StandardScaler()\n            X = scaler.fit_transform(data.drop('Congestion', axis=1))\n    \n            # Split data into features (X) and target (y)\n            y = data['Congestion']\n            return X, y\n        except Exception as e:\n>           mlflow.log_error(f\"Error preprocessing data: {str(e)}\")\nE           AttributeError: module 'mlflow' has no attribute 'log_error'\n\npipeline.py:29: AttributeError\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_llama8b_R2schema\\run_09\\round_1\\pipeline.py:19: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AttributeError: module 'mlflo...\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n2 failed, 1 passed, 2 warnings in 7.16s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_error'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "            data.fillna(data.mean(), inplace=True)\n    \n            # Scale features\n            scaler = StandardScaler()\n            X = scaler.fit_transform(data.drop('Congestion', axis=1))\n    \n            # Split data into features (X) and target (y)\n            y = data['Congestion']\n            return X, y\n        except Exception as e:\n>           mlflow.log_error(f\"Error preprocessing data: {str(e)}\")\nE           AttributeError: module 'mlflow' has no attribute 'log_error'\n\npipeline.py:29: AttributeError\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_llama8b_R2schema\\run_09\\round_1\\pipeline.py:19: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AttributeError: module 'mlflo...\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n2 failed, 1 passed, 2 warnings in 7.16s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_error'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 10,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": "assertion",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.815,
+        "f1": 0.7278,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    \n        >>> non_monotonic_index = pd.Index(list('abcb'))\n        >>> non_monotonic_index.get_loc('b')\n        array([False,  True, False,  True])\n        \"\"\"\n        if method is None:\n            if tolerance is not None:\n                raise ValueError(\n                    \"tolerance argument only valid if using pad, \"\n                    \"backfill or nearest lookups\"\n                )\n            casted_key = self._maybe_cast_indexer(key)\n            try:\n                return self._engine.get_loc(casted_key)\n            except KeyError as err:\n>               raise KeyError(key) from err\nE               KeyError: 'Holiday'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\indexes\\base.py:3363: KeyError\n---------------------------- Captured stdout call -----------------------------\nError preprocessing data: 'Holiday'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - KeyError: 'Holiday'\nFAILED test_pipeline.py::test_train_model - KeyError: 'Holiday'\n2 failed, 1 passed in 11.63s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "KeyError: 'Holiday'"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier",
+            "pipe: column 'Holiday' -> 'IsHoliday' (schema)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 10  # 10 features after one-hot encoding\nE       assert 14 == 10\n\ntest_pipeline.py:12: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 14 == 10\n1 failed, 2 passed in 27.32s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.815,
+            "f1": 0.7278,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 10  # 10 features after one-hot encoding\nE       assert 14 == 10\n\ntest_pipeline.py:12: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 14 == 10\n1 failed, 2 passed in 27.32s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.815,
+            "f1": 0.7278,
+            "n_test": 8113
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 11,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8285,
+        "f1": 0.7402,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:17: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 10.13s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8285,
+            "f1": 0.7402,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 26.05s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8285,
+            "f1": 0.7402,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 12,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.815,
+        "f1": 0.7278,
+        "n_test": 8113
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_llama8b_R2schema\\run_12\\round_0\\pipeline.py:20: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 2 warnings in 27.90s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.815,
+            "f1": 0.7278,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 13,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 2,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8287,
+        "f1": 0.7633,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:17: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 10.04s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        is_float = X.dtype.kind in \"fc\"\n        if is_float and (np.isfinite(_safe_accumulator_op(np.sum, X))):\n            pass\n        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float32').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: Input contains NaN, infinity or a value too large for dtype('float32').\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\n1 failed, 2 passed in 10.61s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 25.69s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8287,
+            "f1": 0.7633,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 14,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: Classification metrics can't handle a mix of binary and continuous targets"
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_llama8b_R2schema\\run_14\\round_0\\pipeline.py:20: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 2 warnings in 43.52s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: Classification metrics can't handle a mix of binary and continuous targets"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 15,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8282,
+        "f1": 0.7617,
+        "n_test": 8113
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 27.59s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8282,
+            "f1": 0.7617,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 16,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8006,
+        "f1": 0.711,
+        "n_test": 8113
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 28.21s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8006,
+            "f1": 0.711,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 17,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8006,
+        "f1": 0.711,
+        "n_test": 8113
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 27.85s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8006,
+            "f1": 0.711,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 18,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_llama8b_R2schema\\run_18\\round_0\\pipeline.py:20: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\extmath.py:985: RuntimeWarning: invalid value encountered in true_divide\n    updated_mean = (last_sum + new_sum) / updated_sample_count\n\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\extmath.py:990: RuntimeWarning: invalid value encountered in true_divide\n    T = new_sum / new_sample_count\n\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\extmath.py:1020: RuntimeWarning: invalid value encountered in true_divide\n    new_unnormalized_variance -= correction ** 2 / new_sample_count\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\n1 failed, 2 passed, 8 warnings in 10.57s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "E               ValueError: Input contains NaN, infinity or a value too large for dtype('float32').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: Input contains NaN, infinity or a value too large for dtype('float32').\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\extmath.py:985: RuntimeWarning: invalid value encountered in true_divide\n    updated_mean = (last_sum + new_sum) / updated_sample_count\n\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\extmath.py:990: RuntimeWarning: invalid value encountered in true_divide\n    T = new_sum / new_sample_count\n\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\extmath.py:1020: RuntimeWarning: invalid value encountered in true_divide\n    new_unnormalized_variance -= correction ** 2 / new_sample_count\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\n1 failed, 2 passed, 6 warnings in 11.40s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "E               ValueError: Input contains NaN, infinity or a value too large for dtype('float32').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: Input contains NaN, infinity or a value too large for dtype('float32').\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\extmath.py:985: RuntimeWarning: invalid value encountered in true_divide\n    updated_mean = (last_sum + new_sum) / updated_sample_count\n\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\extmath.py:990: RuntimeWarning: invalid value encountered in true_divide\n    T = new_sum / new_sample_count\n\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\extmath.py:1020: RuntimeWarning: invalid value encountered in true_divide\n    new_unnormalized_variance -= correction ** 2 / new_sample_count\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\n1 failed, 2 passed, 6 warnings in 11.40s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 19,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.4843,
+        "f1": 0.4669,
+        "n_test": 8113
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_llama8b_R2schema\\run_19\\round_0\\pipeline.py:19: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 2 warnings in 27.92s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.4843,
+            "f1": 0.4669,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 20,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.4843,
+        "f1": 0.4669,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:18: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n1 failed, 2 passed in 27.98s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.4843,
+            "f1": 0.4669,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 26.83s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.4843,
+            "f1": 0.4669,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 21,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 3
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 21.99s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 22,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8287,
+        "f1": 0.7633,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float32').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: Input contains NaN, infinity or a value too large for dtype('float32').\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_llama8b_R2schema\\run_22\\round_0\\pipeline.py:20: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\n1 failed, 2 passed, 2 warnings in 14.91s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 26.98s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8287,
+            "f1": 0.7633,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 23,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8294,
+        "f1": 0.7634,
+        "n_test": 8113
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 37.79s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8294,
+            "f1": 0.7634,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 24,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8006,
+        "f1": 0.711,
+        "n_test": 8113
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 27.59s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8006,
+            "f1": 0.711,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 25,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 45
+                },
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 44
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "y_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest model\"\"\"\n        try:\n>           mlflow.sklearn.log_params(RandomForestClassifier(n_estimators=100))\nE           AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'\n\npipeline.py:44: AttributeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:50 Error training model: module 'mlflow.sklearn' has no attribute 'log_params'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow.sk...\n1 failed, 2 passed in 9.70s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "y_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest model\"\"\"\n        try:\n>           mlflow.sklearn.log_params(RandomForestClassifier(n_estimators=100, random_state=42))\nE           AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'\n\npipeline.py:37: AttributeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:43 Error training model: module 'mlflow.sklearn' has no attribute 'log_params'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow.sk...\n1 failed, 2 passed in 9.99s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "y_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest model\"\"\"\n        try:\n>           mlflow.sklearn.log_params(RandomForestClassifier(n_estimators=100, random_state=42))\nE           AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'\n\npipeline.py:37: AttributeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:43 Error training model: module 'mlflow.sklearn' has no attribute 'log_params'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow.sk...\n1 failed, 2 passed in 9.99s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 26,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8294,
+        "f1": 0.7634,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "self =          temp  rain_1h  snow_1h  clouds_all  ... IsHoliday  Hour  DayOfWeek  Month\n0      288.28      0.0      0.0    ...  6      9\n40563  282.12      0.0      0.0          90  ...         0    23          6      9\n\n[40564 rows x 9 columns]\ndtype = dtype('float64')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n---------------------------- Captured stdout call -----------------------------\nError preprocessing data: could not convert string to float: 'Clouds'\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_llama8b_R2schema\\run_26\\round_0\\pipeline.py:20: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - ValueError: could not convert...\nFAILED test_pipeline.py::test_train_model - ValueError: could not convert str...\n2 failed, 1 passed, 2 warnings in 10.80s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 26.10s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8294,
+            "f1": 0.7634,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 27,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8294,
+        "f1": 0.7634,
+        "n_test": 8113
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 25.61s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8294,
+            "f1": 0.7634,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 28,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8287,
+        "f1": 0.7633,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        is_float = X.dtype.kind in \"fc\"\n        if is_float and (np.isfinite(_safe_accumulator_op(np.sum, X))):\n            pass\n        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float32').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: Input contains NaN, infinity or a value too large for dtype('float32').\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\n1 failed, 2 passed in 9.67s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 26.79s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8287,
+            "f1": 0.7633,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 29,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.8282,
+        "f1": 0.7617,
+        "n_test": 8113
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 21.44s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.8282,
+            "f1": 0.7617,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 30,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    reset=first_call,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:566: in _validate_data\n    X = check_array(X, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =          temp  rain_1h  snow_1h  clouds_all  ... IsHoliday  Hour  DayOfWeek  Month\n0      288.28      0.0      0.0    ...  6      9\n40563  282.12      0.0      0.0          90  ...         0    23          6      9\n\n[40564 rows x 9 columns]\ndtype = dtype('float64')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:27 Error preprocessing data: could not convert string to float: 'Clouds'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - ValueError: could not convert...\nFAILED test_pipeline.py::test_train_model - ValueError: could not convert str...\n2 failed, 1 passed in 11.40s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 26.05s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    }
+  ]
+}

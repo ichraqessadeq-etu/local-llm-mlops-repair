@@ -1,0 +1,57 @@
+ Apologies for the oversight. Here are the corrected versions of the files:
+
+1. **pipeline.py**
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps like filling missing values, encoding categorical variables, etc.
+    # For simplicity, I'm assuming that the data is already preprocessed
+    return data['Features'], data['Congestion']
+
+def train_model(X_train, y_train, random_state=42):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=random_state)
+        model.fit(X_train, y_train)
+        mlflow.log_artifact(model, "models")
+        mlflow.log_metric("train_loss", model.fit_params['loss'])
+
+    return model
+```
+
+2. **test_pipeline.py**
+
+```python
+import unittest
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/traffic.csv')
+
+    def test_load_data(self):
+        self.assertIsInstance(self.data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        X, y = preprocess_data(self.data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        X_train, y_train = preprocess_data(self.data)
+        model = train_model(X_train, y_train)
+        # Add more assertions to test the model's performance if needed
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+In the corrected `pipeline.py`, I added the `numpy` import and the `random_state` argument to the `train_model` function. This should resolve the NameError and reproducibility violation issues. The `test_pipeline.py` file now includes a `setUp` method to preload the data and separate test functions for `load_data`, `preprocess_data`, and `train_model`.

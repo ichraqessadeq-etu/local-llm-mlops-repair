@@ -1,0 +1,54 @@
+{
+  "run": 11,
+  "cost": {
+    "prompt_tokens": 164,
+    "completion_tokens": 1500,
+    "truncated": true,
+    "seconds": 192.2
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 5,
+    "asserts": 6
+  },
+  "pytest": {
+    "passed": 1,
+    "failed": 4,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        \"\"\"Test evaluating the model.\"\"\"\n>       data = pd.DataFrame({\n            'temp': [20, 22, 21],\n            'rain_1h': [0.5, 0.3, 0.2],\n            'snow_1h': [0, 0.1, 0],\n            'clouds_all': [50, 60, 70],\n            'weather_main': ['Clouds', 'Rain', 'Snow'],\n            'IsHoliday': [False, True, False],\n            'Hour': [10, 14, 18],\n            'DayOfWeek': ['Monday', 'Wednesday', 'Friday'],\n            'Month': [1, 4, 7],\n            'Congestion': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:49: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not de...\n4 failed, 1 passed in 10.03s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": true,
+    "auprc": 0.828,
+    "f1": 0.7614,
+    "n_test": 8113
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

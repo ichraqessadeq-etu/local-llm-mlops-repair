@@ -1,0 +1,72 @@
+ Here's a simplified version of the requested components. Please note that this is a basic example and may need to be adjusted to fit your specific project requirements.
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, track, pyfunc, save_model, load_model
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps such as filling missing values, encoding categorical variables, etc.
+    # For simplicity, I'm assuming there are no missing values and no categorical variables.
+    return data[['Time', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20', 'V21', 'V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28', 'Amount']], data['Class']
+
+def train_model(X_train, y_train):
+    model = RandomForestClassifier()
+    model.fit(X_train, y_train)
+    track(f"Model Training Time", -tracking_artifact=True)
+    mlflow.sklearn.log_model(model, "model")
+    return model
+```
+
+2. test_pipeline.py:
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/fraud.csv')
+        self.X, self.y = preprocess_data(self.data)
+
+    def test_train_model(self):
+        X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=0.3, random_state=42)
+        model = train_model(X_train, y_train)
+        # Add your assertions here to test the trained model
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+3. GitHub Actions YAML:
+
+```yaml
+name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          pip install mlflow scikit-learn pytest
+      - name: Test and Train
+        run: |
+          pytest test_pipeline.py
+          mlflow run --python pipeline.py --run-name my_run --track-runs
+```
+
+This example uses GitHub Actions to trigger the pipeline on every push or pull request. The pipeline checks out the code, sets up Python 3.7, installs the required dependencies, runs the tests, and trains the model using MLflow.

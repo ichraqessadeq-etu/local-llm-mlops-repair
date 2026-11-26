@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+            return model
+        except Exception as e:
+>           raise Exception(f"An error occurred while training the model: {e}")
+E           Exception: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]
+
+pipeline.py:34: Exception
+
+During handling of the above exception, another exception occurred:
+
+    def test_run_pipeline():
+        """Test the run_pipeline function."""
+        try:
+            run_pipeline("data/fraud.csv")
+        except Exception as e:
+>           pytest.fail(f"Pipeline failed: {e}")
+E           Failed: Pipeline failed: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]
+
+test_pipeline.py:39: Failed
+---------------------------- Captured stdout call -----------------------------
+Pipeline failed: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_train_model - Exception: An error occurred whil...
+FAILED test_pipeline.py::test_evaluate_model - Exception: An error occurred w...
+FAILED test_pipeline.py::test_run_pipeline - Failed: Pipeline failed: An erro...
+3 failed, 2 passed in 4.22s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

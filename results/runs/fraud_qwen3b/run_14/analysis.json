@@ -1,0 +1,54 @@
+{
+  "run": 14,
+  "cost": {
+    "prompt_tokens": 261,
+    "completion_tokens": 1073,
+    "truncated": false,
+    "seconds": 108.6
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 4,
+    "asserts": 5
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 4,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "model = RandomForestClassifier(random_state=42)\nX_test =           Time        V1        V2  ...       V27       V28  Amount\n9254  143198.0  1.854462  0.500623  ... -0.102140 ....047079 -0.011536   59.75\n7270   75499.0 -0.572851  1.151788  ...  0.032408  0.034631    0.76\n\n[8000 rows x 30 columns]\n\n    def predict(model, X_test):\n        \"\"\"Predict using the trained model.\"\"\"\n        try:\n            y_pred = model.predict(X_test)\n            accuracy = accuracy_score(y_test, y_pred)\n            mlflow.log_metric(\"accuracy\", accuracy)\n            return y_pred\n        except Exception as e:\n>           mlflow.log_exception(e)\nE           AttributeError: module 'mlflow' has no attribute 'log_exception'\n\npipeline.py:57: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_predict - AttributeError: module 'mlflow' has n...\n4 failed in 17.84s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": true,
+    "auprc": 0.8979,
+    "f1": 0.9041,
+    "n_test": 1600
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

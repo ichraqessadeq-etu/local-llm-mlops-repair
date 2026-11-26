@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+            A set of labels (any orderable and hashable object) for each
+            sample. If the `classes` parameter is set, `y` will not be
+            iterated.
+    
+        class_mapping : Mapping
+            Maps from label to column index in label indicator matrix.
+    
+        Returns
+        -------
+        y_indicator : sparse matrix of shape (n_samples, n_classes)
+            Label indicator matrix. Will be of CSR format.
+        """
+        indices = array.array("i")
+        indptr = array.array("i", [0])
+        unknown = set()
+        for labels in y:
+            index = set()
+>           for label in labels:
+E           TypeError: 'int' object is not iterable
+
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\sklearn\preprocessing\_label.py:867: TypeError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_preprocess_data - TypeError: 'int' object is no...
+FAILED test_pipeline.py::test_train_model - TypeError: 'int' object is not it...
+2 failed, 1 passed in 4.81s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

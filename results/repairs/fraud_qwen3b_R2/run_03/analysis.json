@@ -1,0 +1,101 @@
+{
+  "run": 3,
+  "pass_round0": false,
+  "pass_final": true,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": null,
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            model = train_model(X_train, y_train)\n>           assert isinstance(model, RandomForestClassifier)\nE           NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:31: NameError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        try:\n            data = load_data('data/fraud.csv')\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            model = train_model(X_train, y_train)\n            assert isinstance(model, RandomForestClassifier)\n        except Exception as e:\n>           pytest.fail(f\"Test failed: {e}\")\nE           Failed: Test failed: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:33: Failed\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: Test failed: name 'pd' is n...\nFAILED test_pipeline.py::test_preprocess_data - Failed: Test failed: name 'pd...\nFAILED test_pipeline.py::test_train_model - Failed: Test failed: name 'Random...\n3 failed, 1 passed in 12.30s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 4,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "....                                                                     [100%]\n4 passed in 12.26s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

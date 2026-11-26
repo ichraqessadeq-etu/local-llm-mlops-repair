@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+        data = load_data('data/air_quality.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+>       assert X_train is not None and X_test is not None and y_train is not None and y_test is not None
+E       assert (None is not None)
+
+test_pipeline.py:12: AssertionError
+---------------------------- Captured stdout call -----------------------------
+Error preprocessing data: "['Hour' 'DayOfWeek' 'Month'] not found in axis"
+______________________________ test_train_model _______________________________
+
+    def test_train_model():
+        data = load_data('data/air_quality.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_train)
+>       assert model is not None
+E       assert None is not None
+
+test_pipeline.py:18: AssertionError
+---------------------------- Captured stdout call -----------------------------
+Error preprocessing data: "['Hour' 'DayOfWeek' 'Month'] not found in axis"
+Error training model: This RandomForestClassifier estimator requires y to be passed, but the target y is None.
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_preprocess_data - assert (None is not None)
+FAILED test_pipeline.py::test_train_model - assert None is not None
+2 failed, 1 passed in 3.44s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

@@ -1,0 +1,87 @@
+ I'm an AI model and can't directly execute or manage files, but I can certainly help you design the structure and code for your CI/CD pipeline. Here's a simplified version of what you're asking for.
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps here
+    return data, data['Congestion']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "congestion_detector")
+
+    return model
+```
+
+2. test_pipeline.py:
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        # Add your test for load_data here
+        pass
+
+    def test_preprocess_data(self):
+        # Add your test for preprocess_data here
+        pass
+
+    def test_train_model(self):
+        # Add your test for train_model here
+        pass
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+3. GitHub Actions YAML:
+
+```yaml
+name: CI/CD for Traffic Congestion Detector
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install pandas mlflow sklearn
+
+    - name: Test
+      run: pytest test_pipeline.py
+
+    - name: Train and log model
+      run: python pipeline.py data/traffic.csv
+
+    - name: Deploy
+      uses: mlflow/mlflow-action@v2
+      with:
+        track: dev
+        artifact: congestion_detector
+```
+
+This pipeline loads data, preprocesses it, trains a RandomForest model, logs the model using MLflow, and runs tests using pytest. The GitHub Actions workflow is set up to run on every push and pull request. The model is tracked in the 'dev' track in MLflow. The artifact 'congestion_detector' contains the trained model.

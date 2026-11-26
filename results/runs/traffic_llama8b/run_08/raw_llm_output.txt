@@ -1,0 +1,127 @@
+Here is the code for the CI/CD pipeline:
+
+**pipeline.py**
+```python
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    try:
+        # Convert categorical variables to numerical
+        data['weather_main'] = data['weather_main'].map({'Clear': 0, 'Clouds': 1, 'Rain': 2, 'Snow': 3})
+        data['Hour'] = pd.cut(data['Hour'], bins=[0, 6, 12, 18, 24], labels=['Morning', 'Afternoon', 'Evening', 'Night'])
+        data['DayOfWeek'] = pd.Categorical(data['DayOfWeek']).codes
+        data['Month'] = pd.Categorical(data['Month']).codes
+
+        # Scale numerical features
+        scaler = StandardScaler()
+        data[['temp', 'rain_1h', 'snow_1h', 'clouds_all']] = scaler.fit_transform(data[['temp', 'rain_1h', 'snow_1h', 'clouds_all']])
+
+        # Split data into features (X) and target (y)
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+
+        return X, y
+    except Exception as e:
+        print(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        # Train a RandomForest model
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+
+        # Log the model with MLflow
+        mlflow.sklearn.log_model(model, "random_forest_model")
+
+        return model
+    except Exception as e:
+        print(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/traffic.csv')
+    assert data is not None
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert X is not None
+    assert y is not None
+
+def test_train_model():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert model is not None
+```
+
+**.github/workflows/ci_cd.yml**
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Train model
+        run: |
+          python pipeline.py train
+
+      - name: Test model
+        run: |
+          pytest test_pipeline.py
+
+      - name: Deploy model
+        run: |
+          mlflow models serve -m random_forest_model
+```
+
+**requirements.txt**
+```bash
+pandas
+numpy
+scikit-learn
+mlflow
+```
+
+This pipeline assumes that you have a `requirements.txt` file in the root of your repository with the required dependencies. The pipeline consists of four steps:
+
+1. **Checkout code**: The pipeline checks out the code from the repository.
+2. **Install dependencies**: The pipeline installs the required dependencies using `pip`.
+3. **Train model**: The pipeline trains the RandomForest model using the `pipeline.py` script.
+4. **Test model**: The pipeline runs the tests in the `test_pipeline.py` script.
+5. **Deploy model**: The pipeline deploys the trained model using `mlflow`.
+
+Note that this is just a basic example, and you may need to modify the pipeline to fit your specific use case. Additionally, you will need to set up an MLflow server to serve the deployed model.

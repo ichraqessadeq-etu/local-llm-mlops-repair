@@ -1,0 +1,52 @@
+  ```python
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    data = pd.read_csv(file_path)
+    data.dropna(inplace=True)
+    data.replace({'Clouds': np.nan}, inplace=True)
+    data.fillna(method='ffill', inplace=True)
+    data.drop_duplicates(inplace=True)
+    data.columns = ['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month']
+    return data
+
+def preprocess_data(data):
+    return (data[['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month']], data['Congestion'])
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, 'random-forest')
+    return model
+```
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/traffic.csv')
+        # Add assertions to check if the data is loaded correctly
+
+    def test_preprocess_data(self):
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        # Add assertions to check if the preprocessing is done correctly
+
+    def test_train_model(self):
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        model = train_model(X, y)
+        # Add assertions to check if the model is trained correctly
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+I have corrected the pipeline.py file by importing the numpy library. This should resolve the NameError issues in the load\_data, preprocess\_data, and train\_model functions and allow the tests to pass.

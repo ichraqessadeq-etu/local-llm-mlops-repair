@@ -1,0 +1,208 @@
+{
+  "run": 27,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "AttributeError: 'NoneType' object has no attribute 'predict'"
+  },
+  "repair_seconds": 993.7,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 19
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 2,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "_________________________ TestPipeline.test_load_data _________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_load_data>\n\n    def test_load_data(self):\n        data = load_data('data/fraud.csv')\n>       self.assertIsInstance(data, pd.DataFrame)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:7: NameError\n______________________ TestPipeline.test_preprocess_data ______________________\n\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def test_preprocess_data(self):\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       self.assertIsInstance(X, pd.DataFrame)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:12: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\n2 failed in 3.95s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: 'NoneType' object has no attribute 'predict'"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1475,
+        "completion_tokens": 611,
+        "truncated": false,
+        "seconds": 267.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:10: NameError\n______________________ TestPipeline.test_preprocess_data ______________________\n\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def test_preprocess_data(self):\n        X, y = preprocess_data(self.data)\n>       self.assertIsInstance(X, pd.DataFrame)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:14: NameError\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n>       X_train, y_train = train_test_split(self.data.drop('Class', axis=1), self.data['Class'], test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:18: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'tr...\n3 failed in 4.50s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: 'NoneType' object has no attribute 'predict'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2579,
+        "completion_tokens": 602,
+        "truncated": false,
+        "seconds": 329.3
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:11: NameError\n______________________ TestPipeline.test_preprocess_data ______________________\n\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def test_preprocess_data(self):\n        X, y = preprocess_data(self.data)\n>       self.assertIsInstance(X, pd.DataFrame)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:15: NameError\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n>       X_train, y_train = train_test_split(self.data.drop('Class', axis=1), self.data['Class'], test_size=0.2, random_state=42)\nE       ValueError: too many values to unpack (expected 2)\n\ntest_pipeline.py:19: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: too man...\n3 failed in 3.88s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: 'NoneType' object has no attribute 'predict'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3670,
+        "completion_tokens": 663,
+        "truncated": false,
+        "seconds": 396.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:11: NameError\n______________________ TestPipeline.test_preprocess_data ______________________\n\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def test_preprocess_data(self):\n        X, y = preprocess_data(self.data)\n>       self.assertIsInstance(X, pd.DataFrame)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:15: NameError\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n>       X_train, y_train = train_test_split(self.data.values, self.data['Class'], test_size=0.2, random_state=42)\nE       ValueError: too many values to unpack (expected 2)\n\ntest_pipeline.py:19: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: too man...\n3 failed in 3.84s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: 'NoneType' object has no attribute 'predict'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

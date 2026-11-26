@@ -1,0 +1,52 @@
+{
+  "run": 1,
+  "cost": {
+    "prompt_tokens": 261,
+    "completion_tokens": 1327,
+    "truncated": false,
+    "seconds": 148.9
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 6
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 3,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "            ])\n    \n            preprocessor = ColumnTransformer(\n                transformers=[\n                    ('num', num_transformer, num_features),\n                    ('cat', cat_transformer, cat_features)\n                ])\n    \n            X = data[num_features]\n            y = data['Class']\n    \n            # Split the data\n            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n    \n            return X_train, X_test, y_train, y_test\n        except Exception as e:\n>           raise MlflowException(f\"Error preprocessing data: {e}\")\nE           mlflow.exceptions.MlflowException: Error preprocessing data: \"['V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20', 'V21', 'V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28', 'Amount'] not in index\"\n\npipeline.py:53: MlflowException\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'MlflowException' i...\nFAILED test_pipeline.py::test_preprocess_data - mlflow.exceptions.MlflowExcep...\nFAILED test_pipeline.py::test_train_model - mlflow.exceptions.MlflowException...\n3 failed in 8.95s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

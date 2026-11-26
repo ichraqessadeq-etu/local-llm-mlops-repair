@@ -1,0 +1,76 @@
+I apologize for the confusion. Let's correct the issues in the provided code. Here is the corrected `pipeline.py` and `test_pipeline.py`.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess data to separate features and target."""
+    X = data.drop(columns=['Anomaly'])
+    y = data['Anomaly']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier."""
+    with mlflow.start_run():
+        mlflow.log_param("model", "RandomForestClassifier")
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.sklearn.log_model(model, "model")
+    return model
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/air_quality.csv')
+    assert not data.empty
+    assert 'Anomaly' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    assert not X.empty
+    assert not y.empty
+    assert len(X) == len(y)
+
+def test_train_model():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+```
+
+### Additional Notes
+
+1. **MLflow Tracking URI**: Ensure that the `MLFLOW_TRACKING_URI` is set as a secret in your GitHub repository settings.
+2. **Dependencies**: Make sure you have the necessary Python packages installed. You can create a `requirements.txt` file with the following content:
+
+    ```
+    pandas
+    scikit-learn
+    mlflow
+    pytest
+    ```
+
+3. **GitHub Actions YAML**: Ensure that your `.github/workflows/main.yml` file is correctly configured as shown above.
+
+This should provide a complete and functional CI/CD pipeline for training a RandomForest anomaly detector. If you encounter any further issues, please provide more details so I can assist you further.

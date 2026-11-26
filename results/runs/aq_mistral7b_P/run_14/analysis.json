@@ -1,0 +1,59 @@
+{
+  "run": 14,
+  "cost": {
+    "prompt_tokens": 298,
+    "completion_tokens": 794,
+    "truncated": false,
+    "seconds": 188.1
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": true,
+      "rvh_violations": [
+        {
+          "kind": "RVH",
+          "rule": "unseeded_estimator",
+          "detail": "RandomForestClassifier(...) called without random_state",
+          "lineno": 19
+        }
+      ],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 1,
+    "asserts": 0
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 1,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n>       train_X, test_X, train_y, test_y = train_test_split(self.X, self.y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:11: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'tr...\n1 failed in 3.33s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "NameError: name 'data' is not defined"
+  },
+  "is_rvh": true,
+  "is_iih": false
+}

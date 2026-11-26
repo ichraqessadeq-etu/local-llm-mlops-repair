@@ -1,0 +1,143 @@
+Here is the code for the production-ready CI/CD pipeline:
+
+**pipeline.py**
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+
+def load_data(file_path):
+    """
+    Load data from CSV file
+    """
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        logging.error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    """
+    Preprocess data by splitting into features and target, and scaling features
+    """
+    try:
+        X = data.drop(['Class'], axis=1)
+        y = data['Class']
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+        return X_scaled, y
+    except Exception as e:
+        logging.error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """
+    Train a RandomForest classifier on the preprocessed data
+    """
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random_forest")
+        return model
+    except Exception as e:
+        logging.error(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/fraud.csv')
+    assert data is not None
+
+def test_preprocess_data():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    assert X is not None
+    assert y is not None
+
+def test_train_model():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert model is not None
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Train model
+        run: |
+          python pipeline.py train_model
+
+      - name: Test pipeline
+        run: |
+          pytest test_pipeline.py
+
+      - name: Deploy model
+        uses: actions/upload-artifact@v2
+        with:
+          name: model
+          path: model.pkl
+
+      - name: Deploy to MLflow
+        uses: actions/mlflow@v2
+        with:
+          mlflow-tracking-url: 'https://mlflow-tracking-url.com'
+          mlflow-model-name: 'random_forest'
+          mlflow-model-path: 'model.pkl'
+```
+
+**requirements.txt**
+```bash
+pandas==1.2.4
+scikit-learn==1.0.2
+mlflow==1.20.0
+pytest==6.2.5
+```
+
+Note that you'll need to replace the `mlflow-tracking-url` with your actual MLflow tracking URL.
+
+Also, make sure to create a `requirements.txt` file with the required dependencies.
+
+This pipeline will:
+
+1. Load the data from the CSV file
+2. Preprocess the data by splitting into features and target, and scaling features
+3. Train a RandomForest classifier on the preprocessed data
+4. Test the pipeline using pytest
+5. Deploy the trained model to MLflow
+
+The CI/CD pipeline will run on every push to the main branch.

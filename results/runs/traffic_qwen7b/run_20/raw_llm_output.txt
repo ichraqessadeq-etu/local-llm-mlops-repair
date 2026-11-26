@@ -1,0 +1,138 @@
+### 1. Python Module `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+from mlflow import log_param, log_metric, log_artifact
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess the data to prepare it for modeling."""
+    # Handle missing values
+    data.fillna(method='ffill', inplace=True)
+    
+    # Convert categorical variables to numerical
+    data['weather_main'] = data['weather_main'].astype('category').cat.codes
+    
+    # Split data into features and target
+    X = data.drop(columns=['Congestion'])
+    y = data['Congestion']
+    
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier model."""
+    with mlflow.start_run():
+        # Log parameters
+        log_param("n_estimators", 100)
+        log_param("max_depth", 10)
+        
+        # Initialize and train the model
+        model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)
+        model.fit(X_train, y_train)
+        
+        # Log model
+        mlflow.sklearn.log_model(model, "model")
+        
+        # Log metrics
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        log_metric("accuracy", accuracy)
+        
+        # Log artifacts
+        mlflow.log_artifact("data/traffic.csv", artifact_path="data")
+        
+        return model
+```
+
+### 2. Pytest File `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data("data/traffic.csv")
+    assert not data.empty
+
+def test_preprocess_data():
+    data = load_data("data/traffic.csv")
+    X, y = preprocess_data(data)
+    assert X.shape[1] == 9  # 8 features + 1 target
+    assert y.shape[0] == data.shape[0]
+
+def test_train_model():
+    data = load_data("data/traffic.csv")
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    model = train_model(X_train, y_train)
+    y_pred = model.predict(X_test)
+    assert accuracy_score(y_test, y_pred) > 0.5
+```
+
+### 3. GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline for RandomForest Congestion Detector
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: pytest test_pipeline.py
+
+    - name: Train model and log to MLflow
+      run: |
+        python pipeline.py
+      env:
+        MLFLOW_TRACKING_URI: https://your-mlflow-server.com
+        MLFLOW_EXPERIMENT_NAME: traffic-congestion-detection
+```
+
+### 4. `requirements.txt`
+
+```txt
+pandas
+scikit-learn
+mlflow
+pytest
+```
+
+### Notes:
+1. **MLflow Tracking URI**: Replace `https://your-mlflow-server.com` with your actual MLflow server URL.
+2. **MLflow Experiment Name**: Replace `traffic-congestion-detection` with your desired experiment name.
+3. **Error Handling**: The provided code includes basic error handling and logging. You can extend it further based on your requirements.
+4. **Data Splitting**: The code uses a simple train-test split. For production, consider using cross-validation or other more sophisticated methods.
+5. **Model Evaluation**: The accuracy threshold (0.5) is arbitrary. Adjust it based on your specific use case and business requirements.
+
+This setup ensures a robust CI/CD pipeline for your RandomForest congestion detector, with logging and error handling to help with monitoring and debugging.

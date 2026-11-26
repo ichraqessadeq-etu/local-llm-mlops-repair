@@ -1,0 +1,42 @@
+ ```python
+# pipeline.py
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+import mlflow.sklearn
+
+features = ['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH', 'AH', 'Hour', 'DayOfWeek', 'Month']
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    return (data[features], data['Anomaly'])
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, 'anomaly_detector')
+    return model
+```
+
+```python
+# test_pipeline.py
+from pipeline import load_data, preprocess_data, train_model
+import pytest
+import pandas
+
+features = ['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH', 'AH', 'Hour', 'DayOfWeek', 'Month']
+
+def test_train_model():
+    data = pandas.read_csv("data/air_quality.csv")
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    # Add assertions to check if the model is trained correctly
+
+if __name__ == "__main__":
+    test_train_model()
+```
+
+These corrected files define the `features` variable, which was causing the error in the `preprocess_data` function. Now, the `features` variable is defined both in `pipeline.py` and `test_pipeline.py` for consistency and to avoid any potential issues.

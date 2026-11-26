@@ -1,0 +1,149 @@
+{
+  "run": 25,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "KeyError: 'Features'"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 16
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 2,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        >>> monotonic_index.get_loc('b')\n        slice(1, 3, None)\n    \n        >>> non_monotonic_index = pd.Index(list('abcb'))\n        >>> non_monotonic_index.get_loc('b')\n        array([False,  True, False,  True])\n        \"\"\"\n        if method is None:\n            if tolerance is not None:\n                raise ValueError(\n                    \"tolerance argument only valid if using pad, \"\n                    \"backfill or nearest lookups\"\n                )\n            casted_key = self._maybe_cast_indexer(key)\n            try:\n                return self._engine.get_loc(casted_key)\n            except KeyError as err:\n>               raise KeyError(key) from err\nE               KeyError: 'Features'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\indexes\\base.py:3363: KeyError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - KeyError: 'Feat...\n2 failed in 5.49s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "KeyError: 'Features'"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 1 import(s): import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 2,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        >>> monotonic_index = pd.Index(list('abbc'))\n        >>> monotonic_index.get_loc('b')\n        slice(1, 3, None)\n    \n        >>> non_monotonic_index = pd.Index(list('abcb'))\n        >>> non_monotonic_index.get_loc('b')\n        array([False,  True, False,  True])\n        \"\"\"\n        if method is None:\n            if tolerance is not None:\n                raise ValueError(\n                    \"tolerance argument only valid if using pad, \"\n                    \"backfill or nearest lookups\"\n                )\n            casted_key = self._maybe_cast_indexer(key)\n            try:\n                return self._engine.get_loc(casted_key)\n            except KeyError as err:\n>               raise KeyError(key) from err\nE               KeyError: 'Features'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\indexes\\base.py:3363: KeyError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - KeyError: 'Feat...\n1 failed, 1 passed in 4.29s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "KeyError: 'Features'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 1,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        >>> monotonic_index = pd.Index(list('abbc'))\n        >>> monotonic_index.get_loc('b')\n        slice(1, 3, None)\n    \n        >>> non_monotonic_index = pd.Index(list('abcb'))\n        >>> non_monotonic_index.get_loc('b')\n        array([False,  True, False,  True])\n        \"\"\"\n        if method is None:\n            if tolerance is not None:\n                raise ValueError(\n                    \"tolerance argument only valid if using pad, \"\n                    \"backfill or nearest lookups\"\n                )\n            casted_key = self._maybe_cast_indexer(key)\n            try:\n                return self._engine.get_loc(casted_key)\n            except KeyError as err:\n>               raise KeyError(key) from err\nE               KeyError: 'Features'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\indexes\\base.py:3363: KeyError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - KeyError: 'Feat...\n1 failed, 1 passed in 4.29s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "KeyError: 'Features'"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 2,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

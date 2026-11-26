@@ -1,0 +1,207 @@
+{
+  "run": 14,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 753.6,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "model = RandomForestClassifier(random_state=42)\nX_test =           Time        V1        V2  ...       V27       V28  Amount\n9254  143198.0  1.854462  0.500623  ... -0.102140 ....047079 -0.011536   59.75\n7270   75499.0 -0.572851  1.151788  ...  0.032408  0.034631    0.76\n\n[8000 rows x 30 columns]\n\n    def predict(model, X_test):\n        \"\"\"Predict using the trained model.\"\"\"\n        try:\n            y_pred = model.predict(X_test)\n            accuracy = accuracy_score(y_test, y_pred)\n            mlflow.log_metric(\"accuracy\", accuracy)\n            return y_pred\n        except Exception as e:\n>           mlflow.log_exception(e)\nE           AttributeError: module 'mlflow' has no attribute 'log_exception'\n\npipeline.py:57: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_predict - AttributeError: module 'mlflow' has n...\n4 failed in 28.63s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.8979,
+        "f1": 0.9041,
+        "n_test": 1600
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1841,
+        "completion_tokens": 883,
+        "truncated": false,
+        "seconds": 221.8
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmodel = RandomForestClassifier(random_state=42)\nX_test =           Time        V1        V2  ...       V27       V28  Amount\n9254  143198.0  1.854462  0.500623  ... -0.102140 ....047079 -0.011536   59.75\n7270   75499.0 -0.572851  1.151788  ...  0.032408  0.034631    0.76\n\n[8000 rows x 30 columns]\n\n    def predict(model, X_test):\n        \"\"\"Predict using the trained model.\"\"\"\n        try:\n            y_pred = model.predict(X_test)\n            accuracy = accuracy_score(y_test, y_pred)\n            mlflow.log_metric(\"accuracy\", accuracy)\n            return y_pred\n        except Exception as e:\n>           mlflow.log_exception(e)\nE           AttributeError: module 'mlflow' has no attribute 'log_exception'\n\npipeline.py:58: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_predict - AttributeError: module 'mlflow' has n...\n2 failed, 2 passed in 29.78s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.8979,
+        "f1": 0.9041,
+        "n_test": 1600
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3234,
+        "completion_tokens": 923,
+        "truncated": false,
+        "seconds": 211.8
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\nkey = 'exception', value = \"name 'y_test' is not defined\"\ntimestamp = 1795173247465, step = 0\n\n    def _validate_metric(key, value, timestamp, step):\n        \"\"\"\n        Check that a metric with the specified key, value, timestamp, and step is valid and raise an\n        exception if it isn't.\n        \"\"\"\n        _validate_metric_name(key)\n        # value must be a Number\n        # since bool is an instance of Number check for bool additionally\n        if not _is_numeric(value):\n            raise MlflowException(\n                \"Got invalid value %s for metric '%s' (timestamp=%s). Please specify value as a valid \"\n                \"double (64-bit floating point)\" % (value, key, timestamp),\n>               INVALID_PARAMETER_VALUE,\n            )\nE           mlflow.exceptions.MlflowException: Got invalid value name 'y_test' is not defined for metric 'exception' (timestamp=1795173247465). Please specify value as a valid double (64-bit floating point)\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\utils\\validation.py:127: MlflowException\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_predict - mlflow.exceptions.MlflowException: Go...\n2 failed, 2 passed in 32.79s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.8979,
+        "f1": 0.9041,
+        "n_test": 1600
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3309,
+        "completion_tokens": 1008,
+        "truncated": false,
+        "seconds": 320.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\nkey = 'exception', value = \"name 'y_test' is not defined\"\ntimestamp = 1795173614437, step = 0\n\n    def _validate_metric(key, value, timestamp, step):\n        \"\"\"\n        Check that a metric with the specified key, value, timestamp, and step is valid and raise an\n        exception if it isn't.\n        \"\"\"\n        _validate_metric_name(key)\n        # value must be a Number\n        # since bool is an instance of Number check for bool additionally\n        if not _is_numeric(value):\n            raise MlflowException(\n                \"Got invalid value %s for metric '%s' (timestamp=%s). Please specify value as a valid \"\n                \"double (64-bit floating point)\" % (value, key, timestamp),\n>               INVALID_PARAMETER_VALUE,\n            )\nE           mlflow.exceptions.MlflowException: Got invalid value name 'y_test' is not defined for metric 'exception' (timestamp=1795173614437). Please specify value as a valid double (64-bit floating point)\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\utils\\validation.py:127: MlflowException\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_predict - mlflow.exceptions.MlflowException: Go...\n2 failed, 2 passed in 28.87s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

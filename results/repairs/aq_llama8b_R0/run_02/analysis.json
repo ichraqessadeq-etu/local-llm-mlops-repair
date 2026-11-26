@@ -1,0 +1,201 @@
+{
+  "run": 2,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": "other",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "TypeError: cannot unpack non-iterable NoneType object"
+  },
+  "repair_seconds": 1161.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 3
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/air_quality.csv')\n>       X_train, X_test, y_train, y_test = preprocess_data(data)\nE       TypeError: cannot unpack non-iterable NoneType object\n\ntest_pipeline.py:10: TypeError\n---------------------------- Captured stdout call -----------------------------\nError preprocessing data: \"['PT08.S1(CO)_mean' 'PT08.S2(NMHC)_mean' 'PT08.S3(NOx)_mean'\\n 'PT08.S4(NO2)_mean' 'PT08.S5(O3)_mean' 'NOx(GT)_mean' 'C6H6(GT)_mean'\\n 'T_mean' 'RH_mean' 'AH_mean'] not found in axis\"\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/air_quality.csv')\n>       X_train, X_test, y_train, y_test = preprocess_data(data)\nE       TypeError: cannot unpack non-iterable NoneType object\n\ntest_pipeline.py:15: TypeError\n---------------------------- Captured stdout call -----------------------------\nError preprocessing data: \"['PT08.S1(CO)_mean' 'PT08.S2(NMHC)_mean' 'PT08.S3(NOx)_mean'\\n 'PT08.S4(NO2)_mean' 'PT08.S5(O3)_mean' 'NOx(GT)_mean' 'C6H6(GT)_mean'\\n 'T_mean' 'RH_mean' 'AH_mean'] not found in axis\"\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - TypeError: cannot unpack non-...\nFAILED test_pipeline.py::test_train_model - TypeError: cannot unpack non-iter...\n2 failed, 1 passed in 4.27s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: cannot unpack non-iterable NoneType object"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1274,
+        "completion_tokens": 985,
+        "truncated": false,
+        "seconds": 365.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 3
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/air_quality.csv')\n>       X_train, X_test, y_train, y_test = preprocess_data(data)\nE       TypeError: cannot unpack non-iterable NoneType object\n\ntest_pipeline.py:10: TypeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:43 Error preprocessing data: \"['PT08.S1(CO)_mean' 'PT08.S2(NMHC)_mean' 'PT08.S3(NOx)_mean'\\n 'PT08.S4(NO2)_mean' 'PT08.S5(O3)_mean' 'NOx(GT)_mean' 'C6H6(GT)_mean'\\n 'T_mean' 'RH_mean' 'AH_mean'] not found in axis\"\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/air_quality.csv')\n>       X_train, X_test, y_train, y_test = preprocess_data(data)\nE       TypeError: cannot unpack non-iterable NoneType object\n\ntest_pipeline.py:15: TypeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:43 Error preprocessing data: \"['PT08.S1(CO)_mean' 'PT08.S2(NMHC)_mean' 'PT08.S3(NOx)_mean'\\n 'PT08.S4(NO2)_mean' 'PT08.S5(O3)_mean' 'NOx(GT)_mean' 'C6H6(GT)_mean'\\n 'T_mean' 'RH_mean' 'AH_mean'] not found in axis\"\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - TypeError: cannot unpack non-...\nFAILED test_pipeline.py::test_train_model - TypeError: cannot unpack non-iter...\n2 failed, 1 passed in 4.30s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: cannot unpack non-iterable NoneType object"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2312,
+        "completion_tokens": 969,
+        "truncated": false,
+        "seconds": 347.5
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 3
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/air_quality.csv')\n>       X_train, X_test, y_train, y_test = preprocess_data(data)\nE       TypeError: cannot unpack non-iterable NoneType object\n\ntest_pipeline.py:10: TypeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:43 Error preprocessing data: \"['Hour' 'DayOfWeek' 'Month'] not found in axis\"\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/air_quality.csv')\n>       X_train, X_test, y_train, y_test = preprocess_data(data)\nE       TypeError: cannot unpack non-iterable NoneType object\n\ntest_pipeline.py:15: TypeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:43 Error preprocessing data: \"['Hour' 'DayOfWeek' 'Month'] not found in axis\"\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - TypeError: cannot unpack non-...\nFAILED test_pipeline.py::test_train_model - TypeError: cannot unpack non-iter...\n2 failed, 1 passed in 3.84s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: cannot unpack non-iterable NoneType object"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3334,
+        "completion_tokens": 966,
+        "truncated": false,
+        "seconds": 447.9
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 3
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/air_quality.csv')\n>       X_train, X_test, y_train, y_test = preprocess_data(data)\nE       TypeError: cannot unpack non-iterable NoneType object\n\ntest_pipeline.py:10: TypeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:43 Error preprocessing data: \"['Hour' 'DayOfWeek' 'Month'] not found in axis\"\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/air_quality.csv')\n>       X_train, X_test, y_train, y_test = preprocess_data(data)\nE       TypeError: cannot unpack non-iterable NoneType object\n\ntest_pipeline.py:15: TypeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:43 Error preprocessing data: \"['Hour' 'DayOfWeek' 'Month'] not found in axis\"\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - TypeError: cannot unpack non-...\nFAILED test_pipeline.py::test_train_model - TypeError: cannot unpack non-iter...\n2 failed, 1 passed in 12.83s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: cannot unpack non-iterable NoneType object"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

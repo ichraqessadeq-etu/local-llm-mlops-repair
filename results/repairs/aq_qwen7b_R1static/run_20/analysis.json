@@ -1,0 +1,211 @@
+{
+  "run": 20,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9406,
+    "f1": 0.8632,
+    "n_test": 1452
+  },
+  "repair_seconds": 1133.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        data = pd.DataFrame({\n            'PT08.S1(CO)': [1.0, 2.0],\n            'PT08.S2(NMHC)': [3.0, 4.0],\n            'PT08.S3(NOx)': [5.0, 6.0],\n            'PT08.S4(NO2)': [7.0, 8.0],\n            'PT08.S5(O3)': [9.0, 10.0],\n            'NOx(GT)': [11.0, 12.0],\n            'C6H6(GT)': [13.0, 14.0],\n            'T': [15.0, 16.0],\n            'RH': [17.0, 18.0],\n            'AH': [19.0, 20.0],\n            'Hour': [21.0, 22.0],\n            'DayOfWeek': [23.0, 24.0],\n            'Month': [25.0, 26.0],\n            'Anomaly': [0, 1]\n        })\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:48: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert (2, 13) == (2, 14)\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n2 failed, 1 passed in 4.87s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1759,
+        "completion_tokens": 1094,
+        "truncated": false,
+        "seconds": 406.8
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        data = pd.DataFrame({\n            'PT08.S1(CO)': [1.0, 2.0],\n            'PT08.S2(NMHC)': [3.0, 4.0],\n            'PT08.S3(NOx)': [5.0, 6.0],\n            'PT08.S4(NO2)': [7.0, 8.0],\n            'PT08.S5(O3)': [9.0, 10.0],\n            'NOx(GT)': [11.0, 12.0],\n            'C6H6(GT)': [13.0, 14.0],\n            'T': [15.0, 16.0],\n            'RH': [17.0, 18.0],\n            'AH': [19.0, 20.0],\n            'Hour': [21.0, 22.0],\n            'DayOfWeek': [23.0, 24.0],\n            'Month': [25.0, 26.0],\n            'Anomaly': [0, 1]\n        })\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:48: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert (2, 13) == (2, 14)\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n2 failed, 1 passed in 6.78s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2919,
+        "completion_tokens": 1110,
+        "truncated": false,
+        "seconds": 368.5
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        data = pd.DataFrame({\n            'PT08.S1(CO)': [1.0, 2.0],\n            'PT08.S2(NMHC)': [3.0, 4.0],\n            'PT08.S3(NOx)': [5.0, 6.0],\n            'PT08.S4(NO2)': [7.0, 8.0],\n            'PT08.S5(O3)': [9.0, 10.0],\n            'NOx(GT)': [11.0, 12.0],\n            'C6H6(GT)': [13.0, 14.0],\n            'T': [15.0, 16.0],\n            'RH': [17.0, 18.0],\n            'AH': [19.0, 20.0],\n            'Hour': [21.0, 22.0],\n            'DayOfWeek': [23.0, 24.0],\n            'Month': [25.0, 26.0],\n            'Anomaly': [0, 1]\n        })\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:48: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert (2, 13) == (2, 14)\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n2 failed, 1 passed in 5.01s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 4095,
+        "completion_tokens": 1110,
+        "truncated": false,
+        "seconds": 357.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        data = pd.DataFrame({\n            'PT08.S1(CO)': [1.0, 2.0],\n            'PT08.S2(NMHC)': [3.0, 4.0],\n            'PT08.S3(NOx)': [5.0, 6.0],\n            'PT08.S4(NO2)': [7.0, 8.0],\n            'PT08.S5(O3)': [9.0, 10.0],\n            'NOx(GT)': [11.0, 12.0],\n            'C6H6(GT)': [13.0, 14.0],\n            'T': [15.0, 16.0],\n            'RH': [17.0, 18.0],\n            'AH': [19.0, 20.0],\n            'Hour': [21.0, 22.0],\n            'DayOfWeek': [23.0, 24.0],\n            'Month': [25.0, 26.0],\n            'Anomaly': [0, 1]\n        })\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:48: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert (2, 13) == (2, 14)\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n2 failed, 1 passed in 4.84s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+ I'm an AI model and can't directly execute or manage files, but I can certainly help you design the structure and code for your CI/CD pipeline. Here's a simplified example of how you might set up your project:
+
+1. pipeline.py
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps like filling NaN, encoding categorical variables, etc.
+    # For simplicity, I'm assuming that the data is already preprocessed
+    return data['Features'], data['Congestion']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random-forest")
+
+    return model
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        # Test loading data from the correct file
+        data = load_data('data/traffic.csv')
+        # Add assertions to check if the data is loaded correctly
+
+    def test_preprocess_data(self):
+        # Test preprocessing data correctly
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        # Add assertions to check if X and y are as expected
+
+    def test_train_model(self):
+        # Test training the model and logging it correctly
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        model = train_model(X, y)
+        # Add assertions to check if the model is trained correctly and logged
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+3. GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install pandas mlflow sklearn
+
+    - name: Test Pipeline
+      run: |
+        python test_pipeline.py
+
+    - name: Train and Log Model
+      run: |
+        python pipeline.py data/traffic.csv
+```
+
+This setup includes a Python module (pipeline.py) with functions to load data, preprocess data, and train a model using MLflow. It also includes a pytest file (test_pipeline.py) for testing the pipeline functions. Lastly, it includes a GitHub Actions workflow (.github/workflows/ci-cd.yml) that runs the tests and trains the model on every push to the main branch.

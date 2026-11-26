@@ -1,0 +1,141 @@
+{
+  "run": 28,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "1       0\n2       0\n3       0\n4       0\n       ..\n9995    0\n9996    0\n9997    0\n9998    0\n9999    0\nName: Class, Length: 10000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log it using MLflow.\"\"\"\n        with mlflow.start_run():\n            mlflow.log_param(\"model\", \"RandomForestClassifier\")\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, \"model\", signature=infer_signature(X_train, y_train))\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:26: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n1 failed, 2 passed in 8.72s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "1       0\n2       0\n3       0\n4       0\n       ..\n9995    0\n9996    0\n9997    0\n9998    0\n9999    0\nName: Class, Length: 10000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log it using MLflow.\"\"\"\n        with mlflow.start_run():\n            mlflow.log_param(\"model\", \"RandomForestClassifier\")\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, \"model\", signature=infer_signature(X_train, y_train))\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:26: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n1 failed, 2 passed in 15.74s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "1       0\n2       0\n3       0\n4       0\n       ..\n9995    0\n9996    0\n9997    0\n9998    0\n9999    0\nName: Class, Length: 10000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log it using MLflow.\"\"\"\n        with mlflow.start_run():\n            mlflow.log_param(\"model\", \"RandomForestClassifier\")\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, \"model\", signature=infer_signature(X_train, y_train))\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:26: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n1 failed, 2 passed in 15.74s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 7
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

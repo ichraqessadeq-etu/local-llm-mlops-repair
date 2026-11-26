@@ -1,0 +1,53 @@
+{
+  "run": 2,
+  "cost": {
+    "prompt_tokens": 164,
+    "completion_tokens": 1064,
+    "truncated": false,
+    "seconds": 119.2
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK",
+      "FAIL:invalid syntax"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 3
+  },
+  "pytest": {
+    "passed": 2,
+    "failed": 1,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "                # Evaluate the model\n>               y_pred = model.predict(X_test)\nE               NameError: name 'X_test' is not defined\n\npipeline.py:56: NameError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_train_model():\n        \"\"\"Test training the model.\"\"\"\n        try:\n            data = load_data('data/traffic.csv')\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            model = train_model(X_train, y_train)\n            assert model is not None\n        except Exception as e:\n>           pytest.fail(f\"Test failed: {e}\")\nE           Failed: Test failed: name 'X_test' is not defined\n\ntest_pipeline.py:29: Failed\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:62 Error training model: name 'X_test' is not defined\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - Failed: Test failed: name 'X_test...\n1 failed, 2 passed in 17.43s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

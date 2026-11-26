@@ -1,0 +1,161 @@
+### 1. Python Module `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import LabelEncoder
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """
+    Load data from a CSV file.
+    
+    Args:
+        file_path (str): Path to the CSV file.
+    
+    Returns:
+        pd.DataFrame: Loaded data.
+    """
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """
+    Preprocess the data for model training.
+    
+    Args:
+        data (pd.DataFrame): Input data.
+    
+    Returns:
+        tuple: Preprocessed features (X) and target (y).
+    """
+    # Separate features and target
+    X = data.drop(columns=['Congestion'])
+    y = data['Congestion']
+    
+    # Encode categorical variables
+    le = LabelEncoder()
+    X['weather_main'] = le.fit_transform(X['weather_main'])
+    
+    # Split data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    return X_train, X_test, y_train, y_test
+
+def train_model(X_train, y_train):
+    """
+    Train a RandomForestClassifier model.
+    
+    Args:
+        X_train (pd.DataFrame): Training features.
+        y_train (pd.Series): Training target.
+    
+    Returns:
+        RandomForestClassifier: Trained model.
+    """
+    with mlflow.start_run():
+        # Set MLflow parameters
+        mlflow.log_param("model", "RandomForestClassifier")
+        mlflow.log_param("n_estimators", 100)
+        mlflow.log_param("max_depth", 10)
+        
+        # Train the model
+        model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)
+        model.fit(X_train, y_train)
+        
+        # Log the model
+        mlflow.sklearn.log_model(model, "model")
+        
+        # Log metrics
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("train_accuracy", accuracy)
+        
+        return model
+```
+
+### 2. Pytest File `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/traffic.csv')
+    assert isinstance(data, pd.DataFrame)
+    assert 'Congestion' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    assert isinstance(X_train, pd.DataFrame)
+    assert isinstance(y_train, pd.Series)
+    assert len(X_train) == len(y_train)
+    assert len(X_test) == len(y_test)
+
+def test_train_model():
+    data = load_data('data/traffic.csv')
+    X_train, _, y_train, _ = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+```
+
+### 3. GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline for RandomForest Congestion Detector
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: pytest test_pipeline.py
+
+    - name: Train model and log to MLflow
+      run: |
+        mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --host 0.0.0.0 --port 5000 &
+        sleep 10
+        python pipeline.py
+      env:
+        MLFLOW_TRACKING_URI: http://localhost:5000
+
+    - name: Stop MLflow server
+      run: |
+        pkill -f mlflow
+```
+
+### 4. `requirements.txt`
+
+```txt
+pandas==1.3.3
+scikit-learn==1.0.2
+mlflow==1.30.1
+pytest==6.2.5
+```
+
+This setup includes a Python module for loading, preprocessing, and training the model, a test file to ensure the pipeline works as expected, and a GitHub Actions workflow to automate the CI/CD pipeline. The MLflow server is started and stopped within the workflow to log the model and metrics.

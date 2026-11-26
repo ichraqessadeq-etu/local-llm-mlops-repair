@@ -1,0 +1,90 @@
+The error indicates that the `RandomForestClassifier` class is not defined in the `pipeline.py` file. We need to import it from the `sklearn.ensemble` module.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from mlflow import log_param, log_metric
+from mlflow.sklearn import log_model
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess the data by separating features and target."""
+    X = data.drop(columns=['Anomaly'])
+    y = data['Anomaly']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier and log metrics using MLflow."""
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
+    
+    # Log model parameters
+    log_param("n_estimators", model.n_estimators)
+    log_param("random_state", model.random_state)
+    
+    # Log model metrics
+    y_pred = model.predict(X_train)
+    accuracy = accuracy_score(y_train, y_pred)
+    log_metric("accuracy", accuracy)
+    
+    # Log the model
+    log_model(model, "random_forest_model")
+    
+    return model
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+from sklearn.ensemble import RandomForestClassifier
+
+def test_load_data():
+    data = load_data('data/air_quality.csv')
+    assert isinstance(data, pd.DataFrame)
+    assert 'Anomaly' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+    assert len(X) == len(y)
+
+def test_train_model():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert isinstance(model, RandomForestClassifier)
+```
+
+### `requirements.txt`
+
+Ensure you have the necessary packages installed:
+
+```
+pandas
+scikit-learn
+mlflow
+pytest
+```
+
+### GitHub Actions YAML
+
+No changes are needed in the GitHub Actions YAML file as it is already set up correctly.
+
+### Summary
+
+- **`pipeline.py`**: Updated to import `RandomForestClassifier` from `sklearn.ensemble`.
+- **`test_pipeline.py`**: No changes needed.
+- **GitHub Actions YAML**: No changes needed.
+
+This should resolve the `NameError` and allow your tests to pass.

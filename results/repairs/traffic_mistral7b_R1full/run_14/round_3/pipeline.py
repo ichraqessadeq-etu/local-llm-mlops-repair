@@ -1,0 +1,34 @@
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_param, log_artifact, start_run, end_run, register_model, set_tracking_uri, set_experiment
+
+# Set the MLflow tracking URI
+set_tracking_uri("http://localhost:5000")
+
+def log_params(params):
+    with start_run():
+        for key, value in params.items():
+            log_param(key, value)
+
+def log_artifacts(artifacts):
+    with start_run():
+        for artifact in artifacts:
+            log_artifact(artifact)
+
+def log_experiment_info(experiment_id, experiment_name):
+    with start_run():
+        set_experiment(experiment_name)
+        log_params({"experiment_id": experiment_id})
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Perform necessary preprocessing like filling NaN, encoding categorical variables, etc.
+    # For simplicity, I'm assuming data is already preprocessed
+    return data['Features'], data['Congestion']
+
+def train_model(X_train, y_train, random_state=42):
+    model = RandomForestClassifier(random_state=random_state)
+    model.fit(X_train, y_train)
+    return model

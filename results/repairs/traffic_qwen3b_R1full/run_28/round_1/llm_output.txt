@@ -1,0 +1,125 @@
+To resolve the issue with the `test_train_model` failing due to `Input contains NaN`, we need to ensure that the data preprocessing does not introduce any missing values. Let's address this by adding checks for missing values in the data and handling them appropriately.
+
+### pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        logger.error(f"Failed to load data: {e}")
+        raise
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    try:
+        # Convert 'IsHoliday' to binary
+        data['IsHoliday'] = data['IsHoliday'].map({True: 1, False: 0})
+        
+        # Encode categorical variables
+        data = pd.get_dummies(data, columns=['weather_main', 'Hour', 'DayOfWeek', 'Month'])
+        
+        # Drop rows with missing values
+        data.dropna(inplace=True)
+        
+        # Split features and target
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+        
+        return X, y
+    except Exception as e:
+        logger.error(f"Failed to preprocess data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Train the RandomForest model."""
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        
+        # Log the model to MLflow
+        mlflow.log_param("n_estimators", model.n_estimators)
+        mlflow.log_param("random_state", model.random_state)
+        
+        # Log the model
+        mlflow.sklearn.log_model(model, "random_forest_model")
+        
+        return model
+    except Exception as e:
+        logger.error(f"Failed to train model: {e}")
+        raise
+```
+
+### test_pipeline.py
+
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+import pandas as pd
+
+@pytest.fixture
+def data():
+    # Load a sample dataset
+    data = pd.DataFrame({
+        'temp': [20, 22, 18, 25, 30],
+        'rain_1h': [0, 1, 0, 1, 0],
+        'snow_1h': [0, 0, 1, 0, 0],
+        'clouds_all': [50, 70, 40, 90, 60],
+        'weather_main': ['Clouds', 'Rain', 'Snow', 'Clouds', 'Rain'],
+        'IsHoliday': [False, True, False, True, False],
+        'Hour': [9, 15, 12, 18, 10],
+        'DayOfWeek': ['Monday', 'Friday', 'Wednesday', 'Thursday', 'Tuesday'],
+        'Month': ['January', 'March', 'December', 'February', 'November']
+    }, columns=['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month', 'Congestion'])
+    return data
+
+def test_load_data(data):
+    """Test data loading."""
+    try:
+        loaded_data = load_data(data)
+        assert isinstance(loaded_data, pd.DataFrame)
+        assert len(loaded_data) == len(data)
+    except Exception as e:
+        assert False, f"Test failed: {e}"
+
+def test_preprocess_data(data):
+    """Test data preprocessing."""
+    try:
+        X, y = preprocess_data(data)
+        assert isinstance(X, pd.DataFrame)
+        assert isinstance(y, pd.Series)
+        assert len(X) == len(y)
+    except Exception as e:
+        assert False, f"Test failed: {e}"
+
+def test_train_model(data):
+    """Test model training."""
+    try:
+        X, y = preprocess_data(data)
+        model = train_model(X, y)
+        assert isinstance(model, RandomForestClassifier)
+        assert model.n_estimators == 100
+        assert model.random_state == 42
+    except Exception as e:
+        assert False, f"Test failed: {e}"
+```
+
+### Explanation
+
+1. **Data Preprocessing**: In the `preprocess_data` function, we added a line `data.dropna(inplace=True)` to remove any rows with missing values before splitting the data into features and target.
+2. **Test Cases**: The `test_train_model` function now checks that the model is trained successfully and that the parameters are set correctly.
+
+These changes should resolve the issue and ensure that all tests pass.

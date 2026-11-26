@@ -1,0 +1,248 @@
+{
+  "run": 10,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": false,
+  "hint_round0": "other",
+  "hint_final": "assertion",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 956.3,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    \n        >>> non_monotonic_index = pd.Index(list('abcb'))\n        >>> non_monotonic_index.get_loc('b')\n        array([False,  True, False,  True])\n        \"\"\"\n        if method is None:\n            if tolerance is not None:\n                raise ValueError(\n                    \"tolerance argument only valid if using pad, \"\n                    \"backfill or nearest lookups\"\n                )\n            casted_key = self._maybe_cast_indexer(key)\n            try:\n                return self._engine.get_loc(casted_key)\n            except KeyError as err:\n>               raise KeyError(key) from err\nE               KeyError: 'Holiday'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\indexes\\base.py:3363: KeyError\n---------------------------- Captured stdout call -----------------------------\nError preprocessing data: 'Holiday'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - KeyError: 'Holiday'\nFAILED test_pipeline.py::test_train_model - KeyError: 'Holiday'\n2 failed, 1 passed in 3.79s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "KeyError: 'Holiday'"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 0,
+      "phase": "R2",
+      "step": 1,
+      "notes": [
+        "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    \n        >>> non_monotonic_index = pd.Index(list('abcb'))\n        >>> non_monotonic_index.get_loc('b')\n        array([False,  True, False,  True])\n        \"\"\"\n        if method is None:\n            if tolerance is not None:\n                raise ValueError(\n                    \"tolerance argument only valid if using pad, \"\n                    \"backfill or nearest lookups\"\n                )\n            casted_key = self._maybe_cast_indexer(key)\n            try:\n                return self._engine.get_loc(casted_key)\n            except KeyError as err:\n>               raise KeyError(key) from err\nE               KeyError: 'Holiday'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\indexes\\base.py:3363: KeyError\n---------------------------- Captured stdout call -----------------------------\nError preprocessing data: 'Holiday'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - KeyError: 'Holiday'\nFAILED test_pipeline.py::test_train_model - KeyError: 'Holiday'\n2 failed, 1 passed in 3.57s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "KeyError: 'Holiday'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1101,
+        "completion_tokens": 820,
+        "truncated": false,
+        "seconds": 284.4
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/traffic.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n>       assert X_train.shape[1] == 10  # 10 features after one-hot encoding\nE       assert 14 == 10\n\ntest_pipeline.py:12: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 14 == 10\n1 failed, 2 passed in 9.44s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2195,
+        "completion_tokens": 821,
+        "truncated": false,
+        "seconds": 297.8
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/traffic.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n>       assert X_train.shape[1] == 16  # 16 features after one-hot encoding\nE       assert 54 == 16\n\ntest_pipeline.py:12: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 54 == 16\n1 failed, 2 passed in 11.55s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3290,
+        "completion_tokens": 851,
+        "truncated": false,
+        "seconds": 374.1
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/traffic.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        assert X_train.shape[1] == 54  # 54 features after one-hot encoding\n>       assert y_train.shape[0] == data.shape[0]\nE       assert 32451 == 40564\n\ntest_pipeline.py:13: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 32451 == 40564\n1 failed, 2 passed in 9.90s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

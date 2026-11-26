@@ -1,0 +1,95 @@
+It seems there is an issue with the import statement for `train_test_split`. Let's ensure that the import statement is correctly placed at the top of each file.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        raise Exception(f"Failed to load data: {e}")
+
+def preprocess_data(data):
+    """Preprocess data by separating features and target."""
+    try:
+        X = data.drop('Class', axis=1)
+        y = data['Class']
+        return X, y
+    except Exception as e:
+        raise Exception(f"Failed to preprocess data: {e}")
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model and log it using MLflow."""
+    try:
+        with mlflow.start_run():
+            model = RandomForestClassifier(random_state=42)  # Add random_state for reproducibility
+            model.fit(X_train, y_train)
+            mlflow.log_param("n_estimators", model.n_estimators)
+            mlflow.log_param("max_depth", model.max_depth)
+            mlflow.sklearn.log_model(model, "model")
+            return model
+    except Exception as e:
+        raise Exception(f"Failed to train model: {e}")
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model and log metrics."""
+    try:
+        y_pred = model.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        classification_rep = classification_report(y_test, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.log_text(classification_rep, "classification_report.txt")
+        return accuracy, classification_rep
+    except Exception as e:
+        raise Exception(f"Failed to evaluate model: {e}")
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from pipeline import load_data, preprocess_data, train_model, evaluate_model
+
+def test_load_data():
+    data = load_data('data/fraud.csv')
+    assert isinstance(data, pd.DataFrame)
+    assert 'Class' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+    assert len(X) == len(y)
+
+def test_train_model():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+
+def test_evaluate_model():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    accuracy, classification_rep = evaluate_model(model, X_test, y_test)
+    assert isinstance(accuracy, float)
+    assert isinstance(classification_rep, str)
+```
+
+### Notes:
+1. **Import `train_test_split`**: Ensure `train_test_split` is imported from `sklearn.model_selection` at the top of each file.
+
+With these changes, the tests should pass, and the reproducibility violation should be resolved.

@@ -1,0 +1,52 @@
+{
+  "run": 10,
+  "cost": {
+    "prompt_tokens": 262,
+    "completion_tokens": 1500,
+    "truncated": true,
+    "seconds": 194.7
+  },
+  "extraction": {
+    "n_blocks": 2,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": null
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 5,
+    "asserts": 10
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 0,
+    "errors": 5,
+    "returncode": 1,
+    "tail": "            'PT08.S1(CO)': [10, 20, 30],\n            'PT08.S2(NMHC)': [40, 50, 60],\n            'PT08.S3(NOx)': [70, 80, 90],\n            'PT08.S4(NO2)': [100, 110, 120],\n            'PT08.S5(O3)': [130, 140, 150],\n            'NOx(GT)': [160, 170, 180],\n            'C6H6(GT)': [190, 200, 210],\n            'T': [220, 230, 240],\n            'RH': [250, 260, 270],\n            'AH': [280, 290, 300],\n            'Hour': [1, 2, 3],\n            'DayOfWeek': [4, 5, 6],\n            'Month': [7, 8, 9],\n            'Anomaly': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:9: NameError\n=========================== short test summary info ===========================\nERROR test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not de...\nERROR test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not def...\nERROR test_pipeline.py::test_run_pipeline - NameError: name 'pd' is not defined\n5 errors in 4.07s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

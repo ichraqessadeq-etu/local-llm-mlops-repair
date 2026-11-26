@@ -1,0 +1,86 @@
+It seems there is an issue with the way the artifact URI is being handled in MLflow, which is causing the `OSError`. Let's ensure that the artifact URI is correctly formed and that the directory is created properly.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+import mlflow
+import mlflow.sklearn
+import os
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess the data by separating features and target."""
+    X = data.drop(columns=['Class'])
+    y = data['Class']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier and log it using MLflow."""
+    with mlflow.start_run():
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        classification_rep = classification_report(y_train, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+        
+        # Ensure the directory exists
+        report_dir = os.path.join(mlflow.get_artifact_uri(), "reports")
+        os.makedirs(report_dir, exist_ok=True)
+        
+        # Save the classification report to a file
+        report_path = os.path.join(report_dir, "classification_report.txt")
+        with open(report_path, 'w') as f:
+            f.write(classification_rep)
+        
+        mlflow.log_artifact(report_path, artifact_path="reports")
+        mlflow.sklearn.log_model(model, "model")
+    return model
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test the load_data function."""
+    data = load_data('data/fraud.csv')
+    assert not data.empty
+    assert 'Class' in data.columns
+
+def test_preprocess_data():
+    """Test the preprocess_data function."""
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    assert X.shape[0] == y.shape[0]
+    assert 'Class' not in X.columns
+
+def test_train_model():
+    """Test the train_model function."""
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert model is not None
+    assert isinstance(model, RandomForestClassifier)
+```
+
+### Explanation
+
+1. **`pipeline.py`**:
+   - The `train_model` function ensures that the directory for the `classification_report.txt` exists before writing the report.
+   - It uses `os.makedirs(report_dir, exist_ok=True)` to create the directory if it doesn't exist.
+   - It saves the `classification_report.txt` to the specified directory and logs it using MLflow.
+
+2. **`test_pipeline.py`**:
+   - No changes needed as the tests are already correct.
+
+With these corrections, the `test_train_model` should pass without any `OSError`. The issue should be resolved by ensuring that the directory is correctly created and that the file path is properly formed.

@@ -1,0 +1,149 @@
+{
+  "run": 7,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "TypeError: _isdir: path should be string, bytes or os.PathLike, not RandomForestClassifier"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 16
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def setUp(self):\n        self.data = load_data(\"data/air_quality.csv\")\n        self.X, self.y = preprocess_data(self.data)\n>       self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.3, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:8: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'tr...\n1 failed in 5.82s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: _isdir: path should be string, bytes or os.PathLike, not RandomForestClassifier"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\fluent.py:780: in log_artifact\n    MlflowClient().log_artifact(run_id, local_path, artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\client.py:1136: in log_artifact\n    self._tracking_client.log_artifact(run_id, local_path, artifact_path)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <mlflow.tracking._tracking_service.client.TrackingServiceClient object at 0x000001C96B42ECC8>\nrun_id = '67320ac44c1947d994f0d793c4ecc67b'\nlocal_path = RandomForestClassifier(random_state=42), artifact_path = 'model'\n\n    def log_artifact(self, run_id, local_path, artifact_path=None):\n        \"\"\"\n        Write a local file or directory to the remote ``artifact_uri``.\n    \n        :param local_path: Path to the file or directory to write.\n        :param artifact_path: If provided, the directory in ``artifact_uri`` to write to.\n        \"\"\"\n        artifact_repo = self._get_artifact_repo(run_id)\n>       if os.path.isdir(local_path):\nE       TypeError: _isdir: path should be string, bytes or os.PathLike, not RandomForestClassifier\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\_tracking_service\\client.py:453: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - TypeError: _isdir: ...\n1 failed in 11.32s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: _isdir: path should be string, bytes or os.PathLike, not RandomForestClassifier"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\fluent.py:780: in log_artifact\n    MlflowClient().log_artifact(run_id, local_path, artifact_path)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\client.py:1136: in log_artifact\n    self._tracking_client.log_artifact(run_id, local_path, artifact_path)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <mlflow.tracking._tracking_service.client.TrackingServiceClient object at 0x000001C96B42ECC8>\nrun_id = '67320ac44c1947d994f0d793c4ecc67b'\nlocal_path = RandomForestClassifier(random_state=42), artifact_path = 'model'\n\n    def log_artifact(self, run_id, local_path, artifact_path=None):\n        \"\"\"\n        Write a local file or directory to the remote ``artifact_uri``.\n    \n        :param local_path: Path to the file or directory to write.\n        :param artifact_path: If provided, the directory in ``artifact_uri`` to write to.\n        \"\"\"\n        artifact_repo = self._get_artifact_repo(run_id)\n>       if os.path.isdir(local_path):\nE       TypeError: _isdir: path should be string, bytes or os.PathLike, not RandomForestClassifier\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\_tracking_service\\client.py:453: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - TypeError: _isdir: ...\n1 failed in 11.32s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: _isdir: path should be string, bytes or os.PathLike, not RandomForestClassifier"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

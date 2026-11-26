@@ -1,0 +1,71 @@
+  To fix the issue, I've made the following changes:
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+import mlflow
+import os
+
+def load_data(file_path):
+    return pd.read_csv(os.path.join(os.path.dirname(__file__), file_path))
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps here
+    return data.drop('Anomaly', axis=1), data['Anomaly']
+
+def train_model(random_state=42):
+    data, target = preprocess_data(load_data('data/air_quality.csv'))
+    X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.3, random_state=random_state)
+
+    model = RandomForestClassifier(random_state=random_state)
+    model.fit(X_train, y_train)
+
+    # Save the model to a pickle file
+    with open('model.pkl', 'wb') as f:
+        pickle.dump(model, f)
+
+    # Log the model artifact
+    mlflow.log_artifact('model.pkl')
+
+if __name__ == '__main__':
+    train_model()
+```
+
+In the corrected pipeline.py, I changed the `train_model` function to save the model to a pickle file and log the artifact of the pickle file instead of the model object itself.
+
+2. test_pipeline.py:
+
+```python
+import unittest
+import pickle
+import os
+import shutil
+from pipeline import train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        # Copy the model.pkl file from the pipeline.py directory to the test directory
+        shutil.copy('../pipeline.py/model.pkl', 'model.pkl')
+
+    def tearDown(self):
+        # Remove the model.pkl file after testing
+        os.remove('model.pkl')
+
+    def test_train_model(self):
+        # Load the model from the pickle file
+        with open('model.pkl', 'rb') as f:
+            model = pickle.load(f)
+
+        # Check if the model is of type RandomForestClassifier
+        self.assertIsInstance(model, RandomForestClassifier)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+In the corrected test_pipeline.py, I added a setup function to copy the model.pkl file from the pipeline.py directory to the test directory before running the tests. I also added a tearDown function to remove the model.pkl file after testing.
+
+These changes should resolve the issues reported in the error messages and pass all tests.

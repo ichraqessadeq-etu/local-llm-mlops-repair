@@ -1,0 +1,28 @@
+  I apologize for the confusion. It appears that the `tracking` module does not contain a `start_run()` function in MLflow 1.30.1. Instead, you can use `mlflow.start_run()` to start a new run and log artifacts.
+
+Here's the corrected `pipeline.py`:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, pyfunc, start_run
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps here
+    return data, data['Amount']
+
+def train_model(X_train, y_train, random_state=42):
+    with start_run():
+        model = RandomForestClassifier(random_state=random_state)
+        model.fit(X_train, y_train)
+        pyfunc.log_model(model, "model", registered_model_name="RandomForestFraudDetector")
+
+    return model
+```
+
+I've replaced the `tracking.start_run()` with `mlflow.start_run()` in the `train_model` function to resolve the AttributeError issue.

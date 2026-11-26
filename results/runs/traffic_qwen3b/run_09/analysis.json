@@ -1,0 +1,53 @@
+{
+  "run": 9,
+  "cost": {
+    "prompt_tokens": 164,
+    "completion_tokens": 1235,
+    "truncated": false,
+    "seconds": 154.0
+  },
+  "extraction": {
+    "n_blocks": 5,
+    "python_parse": [
+      "OK",
+      "OK",
+      "FAIL:invalid syntax"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 4,
+    "asserts": 3
+  },
+  "pytest": {
+    "passed": 2,
+    "failed": 2,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "37007    0\n7643     0\n        ..\n6265     0\n11284    0\n38158    0\n860      0\n15795    0\nName: Congestion, Length: 32451, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier model.\"\"\"\n        try:\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n            return model\n        except Exception as e:\n>           raise Exception(f\"Error training model: {e}\")\nE           Exception: Error training model: could not convert string to float: 'Rain'\n\npipeline.py:43: Exception\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - Exception: Error training model: ...\nFAILED test_pipeline.py::test_save_model - Exception: Error training model: c...\n2 failed, 2 passed in 8.86s",
+    "all_pass": false,
+    "failure_hint": "other"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

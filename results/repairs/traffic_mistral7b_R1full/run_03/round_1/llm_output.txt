@@ -1,0 +1,59 @@
+ To fix the issues, I've made the following changes:
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import trace_experiment, pyfunc, log_param, log_artifact, set_experiment, seed_experiment
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps like filling NaN, encoding categorical variables, etc.
+    # For simplicity, I'm assuming that the data is already preprocessed.
+    return data['Features'], data['Congestion']
+
+def train_model(X_train, y_train):
+    set_experiment('RandomForestCongestionDetector')
+    seed_experiment(42)  # Set a seed for reproducibility
+    with mlflow.start_run():
+        tracked_model = pyfunc.track_experiment('RandomForestCongestionDetector')
+        model = RandomForestClassifier(random_state=42)  # Add random_state for reproducibility
+        model.fit(X_train, y_train)
+        tracked_model.log_model(model)
+        log_param('num_trees', model.n_estimators)
+        log_artifact('model.pkl', model)
+```
+
+2. test_pipeline.py:
+
+```python
+import unittest
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/traffic.csv')
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        data = pd.DataFrame({'Features': [1, 2, 3], 'Congestion': [0, 1, 0]})
+        X, y = preprocess_data(data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        data = pd.DataFrame({'Features': [[1, 2, 3, 4, 5, 6, 7, 8, 9, 0], [0]],
+                              ['Features': [[2, 3, 4, 5, 6, 7, 8, 9, 0, 1]], ['1']})
+        X_train, y_train = preprocess_data(data)
+        train_model(X_train, y_train)
+        # You can add more tests to check the model's performance
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+In the corrected pipeline.py, I added the `seed_experiment` function call to set a seed for reproducibility and added `random_state` to the RandomForestClassifier constructor. In the corrected test_pipeline.py, I added a test for the preprocess_data function and a test for the train_model function that creates some sample data for testing.

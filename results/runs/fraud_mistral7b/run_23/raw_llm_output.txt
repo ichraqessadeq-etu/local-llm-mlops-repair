@@ -1,0 +1,104 @@
+ I'll provide you with an outline for the requested components. Due to the limitations of this platform, I can't directly write and execute code, but I can certainly guide you through the process.
+
+1. pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Perform necessary data preprocessing such as handling missing values, encoding categorical variables, etc.
+    # For simplicity, I'll assume that no preprocessing is required in this example.
+    return data['Features'], data['Class']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random_forest")
+
+    return model
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/fraud.csv')
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        data = load_data('data/fraud.csv')
+        X, y = preprocess_data(data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        data = load_data('data/fraud.csv')
+        X, y = preprocess_data(data)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+        model = train_model(X_train, y_train)
+        # Add assertions to check the model's performance on the test set
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+3. GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up MLflow
+      uses: mlflow/mlflow-docker@v1
+      with:
+        dockerfile: Dockerfile
+        mlflow-version: '1.21.0'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Test
+      run: pytest test_pipeline.py
+
+    - name: Train and Log Model
+      run: python pipeline.py
+
+    - name: Publish Docker Image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: my-mlflow-image:latest
+```
+
+This example assumes that you have a Dockerfile in your repository to set up the necessary environment for MLflow. You can create a Dockerfile if you don't have one already.
+
+Don't forget to add your requirements in a `requirements.txt` file.
+
+```
+pandas
+pytest
+mlflow
+```
+
+This pipeline will run on every push and pull request, ensuring that your model is trained and tested correctly. The trained model will be logged using MLflow and can be easily deployed for production use.

@@ -1,0 +1,120 @@
+Here is the code for the production-ready CI/CD pipeline:
+
+**pipeline.py**
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow.sklearn
+import mlflow
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    try:
+        # Define features and target column
+        features = ['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH', 'AH', 'Hour', 'DayOfWeek', 'Month']
+        target = 'Anomaly'
+
+        # Split data into features and target
+        X = data[features]
+        y = data[target]
+
+        # Split data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+        # Scale features using StandardScaler
+        scaler = StandardScaler()
+        X_train_scaled = scaler.fit_transform(X_train)
+        X_test_scaled = scaler.transform(X_test)
+
+        return X_train_scaled, X_test_scaled, y_train, y_test
+    except Exception as e:
+        print(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        # Train RandomForest model
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+
+        # Log model to MLflow
+        mlflow.sklearn.log_model(model, "random_forest_model")
+
+        return model
+    except Exception as e:
+        print(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/air_quality.csv')
+        self.assertIsNotNone(data)
+
+    def test_preprocess_data(self):
+        data = load_data('data/air_quality.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        self.assertIsNotNone(X_train)
+        self.assertIsNotNone(X_test)
+        self.assertIsNotNone(y_train)
+        self.assertIsNotNone(y_test)
+
+    def test_train_model(self):
+        data = load_data('data/air_quality.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_train)
+        self.assertIsNotNone(model)
+```
+
+**.github/workflows/ci_cd.yml**
+```yaml
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: Install dependencies
+        run: |
+          pip install mlflow scikit-learn
+
+      - name: Run tests
+        run: |
+          pytest test_pipeline.py
+
+      - name: Train and deploy model
+        run: |
+          python pipeline.py
+          mlflow ui
+```
+
+This pipeline uses GitHub Actions to automate the build, test, and deployment process. The `pipeline.py` module defines the functions for loading data, preprocessing data, and training the model. The `test_pipeline.py` module contains unit tests for these functions. The `.github/workflows/ci_cd.yml` file defines the CI/CD pipeline, which runs on push to the main branch.
+
+Note that this pipeline assumes that the `air_quality.csv` file is located in the `data` directory. You may need to adjust the file path and other settings to match your specific use case.

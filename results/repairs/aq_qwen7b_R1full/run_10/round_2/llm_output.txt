@@ -1,0 +1,79 @@
+The error indicates that the `RandomForestClassifier` is not being found in the `sklearn.model_selection` module. This could be due to a version mismatch or an incorrect import statement. Let's ensure that the correct import statement is used and that the necessary packages are installed.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess data to separate features and target."""
+    X = data.drop(columns=['Anomaly'])
+    y = data['Anomaly']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier model."""
+    with mlflow.start_run():
+        mlflow.log_param("model", "RandomForestClassifier")
+        model = RandomForestClassifier(random_state=42)  # Add random_state for reproducibility
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "model")
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+        return model
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test data loading."""
+    data = load_data('data/air_quality.csv')
+    assert not data.empty
+
+def test_preprocess_data():
+    """Test data preprocessing."""
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    assert X.shape[1] == 19  # 18 features + 1 target
+    assert y.shape[0] == X.shape[0]
+
+def test_train_model():
+    """Test model training."""
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+```
+
+### Summary of Changes:
+1. **`pipeline.py`**:
+   - Removed the import of `train_test_split` as it is not needed here.
+
+2. **`test_pipeline.py`**:
+   - Ensured that `RandomForestClassifier` is imported from `sklearn.ensemble` instead of `sklearn.model_selection`.
+
+### Additional Steps:
+1. **Install Required Packages**: Ensure that the necessary packages are installed in your environment.
+   ```sh
+   pip install pandas scikit-learn mlflow
+   ```
+
+2. **Verify Imports**: Verify that the imports are correct and that the packages are installed correctly.
+
+By making these changes, the `RandomForestClassifier` should be correctly imported, and the tests should pass.

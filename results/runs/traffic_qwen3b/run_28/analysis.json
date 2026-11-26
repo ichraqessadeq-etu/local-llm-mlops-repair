@@ -1,0 +1,52 @@
+{
+  "run": 28,
+  "cost": {
+    "prompt_tokens": 164,
+    "completion_tokens": 1368,
+    "truncated": false,
+    "seconds": 139.3
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 11
+  },
+  "pytest": {
+    "passed": 1,
+    "failed": 2,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "0    20        0        0          50 ...ruary        NaN\n4    30        0        0          60  ...   10    Tuesday  November        NaN\n\n[5 rows x 10 columns]\n\n    def test_train_model(data):\n        \"\"\"Test model training.\"\"\"\n        try:\n            X, y = preprocess_data(data)\n            model = train_model(X, y)\n            assert isinstance(model, RandomForestClassifier)\n            assert model.n_estimators == 100\n            assert model.random_state == 42\n        except Exception as e:\n>           assert False, f\"Test failed: {e}\"\nE           AssertionError: Test failed: Input contains NaN\nE           assert False\n\ntest_pipeline.py:49: AssertionError\n------------------------------ Captured log call ------------------------------\nERROR    pipeline:pipeline.py:54 Failed to train model: Input contains NaN\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - AssertionError: Test failed: argume...\nFAILED test_pipeline.py::test_train_model - AssertionError: Test failed: Inpu...\n2 failed, 1 passed in 3.57s",
+    "all_pass": false,
+    "failure_hint": "assertion"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

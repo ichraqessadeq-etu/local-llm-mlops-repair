@@ -1,0 +1,151 @@
+Sure, here is a production-ready CI/CD pipeline for a RandomForest congestion detector. The pipeline includes a Python module `pipeline.py` with functions for loading and preprocessing data, training the model, and a pytest file `test_pipeline.py` for testing. Additionally, a GitHub Actions YAML file is provided to automate the pipeline.
+
+### 1. `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        raise ValueError(f"Failed to load data: {e}")
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    try:
+        # Handle categorical variables
+        data['weather_main'] = data['weather_main'].astype('category').cat.codes
+        
+        # Split data into features and target
+        X = data.drop(columns=['Congestion'])
+        y = data['Congestion']
+        
+        # Split data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        return X_train, X_test, y_train, y_test
+    except Exception as e:
+        raise ValueError(f"Failed to preprocess data: {e}")
+
+def train_model(X_train, y_train):
+    """Train the RandomForest model."""
+    try:
+        # Initialize MLflow experiment
+        mlflow.set_experiment("traffic-congestion-detection")
+        
+        # Start MLflow run
+        with mlflow.start_run():
+            # Set parameters
+            mlflow.log_param("n_estimators", 100)
+            mlflow.log_param("max_depth", 10)
+            
+            # Train model
+            model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)
+            model.fit(X_train, y_train)
+            
+            # Log model
+            mlflow.sklearn.log_model(model, "model")
+            
+            # Log metrics
+            y_pred = model.predict(X_train)
+            accuracy = accuracy_score(y_train, y_pred)
+            mlflow.log_metric("train_accuracy", accuracy)
+            
+            return model
+    except Exception as e:
+        raise ValueError(f"Failed to train model: {e}")
+```
+
+### 2. `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test data loading."""
+    data = load_data('data/traffic.csv')
+    assert not data.empty
+    assert 'Congestion' in data.columns
+
+def test_preprocess_data():
+    """Test data preprocessing."""
+    data = load_data('data/traffic.csv')
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    assert not X_train.empty
+    assert not y_train.empty
+    assert not X_test.empty
+    assert not y_test.empty
+
+def test_train_model():
+    """Test model training."""
+    data = load_data('data/traffic.csv')
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    assert model is not None
+    assert hasattr(model, 'predict')
+```
+
+### 3. GitHub Actions YAML (`github/workflows/ci-cd.yml`)
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: pytest
+
+    - name: Train model and log to MLflow
+      run: |
+        python pipeline.py
+```
+
+### 4. `requirements.txt`
+
+```txt
+pandas
+scikit-learn
+mlflow
+pytest
+```
+
+### Explanation:
+
+1. **`pipeline.py`**: This module contains functions to load, preprocess, and train the model. It also logs the model and metrics using MLflow.
+2. **`test_pipeline.py`**: This pytest file tests the data loading, preprocessing, and model training functions.
+3. **GitHub Actions YAML**: This file automates the pipeline. It checks out the code, sets up Python, installs dependencies, runs tests, and trains the model using MLflow.
+
+Make sure to replace `'data/traffic.csv'` with the correct path to your data file. Also, ensure that you have the necessary permissions and configurations for MLflow to log the model and metrics.

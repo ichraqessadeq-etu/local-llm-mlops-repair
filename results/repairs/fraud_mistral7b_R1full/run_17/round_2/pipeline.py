@@ -1,0 +1,29 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_param, log_artifact, start_run, pyfunc, end_run
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps here
+    return data, data['Amount'].astype('int')
+
+def train_model(X_train, y_train):
+    with start_run():
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        pyfunc.log_model(model, "random_forest")
+        return model
+
+def serialize_model(model):
+    import pickle
+    with open("model.pkl", "wb") as f:
+        pickle.dump(model, f)
+
+def load_model():
+    import pickle
+    with open("model.pkl", "rb") as f:
+        return pickle.load(f)

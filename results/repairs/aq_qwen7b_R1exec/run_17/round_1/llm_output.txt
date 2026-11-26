@@ -1,0 +1,77 @@
+It seems like the `log_model` function is not available in the version of MLflow you are using. Instead, you can use `mlflow.sklearn.log_model` to log the model. Let's update the `pipeline.py` and `test_pipeline.py` accordingly.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from mlflow import log_param, log_metric
+from mlflow.sklearn import log_model
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess the data by separating features and target."""
+    X = data.drop(columns=['Anomaly'])
+    y = data['Anomaly']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier and log metrics using MLflow."""
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
+    
+    # Log model parameters
+    log_param("n_estimators", model.n_estimators)
+    log_param("random_state", model.random_state)
+    
+    # Log model metrics
+    y_pred = model.predict(X_train)
+    accuracy = accuracy_score(y_train, y_pred)
+    log_metric("accuracy", accuracy)
+    
+    # Log the model
+    log_model(model, "random_forest_model")
+    
+    return model
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/air_quality.csv')
+    assert isinstance(data, pd.DataFrame)
+    assert 'Anomaly' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+    assert len(X) == len(y)
+
+def test_train_model():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert isinstance(model, RandomForestClassifier)
+```
+
+### Explanation
+
+1. **`pipeline.py`**:
+   - Changed the import statement for `log_model` to `from mlflow.sklearn import log_model`.
+   - This ensures that the `log_model` function is correctly imported from the `mlflow.sklearn` module.
+
+2. **`test_pipeline.py`**:
+   - No changes were needed in this file as it only imports functions from `pipeline.py`.
+
+With these changes, the `pytest` should run successfully without any import errors.

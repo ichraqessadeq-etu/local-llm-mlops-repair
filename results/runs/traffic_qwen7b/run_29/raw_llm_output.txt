@@ -1,0 +1,167 @@
+### 1. Python Module: `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+from mlflow.models.signature import infer_signature
+from mlflow.models import ModelSignature, ModelInputExample
+from mlflow.types.schema import Schema, ColSpec
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess data for model training."""
+    # Handle missing values
+    data.fillna(method='ffill', inplace=True)
+    data.fillna(method='bfill', inplace=True)
+
+    # Convert categorical variables to numerical
+    data['weather_main'] = data['weather_main'].astype('category').cat.codes
+    data['IsHoliday'] = data['IsHoliday'].astype('category').cat.codes
+
+    # Split features and target
+    X = data.drop(columns=['Congestion'])
+    y = data['Congestion']
+
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier."""
+    with mlflow.start_run():
+        mlflow.log_param("model", "RandomForestClassifier")
+        mlflow.log_param("features", list(X_train.columns))
+        mlflow.log_param("target", "Congestion")
+
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+
+        # Log model
+        mlflow.sklearn.log_model(model, "model")
+
+        # Log metrics
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("train_accuracy", accuracy)
+
+        # Infer model signature
+        input_example = X_train.iloc[:5]
+        signature = infer_signature(input_example, model.predict(input_example))
+
+        # Log model signature
+        mlflow.log_model(model, "model", signature=signature)
+
+        return model
+```
+
+### 2. Pytest File: `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test data loading."""
+    data = load_data('data/traffic.csv')
+    assert not data.empty
+    assert 'Congestion' in data.columns
+
+def test_preprocess_data():
+    """Test data preprocessing."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert not X.empty
+    assert not y.empty
+    assert 'Congestion' not in X.columns
+
+def test_train_model():
+    """Test model training."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+    y_pred = model.predict(X_test)
+    assert not y_pred.empty
+```
+
+### 3. GitHub Actions YAML: `.github/workflows/ci-cd.yml`
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: pytest test_pipeline.py
+
+    - name: Train model
+      run: python pipeline.py
+
+    - name: Push MLflow model to MLflow Tracking Server
+      run: |
+        mlflow models serve --model-uri mlruns/0/$(mlflow search runs --max-results 1 --order-by "start_time desc" --output-format json | jq -r '.[0].run_id') --port 5000
+      env:
+        MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+        MLFLOW_EXPERIMENT_NAME: traffic-congestion
+
+    - name: Deploy model to production
+      run: |
+        mlflow models serve --model-uri mlruns/0/$(mlflow search runs --max-results 1 --order-by "start_time desc" --output-format json | jq -r '.[0].run_id') --port 5000
+      env:
+        MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+        MLFLOW_EXPERIMENT_NAME: traffic-congestion
+```
+
+### 4. Requirements File: `requirements.txt`
+
+```txt
+pandas==1.3.3
+scikit-learn==0.24.2
+mlflow==1.20.0
+jq==1.6
+```
+
+### 5. MLflow Tracking Server
+
+Ensure you have an MLflow tracking server running and accessible. You can set up a local MLflow server by running:
+
+```sh
+mlflow server --backend-store-uri sqlite:///mlflow.db --artifacts-destination ./mlruns
+```
+
+### 6. Secrets
+
+Add the following secrets to your GitHub repository:
+
+- `MLFLOW_TRACKING_URI`: The URL of your MLflow tracking server.
+
+This setup provides a complete CI/CD pipeline for training and deploying a RandomForest congestion detector for a smart city traffic management system.

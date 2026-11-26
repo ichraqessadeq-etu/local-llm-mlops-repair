@@ -1,0 +1,53 @@
+{
+  "run": 18,
+  "cost": {
+    "prompt_tokens": 220,
+    "completion_tokens": 1216,
+    "truncated": false,
+    "seconds": 289.3
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK",
+      "FAIL:invalid syntax"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 8
+  },
+  "pytest": {
+    "passed": 1,
+    "failed": 2,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        \"\"\"Test the preprocess_data function.\"\"\"\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n>       assert isinstance(X, np.ndarray)\nE       NameError: name 'np' is not defined\n\ntest_pipeline.py:14: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:23: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'np' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n2 failed, 1 passed in 15.79s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "MlflowException: Path 'model' already exists and is not empty"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

@@ -1,0 +1,81 @@
+ I'm an AI model and can't directly execute or manage files, but I can certainly help you design the structure and code for your CI/CD pipeline. Here's a high-level overview of how you might set this up:
+
+1. **pipeline.py**
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps like filling missing values, encoding categorical variables, etc.
+    # For simplicity, I'm assuming that the data is already preprocessed
+    return data['Features'], data['Congestion']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.log_artifact(model, "models")
+        mlflow.log_metric("train_loss", model.fit_params['loss'])
+
+    return model
+```
+
+2. **test_pipeline.py**
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        df = load_data('data/traffic.csv')
+        self.assertIsInstance(df, pd.DataFrame)
+
+    # Add more test cases for preprocess_data and train_model functions
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+3. **GitHub Actions YAML**
+
+```yaml
+name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install pandas sklearn mlflow pytest
+
+    - name: Test
+      run: pytest test_pipeline.py
+
+    - name: Train and Evaluate Model
+      run: python pipeline.py
+
+    - name: Upload Artifacts
+      uses: mlflow/mlflow-github-action@v2
+      with:
+        track: dev
+        artifact_path: '.'
+```
+
+This pipeline uses MLflow for model training and tracking, pytest for unit testing, and GitHub Actions for continuous integration and deployment. The `train_model` function logs the trained model and the training loss as artifacts and metrics, respectively. The GitHub Actions workflow runs tests and trains the model on every push or pull request.

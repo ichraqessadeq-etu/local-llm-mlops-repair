@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+y_train = 4761    0
+5110    1
+1894    0
+3796    0
+864     1
+       ..
+3772    0
+5191    0
+5226    0
+5390    0
+860     0
+Name: Anomaly, Length: 5806, dtype: int64
+
+    def train_model(X_train, y_train):
+        with mlflow.start_run():
+            model = RandomForestClassifier(random_state=42)
+            model.fit(X_train, y_train)
+            model_path = f'model.pkl'
+>           mlflow.save_model(model, model_path)
+E           AttributeError: module 'mlflow' has no attribute 'save_model'
+
+pipeline.py:18: AttributeError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: mod...
+1 failed, 2 passed in 3.77s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

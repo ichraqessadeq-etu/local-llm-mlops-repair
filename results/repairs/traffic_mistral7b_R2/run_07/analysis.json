@@ -1,0 +1,149 @@
+{
+  "run": 7,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 16
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "______________________ TestPipeline.test_preprocess_data ______________________\n\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def test_preprocess_data(self):\n        data = load_data(\"data/traffic.csv\")\n>       X, y = preprocess_data(data)\nE       ValueError: too many values to unpack (expected 2)\n\ntest_pipeline.py:11: ValueError\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n        data = load_data(\"data/traffic.csv\")\n>       X, y = preprocess_data(data)\nE       ValueError: too many values to unpack (expected 2)\n\ntest_pipeline.py:17: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - ValueError: too...\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: too man...\n3 failed in 3.24s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 1 import(s): import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n______________________ TestPipeline.test_preprocess_data ______________________\n\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def test_preprocess_data(self):\n        data = load_data(\"data/traffic.csv\")\n>       X, y = preprocess_data(data)\nE       ValueError: too many values to unpack (expected 2)\n\ntest_pipeline.py:12: ValueError\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n        data = load_data(\"data/traffic.csv\")\n>       X, y = preprocess_data(data)\nE       ValueError: too many values to unpack (expected 2)\n\ntest_pipeline.py:18: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - ValueError: too...\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: too man...\n2 failed, 1 passed in 3.27s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n______________________ TestPipeline.test_preprocess_data ______________________\n\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def test_preprocess_data(self):\n        data = load_data(\"data/traffic.csv\")\n>       X, y = preprocess_data(data)\nE       ValueError: too many values to unpack (expected 2)\n\ntest_pipeline.py:12: ValueError\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n        data = load_data(\"data/traffic.csv\")\n>       X, y = preprocess_data(data)\nE       ValueError: too many values to unpack (expected 2)\n\ntest_pipeline.py:18: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - ValueError: too...\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: too man...\n2 failed, 1 passed in 3.27s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

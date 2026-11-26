@@ -1,0 +1,110 @@
+It appears that the `train_test_split` function is not being recognized in the test environment. This could be due to an issue with the import statement or the environment setup. Let's ensure that all necessary imports are included and that the environment is correctly set up.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    # Drop rows with missing values
+    data = data.dropna()
+    
+    # Convert categorical variables to numerical
+    data['weather_main'] = data['weather_main'].astype('category').cat.codes
+    
+    # Split data into features and target
+    X = data.drop(columns=['Congestion'])
+    y = data['Congestion']
+    
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model."""
+    with mlflow.start_run():
+        # Set MLflow parameters
+        mlflow.log_param("model", "RandomForestClassifier")
+        mlflow.log_param("features", X_train.columns.tolist())
+        
+        # Train the model
+        model = RandomForestClassifier(random_state=42)  # Add random_state for reproducibility
+        model.fit(X_train, y_train)
+        
+        # Log the model
+        mlflow.sklearn.log_model(model, "model")
+        
+        # Log metrics
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+        
+        return model
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test data loading."""
+    data = load_data('data/traffic.csv')
+    assert not data.empty
+
+def test_preprocess_data():
+    """Test data preprocessing."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert not X.empty
+    assert not y.empty
+    assert 'Congestion' not in X.columns
+
+def test_train_model():
+    """Test model training."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+```
+
+### Additional Steps to Ensure Environment is Correct
+
+1. **Ensure `train_test_split` is Imported**:
+   - Make sure that `train_test_split` is imported from `sklearn.model_selection` in both `pipeline.py` and `test_pipeline.py`.
+
+2. **Check Environment Setup**:
+   - Ensure that the environment where you are running the tests has all the necessary packages installed. You can create a `requirements.txt` file and use `pip install -r requirements.txt` to install the required packages.
+
+3. **Verify File Paths**:
+   - Ensure that the file path `'data/traffic.csv'` is correct and accessible from the environment where the tests are being run.
+
+### `requirements.txt`
+
+```txt
+pandas
+scikit-learn
+mlflow
+pytest
+```
+
+### Running the Tests
+
+Run the tests using the following command:
+
+```sh
+pytest
+```
+
+This should now pass without any errors. If you still encounter issues, double-check the environment setup and file paths.

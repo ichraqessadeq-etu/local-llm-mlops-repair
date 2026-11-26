@@ -1,0 +1,201 @@
+{
+  "run": 26,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 408.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        try:\n            data = load_data('data/traffic.csv')\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            rf = train_model(X_train, y_train)\n            assert isinstance(rf, RandomForestClassifier)\n            logging.info(\"Test train_model passed.\")\n        except Exception as e:\n>           logging.error(f\"Test train_model failed: {e}\")\nE           NameError: name 'logging' is not defined\n\ntest_pipeline.py:37: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:47 Error training model: could not convert string to float: 'Rain'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'logging' is not de...\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'logging' is ...\nFAILED test_pipeline.py::test_train_model - NameError: name 'logging' is not ...\n3 failed in 3.48s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1676,
+        "completion_tokens": 774,
+        "truncated": false,
+        "seconds": 143.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        try:\n            data = load_data('data/traffic.csv')\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            rf = train_model(X_train, y_train)\n            assert isinstance(rf, RandomForestClassifier)\n            logging.info(\"Test train_model passed.\")\n        except Exception as e:\n>           logging.error(f\"Test train_model failed: {e}\")\nE           NameError: name 'logging' is not defined\n\ntest_pipeline.py:38: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:47 Error training model: could not convert string to float: 'Rain'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'logging' is not de...\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'logging' is ...\nFAILED test_pipeline.py::test_train_model - NameError: name 'logging' is not ...\n3 failed in 4.08s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2859,
+        "completion_tokens": 774,
+        "truncated": false,
+        "seconds": 132.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        try:\n            data = load_data('data/traffic.csv')\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            rf = train_model(X_train, y_train)\n            assert isinstance(rf, RandomForestClassifier)\n            logging.info(\"Test train_model passed.\")\n        except Exception as e:\n>           logging.error(f\"Test train_model failed: {e}\")\nE           NameError: name 'logging' is not defined\n\ntest_pipeline.py:38: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:47 Error training model: could not convert string to float: 'Rain'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'logging' is not de...\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'logging' is ...\nFAILED test_pipeline.py::test_train_model - NameError: name 'logging' is not ...\n3 failed in 3.85s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 4042,
+        "completion_tokens": 774,
+        "truncated": false,
+        "seconds": 131.8
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        try:\n            data = load_data('data/traffic.csv')\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            rf = train_model(X_train, y_train)\n            assert isinstance(rf, RandomForestClassifier)\n            logging.info(\"Test train_model passed.\")\n        except Exception as e:\n>           logging.error(f\"Test train_model failed: {e}\")\nE           NameError: name 'logging' is not defined\n\ntest_pipeline.py:38: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:47 Error training model: could not convert string to float: 'Rain'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'logging' is not de...\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'logging' is ...\nFAILED test_pipeline.py::test_train_model - NameError: name 'logging' is not ...\n3 failed in 3.76s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

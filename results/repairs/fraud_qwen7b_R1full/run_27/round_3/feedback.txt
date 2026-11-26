@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+            mlflow_model = Model()
+    
+        custom_model_config_kwargs = {
+            CONFIG_KEY_CLOUDPICKLE_VERSION: cloudpickle.__version__,
+        }
+        if isinstance(python_model, PythonModel):
+            saved_python_model_subpath = "python_model.pkl"
+            with open(os.path.join(path, saved_python_model_subpath), "wb") as out:
+                cloudpickle.dump(python_model, out)
+            custom_model_config_kwargs[CONFIG_KEY_PYTHON_MODEL] = saved_python_model_subpath
+        else:
+            raise MlflowException(
+                message=(
+                    "`python_model` must be a subclass of `PythonModel`. Instead, found an"
+                    " object of type: {python_model_type}".format(python_model_type=type(python_model))
+                ),
+>               error_code=INVALID_PARAMETER_VALUE,
+            )
+E           mlflow.exceptions.MlflowException: `python_model` must be a subclass of `PythonModel`. Instead, found an object of type: <class 'sklearn.ensemble._forest.RandomForestClassifier'>
+
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\mlflow\pyfunc\model.py:172: MlflowException
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...
+FAILED test_pipeline.py::test_save_load_model - mlflow.exceptions.MlflowExcep...
+2 failed, 2 passed in 21.06s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

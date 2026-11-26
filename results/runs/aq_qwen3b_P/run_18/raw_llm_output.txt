@@ -1,0 +1,171 @@
+### pipeline.py
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+def load_data(file_path):
+    """Load the dataset from the specified file path."""
+    try:
+        data = pd.read_csv(file_path)
+        logging.info("Data loaded successfully.")
+        return data
+    except FileNotFoundError:
+        logging.error("File not found.")
+        raise
+    except pd.errors.EmptyDataError:
+        logging.error("Empty data file.")
+        raise
+
+def preprocess_data(data):
+    """Preprocess the data by handling missing values and encoding categorical variables."""
+    try:
+        # Handle missing values
+        data.fillna(method='ffill', inplace=True)
+        
+        # Encode categorical variables
+        data['DayOfWeek'] = data['DayOfWeek'].map({'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4, 'Saturday': 5, 'Sunday': 6})
+        
+        # Split features and target
+        X = data.drop('Anomaly', axis=1)
+        y = data['Anomaly']
+        
+        logging.info("Data preprocessed successfully.")
+        return X, y
+    except Exception as e:
+        logging.error(f"Preprocessing error: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier model."""
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        logging.info("Model trained successfully.")
+        return model
+    except Exception as e:
+        logging.error(f"Model training error: {e}")
+        raise
+
+def save_model(model, file_path):
+    """Save the trained model to the specified file path."""
+    try:
+        mlflow.sklearn.save_model(model, file_path)
+        logging.info("Model saved successfully.")
+    except Exception as e:
+        logging.error(f"Model saving error: {e}")
+        raise
+```
+
+### test_pipeline.py
+
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model, save_model
+import pandas as pd
+
+@pytest.fixture
+def data():
+    # Create a sample dataset
+    data = pd.DataFrame({
+        'PT08.S1(CO)': [10, 20, 30, 40, 50],
+        'PT08.S2(NMHC)': [15, 25, 35, 45, 55],
+        'PT08.S3(NOx)': [20, 30, 40, 50, 60],
+        'PT08.S4(NO2)': [25, 35, 45, 55, 65],
+        'PT08.S5(O3)': [30, 40, 50, 60, 70],
+        'NOx(GT)': [35, 45, 55, 65, 75],
+        'C6H6(GT)': [40, 50, 60, 70, 80],
+        'T': [45, 55, 65, 75, 85],
+        'RH': [50, 60, 70, 80, 90],
+        'AH': [55, 65, 75, 85, 95],
+        'Hour': [1, 2, 3, 4, 5],
+        'DayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        'Month': [1, 2, 3, 4, 5],
+        'Anomaly': [0, 1, 0, 1, 0]
+    })
+    return data
+
+def test_load_data(data):
+    """Test the load_data function."""
+    try:
+        loaded_data = load_data('data/air_quality.csv')
+        assert loaded_data.equals(data), "Data loading failed."
+        logging.info("Data loading test passed.")
+    except Exception as e:
+        logging.error(f"Data loading test failed: {e}")
+
+def test_preprocess_data(data):
+    """Test the preprocess_data function."""
+    try:
+        X, y = preprocess_data(data)
+        assert len(X.columns) == 11, "Incorrect number of features."
+        assert len(y) == 5, "Incorrect number of target values."
+        logging.info("Data preprocessing test passed.")
+    except Exception as e:
+        logging.error(f"Data preprocessing test failed: {e}")
+
+def test_train_model(data):
+    """Test the train_model function."""
+    try:
+        X, y = preprocess_data(data)
+        model = train_model(X, y)
+        assert isinstance(model, RandomForestClassifier), "Model training failed."
+        logging.info("Model training test passed.")
+    except Exception as e:
+        logging.error(f"Model training test failed: {e}")
+
+def test_save_model(data):
+    """Test the save_model function."""
+    try:
+        X, y = preprocess_data(data)
+        model = train_model(X, y)
+        save_model(model, 'model.pkl')
+        logging.info("Model saving test passed.")
+    except Exception as e:
+        logging.error(f"Model saving test failed: {e}")
+```
+
+### GitHub Actions YAML
+
+```yaml
+name: MLOps Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7'
+
+    - name: Install dependencies
+      run: |
+        pip install mlflow==1.30.1 scikit-learn==1.0.2 pytest
+
+    - name: Run tests
+      run: |
+        pytest
+
+    - name: Train and save model
+      run: |
+        python pipeline.py
+```
+
+This pipeline includes a CI/CD setup using GitHub Actions to automate the data loading, preprocessing, model training, and saving process. The pipeline is designed to handle errors and log all operations for better traceability.

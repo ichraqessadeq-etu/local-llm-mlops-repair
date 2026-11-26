@@ -1,0 +1,248 @@
+{
+  "run": 1,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": false,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "file_or_path",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 474.3,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "1916    0\n4630    0\n4786    0\n2876    0\n3832    0\nName: Anomaly, Length: 1452, dtype: int64)\n\n    def test_train_model(data):\n        \"\"\"Test training the model.\"\"\"\n        X_train, y_train, _, _ = data\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:30: NameError\n----------------------------- Captured log setup ------------------------------\nINFO     pipeline:pipeline.py:16 Data loaded successfully.\nINFO     pipeline:pipeline.py:39 Data preprocessed successfully.\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:54 Model trained successfully.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: DID NOT RAISE <class 'FileN...\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n3 failed, 1 passed in 26.94s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 0,
+      "phase": "R2",
+      "step": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "F...                                                                     [100%]\n================================== FAILURES ===================================\n_______________________________ test_load_data ________________________________\n\n    def test_load_data():\n        \"\"\"Test loading data.\"\"\"\n        file_path = 'data/air_quality.csv'\n        with pytest.raises(FileNotFoundError):\n>           load_data(file_path)\nE           Failed: DID NOT RAISE <class 'FileNotFoundError'>\n\ntest_pipeline.py:18: Failed\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:16 Data loaded successfully.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: DID NOT RAISE <class 'FileN...\n1 failed, 3 passed in 8.13s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1354,
+        "completion_tokens": 858,
+        "truncated": false,
+        "seconds": 170.3
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "F...                                                                     [100%]\n================================== FAILURES ===================================\n_______________________________ test_load_data ________________________________\n\n    def test_load_data():\n        \"\"\"Test loading data.\"\"\"\n        file_path = 'data/air_quality.csv'\n        with pytest.raises(FileNotFoundError):\n>           load_data(file_path)\nE           Failed: DID NOT RAISE <class 'FileNotFoundError'>\n\ntest_pipeline.py:18: Failed\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:16 Data loaded successfully.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: DID NOT RAISE <class 'FileN...\n1 failed, 3 passed in 7.67s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2501,
+        "completion_tokens": 858,
+        "truncated": false,
+        "seconds": 144.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "F...                                                                     [100%]\n================================== FAILURES ===================================\n_______________________________ test_load_data ________________________________\n\n    def test_load_data():\n        \"\"\"Test loading data.\"\"\"\n        file_path = 'data/air_quality.csv'\n        with pytest.raises(FileNotFoundError):\n>           load_data(file_path)\nE           Failed: DID NOT RAISE <class 'FileNotFoundError'>\n\ntest_pipeline.py:18: Failed\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:16 Data loaded successfully.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: DID NOT RAISE <class 'FileN...\n1 failed, 3 passed in 10.69s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3649,
+        "completion_tokens": 858,
+        "truncated": false,
+        "seconds": 159.3
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "F...                                                                     [100%]\n================================== FAILURES ===================================\n_______________________________ test_load_data ________________________________\n\n    def test_load_data():\n        \"\"\"Test loading data.\"\"\"\n        file_path = 'data/air_quality.csv'\n        with pytest.raises(FileNotFoundError):\n>           load_data(file_path)\nE           Failed: DID NOT RAISE <class 'FileNotFoundError'>\n\ntest_pipeline.py:18: Failed\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:16 Data loaded successfully.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: DID NOT RAISE <class 'FileN...\n1 failed, 3 passed in 9.34s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

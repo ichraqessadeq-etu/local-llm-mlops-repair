@@ -1,0 +1,52 @@
+{
+  "run": 1,
+  "cost": {
+    "prompt_tokens": 220,
+    "completion_tokens": 1500,
+    "truncated": true,
+    "seconds": 180.7
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 4,
+    "asserts": 10
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 0,
+    "errors": 4,
+    "returncode": 1,
+    "tail": "\n    @pytest.fixture\n    def data():\n        # Load a sample dataset for testing\n>       data = pd.DataFrame({\n            'temp': [20, 22, 18, 25, 21],\n            'rain_1h': [0, 1, 0, 1, 0],\n            'snow_1h': [0, 0, 1, 0, 0],\n            'clouds_all': [50, 70, 30, 80, 60],\n            'weather_main': ['Clear', 'Clouds', 'Rain', 'Snow', 'Clear'],\n            'IsHoliday': [0, 1, 0, 1, 0],\n            'Hour': [8, 14, 10, 16, 12],\n            'DayOfWeek': [1, 2, 3, 4, 5],\n            'Month': [1, 2, 3, 4, 5],\n            'Congestion': [0, 1, 0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:7: NameError\n=========================== short test summary info ===========================\nERROR test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not de...\nERROR test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_save_model - NameError: name 'pd' is not defined\n4 errors in 5.55s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

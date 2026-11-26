@@ -1,0 +1,133 @@
+Here is the code for the CI/CD pipeline:
+
+**pipeline.py**
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        mlflow.log_error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    try:
+        # One-hot encoding for categorical features
+        data = pd.get_dummies(data, columns=['weather_main', 'IsHoliday', 'DayOfWeek', 'Month'])
+        
+        # Scale numerical features
+        scaler = StandardScaler()
+        data[['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'Hour']] = scaler.fit_transform(data[['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'Hour']])
+        
+        # Split data into features (X) and target (y)
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+        
+        return X, y
+    except Exception as e:
+        mlflow.log_error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        # Train a RandomForest classifier
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        
+        # Log the model with MLflow
+        mlflow.sklearn.log_model(model, "random_forest")
+        
+        return model
+    except Exception as e:
+        mlflow.log_error(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/traffic.csv')
+    assert data is not None
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert X is not None
+    assert y is not None
+
+def test_train_model():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert model is not None
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Train model
+        run: |
+          python pipeline.py train_model
+
+      - name: Test pipeline
+        run: |
+          pytest test_pipeline.py
+
+      - name: Log model with MLflow
+        run: |
+          mlflow run . -m pipeline.py train_model
+
+      - name: Deploy model
+        uses: appleboy/ssh-action@v0.3.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            mkdir -p /path/to/model
+            cp /path/to/model/random_forest.pkl /path/to/model/
+```
+
+This pipeline assumes that you have a `requirements.txt` file with the following dependencies:
+```
+pandas==1.0.3
+scikit-learn==1.0.2
+mlflow==1.30.1
+```
+You'll need to create a GitHub repository and add the pipeline files to it. You'll also need to create a secrets file with your SSH credentials (host, username, password) to deploy the model.
+
+Note that this pipeline uses MLflow to log the model and deploy it to a remote location. You'll need to configure MLflow to use your desired tracking server and storage.
+
+Also, this pipeline assumes that you have a `traffic.csv` file in the `data` directory with the correct format. You'll need to modify the pipeline to match your specific data format and requirements.

@@ -1,0 +1,53 @@
+  It seems that the issue is caused by using an outdated version of MLflow (1.30.1) that doesn't have the `log_metric` function. To fix the issue, you can upgrade MLflow to the latest version (1.29.0 at the time of writing) and update the `log_metric` import accordingly.
+
+Here are the corrected files:
+
+```python
+# pipeline.py
+import mlflow
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow.tracking import log_artifact, log_param
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    return (data['Features'], data['Class'])
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        log_param('random_state', 42)
+        log_artifact(X_train, 'X_train')
+        log_artifact(y_train, 'y_train')
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.pyfunc.log_model(pyfunc.DistributedModel.from_flask(model), artifact_path='model')
+        print(f'Model with version {mlflow.get_run_id()} has been saved.')
+```
+
+```python
+# test_pipeline.py
+import pandas as pd
+from sklearn.model_selection import train_test_split
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/fraud.csv')
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        data = load_data('data/fraud.csv')
+        X, y = preprocess_data(data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        data = load_data('data/fraud.csv')
+        X, y = preprocess_data(data)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+        train_model(X_train, y_train)
+```

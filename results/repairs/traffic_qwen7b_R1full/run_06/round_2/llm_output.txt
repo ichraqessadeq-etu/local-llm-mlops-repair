@@ -1,0 +1,86 @@
+The error indicates that there is a string value in the 'Rain' column that cannot be converted to a float. We need to handle this missing or incorrect data before proceeding with the model training.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        raise Exception(f"Failed to load data: {e}")
+
+def preprocess_data(data):
+    """Preprocess data by separating features and target."""
+    try:
+        # Drop rows with missing values in the target column
+        data = data.dropna(subset=['Congestion'])
+        
+        # Convert 'Rain_1h' to numeric, handling non-numeric values
+        data['Rain_1h'] = pd.to_numeric(data['Rain_1h'], errors='coerce')
+        
+        X = data.drop(columns=['Congestion'])
+        y = data['Congestion']
+        return X, y
+    except Exception as e:
+        raise Exception(f"Failed to preprocess data: {e}")
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier."""
+    try:
+        with mlflow.start_run():
+            model = RandomForestClassifier(n_estimators=100, random_state=42)
+            model.fit(X_train, y_train)
+            mlflow.log_param("n_estimators", 100)
+            mlflow.sklearn.log_model(model, "model")
+            return model
+    except Exception as e:
+        raise Exception(f"Failed to train model: {e}")
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test the load_data function."""
+    data = load_data('data/traffic.csv')
+    assert not data.empty
+
+def test_preprocess_data():
+    """Test the preprocess_data function."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert not X.empty
+    assert not y.empty
+
+def test_train_model():
+    """Test the train_model function."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    y_pred = model.predict(X_test)
+    assert accuracy_score(y_test, y_pred) > 0.5
+```
+
+### Explanation
+
+1. **`pipeline.py`**:
+    - **Drop rows with missing values in the target column**: This ensures that we don't train the model with incomplete data.
+    - **Convert 'Rain_1h' to numeric, handling non-numeric values**: This converts the 'Rain_1h' column to numeric, replacing any non-numeric values with `NaN` (handled by `errors='coerce'`).
+
+2. **`test_pipeline.py`**: This file remains unchanged as it was already correct.
+
+These changes should resolve the `ValueError` and ensure that all tests pass.

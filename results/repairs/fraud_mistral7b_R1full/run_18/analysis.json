@@ -1,0 +1,208 @@
+{
+  "run": 18,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": false,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: The least populated class in y has only 1 member, which is too few. The minimum number of groups for any class cannot be less than 2."
+  },
+  "repair_seconds": 934.1,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 16
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "______________________ TestPipeline.test_preprocess_data ______________________\n\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def test_preprocess_data(self):\n        data, _ = preprocess_data(load_data(\"data/fraud.csv\"))\n>       self.assertIsInstance(data, pd.DataFrame)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:11: NameError\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n        data, y = preprocess_data(load_data(\"data/fraud.csv\"))\n>       X_train, X_test, y_train, y_test = train_test_split(data.drop('Class', axis=1), y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:15: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'tr...\n3 failed in 4.67s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: The least populated class in y has only 1 member, which is too few. The minimum number of groups for any class cannot be less than 2."
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1655,
+        "completion_tokens": 629,
+        "truncated": false,
+        "seconds": 372.2
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "7270   75499.0 -0.572851  1.151788  ...  0.032408  0.034631    0.76\n\n[8000 rows x 30 columns]\ny_train = 9254     78.17\n1561     41.25\n1670    338.00\n6087     24.90\n6669     60.00\n         ...  \n5734      9.95\n5191      7.00\n5390     75.62\n860      59.75\n7270      0.76\nName: Amount, Length: 8000, dtype: float64\nrandom_state = 42\n\n    def train_model(X_train, y_train, random_state=42):\n>       with mlflow.start_run():\nE       NameError: name 'mlflow' is not defined\n\npipeline.py:15: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'ml...\n1 failed, 2 passed in 4.89s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: The least populated class in y has only 1 member, which is too few. The minimum number of groups for any class cannot be less than 2."
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=no"
+      ],
+      "cost": {
+        "prompt_tokens": 2758,
+        "completion_tokens": 309,
+        "truncated": false,
+        "seconds": 279.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "7270   75499.0 -0.572851  1.151788  ...  0.032408  0.034631    0.76\n\n[8000 rows x 30 columns]\ny_train = 9254     78.17\n1561     41.25\n1670    338.00\n6087     24.90\n6669     60.00\n         ...  \n5734      9.95\n5191      7.00\n5390     75.62\n860      59.75\n7270      0.76\nName: Amount, Length: 8000, dtype: float64\nrandom_state = 42\n\n    def train_model(X_train, y_train, random_state=42):\n>       with tracking.start_run():  # Replace 'mlflow.start_run()' with 'tracking.start_run()'\nE       AttributeError: module 'mlflow.tracking' has no attribute 'start_run'\n\npipeline.py:15: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: mod...\n1 failed, 2 passed in 4.59s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: The least populated class in y has only 1 member, which is too few. The minimum number of groups for any class cannot be less than 2."
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=no"
+      ],
+      "cost": {
+        "prompt_tokens": 3569,
+        "completion_tokens": 329,
+        "truncated": false,
+        "seconds": 282.3
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        \"\"\"Ensure that target y is of a non-regression type.\n    \n        Only the following target types (as defined in type_of_target) are allowed:\n            'binary', 'multiclass', 'multiclass-multioutput',\n            'multilabel-indicator', 'multilabel-sequences'\n    \n        Parameters\n        ----------\n        y : array-like\n        \"\"\"\n        y_type = type_of_target(y)\n        if y_type not in [\n            \"binary\",\n            \"multiclass\",\n            \"multiclass-multioutput\",\n            \"multilabel-indicator\",\n            \"multilabel-sequences\",\n        ]:\n>           raise ValueError(\"Unknown label type: %r\" % y_type)\nE           ValueError: Unknown label type: 'continuous'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\multiclass.py:197: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: Unknown...\n1 failed, 2 passed in 5.38s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: The least populated class in y has only 1 member, which is too few. The minimum number of groups for any class cannot be less than 2."
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

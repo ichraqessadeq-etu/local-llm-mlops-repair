@@ -1,0 +1,77 @@
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow
+import logging
+import sklearn
+
+def load_data(file_path):
+    """Load data from CSV file"""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        logging.error(f'Error loading data: {e}')
+        raise
+
+def preprocess_data(data):
+    """Preprocess data by encoding categorical variables and scaling numerical variables"""
+    try:
+        data['weather_main'] = pd.Categorical(data['weather_main']).codes
+        data['Hour'] = pd.Categorical(data['Hour']).codes
+        data['DayOfWeek'] = pd.Categorical(data['DayOfWeek']).codes
+        data['Month'] = pd.Categorical(data['Month']).codes
+        scaler = StandardScaler()
+        data[['temp', 'rain_1h', 'snow_1h', 'clouds_all']] = scaler.fit_transform(data[['temp', 'rain_1h', 'snow_1h', 'clouds_all']])
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+        return (X, y)
+    except Exception as e:
+        logging.error(f'Error preprocessing data: {e}')
+        raise
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model"""
+    try:
+        mlflow.sklearn.log_model(RandomForestClassifier(n_estimators=100, random_state=42), 'random_forest_model')
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.log_metric('accuracy', model.score(X_train, y_train))
+        return model
+    except Exception as e:
+        logging.error(f'Error training model: {e}')
+        raise
+```
+
+```python
+import pytest
+import mlflow
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/traffic.csv')
+    assert data.shape[0] > 0
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert X.shape[0] > 0
+    assert y.shape[0] > 0
+
+def test_train_model(tmp_path):
+    mlflow.start_run()
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+    mlflow.log_artifact('model.pkl', artifact_path='models')
+    mlflow.end_run()
+```
+
+The changes made were:
+
+1. Added `import mlflow` at the beginning of `test_pipeline.py` to import the `mlflow` module.
+2. Added `mlflow.log_artifact('model.pkl', artifact_path='models')` to log the trained model as an artifact.

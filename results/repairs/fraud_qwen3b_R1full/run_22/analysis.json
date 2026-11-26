@@ -1,0 +1,201 @@
+{
+  "run": 22,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 515.1,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 4,
+        "returncode": 1,
+        "tail": "test_pipeline.py:7: NameError\n_____________________ ERROR at setup of test_train_model ______________________\n\n    @pytest.fixture\n    def data():\n        # Load a small subset of the dataset for testing\n>       data = pd.read_csv('data/fraud.csv', nrows=1000)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:7: NameError\n____________________ ERROR at setup of test_evaluate_model ____________________\n\n    @pytest.fixture\n    def data():\n        # Load a small subset of the dataset for testing\n>       data = pd.read_csv('data/fraud.csv', nrows=1000)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:7: NameError\n=========================== short test summary info ===========================\nERROR test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not de...\nERROR test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not def...\n4 errors in 3.29s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1956,
+        "completion_tokens": 847,
+        "truncated": false,
+        "seconds": 162.4
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "..F.                                                                     [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\ndata =          Time        V1        V2        V3  ...       V27       V28  Amount  Class\n0     81072.0  0.152504 -0.529875 ...30      0\n999  148887.0 -0.106930  1.244002 -0.010788  ...  0.435829  0.240035    4.60      0\n\n[1000 rows x 31 columns]\n\n    def test_train_model(data):\n        \"\"\"Test the train_model function.\"\"\"\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:27: NameError\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:28 Data preprocessed successfully.\nINFO     pipeline:pipeline.py:39 Model trained successfully.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n1 failed, 3 passed in 4.45s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3271,
+        "completion_tokens": 848,
+        "truncated": false,
+        "seconds": 142.8
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "..F.                                                                     [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\ndata =          Time        V1        V2        V3  ...       V27       V28  Amount  Class\n0     81072.0  0.152504 -0.529875 ...30      0\n999  148887.0 -0.106930  1.244002 -0.010788  ...  0.435829  0.240035    4.60      0\n\n[1000 rows x 31 columns]\n\n    def test_train_model(data):\n        \"\"\"Test the train_model function.\"\"\"\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:27: NameError\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:28 Data preprocessed successfully.\nINFO     pipeline:pipeline.py:39 Model trained successfully.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n1 failed, 3 passed in 4.45s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3044,
+        "completion_tokens": 848,
+        "truncated": false,
+        "seconds": 209.9
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "..F.                                                                     [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\ndata =          Time        V1        V2        V3  ...       V27       V28  Amount  Class\n0     81072.0  0.152504 -0.529875 ...30      0\n999  148887.0 -0.106930  1.244002 -0.010788  ...  0.435829  0.240035    4.60      0\n\n[1000 rows x 31 columns]\n\n    def test_train_model(data):\n        \"\"\"Test the train_model function.\"\"\"\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:27: NameError\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:28 Data preprocessed successfully.\nINFO     pipeline:pipeline.py:39 Model trained successfully.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n1 failed, 3 passed in 4.58s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+  The issue is caused by using an outdated version of scikit-learn (1.0.2) that doesn't support the `type_of_target` function. To fix this, you can update the scikit-learn version to a more recent one (e.g., 1.0.2) and then modify the `pipeline.py` file accordingly.
+
+Here's the corrected `pipeline.py` file:
+
+```python
+import mlflow
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.utils.multiclass import type_of_target
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    return (data.drop('Amount', axis=1), data['Amount'])
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.pyfunc.log_model(model, 'model')
+        mlflow.log_artifact(artifact_path='model', artifact_rel_path='models')
+        mlflow.log_metric('training_loss', model.loss_)
+        mlflow.log_metric('training_score', model.score_)
+
+        # Check if the target y is of a non-regression type
+        y_type = type_of_target(y_train)
+        if y_type not in [
+            "binary",
+            "multiclass",
+            "multiclass-multioutput",
+            "multilabel-indicator",
+            "multilabel-sequences",
+        ]:
+            raise ValueError("Unknown label type: %r" % y_type)
+```
+
+And here's the corrected `test_pipeline.py` file:
+
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+@pytest.fixture(scope="module")
+def data():
+    return load_data("data/fraud.csv")
+
+def test_pipeline(data):
+    X, y = preprocess_data(data)
+    train_model(X_train=X, y_train=y)
+```
+
+These corrected files should pass the tests and not have any violation.

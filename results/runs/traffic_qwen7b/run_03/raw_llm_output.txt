@@ -1,0 +1,110 @@
+Sure, here's a production-ready CI/CD pipeline for a RandomForest congestion detector. The pipeline includes a Python module `pipeline.py` with functions to load and preprocess data, train a model, and a pytest file `test_pipeline.py` for testing. Additionally, a GitHub Actions YAML file is provided to automate the pipeline.
+
+### 1. Python Module `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    data = pd.read_csv(file_path)
+    return data
+
+def preprocess_data(data):
+    """Preprocess data to prepare it for modeling."""
+    # Assuming 'Congestion' is the target column
+    X = data.drop(columns=['Congestion'])
+    y = data['Congestion']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier model."""
+    with mlflow.start_run():
+        mlflow.log_param("model", "RandomForestClassifier")
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "model")
+        mlflow.log_metric("accuracy", accuracy_score(y_train, model.predict(X_train)))
+        return model
+```
+
+### 2. Pytest File `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/traffic.csv')
+    assert isinstance(data, pd.DataFrame)
+    assert not data.empty
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+    assert not X.empty
+    assert not y.empty
+
+def test_train_model():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+    assert model.n_estimators == 100
+    assert model.random_state == 42
+```
+
+### 3. GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline for RandomForest Congestion Detector
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas scikit-learn mlflow pytest
+
+    - name: Run tests
+      run: pytest test_pipeline.py
+
+    - name: Train model and log to MLflow
+      run: |
+        python pipeline.py
+      env:
+        MLFLOW_TRACKING_URI: "http://mlflow-server:5000"  # Replace with your MLflow server URL
+        MLFLOW_EXPERIMENT_NAME: "RandomForest Congestion Detector"
+```
+
+### Notes:
+1. **MLflow Setup**: Ensure you have an MLflow server running and accessible at the specified `MLFLOW_TRACKING_URI`.
+2. **Environment Variables**: The `MLFLOW_TRACKING_URI` and `MLFLOW_EXPERIMENT_NAME` should be set appropriately in your GitHub Actions workflow.
+3. **Data Path**: Ensure the data file `traffic.csv` is available in the `data` directory relative to the script.
+
+This pipeline will automatically run tests and train the model whenever changes are pushed to the `main` branch or a pull request is opened against it.

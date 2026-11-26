@@ -1,0 +1,54 @@
+{
+  "run": 19,
+  "cost": {
+    "prompt_tokens": 261,
+    "completion_tokens": 1500,
+    "truncated": true,
+    "seconds": 156.4
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 6,
+    "asserts": 7
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 6,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "6412    0\n8285    0\n7853    0\n1095    0\n6929    0\nName: Class, Length: 2000, dtype: int64\n\n    def evaluate(model, X_test, y_test):\n        \"\"\"Evaluate the model's performance.\"\"\"\n        try:\n>           accuracy = accuracy_score(y_test, y_pred)\nE           NameError: name 'y_pred' is not defined\n\npipeline.py:60: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:64 Error evaluating model: name 'y_pred' is not defined\nERROR    root:pipeline.py:78 Pipeline failed: name 'y_pred' is not defined\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_predict - NameError: name 'train_test_split' is...\nFAILED test_pipeline.py::test_evaluate - NameError: name 'train_test_split' i...\nFAILED test_pipeline.py::test_run_pipeline - NameError: name 'y_pred' is not ...\n6 failed in 7.15s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": true,
+    "auprc": 0.9071,
+    "f1": 0.9,
+    "n_test": 2000
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

@@ -1,0 +1,52 @@
+{
+  "run": 5,
+  "cost": {
+    "prompt_tokens": 261,
+    "completion_tokens": 1105,
+    "truncated": false,
+    "seconds": 111.7
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 4,
+    "asserts": 6
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 4,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "            model = RandomForestClassifier(n_estimators=100, random_state=42)\n    \n            # Train the model\n            model.fit(X_train, y_train)\n    \n            # Evaluate the model\n            y_pred = model.predict(X_test)\n            accuracy = accuracy_score(y_test, y_pred)\n    \n            # Log metrics and parameters\n            mlflow.log_metric(\"accuracy\", accuracy)\n            mlflow.log_param(\"n_estimators\", model.n_estimators)\n    \n            return model\n        except Exception as e:\n>           raise ValueError(f\"Model training error: {e}\")\nE           ValueError: Model training error: name 'X_test' is not defined\n\npipeline.py:49: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - ValueError: Model training error:...\nFAILED test_pipeline.py::test_save_model - ValueError: Model training error: ...\n4 failed in 11.53s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

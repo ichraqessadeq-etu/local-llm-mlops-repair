@@ -1,0 +1,149 @@
+{
+  "run": 23,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "assertion",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9071,
+    "f1": 0.9,
+    "n_test": 2000
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            'Time': [1, 2, 3],\n            'V1': [4, 5, 6],\n            'V2': [7, 8, 9],\n            'Class': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:9: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n>       data = pd.DataFrame({\n            'Time': [1, 2, 3],\n            'V1': [4, 5, 6],\n            'V2': [7, 8, 9],\n            'Class': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:20: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\n3 failed in 10.05s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): import pandas as pd; from sklearn.model_selection import train_test_split"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = pd.DataFrame({\n            'Time': [1, 2, 3],\n            'V1': [4, 5, 6],\n            'V2': [7, 8, 9],\n            'Class': [0, 1, 0]\n        })\n        X, y = pipeline.preprocess_data(data)\n>       assert isinstance(X, pd.DataFrame)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([[-1.22474487, -1.22474487, -1.22474487],\\n       [ 0.        ,  0.        ,  0.        ],\\n       [ 1.22474487,  1.22474487,  1.22474487]]), <class 'pandas.core.frame.DataFrame'>)\nE        +    where <class 'pandas.core.frame.DataFrame'> = pd.DataFrame\n\ntest_pipeline.py:18: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 10.63s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = pd.DataFrame({\n            'Time': [1, 2, 3],\n            'V1': [4, 5, 6],\n            'V2': [7, 8, 9],\n            'Class': [0, 1, 0]\n        })\n        X, y = pipeline.preprocess_data(data)\n>       assert isinstance(X, pd.DataFrame)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([[-1.22474487, -1.22474487, -1.22474487],\\n       [ 0.        ,  0.        ,  0.        ],\\n       [ 1.22474487,  1.22474487,  1.22474487]]), <class 'pandas.core.frame.DataFrame'>)\nE        +    where <class 'pandas.core.frame.DataFrame'> = pd.DataFrame\n\ntest_pipeline.py:18: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 10.63s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

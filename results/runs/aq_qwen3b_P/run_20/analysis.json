@@ -1,0 +1,59 @@
+{
+  "run": 20,
+  "cost": {
+    "prompt_tokens": 262,
+    "completion_tokens": 1423,
+    "truncated": false,
+    "seconds": 182.9
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": true,
+      "rvh_violations": [
+        {
+          "kind": "RVH",
+          "rule": "unseeded_estimator",
+          "detail": "RandomForestClassifier(...) called without random_state",
+          "lineno": 38
+        }
+      ],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 6
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 3,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "        \"\"\"Test training the model.\"\"\"\n>       data = pd.DataFrame({\n            'PT08.S1(CO)': [1, 2, 3],\n            'PT08.S2(NMHC)': [4, 5, 6],\n            'PT08.S3(NOx)': [7, 8, 9],\n            'PT08.S4(NO2)': [10, 11, 12],\n            'PT08.S5(O3)': [13, 14, 15],\n            'NOx(GT)': [16, 17, 18],\n            'C6H6(GT)': [19, 20, 21],\n            'T': [22, 23, 24],\n            'RH': [25, 26, 27],\n            'AH': [28, 29, 30],\n            'Hour': [31, 32, 33],\n            'DayOfWeek': [34, 35, 36],\n            'Month': [37, 38, 39],\n            'Anomaly': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:35: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\n3 failed in 3.95s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": true,
+  "is_iih": false
+}

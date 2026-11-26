@@ -1,0 +1,52 @@
+{
+  "run": 6,
+  "cost": {
+    "prompt_tokens": 261,
+    "completion_tokens": 1307,
+    "truncated": false,
+    "seconds": 137.5
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 5,
+    "asserts": 7
+  },
+  "pytest": {
+    "passed": 2,
+    "failed": 3,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "6412    0\n8285    0\n7853    0\n1095    0\n6929    0\nName: Class, Length: 2000, dtype: int64)\n\n    def test_train_model(data):\n        \"\"\"Test the train_model function.\"\"\"\n        X_train, X_test, y_train, y_test = data\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:30: NameError\n----------------------------- Captured log setup ------------------------------\nINFO     pipeline:pipeline.py:16 Data loaded successfully.\nINFO     pipeline:pipeline.py:28 Data preprocessed successfully.\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:39 Model trained successfully.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n3 failed, 2 passed in 17.16s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

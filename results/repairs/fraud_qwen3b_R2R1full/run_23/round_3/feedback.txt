@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+        input_features : array-like of str or None, default=None
+            Input features.
+    
+        Returns
+        -------
+        feature_names_out : ndarray of str objects
+            Transformed feature names.
+        """
+        feature_names_out = input_features
+        for _, name, transform in self._iter():
+            if not hasattr(transform, "get_feature_names_out"):
+                raise AttributeError(
+                    "Estimator {} does not provide get_feature_names_out. "
+                    "Did you mean to call pipeline[:-1].get_feature_names_out"
+>                   "()?".format(name)
+                )
+E               AttributeError: Estimator imputer does not provide get_feature_names_out. Did you mean to call pipeline[:-1].get_feature_names_out()?
+
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\sklearn\pipeline.py:754: AttributeError
+------------------------------ Captured log call ------------------------------
+ERROR    root:pipeline.py:65 Error preprocessing data: Estimator imputer does not provide get_feature_names_out. Did you mean to call pipeline[:-1].get_feature_names_out()?
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_preprocess_data - AttributeError: Estimator imp...
+FAILED test_pipeline.py::test_train_model - AttributeError: Estimator imputer...
+2 failed, 1 passed in 3.66s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

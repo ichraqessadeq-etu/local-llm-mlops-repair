@@ -1,0 +1,53 @@
+ I apologize for the confusion. It seems that the issue persists. To fix the KeyError, we need to ensure that the data is loaded correctly in the test cases. Here's the updated code:
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps like filling NaN, encoding categorical variables, etc.
+    # For simplicity, I'm assuming that the data is already preprocessed
+    return data['Features'], data['Congestion']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random-forest")
+
+    return model
+```
+
+2. test_pipeline.py:
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/traffic.csv')
+
+    def test_load_data(self):
+        self.assertTrue(self.data.columns.get_loc('Features') != -1)
+        self.assertTrue(self.data.columns.get_loc('Congestion') != -1)
+
+    def test_preprocess_data(self):
+        X, y = preprocess_data(self.data)
+        self.assertTrue(X.shape[1] > 0)
+        self.assertTrue(y.shape[0] > 0)
+
+    def test_train_model(self):
+        X, y = preprocess_data(self.data)
+        model = train_model(X, y)
+        # Add assertions to check if the model is trained correctly
+```
+
+In this updated version, I've added a `setUp` method in the test case class to load the data once before running the tests. This ensures that the data is loaded correctly for all tests.

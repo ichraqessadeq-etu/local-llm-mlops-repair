@@ -1,0 +1,52 @@
+{
+  "run": 7,
+  "cost": {
+    "prompt_tokens": 262,
+    "completion_tokens": 1272,
+    "truncated": false,
+    "seconds": 161.1
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 5,
+    "asserts": 8
+  },
+  "pytest": {
+    "passed": 1,
+    "failed": 4,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "        \"\"\"Test evaluating the model.\"\"\"\n>       data = pd.DataFrame({\n            'PT08.S1(CO)': [1, 2, 3],\n            'Anomaly': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:33: NameError\n__________________________________ test_main __________________________________\n\n    def test_main():\n        \"\"\"Test the main function.\"\"\"\n        with pytest.raises(ValueError):\n>           main(\"nonexistent_file.csv\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\ntest_pipeline.py:45: Failed\n---------------------------- Captured stdout call -----------------------------\nError: File not found.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not de...\nFAILED test_pipeline.py::test_main - Failed: DID NOT RAISE <class 'ValueError'>\n4 failed, 1 passed in 4.61s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

@@ -1,0 +1,74 @@
+It seems there was a misunderstanding. The error `NameError: name 'RandomForestClassifier' is not defined` indicates that the `RandomForestClassifier` class is not imported. Let's correct this by importing the `RandomForestClassifier` from `sklearn.ensemble`.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess the data by separating features and target."""
+    X = data.drop(columns=['Class'])
+    y = data['Class']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model and log it using MLflow."""
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)  # Add random_state for reproducibility
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random_forest_model")  # Use mlflow.sklearn.log_model
+        mlflow.log_param("n_estimators", 100)
+        mlflow.log_param("max_depth", None)
+        mlflow.log_metric("accuracy", accuracy_score(y_train, model.predict(X_train)))
+        return model
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier  # Import RandomForestClassifier
+
+def test_load_data():
+    """Test the load_data function."""
+    data = load_data('data/fraud.csv')
+    assert not data.empty
+    assert 'Class' in data.columns
+
+def test_preprocess_data():
+    """Test the preprocess_data function."""
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    assert X.shape[1] == 29  # 29 features
+    assert y.shape[0] == X.shape[0]  # Same number of samples
+
+def test_train_model():
+    """Test the train_model function."""
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+    assert isinstance(model, RandomForestClassifier)
+```
+
+### Explanation of Changes:
+
+1. **`pipeline.py`**:
+   - No changes needed here.
+
+2. **`test_pipeline.py`**:
+   - Imported `RandomForestClassifier` from `sklearn.ensemble` to avoid the `NameError`.
+
+With these changes, both the tests and the static checks should pass successfully.

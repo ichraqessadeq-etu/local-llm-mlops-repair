@@ -1,0 +1,263 @@
+{
+  "run": 19,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": false,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "file_or_path",
+  "weakened_final": false,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "FileNotFoundError: [Errno 2] No such file or directory: 'models\\\\random_forest_mock.pkl'"
+  },
+  "repair_seconds": 1140.4,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 16
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def test_train_model(self):\n        data = load_data(\"data/air_quality.csv\")\n>       X, y = preprocess_data(data)\n\ntest_pipeline.py:17: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ndata =       PT08.S1(CO)  PT08.S2(NMHC)  PT08.S3(NOx)  ...  DayOfWeek  Month  Anomaly\n0          1360.0         1046.0       ...    4        0\n7257       1071.0         1047.0         654.0  ...          0      4        0\n\n[7258 rows x 14 columns]\n\n    def preprocess_data(data):\n        # Perform any necessary data preprocessing such as normalization, encoding, etc.\n        # For simplicity, I'll assume no preprocessing is required.\n>       return data[Features], data['Anomaly']\nE       NameError: name 'Features' is not defined\n\npipeline.py:12: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'Fe...\n3 failed in 3.17s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "NameError: name 'Features' is not defined"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 0,
+      "phase": "R2",
+      "step": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 2 import(s): import pandas as pd; from sklearn.model_selection import train_test_split"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n        data = load_data(\"data/air_quality.csv\")\n>       X, y = preprocess_data(data)\n\ntest_pipeline.py:19: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ndata =       PT08.S1(CO)  PT08.S2(NMHC)  PT08.S3(NOx)  ...  DayOfWeek  Month  Anomaly\n0          1360.0         1046.0       ...    4        0\n7257       1071.0         1047.0         654.0  ...          0      4        0\n\n[7258 rows x 14 columns]\n\n    def preprocess_data(data):\n>       return (data[Features], data['Anomaly'])\nE       NameError: name 'Features' is not defined\n\npipeline.py:10: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'Fe...\n2 failed, 1 passed in 2.99s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "NameError: name 'Features' is not defined"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1247,
+        "completion_tokens": 721,
+        "truncated": false,
+        "seconds": 252.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        \"\"\"\n        if _samefile(src, dst):\n            raise SameFileError(\"{!r} and {!r} are the same file\".format(src, dst))\n    \n        for fn in [src, dst]:\n            try:\n                st = os.stat(fn)\n            except OSError:\n                # File most likely does not exist\n                pass\n            else:\n                # XXX What about other special files? (sockets, devices...)\n                if stat.S_ISFIFO(st.st_mode):\n                    raise SpecialFileError(\"`%s` is a named pipe\" % fn)\n    \n        if not follow_symlinks and os.path.islink(src):\n            os.symlink(os.readlink(src), dst)\n        else:\n>           with open(src, 'rb') as fsrc:\nE           FileNotFoundError: [Errno 2] No such file or directory: 'models/random_forest_dde51b7250e5465e852e28e641838592.pkl'\n\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\shutil.py:120: FileNotFoundError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - FileNotFoundError: ...\n1 failed, 2 passed in 4.06s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "FileNotFoundError: [Errno 2] No such file or directory: 'models/random_forest_a3110911c6e841159623ab0c519f779d.pkl'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2475,
+        "completion_tokens": 898,
+        "truncated": false,
+        "seconds": 416.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 16
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "self = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def setUp(self):\n        # Mock model file for tests\n        model_path = os.path.join('models', f'random_forest_mock.pkl')\n>       with open(model_path, 'wb') as f:\nE       FileNotFoundError: [Errno 2] No such file or directory: 'models\\\\random_forest_mock.pkl'\n\ntest_pipeline.py:15: FileNotFoundError\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def setUp(self):\n        # Mock model file for tests\n        model_path = os.path.join('models', f'random_forest_mock.pkl')\n>       with open(model_path, 'wb') as f:\nE       FileNotFoundError: [Errno 2] No such file or directory: 'models\\\\random_forest_mock.pkl'\n\ntest_pipeline.py:15: FileNotFoundError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - FileNotFoundError: [E...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - FileNotFoundErr...\nFAILED test_pipeline.py::TestPipeline::test_train_model - FileNotFoundError: ...\n3 failed in 3.18s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "FileNotFoundError: [Errno 2] No such file or directory: 'models\\\\random_forest_584e34c2057848a781c3ee10838f7e62.pkl'"
+      },
+      "is_rvh": true,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3928,
+        "completion_tokens": 879,
+        "truncated": false,
+        "seconds": 471.1
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "self = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def setUp(self):\n        # Mock model file for tests\n        model_path = os.path.join('models', f'random_forest_mock.pkl')\n>       with open(model_path, 'wb') as f:\nE       FileNotFoundError: [Errno 2] No such file or directory: 'models\\\\random_forest_mock.pkl'\n\ntest_pipeline.py:15: FileNotFoundError\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def setUp(self):\n        # Mock model file for tests\n        model_path = os.path.join('models', f'random_forest_mock.pkl')\n>       with open(model_path, 'wb') as f:\nE       FileNotFoundError: [Errno 2] No such file or directory: 'models\\\\random_forest_mock.pkl'\n\ntest_pipeline.py:15: FileNotFoundError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - FileNotFoundError: [E...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - FileNotFoundErr...\nFAILED test_pipeline.py::TestPipeline::test_train_model - FileNotFoundError: ...\n3 failed in 3.02s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "FileNotFoundError: [Errno 2] No such file or directory: 'models\\\\random_forest_mock.pkl'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

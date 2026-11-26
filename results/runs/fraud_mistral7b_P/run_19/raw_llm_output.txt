@@ -1,0 +1,103 @@
+ Here's a simplified version of the requested structure. Please note that this is a basic example and may need to be adjusted to fit your specific needs.
+
+1. pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, track, pyfunc, run_local
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps here
+    return data.drop('Class', axis=1), data['Class']
+
+def train_model(X_train, y_train):
+    model = RandomForestClassifier()
+    model.fit(X_train, y_train)
+    track(f"model.params", model.get_params())
+    return model
+
+def save_model(model, artifact_path):
+    pyfunc.save_model(model, artifact_path)
+    log_artifact(artifact_path)
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+from unittest.mock import patch
+from pipeline import load_data, preprocess_data, train_model, save_model
+
+class TestPipeline(unittest.TestCase):
+    @patch('pipeline.pd.read_csv')
+    def test_load_data(self, mock_read_csv):
+        mock_data = pd.DataFrame()
+        mock_read_csv.return_value = mock_data
+        result = load_data('data/fraud.csv')
+        self.assertEqual(result, mock_data)
+
+    @patch('pipeline.pd.DataFrame')
+    def test_preprocess_data(self, mock_df):
+        mock_df_return_value = mock_df(columns=['V1', 'V2'])
+        mock_df.return_value = mock_df_return_value
+        data = load_data('data/fraud.csv')
+        X, y = preprocess_data(data)
+        self.assertTrue(isinstance(X, pd.DataFrame))
+        self.assertTrue(isinstance(y, pd.Series))
+
+    @patch('pipeline.RandomForestClassifier')
+    def test_train_model(self, mock_rf):
+        mock_rf.return_value = object()
+        X, y = preprocess_data(load_data('data/fraud.csv'))
+        model = train_model(X, y)
+        self.assertIsInstance(model, object)
+
+    @patch('pipeline.save_model')
+    def test_save_model(self, mock_save_model):
+        model = object()
+        save_model(model, 'model')
+        mock_save_model.assert_called_once_with(model, 'model')
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+3. GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install scikit-learn==1.0.2 mlflow==1.30.1
+
+    - name: Run tests
+      run: |
+        python test_pipeline.py
+
+    - name: Train and save model
+      run: |
+        mlflow run . --track-run --python pipeline.py
+```
+
+This setup includes a Python module `pipeline.py` with functions for loading data, preprocessing data, training a model, and saving the model using MLflow. There's also a separate test module `test_pipeline.py` that tests each function. The GitHub Actions YAML file sets up a CI/CD pipeline that runs the tests and trains the model on every push or pull request.

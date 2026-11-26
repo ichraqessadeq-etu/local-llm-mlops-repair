@@ -1,0 +1,169 @@
+{
+  "run": 25,
+  "pass_round0": false,
+  "pass_final": true,
+  "rounds_used": 2,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": null,
+  "weakened_final": false,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.8282,
+    "f1": 0.7617,
+    "n_test": 8113
+  },
+  "repair_seconds": 590.3,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 45
+            },
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 44
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "y_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest model\"\"\"\n        try:\n>           mlflow.sklearn.log_params(RandomForestClassifier(n_estimators=100))\nE           AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'\n\npipeline.py:44: AttributeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:50 Error training model: module 'mlflow.sklearn' has no attribute 'log_params'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow.sk...\n1 failed, 2 passed in 4.50s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1574,
+        "completion_tokens": 687,
+        "truncated": false,
+        "seconds": 313.5
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest model\"\"\"\n        try:\n            # Set a random seed for reproducibility\n            np.random.seed(42)\n>           mlflow.sklearn.log_params(RandomForestClassifier(n_estimators=100, random_state=42))\nE           AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'\n\npipeline.py:48: AttributeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:54 Error training model: module 'mlflow.sklearn' has no attribute 'log_params'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow.sk...\n1 failed, 2 passed in 3.80s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2619,
+        "completion_tokens": 641,
+        "truncated": false,
+        "seconds": 276.8
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "...                                                                      [100%]\n3 passed in 11.01s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.8282,
+        "f1": 0.7617,
+        "n_test": 8113
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

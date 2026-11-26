@@ -1,0 +1,59 @@
+{
+  "run": 14,
+  "cost": {
+    "prompt_tokens": 255,
+    "completion_tokens": 730,
+    "truncated": false,
+    "seconds": 172.9
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": true,
+      "rvh_violations": [
+        {
+          "kind": "RVH",
+          "rule": "unseeded_estimator",
+          "detail": "RandomForestClassifier(...) called without random_state",
+          "lineno": 15
+        }
+      ],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 0
+  },
+  "pytest": {
+    "passed": 2,
+    "failed": 1,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: could n...\n1 failed, 2 passed in 4.89s",
+    "all_pass": false,
+    "failure_hint": "other"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: could not convert string to float: 'Clouds'"
+  },
+  "is_rvh": true,
+  "is_iih": false
+}

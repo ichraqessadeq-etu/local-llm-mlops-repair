@@ -1,0 +1,201 @@
+{
+  "run": 22,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+  },
+  "repair_seconds": 788.2,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            'IsHoliday': [0, 1, 0],\n            'Hour': [10, 14, 18],\n            'DayOfWeek': [1, 2, 3],\n            'Month': [1, 2, 3],\n            'Congestion': ['Low', 'Medium', 'High']\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:31: NameError\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        \"\"\"Test the entire pipeline.\"\"\"\n        with pytest.raises(ValueError):\n>           run_pipeline(\"nonexistent_file.csv\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\ntest_pipeline.py:50: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline error: File not found: nonexistent_file.csv\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_run_pipeline - Failed: DID NOT RAISE <class 'Va...\n3 failed, 1 passed in 13.58s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2066,
+        "completion_tokens": 1239,
+        "truncated": false,
+        "seconds": 266.8
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            'Month': [1, 2, 3],\n            'Congestion': ['Low', 'Medium', 'High']\n        })\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:46: NameError\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        \"\"\"Test the entire pipeline.\"\"\"\n        with pytest.raises(ValueError):\n>           run_pipeline(\"nonexistent_file.csv\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\ntest_pipeline.py:51: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline error: File not found: nonexistent_file.csv\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert (3, 13) == (3, 10)\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_run_pipeline - Failed: DID NOT RAISE <class 'Va...\n3 failed, 1 passed in 5.28s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3694,
+        "completion_tokens": 1228,
+        "truncated": false,
+        "seconds": 220.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            'Month': [1, 2, 3],\n            'Congestion': ['Low', 'Medium', 'High']\n        })\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:46: NameError\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        \"\"\"Test the entire pipeline.\"\"\"\n        with pytest.raises(ValueError):\n>           run_pipeline(\"nonexistent_file.csv\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\ntest_pipeline.py:51: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline error: File not found: nonexistent_file.csv\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert (3, 13) == (3, 10)\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_run_pipeline - Failed: DID NOT RAISE <class 'Va...\n3 failed, 1 passed in 3.92s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3658,
+        "completion_tokens": 1228,
+        "truncated": false,
+        "seconds": 300.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            'Month': [1, 2, 3],\n            'Congestion': ['Low', 'Medium', 'High']\n        })\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:46: NameError\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        \"\"\"Test the entire pipeline.\"\"\"\n        with pytest.raises(ValueError):\n>           run_pipeline(\"nonexistent_file.csv\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\ntest_pipeline.py:51: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline error: File not found: nonexistent_file.csv\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert (3, 13) == (3, 10)\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_run_pipeline - Failed: DID NOT RAISE <class 'Va...\n3 failed, 1 passed in 3.61s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

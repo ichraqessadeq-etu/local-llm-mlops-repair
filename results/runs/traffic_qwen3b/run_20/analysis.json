@@ -1,0 +1,52 @@
+{
+  "run": 20,
+  "cost": {
+    "prompt_tokens": 164,
+    "completion_tokens": 1021,
+    "truncated": false,
+    "seconds": 126.1
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 6
+  },
+  "pytest": {
+    "passed": 2,
+    "failed": 1,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\ndata =          temp  rain_1h  snow_1h  clouds_all  ...  Hour  DayOfWeek  Month  Congestion\n0      288.28      0.0      0.0  ...      0\n40563  282.12      0.0      0.0          90  ...    23          6      9           0\n\n[40564 rows x 10 columns]\n\n    def test_train_model(data):\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert model is not None\nE       assert None is not None\n\ntest_pipeline.py:22: AssertionError\n---------------------------- Captured stdout call -----------------------------\nError training model: Input contains NaN, infinity or a value too large for dtype('float32').\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - assert None is not None\n1 failed, 2 passed in 3.05s",
+    "all_pass": false,
+    "failure_hint": "assertion"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

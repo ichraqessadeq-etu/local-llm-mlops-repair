@@ -1,0 +1,52 @@
+{
+  "run": 17,
+  "cost": {
+    "prompt_tokens": 220,
+    "completion_tokens": 1260,
+    "truncated": false,
+    "seconds": 157.3
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 6,
+    "asserts": 9
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 6,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "        except Exception as e:\n>           raise ValueError(\"Error training model: {}\".format(e))\nE           ValueError: Error training model: could not convert string to float: 'Rain'\n\npipeline.py:35: ValueError\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        \"\"\"Test running the entire pipeline.\"\"\"\n        data = load_data('data/traffic.csv')\n        model = run_pipeline('data/traffic.csv')\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:45: NameError\n---------------------------- Captured stdout call -----------------------------\nError running pipeline: Error training model: could not convert string to float: 'Rain'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - ValueError: Error training model:...\nFAILED test_pipeline.py::test_predict - ValueError: Error training model: cou...\nFAILED test_pipeline.py::test_evaluate_model - ValueError: Error training mod...\nFAILED test_pipeline.py::test_run_pipeline - NameError: name 'RandomForestCla...\n6 failed in 4.42s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

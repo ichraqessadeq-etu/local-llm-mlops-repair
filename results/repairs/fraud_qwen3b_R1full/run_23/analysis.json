@@ -1,0 +1,207 @@
+{
+  "run": 23,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "NotFittedError: This OneHotEncoder instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator."
+  },
+  "repair_seconds": 624.8,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            'Time': [1, 2, 3],\n            'V1': [4, 5, 6],\n            'V2': [7, 8, 9],\n            'Class': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:9: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n>       data = pd.DataFrame({\n            'Time': [1, 2, 3],\n            'V1': [4, 5, 6],\n            'V2': [7, 8, 9],\n            'Class': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:20: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\n3 failed in 5.01s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1927,
+        "completion_tokens": 1000,
+        "truncated": false,
+        "seconds": 188.2
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        X, y = pipeline.preprocess_data(data)\n>       assert isinstance(X, pd.DataFrame)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([[-1.22474487, -1.22474487, -1.22474487],\\n       [ 0.        ,  0.        ,  0.        ],\\n       [ 1.22474487,  1.22474487,  1.22474487]]), <class 'pandas.core.frame.DataFrame'>)\nE        +    where <class 'pandas.core.frame.DataFrame'> = pd.DataFrame\n\ntest_pipeline.py:17: AssertionError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = pd.DataFrame({\n            'Time': [1, 2, 3],\n            'V1': [4, 5, 6],\n            'V2': [7, 8, 9],\n            'Class': [0, 1, 0]\n        })\n        X, y = pipeline.preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:28: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n2 failed, 1 passed in 3.99s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3445,
+        "completion_tokens": 1003,
+        "truncated": false,
+        "seconds": 169.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = pd.DataFrame({\n            'Time': [1, 2, 3],\n            'V1': [4, 5, 6],\n            'V2': [7, 8, 9],\n            'Class': [0, 1, 0]\n        })\n        X, y = pipeline.preprocess_data(data)\n>       assert isinstance(X, pd.DataFrame)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([[-1.22474487, -1.22474487, -1.22474487],\\n       [ 0.        ,  0.        ,  0.        ],\\n       [ 1.22474487,  1.22474487,  1.22474487]]), <class 'pandas.core.frame.DataFrame'>)\nE        +    where <class 'pandas.core.frame.DataFrame'> = pd.DataFrame\n\ntest_pipeline.py:18: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 4.22s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3379,
+        "completion_tokens": 1073,
+        "truncated": false,
+        "seconds": 266.9
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        if not hasattr(estimator, \"fit\"):\n            raise TypeError(\"%s is not an estimator instance.\" % (estimator))\n    \n        if attributes is not None:\n            if not isinstance(attributes, (list, tuple)):\n                attributes = [attributes]\n            fitted = all_or_any([hasattr(estimator, attr) for attr in attributes])\n        elif hasattr(estimator, \"__sklearn_is_fitted__\"):\n            fitted = estimator.__sklearn_is_fitted__()\n        else:\n            fitted = [\n                v for v in vars(estimator) if v.endswith(\"_\") and not v.startswith(\"__\")\n            ]\n    \n        if not fitted:\n>           raise NotFittedError(msg % {\"name\": type(estimator).__name__})\nE           sklearn.exceptions.NotFittedError: This OneHotEncoder instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:1222: NotFittedError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:65 Error preprocessing data: This OneHotEncoder instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - sklearn.exceptions.NotFittedE...\nFAILED test_pipeline.py::test_train_model - sklearn.exceptions.NotFittedError...\n2 failed, 1 passed in 5.15s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "NotFittedError: This OneHotEncoder instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator."
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

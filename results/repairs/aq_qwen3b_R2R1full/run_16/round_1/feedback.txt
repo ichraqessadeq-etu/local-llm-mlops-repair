@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+================================== FAILURES ===================================
+_______________________________ test_log_model ________________________________
+
+    def test_log_model():
+        """Test logging the model using MLflow."""
+        data = load_data('data/air_quality.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_train)
+>       log_model(model, 'AirQualityAnomalyDetection', 'Run1')
+
+test_pipeline.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+model = RandomForestClassifier(random_state=42)
+experiment_name = 'AirQualityAnomalyDetection', run_name = 'Run1'
+
+    def log_model(model, experiment_name, run_name):
+        """Log the model using MLflow."""
+>       with mlflow.start_run(experiment_name=experiment_name, run_name=run_name):
+E       TypeError: start_run() got an unexpected keyword argument 'experiment_name'
+
+pipeline.py:31: TypeError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_log_model - TypeError: start_run() got an unexp...
+1 failed, 3 passed in 4.18s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

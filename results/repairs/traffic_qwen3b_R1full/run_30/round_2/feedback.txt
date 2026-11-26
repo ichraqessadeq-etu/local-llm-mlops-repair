@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+        is_float = X.dtype.kind in "fc"
+        if is_float and (np.isfinite(_safe_accumulator_op(np.sum, X))):
+            pass
+        elif is_float:
+            msg_err = "Input contains {} or a value too large for {!r}."
+            if (
+                allow_nan
+                and np.isinf(X).any()
+                or not allow_nan
+                and not np.isfinite(X).all()
+            ):
+                type_err = "infinity" if allow_nan else "NaN, infinity"
+                raise ValueError(
+                    msg_err.format(
+>                       type_err, msg_dtype if msg_dtype is not None else X.dtype
+                    )
+                )
+E               ValueError: Input contains NaN, infinity or a value too large for dtype('float32').
+
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\sklearn\utils\validation.py:116: ValueError
+------------------------------ Captured log call ------------------------------
+ERROR    root:pipeline.py:62 Error training model: Input contains NaN, infinity or a value too large for dtype('float32').
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: Input c...
+1 failed, 2 passed in 3.68s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

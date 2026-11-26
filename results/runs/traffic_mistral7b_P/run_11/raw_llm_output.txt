@@ -1,0 +1,98 @@
+ I'll provide you with the required components for your request. Let's break it down into three parts: the Python module `pipeline.py`, the test file `test_pipeline.py`, and the GitHub Actions YAML.
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, track, pyfunc, start_run, end_run
+
+def load_data(file_path):
+    df = pd.read_csv(file_path)
+    return df
+
+def preprocess_data(data):
+    data = data.dropna()  # Drop missing values
+    X = data.drop('Congestion', axis=1)
+    y = data['Congestion']
+    return X, y
+
+def train_model(X_train, y_train):
+    with start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        track(pyfunc.fit(model, X_train, y_train), run_id="RandomForest Fit")
+        log_artifact(model, artifact_path="models")
+
+    return model
+```
+
+2. test_pipeline.py:
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data_path = "data/traffic.csv"
+        self.X, self.y = None, None
+
+    def test_load_data(self):
+        data = load_data(self.data_path)
+        self.assertTrue(len(data) > 0)
+
+    def test_preprocess_data(self):
+        data = load_data(self.data_path)
+        self.X, self.y = preprocess_data(data)
+        self.assertTrue(len(self.X) > 0 and len(self.y) > 0)
+
+    def test_train_model(self):
+        data = load_data(self.data_path)
+        self.X, self.y = preprocess_data(data)
+        X_train, y_train, X_test, y_test = train_test_split(self.X, self.y, test_size=0.3, random_state=42)
+        model = train_model(X_train, y_train)
+        # Add your custom assertions for the model performance here
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+3. GitHub Actions YAML:
+
+```yaml
+name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Test and Train
+        run: |
+          pytest test_pipeline.py
+          python pipeline.py --file data/traffic.csv
+```
+
+This GitHub Actions workflow will trigger on every push or pull request. It checks out the code, sets up Python 3.7, installs the dependencies from `requirements.txt`, runs the tests, and trains the model using the provided CSV file.
+
+To create the `requirements.txt` file, you can use:
+
+```
+mlflow==1.30.1
+scikit-learn==1.0.2
+pandas==1.3.5
+numpy==1.21.5
+pytest==6.2.5
+```

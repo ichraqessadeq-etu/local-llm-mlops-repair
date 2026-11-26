@@ -1,0 +1,39 @@
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow.sklearn
+import mlflow
+
+def load_data(file_path):
+    """Loads the data from a CSV file"""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    """Preprocesses the data by splitting into features and target, and scaling the features"""
+    try:
+        X = data.drop('Class', axis=1)
+        y = data['Class']
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+        return X_scaled, y
+    except Exception as e:
+        print(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Trains a RandomForest classifier on the preprocessed data"""
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random_forest")
+        return model
+    except Exception as e:
+        print(f"Error training model: {e}")
+        raise

@@ -1,0 +1,75 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import OneHotEncoder
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """
+    Load data from a CSV file.
+    
+    Parameters:
+    file_path (str): Path to the CSV file.
+    
+    Returns:
+    pd.DataFrame: The loaded data.
+    """
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        raise ValueError(f"Failed to load data: {e}")
+
+def preprocess_data(data):
+    """
+    Preprocess the data by separating features and target, and handling categorical variables.
+    
+    Parameters:
+    data (pd.DataFrame): The input data.
+    
+    Returns:
+    tuple: A tuple containing the features (X) and target (y).
+    """
+    try:
+        # Separate features and target
+        X = data.drop(columns=['Congestion'])
+        y = data['Congestion']
+        
+        # Handle categorical variables using one-hot encoding
+        encoder = OneHotEncoder(sparse=False)
+        categorical_features = X.select_dtypes(include=['object']).columns
+        X_encoded = encoder.fit_transform(X[categorical_features])
+        X_encoded_df = pd.DataFrame(X_encoded, columns=encoder.get_feature_names_out(categorical_features))
+        
+        # Concatenate the encoded features with the remaining features
+        X = pd.concat([X.drop(categorical_features, axis=1), X_encoded_df], axis=1)
+        
+        return X, y
+    except Exception as e:
+        raise ValueError(f"Failed to preprocess data: {e}")
+
+def train_model(X_train, y_train):
+    """
+    Train a RandomForestClassifier model.
+    
+    Parameters:
+    X_train (pd.DataFrame): The training features.
+    y_train (pd.Series): The training target.
+    
+    Returns:
+    RandomForestClassifier: The trained model.
+    """
+    try:
+        with mlflow.start_run():
+            model = RandomForestClassifier(random_state=42)  # Add random_state for reproducibility
+            model.fit(X_train, y_train)
+            mlflow.log_model(model, "model")
+            mlflow.log_param("n_estimators", 100)
+            mlflow.log_param("max_depth", 10)
+            y_pred = model.predict(X_test)
+            mlflow.log_metric("accuracy", accuracy_score(y_test, y_pred))  # Log actual accuracy
+            return model
+    except Exception as e:
+        raise ValueError(f"Failed to train model: {e}")

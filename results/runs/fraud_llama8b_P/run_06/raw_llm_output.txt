@@ -1,0 +1,137 @@
+Here is the code for the CI/CD pipeline:
+
+**pipeline.py**
+```python
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow.sklearn
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    try:
+        # Drop unnecessary columns
+        data.drop(['Time'], axis=1, inplace=True)
+        
+        # Scale features
+        scaler = StandardScaler()
+        X = scaler.fit_transform(data.drop('Class', axis=1))
+        
+        # Encode target variable
+        y = data['Class'].map({'0': 0, '1': 1})
+        
+        # Split data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        return X_train, X_test, y_train, y_test
+    except Exception as e:
+        print(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        # Train a random forest classifier
+        with mlflow.start_run():
+            mlflow.set_experiment('fraud_detection')
+            mlflow.log_param('model_type', 'RandomForestClassifier')
+            mlflow.log_param('n_estimators', 100)
+            mlflow.log_param('max_depth', 10)
+            
+            model = RandomForestClassifier(n_estimators=100, max_depth=10)
+            model.fit(X_train, y_train)
+            
+            mlflow.sklearn.log_model(model, 'model')
+            
+            return model
+    except Exception as e:
+        print(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/fraud.csv')
+        self.assertIsInstance(data, pd.DataFrame)
+        
+    def test_preprocess_data(self):
+        data = load_data('data/fraud.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        self.assertIsInstance(X_train, np.ndarray)
+        self.assertIsInstance(X_test, np.ndarray)
+        self.assertIsInstance(y_train, np.ndarray)
+        self.assertIsInstance(y_test, np.ndarray)
+        
+    def test_train_model(self):
+        data = load_data('data/fraud.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_train)
+        self.assertIsInstance(model, RandomForestClassifier)
+        
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mlflow scikit-learn
+          
+      - name: Run tests
+        run: |
+          pytest test_pipeline.py
+          
+      - name: Train model
+        run: |
+          python pipeline.py --data data/fraud.csv --output model.pkl
+          
+      - name: Deploy model
+        uses: actions/upload-artifact@v2
+        with:
+          name: model.pkl
+          path: model.pkl
+```
+
+Note that this pipeline assumes that the `data/fraud.csv` file is in the repository's root directory. You may need to adjust the file path accordingly.
+
+Also, this pipeline uses the `pytest` framework for testing, which is not included in the standard Python library. You may need to install it separately using `pip install pytest`.
+
+The `mlflow` library is used to track the model training process and store the model artifacts. You may need to configure your MLflow instance to store the artifacts.
+
+The `RandomForestClassifier` model is trained using the `train_model` function, which logs the model parameters and artifacts using MLflow. The trained model is then stored as a pickle file using the `upload-artifact` action.
+
+The pipeline also includes a `deploy` step, which is not implemented in this example. You would need to add the necessary code to deploy the model to a production environment, such as a cloud-based API or a local server.

@@ -1,0 +1,114 @@
+Here are the required files:
+
+**pipeline.py**
+```python
+import mlflow.sklearn
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
+import numpy as np
+
+def load_data(file_path):
+    """Loads data from CSV file"""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    """Preprocesses data by encoding categorical variables and scaling"""
+    try:
+        # Encode categorical variables
+        data['weather_main'] = pd.Categorical(data['weather_main']).codes
+        data['Month'] = pd.Categorical(data['Month']).codes
+        data['DayOfWeek'] = pd.Categorical(data['DayOfWeek']).codes
+        
+        # Scale numerical variables
+        scaler = StandardScaler()
+        data[['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'Hour']] = scaler.fit_transform(data[['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'Hour']])
+        
+        # Split data into features (X) and target (y)
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+        
+        return X, y
+    except Exception as e:
+        print(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Trains a RandomForest model"""
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random_forest")
+        return model
+    except Exception as e:
+        print(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/traffic.csv')
+    assert data is not None
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert X is not None
+    assert y is not None
+
+def test_train_model():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert model is not None
+```
+
+**.github/workflows/ci_cd.yml**
+```yaml
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: Install dependencies
+        run: |
+          pip install mlflow scikit-learn
+
+      - name: Run CI/CD pipeline
+        run: |
+          python pipeline.py
+
+      - name: Test pipeline
+        run: |
+          pytest test_pipeline.py
+
+      - name: Deploy model
+        run: |
+          mlflow models serve -m "random_forest"
+```
+
+This pipeline assumes that you have a `traffic.csv` file in the `data` directory, with the specified columns. The `pipeline.py` module loads the data, preprocesses it, trains a RandomForest model, and logs the model with MLflow. The `test_pipeline.py` module tests each function in the `pipeline.py` module. The GitHub Actions YAML file defines a CI/CD pipeline that runs on push to the `main` branch, checks out the code, sets up Python, installs dependencies, runs the CI/CD pipeline, tests the pipeline, and deploys the model.

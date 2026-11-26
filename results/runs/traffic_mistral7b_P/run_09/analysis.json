@@ -1,0 +1,60 @@
+{
+  "run": 9,
+  "cost": {
+    "prompt_tokens": 255,
+    "completion_tokens": 697,
+    "truncated": false,
+    "seconds": 162.7
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK",
+      "FAIL:invalid syntax"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": true,
+      "rvh_violations": [
+        {
+          "kind": "RVH",
+          "rule": "unseeded_estimator",
+          "detail": "RandomForestClassifier(...) called without random_state",
+          "lineno": 14
+        }
+      ],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 1,
+    "asserts": 0
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 1,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ny_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n>       with mlflow.start_run():\nE       NameError: name 'mlflow' is not defined\n\npipeline.py:13: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'ml...\n1 failed in 3.81s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "NameError: name 'mlflow' is not defined"
+  },
+  "is_rvh": true,
+  "is_iih": false
+}

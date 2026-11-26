@@ -1,0 +1,65 @@
+ To fix the error, we need to ensure that the MLflow version is compatible with the `local_mode` import. Since you're using MLflow 1.30.1, I'll provide the corrected pipeline.py and test_pipeline.py files for Python 3.7.7.
+
+1. **pipeline.py**
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow.pyfunc import DynamicArtifact
+from mlflow import log_artifact, start_run, end_run
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any preprocessing steps here, such as normalization, encoding, etc.
+    return np.array(data.drop('Congestion', axis=1)), data['Congestion']
+
+def train_model(X_train, y_train):
+    with start_run(run_name='RandomForestCongestionDetector', experiment_id='0'):
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        artifact_path = DynamicArtifact('model')
+        artifact_path.set_local_path(f'./models/model.pkl')
+        log_artifact(artifact_path)
+    return model
+```
+
+2. **test_pipeline.py**
+
+```python
+import unittest
+import tempfile
+from unittest.mock import patch
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/traffic.csv')
+
+    def test_load_data(self):
+        self.assertIsInstance(self.data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        X, y = preprocess_data(self.data)
+        self.assertIsInstance(X, np.ndarray)
+        self.assertIsInstance(y, np.ndarray)
+
+    @patch('pipeline.RandomForestClassifier', new_callable=lambda *args, **kwargs: unittest.mock.Mock())
+    def test_train_model(self, mock_rf):
+        X_train, y_train = preprocess_data(self.data)
+        train_model(X_train, y_train)
+        mock_rf.assert_called_once_with()
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+I've made the following changes:
+
+- Removed the `local_mode` import from pipeline.py
+- Changed the MLflow import to `mlflow.pyfunc` instead of `mlflow`
+
+These changes should resolve the reported error and violations.

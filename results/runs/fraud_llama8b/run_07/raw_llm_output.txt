@@ -1,0 +1,142 @@
+Here is the code for the CI/CD pipeline as per your requirements:
+
+**pipeline.py**
+```python
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        logging.error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    try:
+        # Drop unnecessary columns
+        data.drop(['Time'], axis=1, inplace=True)
+        
+        # Scale features using StandardScaler
+        scaler = StandardScaler()
+        X = scaler.fit_transform(data.drop('Class', axis=1))
+        
+        # Encode target variable
+        y = pd.get_dummies(data['Class']).iloc[:, 0]
+        
+        return X, y
+    except Exception as e:
+        logging.error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        # Train RandomForest model
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        
+        # Log model to MLflow
+        mlflow.sklearn.log_model(model, "random_forest")
+        
+        return model
+    except Exception as e:
+        logging.error(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/fraud.csv')
+    assert data.shape[0] > 0
+
+def test_preprocess_data():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    assert X.shape[0] > 0
+    assert y.shape[0] > 0
+
+def test_train_model():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert model is not None
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          pytest test_pipeline.py
+
+      - name: Train model
+        run: |
+          python pipeline.py train_model
+
+      - name: Log model to MLflow
+        run: |
+          mlflow sklog -m random_forest
+
+      - name: Deploy model
+        run: |
+          # Deploy model to production environment
+          # (e.g. using Kubernetes or other deployment tool)
+```
+
+**requirements.txt**
+```python
+pandas==1.3.5
+numpy==1.21.4
+scikit-learn==1.0.2
+mlflow==1.24.0
+pytest==6.2.5
+```
+
+This pipeline assumes that you have a `requirements.txt` file with the necessary dependencies, and that you have set up a GitHub Actions workflow to run the pipeline on push to the `main` branch.
+
+The pipeline consists of the following steps:
+
+1. Checkout the code
+2. Set up a Python environment
+3. Install dependencies
+4. Run tests using `pytest`
+5. Train the model using `pipeline.py`
+6. Log the model to MLflow
+7. Deploy the model to production (not implemented in this example)
+
+Note that this is just a basic example, and you may need to modify the pipeline to suit your specific use case. Additionally, you will need to set up a production environment to deploy the model to.

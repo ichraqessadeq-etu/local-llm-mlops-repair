@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+40563  282.12      0.0      0.0          90  ...   23          6      9           0
+
+[40564 rows x 10 columns]
+
+    def preprocess_data(data):
+        """Preprocess data by separating features and target."""
+        try:
+            # Drop rows with missing values in the target column
+            data = data.dropna(subset=['Congestion'])
+    
+            # Convert 'Rain_1h' to numeric, handling non-numeric values
+            data['Rain_1h'] = pd.to_numeric(data['Rain_1h'], errors='coerce')
+    
+            X = data.drop(columns=['Congestion'])
+            y = data['Congestion']
+            return X, y
+        except Exception as e:
+>           raise Exception(f"Failed to preprocess data: {e}")
+E           Exception: Failed to preprocess data: 'Rain_1h'
+
+pipeline.py:29: Exception
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_preprocess_data - Exception: Failed to preproce...
+FAILED test_pipeline.py::test_train_model - Exception: Failed to preprocess d...
+2 failed, 1 passed in 4.14s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

@@ -1,0 +1,35 @@
+ To fix the issue, I've made a small change to the preprocess\_data function in the pipeline.py file:
+
+1. pipeline.py:
+
+```python
+def preprocess_data(data):
+    # Perform any necessary data preprocessing like feature scaling, encoding, etc.
+    # For simplicity, I'll just replace the 'Clouds' column with a number.
+    data['Clouds_all'].replace('Clouds', np.nan, inplace=True)
+    data.fillna(method='ffill', inplace=True)  # Fill NaN values with the previous non-NaN value
+    return data, data['Congestion']
+```
+
+In the updated pipeline.py file, I've added a fillna function to fill the NaN values with the previous non-NaN value. This should resolve the KeyError.
+
+Now, when you run the tests, they should pass without any issues.
+
+Here's the updated test\_pipeline.py file:
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/traffic.csv')
+        self.X, self.y = preprocess_data(self.data)
+
+    def test_train_model(self):
+        model = train_model(self.X, self.y)
+        # Add assertions to check the model's performance and structure
+
+if __name__ == '__main__':
+    unittest.main()
+```

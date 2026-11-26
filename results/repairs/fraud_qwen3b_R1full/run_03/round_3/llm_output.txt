@@ -1,0 +1,101 @@
+It seems there was an issue with the import statement for `RandomForestClassifier` in the `pipeline.py` file. Let's correct that and ensure all tests pass.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load the dataset from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except FileNotFoundError:
+        raise ValueError("The file does not exist.")
+    except Exception as e:
+        raise Exception(f"An error occurred while loading the data: {e}")
+
+def preprocess_data(data):
+    """Preprocess the data by splitting it into features and target."""
+    try:
+        X = data.drop('Class', axis=1)
+        y = data['Class']
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        return X_train, X_test, y_train, y_test
+    except Exception as e:
+        raise Exception(f"An error occurred while preprocessing the data: {e}")
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier model."""
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        return model
+    except Exception as e:
+        raise Exception(f"An error occurred while training the model: {e}")
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model's accuracy."""
+    try:
+        y_pred = model.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        return accuracy
+    except Exception as e:
+        raise Exception(f"An error occurred while evaluating the model: {e}")
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model, evaluate_model
+
+def test_load_data():
+    """Test the load_data function."""
+    try:
+        data = load_data('data/fraud.csv')
+        assert isinstance(data, pd.DataFrame)
+        assert 'Class' in data.columns
+    except Exception as e:
+        pytest.fail(f"Test failed: {e}")
+
+def test_preprocess_data():
+    """Test the preprocess_data function."""
+    try:
+        data = load_data('data/fraud.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        assert isinstance(X_train, pd.DataFrame)
+        assert isinstance(X_test, pd.DataFrame)
+        assert isinstance(y_train, pd.Series)
+        assert isinstance(y_test, pd.Series)
+    except Exception as e:
+        pytest.fail(f"Test failed: {e}")
+
+def test_train_model():
+    """Test the train_model function."""
+    try:
+        data = load_data('data/fraud.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_train)
+        assert isinstance(model, RandomForestClassifier)
+    except Exception as e:
+        pytest.fail(f"Test failed: {e}")
+
+def test_evaluate_model():
+    """Test the evaluate_model function."""
+    try:
+        data = load_data('data/fraud.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_train)
+        accuracy = evaluate_model(model, X_test, y_test)
+        assert isinstance(accuracy, float)
+    except Exception as e:
+        pytest.fail(f"Test failed: {e}")
+```
+
+These corrections should resolve the `NameError` and ensure that all tests pass.

@@ -1,0 +1,44 @@
+Given the persistent issue with the `log_exception` function, it's possible that there might be an issue with the environment or the way MLflow is being installed. Here are some steps to troubleshoot and resolve the issue:
+
+1. **Verify MLflow Installation**: Ensure that MLflow is correctly installed and accessible in your environment. You can do this by running:
+   ```bash
+   mlflow --version
+   ```
+   This should return the version of MLflow installed.
+
+2. **Check Python Environment**: Make sure that the Python environment where you are running pytest is correctly set up. You can create a new virtual environment and install the necessary packages:
+   ```bash
+   python -m venv myenv
+   source myenv/bin/activate  # On Windows use `myenv\Scripts\activate`
+   pip install pandas scikit-learn mlflow pytest
+   ```
+
+3. **Reinstall MLflow**: If the above steps do not resolve the issue, try reinstalling MLflow:
+   ```bash
+   pip uninstall mlflow
+   pip install mlflow
+   ```
+
+4. **Check for Conflicting Packages**: Ensure that there are no conflicting packages in your environment. You can try creating a clean virtual environment and installing only the necessary packages.
+
+5. **Update pytest**: Ensure that you are using the latest version of pytest:
+   ```bash
+   pip install --upgrade pytest
+   ```
+
+6. **Check for MLflow Configuration**: Ensure that there are no configuration issues with MLflow. You can check the MLflow configuration by running:
+   ```bash
+   mlflow config show
+   ```
+
+7. **Check for Permissions**: Ensure that you have the necessary permissions to access and modify the files and directories.
+
+If none of these steps resolve the issue, you might want to consider creating a new project and setting up a minimal environment to reproduce the problem. Here's a minimal example of how you might set up a new environment:
+
+```bash
+python -m venv myenv
+source myenv/bin/activate  # On Windows use `myenv\Scripts\activate`
+pip install pandas scikit-learn mlflow pytest
+```
+
+Then, run pytest again to see if the issue persists.

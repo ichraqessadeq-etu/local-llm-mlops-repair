@@ -1,0 +1,63 @@
+{
+  "run": 1,
+  "pass_round0": true,
+  "pass_final": true,
+  "rounds_used": 0,
+  "pass_after_R2_phase": true,
+  "hint_round0": null,
+  "hint_final": null,
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": true,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: could not convert string to float: 'Clouds'"
+  },
+  "repair_seconds": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 16
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "...                                                                      [100%]\n3 passed in 2.94s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    }
+  ]
+}

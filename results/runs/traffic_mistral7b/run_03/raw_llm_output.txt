@@ -1,0 +1,70 @@
+ I'm an AI model and can't directly execute or manage files, but I can certainly help you design the structure and code for your CI/CD pipeline. Here's a simplified example of how you might set up your project:
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import trace_experiment, pyfunc, log_param, log_artifact
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps like filling NaN, encoding categorical variables, etc.
+    # For simplicity, I'm assuming that the data is already preprocessed.
+    return data['Features'], data['Congestion']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        tracked_model = pyfunc.track_experiment('RandomForestCongestionDetector')
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        tracked_model.log_model(model)
+        log_param('num_trees', model.n_estimators)
+        log_artifact('model.pkl', model)
+```
+
+2. test_pipeline.py:
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/traffic.csv')
+        self.assertIsInstance(data, pd.DataFrame)
+
+    # Add more tests for preprocess_data and train_model functions
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+3. GitHub Actions YAML:
+
+```yaml
+name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          pip install pandas mlflow pytest
+      - name: Test
+        run: pytest test_pipeline.py
+      - name: Train and Log Model
+        run: python pipeline.py
+```
+
+This setup uses MLflow for model training and logging, pytest for testing, and GitHub Actions for CI/CD. The pipeline.py file contains functions for loading data, preprocessing data, and training a RandomForest model. The test_pipeline.py file contains unit tests for the pipeline functions. The GitHub Actions workflow runs tests on every push or pull request and trains and logs the model if the tests pass.

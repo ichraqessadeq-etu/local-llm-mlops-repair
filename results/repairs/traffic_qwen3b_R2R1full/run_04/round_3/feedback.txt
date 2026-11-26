@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+    
+        if n_train + n_test > n_samples:
+            raise ValueError(
+                "The sum of train_size and test_size = %d, "
+                "should be smaller than the number of "
+                "samples %d. Reduce test_size and/or "
+                "train_size." % (n_train + n_test, n_samples)
+            )
+    
+        n_train, n_test = int(n_train), int(n_test)
+    
+        if n_train == 0:
+            raise ValueError(
+                "With n_samples={}, test_size={} and train_size={}, the "
+                "resulting train set will be empty. Adjust any of the "
+>               "aforementioned parameters.".format(n_samples, test_size, train_size)
+            )
+E           ValueError: With n_samples=0, test_size=0.2 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters.
+
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\sklearn\model_selection\_split.py:2101: ValueError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_preprocess_data - ValueError: With n_samples=0,...
+FAILED test_pipeline.py::test_train_model - ValueError: With n_samples=0, tes...
+FAILED test_pipeline.py::test_evaluate_model - ValueError: With n_samples=0, ...
+3 failed, 1 passed in 3.76s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

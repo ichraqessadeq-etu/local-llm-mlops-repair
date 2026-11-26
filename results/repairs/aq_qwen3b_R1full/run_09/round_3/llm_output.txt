@@ -1,0 +1,107 @@
+It seems there are still some issues with the imports and function definitions in the `pipeline.py` file. Let's ensure that all necessary imports are included and that the functions are correctly defined. Here are the corrected files:
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except FileNotFoundError:
+        raise FileNotFoundError("The file does not exist.")
+    except pd.errors.EmptyDataError:
+        raise pd.errors.EmptyDataError("The file is empty.")
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    try:
+        # Define features and target
+        features = ['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH', 'AH', 'Hour', 'DayOfWeek', 'Month']
+        target = 'Anomaly'
+        
+        # Split the data
+        X = data[features]
+        y = data[target]
+        
+        # Split into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        return X_train, X_test, y_train, y_test
+    except KeyError:
+        raise KeyError("The target column or feature columns are not in the dataset.")
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model."""
+    try:
+        # Initialize the model
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        
+        # Train the model
+        model.fit(X_train, y_train)
+        
+        return model
+    except Exception as e:
+        raise Exception(f"An error occurred during model training: {e}")
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model."""
+    try:
+        # Make predictions
+        y_pred = model.predict(X_test)
+        
+        # Calculate accuracy
+        accuracy = accuracy_score(y_test, y_pred)
+        
+        return accuracy
+    except Exception as e:
+        raise Exception(f"An error occurred during model evaluation: {e}")
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model, evaluate_model
+
+@pytest.fixture
+def data():
+    file_path = 'data/air_quality.csv'
+    return load_data(file_path)
+
+def test_load_data(data):
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data(data):
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    assert isinstance(X_train, pd.DataFrame)
+    assert isinstance(X_test, pd.DataFrame)
+    assert isinstance(y_train, pd.Series)
+    assert isinstance(y_test, pd.Series)
+
+def test_train_model(data):
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+
+def test_evaluate_model(data):
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    accuracy = evaluate_model(model, X_test, y_test)
+    assert isinstance(accuracy, float)
+```
+
+### Explanation
+
+1. **Imports**: Ensure all necessary modules are imported at the beginning of the files.
+2. **Function Definitions**: Make sure all functions are defined correctly and are accessible.
+3. **Assertions**: Ensure all assertions are correctly placed and that the expected types are checked.
+
+These corrections should resolve the issues and allow the tests to pass.

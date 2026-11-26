@@ -1,0 +1,52 @@
+{
+  "run": 8,
+  "cost": {
+    "prompt_tokens": 261,
+    "completion_tokens": 1164,
+    "truncated": false,
+    "seconds": 118.1
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 6
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 3,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "\n    def test_preprocess_data():\n        \"\"\"Test preprocessing data.\"\"\"\n        data = load_data('data/fraud.csv')\n        X_train, y_train, X_test, y_test = preprocess_data(data)\n>       assert isinstance(X_train, pd.DataFrame), \"X_train should be a pandas DataFrame.\"\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:13: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test training the model.\"\"\"\n        data = load_data('data/fraud.csv')\n        X_train, y_train, _, _ = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier), \"Model should be a RandomForestClassifier.\"\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:23: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n3 failed in 6.70s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

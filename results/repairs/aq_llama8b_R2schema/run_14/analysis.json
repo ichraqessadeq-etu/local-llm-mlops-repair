@@ -1,0 +1,56 @@
+{
+  "run": 14,
+  "pass_round0": true,
+  "pass_final": true,
+  "rounds_used": 0,
+  "pass_after_R2_phase": null,
+  "hint_round0": null,
+  "hint_final": null,
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "  Try using .loc[row_indexer,col_indexer] = value instead\n  \n  See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n    X['Hour'] = pd.Categorical(X['Hour']).codes\n\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_llama8b_R2schema\\run_14\\round_0\\pipeline.py:23: SettingWithCopyWarning: \n  A value is trying to be set on a copy of a slice from a DataFrame.\n  Try using .loc[row_indexer,col_indexer] = value instead\n  \n  See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n    X['DayOfWeek'] = pd.Categorical(X['DayOfWeek']).codes\n\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_llama8b_R2schema\\run_14\\round_0\\pipeline.py:24: SettingWithCopyWarning: \n  A value is trying to be set on a copy of a slice from a DataFrame.\n  Try using .loc[row_indexer,col_indexer] = value instead\n  \n  See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n    X['Month'] = pd.Categorical(X['Month']).codes\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 6 warnings in 22.44s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

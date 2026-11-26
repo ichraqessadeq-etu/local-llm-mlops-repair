@@ -1,0 +1,211 @@
+{
+  "run": 19,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9071,
+    "f1": 0.9,
+    "n_test": 2000
+  },
+  "repair_seconds": 723.3,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 6,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 6,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "6412    0\n8285    0\n7853    0\n1095    0\n6929    0\nName: Class, Length: 2000, dtype: int64\n\n    def evaluate(model, X_test, y_test):\n        \"\"\"Evaluate the model's performance.\"\"\"\n        try:\n>           accuracy = accuracy_score(y_test, y_pred)\nE           NameError: name 'y_pred' is not defined\n\npipeline.py:60: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:64 Error evaluating model: name 'y_pred' is not defined\nERROR    root:pipeline.py:78 Pipeline failed: name 'y_pred' is not defined\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_predict - NameError: name 'train_test_split' is...\nFAILED test_pipeline.py::test_evaluate - NameError: name 'train_test_split' i...\nFAILED test_pipeline.py::test_run_pipeline - NameError: name 'y_pred' is not ...\n6 failed in 8.37s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2205,
+        "completion_tokens": 1211,
+        "truncated": false,
+        "seconds": 227.4
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 6,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "4521    0\n       ..\n6412    0\n8285    0\n7853    0\n1095    0\n6929    0\nName: Class, Length: 2000, dtype: int64\n\n    def evaluate(model, X_test, y_test):\n        \"\"\"Evaluate the model's performance.\"\"\"\n        try:\n>           accuracy = accuracy_score(y_test, y_pred)\nE           NameError: name 'y_pred' is not defined\n\npipeline.py:61: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:65 Error evaluating model: name 'y_pred' is not defined\nERROR    root:pipeline.py:79 Pipeline failed: name 'y_pred' is not defined\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_predict - NameError: name 'train_test_split' is...\nFAILED test_pipeline.py::test_evaluate - NameError: name 'train_test_split' i...\nFAILED test_pipeline.py::test_run_pipeline - NameError: name 'y_pred' is not ...\n4 failed, 2 passed in 8.73s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3832,
+        "completion_tokens": 1222,
+        "truncated": false,
+        "seconds": 198.2
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 6,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "4521    0\n       ..\n6412    0\n8285    0\n7853    0\n1095    0\n6929    0\nName: Class, Length: 2000, dtype: int64\n\n    def evaluate(model, X_test, y_test):\n        \"\"\"Evaluate the model's performance.\"\"\"\n        try:\n>           accuracy = accuracy_score(y_test, y_pred)\nE           NameError: name 'y_pred' is not defined\n\npipeline.py:61: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:65 Error evaluating model: name 'y_pred' is not defined\nERROR    root:pipeline.py:79 Pipeline failed: name 'y_pred' is not defined\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_predict - NameError: name 'train_test_split' is...\nFAILED test_pipeline.py::test_evaluate - NameError: name 'train_test_split' i...\nFAILED test_pipeline.py::test_run_pipeline - NameError: name 'y_pred' is not ...\n4 failed, 2 passed in 8.79s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3720,
+        "completion_tokens": 1222,
+        "truncated": false,
+        "seconds": 297.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 6,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "4521    0\n       ..\n6412    0\n8285    0\n7853    0\n1095    0\n6929    0\nName: Class, Length: 2000, dtype: int64\n\n    def evaluate(model, X_test, y_test):\n        \"\"\"Evaluate the model's performance.\"\"\"\n        try:\n>           accuracy = accuracy_score(y_test, y_pred)\nE           NameError: name 'y_pred' is not defined\n\npipeline.py:61: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:65 Error evaluating model: name 'y_pred' is not defined\nERROR    root:pipeline.py:79 Pipeline failed: name 'y_pred' is not defined\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_predict - NameError: name 'train_test_split' is...\nFAILED test_pipeline.py::test_evaluate - NameError: name 'train_test_split' i...\nFAILED test_pipeline.py::test_run_pipeline - NameError: name 'y_pred' is not ...\n4 failed, 2 passed in 8.54s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

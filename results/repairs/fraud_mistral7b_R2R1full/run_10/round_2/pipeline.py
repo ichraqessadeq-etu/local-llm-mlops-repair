@@ -1,0 +1,23 @@
+# pipeline.py
+import mlflow
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow.tracking import log_metric
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    return (data['Features'], data['Class'])
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        log_metric('train_start_time', mlflow.get_time())
+        log_artifact(X_train, 'X_train')
+        log_artifact(y_train, 'y_train')
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.pyfunc.log_model(pyfunc.DistributedModel.from_flask(model), artifact_path='model')
+        log_metric('train_end_time', mlflow.get_time())
+        print(f'Model with version {mlflow.get_run_id()} has been saved.')

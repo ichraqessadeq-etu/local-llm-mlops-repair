@@ -1,0 +1,89 @@
+ I'm an AI model and cannot directly create or execute files, but I can certainly help you design the structure and provide you with a high-level outline for your requested components. Here's a guide to help you set up your project:
+
+1. pipeline.py
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, track, start_run, pyfunc, log_param
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    data = data.dropna()  # Drop missing values
+    X = data.drop('Congestion', axis=1)  # Features
+    y = data['Congestion']  # Target
+    return X, y
+
+def train_model(X_train, y_train):
+    model = RandomForestClassifier()
+    model.fit(X_train, y_train)
+    return model
+
+def train(file_path):
+    data = load_data(file_path)
+    X, y = preprocess_data(data)
+    with start_run():
+        model = train_model(X_train, y_train)
+        pyfunc.log_model(model, "model", registered_model_name="congestion_detector")
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+from unittest.mock import patch
+import pipeline
+
+class TestPipeline(unittest.TestCase):
+    @patch('pipeline.pd.read_csv')
+    def test_load_data(self, mock_read_csv):
+        mock_data = {'temp': [1, 2, 3], 'rain_1h': [4, 5, 6]}
+        mock_read_csv.return_value = pd.DataFrame(mock_data)
+        result = pipeline.load_data('data/traffic.csv')
+        self.assertIsInstance(result, pd.DataFrame)
+
+    # Add more test cases for preprocess_data and train_model functions
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+3. GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        python -m pip install -r requirements.txt
+
+    - name: Test
+      run: |
+        python test_pipeline.py
+
+    - name: Train and log model
+      run: |
+        python pipeline.py data/traffic.csv
+```
+
+This setup uses MLflow for model training and logging, and pytest for testing the Python module. You'll need to create a requirements.txt file to list your project's dependencies, such as pandas, numpy, pytest, and mlflow.
+
+Don't forget to initialize your GitHub repository with Git and add the required files. Then, commit and push the changes to start using GitHub Actions for continuous integration and deployment.

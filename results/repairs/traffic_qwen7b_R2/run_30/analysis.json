@@ -1,0 +1,141 @@
+{
+  "run": 30,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 12
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "                y_pred = model.predict(X_train)\n                accuracy = accuracy_score(y_train, y_pred)\n                mlflow.log_metric(\"train_accuracy\", accuracy)\n    \n                # Infer signature\n                signature = infer_signature(X_train, y_pred)\n    \n                # Save model as MLflow PyFunc\n                mlflow.pyfunc.save_model(path=\"model_pyfunc\", python_model=model, signature=signature)\n    \n                return model\n        except Exception as e:\n>           raise ValueError(f\"Error training model: {e}\")\nE           ValueError: Error training model: `python_model` must be a subclass of `PythonModel`. Instead, found an object of type: <class 'sklearn.ensemble._forest.RandomForestClassifier'>\n\npipeline.py:64: ValueError\n============================== warnings summary ===============================\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\models\\signature.py:129: UserWarning: Hint: Inferred schema contains integer column(s). Integer columns in Python cannot represent missing values. If your input data contains missing values at inference time, it will be encoded as floats and will cause a schema enforcement error. The best way to avoid this problem is to infer the model schema based on a realistic data sample (training dataset) that includes missing values. Alternatively, you can declare integer columns as doubles (float64) whenever these columns may have missing values. See `Handling Integers With Missing Values <https://www.mlflow.org/docs/latest/models.html#handling-integers-with-missing-values>`_ for more details.\n    inputs = _infer_schema(model_input)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Error training model:...\n1 failed, 2 passed, 1 warning in 9.55s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 12
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "                y_pred = model.predict(X_train)\n                accuracy = accuracy_score(y_train, y_pred)\n                mlflow.log_metric(\"train_accuracy\", accuracy)\n    \n                # Infer signature\n                signature = infer_signature(X_train, y_pred)\n    \n                # Save model as MLflow PyFunc\n                mlflow.pyfunc.save_model(path=\"model_pyfunc\", python_model=model, signature=signature)\n    \n                return model\n        except Exception as e:\n>           raise ValueError(f\"Error training model: {e}\")\nE           ValueError: Error training model: `python_model` must be a subclass of `PythonModel`. Instead, found an object of type: <class 'sklearn.ensemble._forest.RandomForestClassifier'>\n\npipeline.py:64: ValueError\n============================== warnings summary ===============================\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\models\\signature.py:129: UserWarning: Hint: Inferred schema contains integer column(s). Integer columns in Python cannot represent missing values. If your input data contains missing values at inference time, it will be encoded as floats and will cause a schema enforcement error. The best way to avoid this problem is to infer the model schema based on a realistic data sample (training dataset) that includes missing values. Alternatively, you can declare integer columns as doubles (float64) whenever these columns may have missing values. See `Handling Integers With Missing Values <https://www.mlflow.org/docs/latest/models.html#handling-integers-with-missing-values>`_ for more details.\n    inputs = _infer_schema(model_input)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Error training model:...\n1 failed, 2 passed, 1 warning in 8.92s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "                y_pred = model.predict(X_train)\n                accuracy = accuracy_score(y_train, y_pred)\n                mlflow.log_metric(\"train_accuracy\", accuracy)\n    \n                # Infer signature\n                signature = infer_signature(X_train, y_pred)\n    \n                # Save model as MLflow PyFunc\n                mlflow.pyfunc.save_model(path=\"model_pyfunc\", python_model=model, signature=signature)\n    \n                return model\n        except Exception as e:\n>           raise ValueError(f\"Error training model: {e}\")\nE           ValueError: Error training model: `python_model` must be a subclass of `PythonModel`. Instead, found an object of type: <class 'sklearn.ensemble._forest.RandomForestClassifier'>\n\npipeline.py:64: ValueError\n============================== warnings summary ===============================\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\models\\signature.py:129: UserWarning: Hint: Inferred schema contains integer column(s). Integer columns in Python cannot represent missing values. If your input data contains missing values at inference time, it will be encoded as floats and will cause a schema enforcement error. The best way to avoid this problem is to infer the model schema based on a realistic data sample (training dataset) that includes missing values. Alternatively, you can declare integer columns as doubles (float64) whenever these columns may have missing values. See `Handling Integers With Missing Values <https://www.mlflow.org/docs/latest/models.html#handling-integers-with-missing-values>`_ for more details.\n    inputs = _infer_schema(model_input)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Error training model:...\n1 failed, 2 passed, 1 warning in 8.92s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 12
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

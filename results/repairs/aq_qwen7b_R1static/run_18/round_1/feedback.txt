@@ -1,0 +1,4 @@
+Static checks of your files against the target environment report:
+- pipeline.py: reproducibility violation: {'kind': 'RVH', 'rule': 'unseeded_estimator', 'detail': 'RandomForestClassifier(...) called without random_state', 'lineno': 27}
+Fix the files.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

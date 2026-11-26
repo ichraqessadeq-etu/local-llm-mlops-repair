@@ -1,0 +1,63 @@
+ To fix the NameError issues, I'll import the missing modules at the beginning of the files.
+
+1. pipeline.py
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, pyfunc, tracking
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Perform data preprocessing such as handling missing values, encoding categorical variables, etc.
+    # For simplicity, I'll just drop missing values and keep the original encoding.
+    data.dropna(inplace=True)
+    X = data.drop('Class', axis=1)
+    y = data['Class']
+    return X, y
+
+def train_model(X_train, y_train, random_state=42):
+    model = RandomForestClassifier(random_state=random_state)
+    model.fit(X_train, y_train)
+    tracking.set_global_context(experiment_id=mlflow.get_experiment_by_name("Fraud Detection").experiment_id)
+    log_artifact(model, "model")
+
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+import mlflow
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        mlflow.set_tracking_uri("http://localhost:5000")
+
+    def test_load_data(self):
+        data = load_data("data/fraud.csv")
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        data = load_data("data/fraud.csv")
+        X, y = preprocess_data(data)
+        self.assertIsInstance(X, pd.DataFrame)
+
+    def test_train_model(self):
+        data = load_data("data/fraud.csv")
+        X, y = preprocess_data(data)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+        train_model(X_train, y_train, random_state=42)
+
+if __name__ == "__main__":
+    unittest.main()
+
+```
+
+In both files, I've imported the missing modules at the beginning. This should resolve the NameError issues.

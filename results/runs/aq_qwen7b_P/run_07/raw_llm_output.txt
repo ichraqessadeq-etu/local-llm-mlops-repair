@@ -1,0 +1,116 @@
+### 1. Python Module `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess the data to separate features and target."""
+    X = data.drop(columns=['Anomaly'])
+    y = data['Anomaly']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier model."""
+    with mlflow.start_run():
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.log_param("n_estimators", 100)
+        mlflow.log_param("random_state", 42)
+        mlflow.sklearn.log_model(model, "model")
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+    return model
+```
+
+### 2. Pytest File `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/air_quality.csv')
+    assert not data.empty
+    assert 'Anomaly' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    assert X.shape[1] == 18  # 18 features
+    assert y.shape[0] == data.shape[0]
+
+def test_train_model():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+    y_pred = model.predict(X_test)
+    assert len(y_pred) == len(y_test)
+```
+
+### 3. GitHub Actions YAML (`ci.yml`)
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: pytest test_pipeline.py
+
+    - name: Train model and log to MLflow
+      run: |
+        python pipeline.py
+      env:
+        MLFLOW_TRACKING_URI: https://mlflow.yourdomain.com
+        MLFLOW_EXPERIMENT_NAME: AirQualityAnomalyDetection
+```
+
+### 4. `requirements.txt`
+
+```txt
+pandas==1.3.4
+scikit-learn==1.0.2
+mlflow==1.30.1
+pytest==6.2.5
+```
+
+### Notes:
+1. **MLflow Tracking URI**: Replace `https://mlflow.yourdomain.com` with your actual MLflow tracking URI.
+2. **MLflow Experiment Name**: Replace `AirQualityAnomalyDetection` with your desired experiment name.
+3. **Error Handling**: The provided code does not include explicit error handling. You can add try-except blocks around critical sections to handle potential errors gracefully.
+4. **Data Splitting**: The `train_test_split` function is used for simplicity. In a production environment, consider using cross-validation or other techniques for better model evaluation.
+
+This setup provides a robust CI/CD pipeline for training and deploying a RandomForest anomaly detector for a smart city air quality system.

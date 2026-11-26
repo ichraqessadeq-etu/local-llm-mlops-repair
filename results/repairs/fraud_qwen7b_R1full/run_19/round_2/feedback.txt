@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+        raised.  This is recursive.
+    
+        """
+        head, tail = path.split(name)
+        if not tail:
+            head, tail = path.split(head)
+        if head and tail and not path.exists(head):
+            try:
+                makedirs(head, exist_ok=exist_ok)
+            except FileExistsError:
+                # Defeats race condition when another thread created the path
+                pass
+            cdir = curdir
+            if isinstance(tail, bytes):
+                cdir = bytes(curdir, 'ASCII')
+            if tail == cdir:           # xxx/newdir/. exists if xxx/newdir exists
+                return
+        try:
+>           mkdir(name, mode)
+E           OSError: [WinError 123] La syntaxe du nom de fichier, de répertoire ou de volume est incorrecte: 'file:'
+
+C:\Program Files\Odoo 16.0.20230507\python\lib\os.py:223: OSError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_train_model - OSError: [WinError 123] La syntax...
+1 failed, 2 passed in 10.54s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

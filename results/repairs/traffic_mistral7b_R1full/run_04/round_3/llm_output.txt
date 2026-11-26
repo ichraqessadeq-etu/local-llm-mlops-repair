@@ -1,0 +1,61 @@
+  To fix the issues, let's first install the required package for the Random Forest algorithm and seed the random number generator for reproducibility. Here's the corrected pipeline.py and test_pipeline.py:
+
+1. pipeline.py
+
+```python
+import pandas as pd
+import mlflow
+import randomforest as rf
+from sklearn.model_selection import train_test_split
+import numpy as np
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps like filling missing values, encoding categorical variables, etc.
+    # For simplicity, I'm assuming the data is clean and ready to use.
+    return data, data['Congestion']
+
+def train_model(X_train, y_train):
+    np.random.seed(42)  # Seed the random number generator for reproducibility
+    with mlflow.start_run():
+        model = rf.RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.log_artifact(model, "model")
+        mlflow.log_metric("train_loss", model.fit(X_train, y_train).loss_)
+
+    return model
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+import numpy as np
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data("data/traffic.csv")
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        data, _ = preprocess_data(load_data("data/traffic.csv"))
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_train_model(self):
+        data = load_data("data/traffic.csv")
+        X, y = preprocess_data(data)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+        model = train_model(X_train, y_train)
+        # Add more tests for model predictions and error handling as needed
+```
+
+Now, the pipeline.py file includes the seeding of the random number generator for reproducibility, and the test_pipeline.py file includes a test for the train_model function. The RandomForest package should be installed before running the pipeline.py file. You can install it using pip:
+
+```
+pip install randomforest
+```
+
+With these changes, the tests should pass, and the reproducibility violation should be resolved.

@@ -1,0 +1,53 @@
+{
+  "run": 27,
+  "cost": {
+    "prompt_tokens": 164,
+    "completion_tokens": 1062,
+    "truncated": false,
+    "seconds": 106.4
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK",
+      "FAIL:invalid syntax"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 6
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 3,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "                model = RandomForestClassifier(n_estimators=100, random_state=42)\n    \n                # Train the model\n                model.fit(X_train, y_train)\n    \n                # Log model parameters\n                mlflow.log_param(\"n_estimators\", model.n_estimators)\n                mlflow.log_param(\"random_state\", model.random_state)\n    \n                # Evaluate the model\n                y_pred = model.predict(X_test)\n                accuracy = accuracy_score(y_test, y_pred)\n                mlflow.log_metric(\"accuracy\", accuracy)\n    \n                return model\n        except Exception as e:\n>           raise ValueError(f\"Training error: {e}\")\nE           ValueError: Training error: name 'X_test' is not defined\n\npipeline.py:56: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - ValueError: Training error: name ...\n3 failed in 5.63s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

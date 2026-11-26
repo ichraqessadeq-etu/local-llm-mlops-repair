@@ -1,0 +1,53 @@
+{
+  "run": 5,
+  "cost": {
+    "prompt_tokens": 262,
+    "completion_tokens": 1500,
+    "truncated": true,
+    "seconds": 192.5
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK",
+      "FAIL:invalid syntax"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 4,
+    "asserts": 3
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 4,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "0           10             15            2...   4      4        1\n4           50             55            60  ...          5      5        0\n\n[5 rows x 14 columns]\n\n    def test_save_model(data):\n        \"\"\"Test the save_model function.\"\"\"\n        try:\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            model = train_model(X_train, y_train)\n            save_model(model, \"air_quality_experiment\", \"air_quality_run\")\n            logging.info(\"Model saving test passed.\")\n        except Exception as e:\n>           logging.error(f\"Model saving test failed: {e}\")\nE           NameError: name 'logging' is not defined\n\ntest_pipeline.py:64: NameError\n---------------------------- Captured stderr call -----------------------------\n2026/11/24 22:56:14 INFO mlflow.tracking.fluent: Experiment with name 'air_quality_experiment' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'logging' is not de...\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'logging' is ...\nFAILED test_pipeline.py::test_train_model - NameError: name 'logging' is not ...\nFAILED test_pipeline.py::test_save_model - NameError: name 'logging' is not d...\n4 failed in 11.37s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

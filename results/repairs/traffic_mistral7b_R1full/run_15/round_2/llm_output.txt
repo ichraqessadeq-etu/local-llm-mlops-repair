@@ -1,0 +1,66 @@
+ To fix the PermissionError issue, we can use a temporary directory with write access for the tests. Here's the updated code for the files:
+
+1. pipeline.py
+
+```python
+import pandas as pd
+import numpy as np
+import mlflow
+import mlflow.pyfunc
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    data = data.dropna()  # Drop missing values
+    X = data.drop('Congestion', axis=1)  # Features
+    y = data['Congestion']  # Target
+    return X, y
+
+def train_model(X_train, y_train, random_state=42):
+    model = RandomForestClassifier(random_state=random_state)
+    model.fit(X_train, y_train)
+    return model
+
+def train(file_path, random_state=42):
+    data = load_data(file_path)
+    X, y = preprocess_data(data)
+    with mlflow.start_run():
+        model = train_model(X_train, y_train, random_state=random_state)
+        mlflow.pyfunc.log_model(model, "model", registered_model_name="congestion_detector")
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+import tempfile
+from unittest.mock import patch
+import pipeline
+
+class TestPipeline(unittest.TestCase):
+    @patch('pipeline.pd.read_csv')
+    def test_load_data(self, mock_read_csv):
+        mock_data = {'temp': [1, 2, 3], 'rain_1h': [4, 5, 6]}
+        temp_dir = tempfile.TemporaryDirectory()
+        temp_file = temp_dir.name + "\\test_data.csv"
+        pd.DataFrame(mock_data).to_csv(temp_file)
+        temp_dir.cleanup()
+        result = pipeline.load_data(temp_file)
+        self.assertIsInstance(result, pd.DataFrame)
+
+    @patch('pipeline.RandomForestClassifier')
+    def test_train_model(self, mock_rf_classifier):
+        mock_rf_classifier.return_value = mock_rf_classifier
+        data = pipeline.load_data(tempfile.mkdtemp())
+        X, y = pipeline.preprocess_data(data)
+        model = pipeline.train_model(X, y, random_state=42)
+        self.assertIsInstance(model, mock_rf_classifier)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+In the updated test_pipeline.py, I used tempfile.TemporaryDirectory to create a temporary directory with write access for the test data. This should resolve the PermissionError issue and allow the tests to pass.

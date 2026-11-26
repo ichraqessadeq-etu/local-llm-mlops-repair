@@ -1,0 +1,85 @@
+ I'll provide you with the necessary components for your request. Let's break it down into three parts: `pipeline.py`, `test_pipeline.py`, and the GitHub Actions YAML file.
+
+1. pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, pyfunc, track
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    return data.drop('Class', axis=1), data['Class']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "model")
+        mlflow.log_artifact("data/fraud.csv", "data")
+        pyfunc.log_model(model, "scikit_learn_model")
+        track(f"Training Accuracy: {model.score(X_train, y_train)}")
+        track(f"Testing Accuracy: {model.score(X_test, y_test)}")
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data("data/fraud.csv")
+        self.X, self.y = preprocess_data(self.data)
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.3, random_state=42)
+
+    def test_train_model(self):
+        train_model(self.X_train, self.y_train)
+        # You can add more assertions here to test the accuracy, model artifacts, etc.
+```
+
+3. GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install mlflow==1.30.1 scikit-learn==1.0.2
+
+    - name: Test
+      run: pytest test_pipeline.py
+
+    - name: Train Model
+      run: python pipeline.py
+```
+
+This setup uses GitHub Actions for the CI/CD pipeline, tests the pipeline using pytest, and trains the Random Forest model with MLflow. Make sure to create a `requirements.txt` file to list the necessary dependencies.
+
+```
+mlflow==1.30.1
+scikit-learn==1.0.2
+pytest==6.2.5
+```

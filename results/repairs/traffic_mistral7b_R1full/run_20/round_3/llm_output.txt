@@ -1,0 +1,68 @@
+  I apologize for the oversight in my previous response. Here's the corrected `pipeline.py` and `test_pipeline.py` files:
+
+1. pipeline.py
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+import mlflow.sklearn
+
+# Define the Features list
+Features = ['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month']
+
+def load_data(file_path):
+    data = pd.read_csv(file_path)
+    data.replace(['Clouds', 'Clear'], np.nan, inplace=True)  # Replace 'Clouds' and 'Clear' with NaN
+    return data
+
+def preprocess_data(data):
+    # Preprocessing steps like filling missing values, encoding categorical variables, etc.
+    data[Features] = data[Features].astype(np.float32)  # Convert categorical columns to float32
+    data = pd.get_dummies(data, columns=['weather_main', 'clouds_all'])  # One-hot encode categorical columns
+    return data[Features], data['Congestion']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)  # Seed the random number generator
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random-forest")
+
+    return model
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+import numpy as np
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data("data/traffic.csv")
+
+    def test_load_data(self):
+        self.assertIsInstance(self.data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        X, y = preprocess_data(self.data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        X, y = preprocess_data(self.data)
+        model = train_model(X, y)
+        # Add assertions to check model properties if needed
+
+    def tearDown(self):
+        self.data = None
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+In the corrected pipeline.py, I added a line to replace the 'Clear' column with NaN, in addition to the 'Clouds' column. In the test\_pipeline.py, I added a `setUp` and `tearDown` method to ensure the data is loaded only once for all tests.
+
+These corrections should resolve the reported issues and pass the tests, as well as remove any potential violations.

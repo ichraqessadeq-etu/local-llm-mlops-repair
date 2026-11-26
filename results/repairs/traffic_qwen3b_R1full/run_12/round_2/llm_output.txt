@@ -1,0 +1,147 @@
+To resolve the `ValueError: could not convert string to float` in the test files, we need to ensure that the data types are correctly specified when loading the CSV file. Specifically, we need to convert the columns that contain string representations of numbers to numeric types. Here are the corrected versions of `pipeline.py` and `test_pipeline.py`:
+
+### pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path, dtype={
+            'temp': float,
+            'rain_1h': float,
+            'snow_1h': float,
+            'clouds_all': float,
+            'Hour': int,
+            'DayOfWeek': int,
+            'Month': int
+        })
+        logger.info("Data loaded successfully.")
+        return data
+    except FileNotFoundError:
+        logger.error("File not found.")
+        raise
+    except pd.errors.EmptyDataError:
+        logger.error("Empty file.")
+        raise
+    except pd.errors.ParserError:
+        logger.error("Error parsing CSV file.")
+        raise
+
+def preprocess_data(data):
+    """Preprocess the data by splitting features and target."""
+    try:
+        features = data.drop('Congestion', axis=1)
+        target = data['Congestion']
+        X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
+        logger.info("Data preprocessed successfully.")
+        return X_train, X_test, y_train, y_test
+    except Exception as e:
+        logger.error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model."""
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        logger.info("Model trained successfully.")
+        return model
+    except Exception as e:
+        logger.error(f"Error training model: {e}")
+        raise
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model."""
+    try:
+        y_pred = model.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        logger.info(f"Model accuracy: {accuracy:.2f}")
+        return accuracy
+    except Exception as e:
+        logger.error(f"Error evaluating model: {e}")
+        raise
+
+def run_pipeline(file_path):
+    """Run the entire pipeline."""
+    try:
+        data = load_data(file_path)
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_train)
+        accuracy = evaluate_model(model, X_test, y_test)
+        return accuracy
+    except Exception as e:
+        logger.error(f"Error running pipeline: {e}")
+        raise
+```
+
+### test_pipeline.py
+
+```python
+import pytest
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model, evaluate_model, run_pipeline
+
+@pytest.fixture
+def test_data():
+    # Create a sample DataFrame for testing
+    data = {
+        'temp': [291.25, 295.89],
+        'rain_1h': [1.02, 0.00],
+        'snow_1h': [0.0, 0.0],
+        'clouds_all': [50, 60],
+        'Hour': [11, 18],
+        'DayOfWeek': [6, 9],
+        'Month': [9, 9],
+        'Congestion': [4, 4]
+    }
+    return pd.DataFrame(data)
+
+def test_load_data(test_data):
+    """Test loading data."""
+    with pytest.raises(FileNotFoundError):
+        load_data('non_existent_file.csv')
+    with pytest.raises(pd.errors.EmptyDataError):
+        load_data('empty.csv')
+    with pytest.raises(pd.errors.ParserError):
+        load_data('invalid.csv')
+    assert load_data('data/traffic.csv').equals(test_data)
+
+def test_preprocess_data(test_data):
+    """Test preprocessing data."""
+    X_train, X_test, y_train, y_test = preprocess_data(test_data)
+    assert X_train.shape == (3, 8)
+    assert y_train.shape == (3,)
+    assert X_test.shape == (1, 8)
+    assert y_test.shape == (1,)
+
+def test_train_model(test_data):
+    """Test training the model."""
+    X_train, X_test, y_train, y_test = preprocess_data(test_data)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+
+def test_evaluate_model(test_data):
+    """Test evaluating the model."""
+    X_train, X_test, y_train, y_test = preprocess_data(test_data)
+    model = train_model(X_train, y_train)
+    accuracy = evaluate_model(model, X_test, y_test)
+    assert isinstance(accuracy, float)
+
+def test_run_pipeline(test_data):
+    """Test running the entire pipeline."""
+    accuracy = run_pipeline('data/traffic.csv')
+    assert isinstance(accuracy, float)
+```
+
+These changes ensure that the data types are correctly specified when loading the CSV file, which resolves the `ValueError`.

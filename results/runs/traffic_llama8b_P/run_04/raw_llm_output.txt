@@ -1,0 +1,134 @@
+Here is the code for the CI/CD pipeline:
+
+**pipeline.py**
+```python
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow.sklearn
+import mlflow
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        mlflow.log_error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    try:
+        # Convert categorical features to numerical
+        data['weather_main'] = pd.Categorical(data['weather_main']).codes
+        data['DayOfWeek'] = pd.Categorical(data['DayOfWeek']).codes
+        data['Month'] = pd.Categorical(data['Month']).codes
+
+        # Scale numerical features
+        scaler = StandardScaler()
+        data[['temp', 'rain_1h', 'snow_1h', 'clouds_all']] = scaler.fit_transform(data[['temp', 'rain_1h', 'snow_1h', 'clouds_all']])
+
+        # Split data into features (X) and target (y)
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+
+        return X, y
+    except Exception as e:
+        mlflow.log_error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        # Train RandomForest model
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+
+        # Log model to MLflow
+        mlflow.sklearn.log_model(model, "random_forest_model")
+
+        return model
+    except Exception as e:
+        mlflow.log_error(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/traffic.csv')
+    assert data is not None
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert X is not None
+    assert y is not None
+
+def test_train_model():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert model is not None
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          pytest test_pipeline.py
+
+      - name: Train model
+        run: |
+          python pipeline.py train
+
+      - name: Log model to MLflow
+        run: |
+          mlflow run . --no-remote
+
+      - name: Deploy model
+        uses: appleboy/ssh-action@v0.1.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            mkdir -p /path/to/model
+            cp /path/to/model.pkl /path/to/model/
+```
+
+**requirements.txt**
+```bash
+mlflow==1.30.1
+scikit-learn==1.0.2
+pandas==1.3.5
+numpy==1.21.2
+```
+
+This pipeline assumes that the `traffic.csv` file is located in the `data` directory, and that the `requirements.txt` file is present in the root directory. The pipeline uses MLflow to log the model and its metrics. The `test_pipeline.py` file contains three test functions that cover the loading of data, preprocessing of data, and training of the model. The CI/CD pipeline uses GitHub Actions to automate the build, test, and deployment of the model.

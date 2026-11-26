@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+pipeline.py:9: NameError
+________________________ TestPipeline.test_train_model ________________________
+
+self = <test_pipeline.TestPipeline testMethod=test_train_model>
+
+    def test_train_model(self):
+>       data = load_data('data/traffic.csv')
+
+test_pipeline.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+file_path = 'data/traffic.csv'
+
+    def load_data(file_path):
+        data = pd.read_csv(file_path)
+        data.dropna(inplace=True)
+>       data.replace({'Clouds': np.nan}, inplace=True)
+E       NameError: name 'np' is not defined
+
+pipeline.py:9: NameError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'np' ...
+FAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...
+FAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'np...
+3 failed in 3.33s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

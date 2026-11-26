@@ -1,0 +1,201 @@
+{
+  "run": 18,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 799.4,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:29: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n>       data = pd.DataFrame({\n            'temp': [20, 22, 18, 25],\n            'rain_1h': [0, 1, 0, 1],\n            'snow_1h': [0, 0, 1, 0],\n            'clouds_all': [50, 70, 30, 60],\n            'weather_main': ['Clear', 'Clouds', 'Rain', 'Snow'],\n            'IsHoliday': [False, True, False, True],\n            'Hour': [10, 14, 18, 22],\n            'DayOfWeek': [1, 2, 3, 4],\n            'Month': [1, 2, 3, 4],\n            'Congestion': [0, 1, 0, 1]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:46: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not de...\n4 failed in 3.73s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2148,
+        "completion_tokens": 1324,
+        "truncated": false,
+        "seconds": 245.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = pd.DataFrame({\n            'temp': [20, 22, 18, 25],\n            'rain_1h': [0, 1, 0, 1],\n            'snow_1h': [0, 0, 1, 0],\n            'clouds_all': [50, 70, 30, 60],\n            'weather_main': ['Clear', 'Clouds', 'Rain', 'Snow'],\n            'IsHoliday': [False, True, False, True],\n            'Hour': [10, 14, 18, 22],\n            'DayOfWeek': [1, 2, 3, 4],\n            'Month': [1, 2, 3, 4],\n            'Congestion': [0, 1, 0, 1]\n        })\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:44: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n1 failed, 3 passed in 3.91s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3928,
+        "completion_tokens": 1326,
+        "truncated": false,
+        "seconds": 219.1
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = pd.DataFrame({\n            'temp': [20, 22, 18, 25],\n            'rain_1h': [0, 1, 0, 1],\n            'snow_1h': [0, 0, 1, 0],\n            'clouds_all': [50, 70, 30, 60],\n            'weather_main': ['Clear', 'Clouds', 'Rain', 'Snow'],\n            'IsHoliday': [False, True, False, True],\n            'Hour': [10, 14, 18, 22],\n            'DayOfWeek': [1, 2, 3, 4],\n            'Month': [1, 2, 3, 4],\n            'Congestion': [0, 1, 0, 1]\n        })\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:44: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n1 failed, 3 passed in 3.48s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 4057,
+        "completion_tokens": 1326,
+        "truncated": false,
+        "seconds": 334.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = pd.DataFrame({\n            'temp': [20, 22, 18, 25],\n            'rain_1h': [0, 1, 0, 1],\n            'snow_1h': [0, 0, 1, 0],\n            'clouds_all': [50, 70, 30, 60],\n            'weather_main': ['Clear', 'Clouds', 'Rain', 'Snow'],\n            'IsHoliday': [False, True, False, True],\n            'Hour': [10, 14, 18, 22],\n            'DayOfWeek': [1, 2, 3, 4],\n            'Month': [1, 2, 3, 4],\n            'Congestion': [0, 1, 0, 1]\n        })\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:44: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n1 failed, 3 passed in 3.76s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\sklearn\ensemble\_forest.py:328: in fit
+    X, y, multi_output=True, accept_sparse="csc", dtype=DTYPE
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\sklearn\base.py:581: in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\sklearn\utils\validation.py:976: in check_X_y
+    estimator=estimator,
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\sklearn\utils\validation.py:746: in check_array
+    array = np.asarray(array, order=order, dtype=dtype)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self =          temp  rain_1h  snow_1h  clouds_all  ... IsHoliday  Hour  DayOfWeek  Month
+0      288.28      0.0      0.0    ...  6      9
+40563  282.12      0.0      0.0          90  ...         0    23          6      9
+
+[40564 rows x 9 columns]
+dtype = dtype('float32')
+
+    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:
+>       return np.asarray(self._values, dtype=dtype)
+E       ValueError: could not convert string to float: 'Clouds'
+
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\pandas\core\generic.py:1993: ValueError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_train_model - ValueError: could not convert str...
+1 failed in 4.42s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

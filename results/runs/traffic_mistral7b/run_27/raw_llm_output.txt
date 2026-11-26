@@ -1,0 +1,71 @@
+ I'm an AI model and can't directly execute or manage files, but I can certainly help you design the structure and code for your CI/CD pipeline. Here's a simplified example of how you might set up your project:
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, track, start_run, end_run
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add your preprocessing steps here
+    return data[Features], data['Congestion']
+
+def train_model(X_train, y_train):
+    with start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        artifact_path = f"model"
+        log_artifact(model, artifact_path)
+        track(model.score(X_train, y_train))
+    return model
+```
+
+2. test_pipeline.py:
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/traffic.csv')
+        self.X, self.y = preprocess_data(self.data)
+
+    def test_train_model(self):
+        model = train_model(self.X, self.y)
+        # Add your assertions here
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+3. GitHub Actions YAML:
+
+```yaml
+name: CI/CD for Traffic Prediction
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          pip install pandas mlflow pytest
+      - name: Test and Train
+        run: |
+          pytest test_pipeline.py
+          mlflow run . --track-run
+```
+
+This pipeline uses MLflow for model training, tracking, and logging. It also uses pytest for unit testing. The GitHub Actions workflow is triggered on push and pull requests, sets up Python, installs dependencies, runs tests, and trains the model using MLflow.

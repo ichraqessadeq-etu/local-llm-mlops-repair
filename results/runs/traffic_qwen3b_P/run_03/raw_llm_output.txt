@@ -1,0 +1,153 @@
+Here is a production-ready CI/CD pipeline for a RandomForest congestion detector using Python, MLflow, and GitHub Actions. This pipeline includes a Python module `pipeline.py` with functions for loading data, preprocessing, and training the model. It also includes a pytest file `test_pipeline.py` for testing the pipeline. The GitHub Actions YAML is provided to automate the CI/CD process.
+
+### pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+import logging
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        logging.info(f"Data loaded from {file_path}")
+        return data
+    except Exception as e:
+        logging.error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    try:
+        # Drop unnecessary columns
+        data = data.drop(['Unnamed: 0'], axis=1)
+        
+        # Convert categorical columns to numerical
+        data['weather_main'] = data['weather_main'].astype('category').cat.codes
+        
+        # Split features and target
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+        
+        # Split the data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        logging.info("Data preprocessed successfully")
+        return X_train, y_train, X_test, y_test
+    except Exception as e:
+        logging.error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Train the RandomForest model."""
+    try:
+        # Initialize the model
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        
+        # Train the model
+        model.fit(X_train, y_train)
+        
+        logging.info("Model trained successfully")
+        return model
+    except Exception as e:
+        logging.error(f"Error training model: {e}")
+        raise
+
+def save_model(model, experiment_name, run_name):
+    """Save the model using MLflow."""
+    try:
+        mlflow.set_experiment(experiment_name)
+        with mlflow.start_run(run_name=run_name):
+            mlflow.sklearn.log_model(model, "model")
+            logging.info("Model saved to MLflow")
+    except Exception as e:
+        logging.error(f"Error saving model: {e}")
+        raise
+```
+
+### test_pipeline.py
+
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model, save_model
+
+def test_load_data():
+    """Test loading data."""
+    data = load_data('data/traffic.csv')
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    """Test preprocessing data."""
+    data = load_data('data/traffic.csv')
+    X_train, y_train, X_test, y_test = preprocess_data(data)
+    assert isinstance(X_train, pd.DataFrame)
+    assert isinstance(y_train, pd.Series)
+    assert isinstance(X_test, pd.DataFrame)
+    assert isinstance(y_test, pd.Series)
+
+def test_train_model():
+    """Test training the model."""
+    data = load_data('data/traffic.csv')
+    X_train, y_train, _, _ = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+
+def test_save_model():
+    """Test saving the model."""
+    data = load_data('data/traffic.csv')
+    X_train, y_train, _, _ = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    save_model(model, 'traffic_congestion', 'test_run')
+```
+
+### GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        pytest
+
+    - name: Train and save model
+      run: |
+        python pipeline.py
+```
+
+### requirements.txt
+
+```plaintext
+pandas==1.0.2
+scikit-learn==1.0.2
+mlflow==1.30.1
+pytest==6.2.5
+```
+
+This pipeline automates the data loading, preprocessing, model training, and saving process using MLflow. It also includes tests to ensure the pipeline functions correctly. The GitHub Actions YAML file sets up the CI/CD pipeline to run on every push to the `main` branch.

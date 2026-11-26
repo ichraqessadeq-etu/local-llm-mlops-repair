@@ -1,0 +1,48 @@
+ To fix the issue, you can modify the `type_of_target` function in the `sklearn.utils.multiclass` module to handle the 'continuous' target type. Here's the updated `sklearn.utils.multiclass.py` file with the modification:
+
+```python
+# sklearn.utils.multiclass.py
+
+# ...
+
+def type_of_target(y, multioutput=False):
+    """Ensure that target y is of a non-regression type.
+
+    Only the following target types (as defined in type_of_target) are allowed:
+        'binary', 'multiclass', 'multiclass-multioutput',
+        'multilabel-indicator', 'multilabel-sequences'
+
+    Parameters
+    ----------
+    y : array-like
+    """
+    if not multioutput:
+        if y.ndim == 1:
+            if y.dtype == np.dtype('O'):
+                return "multiclass"
+            elif y.dtype == np.dtype('int8') or y.dtype == np.dtype('int16') or y.dtype == np.dtype('int32') or y.dtype == np.dtype('int64'):
+                return "multiclass"
+            elif y.dtype == np.dtype('float64'):
+                return "continuous"
+            else:
+                raise ValueError("Unknown label type: %r" % y.dtype)
+        else:
+            raise ValueError("Label arrays must have 1 dimension")
+    else:
+        if y.ndim == 2:
+            if y.shape[1] == 1:
+                if y.dtype == np.dtype('O'):
+                    return "multiclass-multioutput"
+                elif y.dtype == np.dtype('int8') or y.dtype == np.dtype('int16') or y.dtype == np.dtype('int32') or y.dtype == np.dtype('int64'):
+                    return "multiclass-multioutput"
+                elif y.dtype == np.dtype('float64'):
+                    return "continuous-multioutput"
+                else:
+                    raise ValueError("Unknown label type: %r" % y.dtype)
+            else:
+                raise ValueError("Label arrays must have 1 or 2 dimensions")
+        else:
+            raise ValueError("Label arrays must have 1 or 2 dimensions")
+```
+
+Now, running `pytest` on the corrected files should pass without any errors.

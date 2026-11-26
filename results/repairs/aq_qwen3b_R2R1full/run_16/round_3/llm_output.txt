@@ -1,0 +1,17 @@
+The error you're encountering is due to the fact that the `mlflow` package is not installed in your target environment. To resolve this, you need to install the `mlflow` package using pip. Here are the steps to do that:
+
+1. **Install MLflow**: Run the following command in your terminal or command prompt to install MLflow:
+
+   ```bash
+   pip install mlflow
+   ```
+
+2. **Verify Installation**: After installation, you can verify that MLflow is installed correctly by running:
+
+   ```bash
+   mlflow --version
+   ```
+
+3. **Run pytest Again**: Once MLflow is installed, try running your tests again using pytest.
+
+If you encounter any further issues, please let me know!

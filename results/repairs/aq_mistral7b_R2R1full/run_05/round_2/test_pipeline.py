@@ -1,0 +1,16 @@
+# test_pipeline.py
+import unittest
+from pipeline import load_data, preprocess_data, train_model, model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/air_quality.csv')
+        self.X, self.y = preprocess_data(self.data)
+
+    def test_train_model(self):
+        model = model
+        model.fit(self.X, self.y)
+        # Add assertions to test the model here
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,0 +1,52 @@
+{
+  "run": 2,
+  "cost": {
+    "prompt_tokens": 220,
+    "completion_tokens": 841,
+    "truncated": false,
+    "seconds": 206.1
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 7
+  },
+  "pytest": {
+    "passed": 1,
+    "failed": 2,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "        try:\n            X = self._validate_data(\n                X,\n                reset=in_fit,\n                accept_sparse=\"csc\",\n                dtype=dtype,\n                force_all_finite=force_all_finite,\n                copy=self.copy,\n            )\n        except ValueError as ve:\n            if \"could not convert\" in str(ve):\n                new_ve = ValueError(\n                    \"Cannot use {} strategy with non-numeric data:\\n{}\".format(\n                        self.strategy, ve\n                    )\n                )\n>               raise new_ve from None\nE               ValueError: Cannot use mean strategy with non-numeric data:\nE               could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\impute\\_base.py:285: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - ValueError: Cannot use mean s...\nFAILED test_pipeline.py::test_train_model - ValueError: Cannot use mean strat...\n2 failed, 1 passed in 5.72s",
+    "all_pass": false,
+    "failure_hint": "other"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: Cannot use mean strategy with non-numeric data:\ncould not convert string to float: 'Clouds'"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

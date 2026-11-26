@@ -1,0 +1,4 @@
+Static checks of your files against the target environment report:
+- no violation found by the static detectors
+Fix the files.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

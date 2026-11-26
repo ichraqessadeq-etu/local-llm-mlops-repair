@@ -1,0 +1,34 @@
+import pytest
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def test_load_data():
+    """Test loading data."""
+    data = load_data('data/air_quality.csv')
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    """Test preprocessing data."""
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+
+def test_train_model():
+    """Test training the model."""
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert isinstance(model, RandomForestClassifier)
+
+def test_evaluate_model():
+    """Test evaluating the model."""
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    accuracy = evaluate_model(model, X, y)
+    assert isinstance(accuracy, float)

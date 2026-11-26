@@ -1,0 +1,148 @@
+Sure, I'll provide you with the necessary files for a production-ready CI/CD pipeline for a RandomForest congestion detector. Here are the files you need:
+
+1. `pipeline.py`
+2. `test_pipeline.py`
+3. `.github/workflows/ci_cd.yml`
+
+### 1. `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        raise Exception(f"Failed to load data: {e}")
+
+def preprocess_data(data):
+    """Preprocess data to prepare for modeling."""
+    try:
+        # Drop any rows with missing values
+        data = data.dropna()
+        
+        # Convert categorical variables to dummy variables
+        data = pd.get_dummies(data, columns=['weather_main', 'IsHoliday'], drop_first=True)
+        
+        # Separate features and target
+        X = data.drop(columns=['Congestion'])
+        y = data['Congestion']
+        
+        return X, y
+    except Exception as e:
+        raise Exception(f"Failed to preprocess data: {e}")
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model."""
+    try:
+        with mlflow.start_run():
+            # Set MLflow experiment name
+            mlflow.set_experiment("traffic_congestion_detection")
+            
+            # Initialize the RandomForestClassifier
+            rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
+            
+            # Train the model
+            rf_model.fit(X_train, y_train)
+            
+            # Log the model
+            mlflow.sklearn.log_model(rf_model, "model")
+            
+            # Log model parameters
+            mlflow.log_param("n_estimators", 100)
+            mlflow.log_param("random_state", 42)
+            
+            # Log model metrics
+            y_pred = rf_model.predict(X_train)
+            accuracy = accuracy_score(y_train, y_pred)
+            classification_rep = classification_report(y_train, y_pred)
+            mlflow.log_metric("accuracy", accuracy)
+            mlflow.log_text(classification_rep, "classification_report.txt")
+            
+            return rf_model
+    except Exception as e:
+        raise Exception(f"Failed to train model: {e}")
+```
+
+### 2. `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test the load_data function."""
+    data = load_data('data/traffic.csv')
+    assert not data.empty, "Data should not be empty"
+
+def test_preprocess_data():
+    """Test the preprocess_data function."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert not X.empty, "Features should not be empty"
+    assert not y.empty, "Target should not be empty"
+
+def test_train_model():
+    """Test the train_model function."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None, "Model should not be None"
+```
+
+### 3. `.github/workflows/ci_cd.yml`
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas scikit-learn mlflow pytest
+
+    - name: Run tests
+      run: pytest test_pipeline.py
+
+    - name: Train model and log to MLflow
+      run: |
+        python -m pipeline
+```
+
+### Explanation
+
+1. **`pipeline.py`**: This file contains functions to load data, preprocess it, and train a RandomForest model. It also uses MLflow to log the model and its metrics.
+
+2. **`test_pipeline.py`**: This file contains unit tests for the functions in `pipeline.py` to ensure they work as expected.
+
+3. **`.github/workflows/ci_cd.yml`**: This GitHub Actions workflow file defines the CI/CD pipeline. It runs on every push or pull request to the `main` branch. It checks out the code, sets up Python, installs dependencies, runs tests, and trains the model using MLflow.
+
+Make sure to replace `'data/traffic.csv'` with the correct path to your data file if it's located elsewhere. Also, ensure that you have the necessary permissions to push to the `main` branch and that your GitHub repository is set up correctly.

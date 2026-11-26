@@ -1,0 +1,82 @@
+Sure, let's fix the issues in the files. The error is due to the missing import of `train_test_split` from `sklearn.model_selection`. I'll also ensure that the `evaluate_model` function is correctly used in the test.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    data = pd.read_csv(file_path)
+    return data
+
+def preprocess_data(data):
+    """Preprocess data by separating features and target."""
+    X = data.drop(columns=['Class'])
+    y = data['Class']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier and log it using MLflow."""
+    with mlflow.start_run():
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.log_param("n_estimators", 100)
+        mlflow.sklearn.log_model(model, "model")
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+    return model
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model on test data."""
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    return accuracy
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model, evaluate_model
+from sklearn.model_selection import train_test_split
+
+def test_load_data():
+    data = load_data('data/fraud.csv')
+    assert not data.empty
+    assert 'Class' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    assert not X.empty
+    assert not y.empty
+    assert len(X) == len(y)
+
+def test_train_model():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+    accuracy = evaluate_model(model, X_test, y_test)
+    assert accuracy > 0.5
+
+if __name__ == "__main__":
+    test_load_data()
+    test_preprocess_data()
+    test_train_model()
+```
+
+### Explanation of Changes:
+1. **Import `train_test_split`**: Added the import statement for `train_test_split` from `sklearn.model_selection`.
+2. **Use `train_test_split`**: Used `train_test_split` correctly in the `test_train_model` function.
+3. **Ensure `evaluate_model` is used**: Ensured that the `evaluate_model` function is used to calculate and assert the accuracy of the model.
+
+This should resolve the issues and make all tests pass.

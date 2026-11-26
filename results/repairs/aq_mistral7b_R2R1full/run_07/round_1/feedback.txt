@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\mlflow\tracking\fluent.py:780: in log_artifact
+    MlflowClient().log_artifact(run_id, local_path, artifact_path)
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\mlflow\tracking\client.py:1136: in log_artifact
+    self._tracking_client.log_artifact(run_id, local_path, artifact_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <mlflow.tracking._tracking_service.client.TrackingServiceClient object at 0x000002A78C985B48>
+run_id = '48e5e2a6a59643ab8d4e084f9cce3b88'
+local_path = RandomForestClassifier(random_state=42), artifact_path = 'model'
+
+    def log_artifact(self, run_id, local_path, artifact_path=None):
+        """
+        Write a local file or directory to the remote ``artifact_uri``.
+    
+        :param local_path: Path to the file or directory to write.
+        :param artifact_path: If provided, the directory in ``artifact_uri`` to write to.
+        """
+        artifact_repo = self._get_artifact_repo(run_id)
+>       if os.path.isdir(local_path):
+E       TypeError: _isdir: path should be string, bytes or os.PathLike, not RandomForestClassifier
+
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\mlflow\tracking\_tracking_service\client.py:453: TypeError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::TestPipeline::test_train_model - TypeError: _isdir: ...
+1 failed in 3.82s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

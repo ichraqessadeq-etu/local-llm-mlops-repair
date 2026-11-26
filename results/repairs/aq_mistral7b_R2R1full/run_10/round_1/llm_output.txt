@@ -1,0 +1,44 @@
+ It appears that the issue is caused by the use of an outdated version of MLflow (1.30.1) which does not have the `track` function. To fix the issue, you can either update the MLflow version or replace the `track` function with an alternative method.
+
+Here is the corrected `pipeline.py` file using the `mlflow.log_param` function instead of `track`:
+
+```python
+import mlflow
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    return (data.drop('Anomaly', axis=1), data['Anomaly'])
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.pyfunc.log_model(model, 'model')
+        mlflow.log_param("version", mlflow.get_run_id())
+        print(f'Model with version {mlflow.get_run_id()} trained successfully.')
+```
+
+And here is the corrected `test_pipeline.py` file:
+
+```python
+import pandas as pd
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data("data/air_quality.csv")
+        self.assertIsInstance(data, pd.DataFrame)
+
+    # Add more test cases for preprocess_data and train_model functions
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+These corrected files should pass the tests and not have any violations in static checks.

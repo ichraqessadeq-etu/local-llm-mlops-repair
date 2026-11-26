@@ -1,0 +1,52 @@
+{
+  "run": 19,
+  "cost": {
+    "prompt_tokens": 261,
+    "completion_tokens": 852,
+    "truncated": false,
+    "seconds": 179.0
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 6
+  },
+  "pytest": {
+    "passed": 2,
+    "failed": 1,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "        \"\"\"\n        if _samefile(src, dst):\n            raise SameFileError(\"{!r} and {!r} are the same file\".format(src, dst))\n    \n        for fn in [src, dst]:\n            try:\n                st = os.stat(fn)\n            except OSError:\n                # File most likely does not exist\n                pass\n            else:\n                # XXX What about other special files? (sockets, devices...)\n                if stat.S_ISFIFO(st.st_mode):\n                    raise SpecialFileError(\"`%s` is a named pipe\" % fn)\n    \n        if not follow_symlinks and os.path.islink(src):\n            os.symlink(os.readlink(src), dst)\n        else:\n>           with open(src, 'rb') as fsrc:\nE           FileNotFoundError: [Errno 2] No such file or directory: 'classification_report.txt'\n\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\shutil.py:120: FileNotFoundError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - FileNotFoundError: [Errno 2] No s...\n1 failed, 2 passed in 8.89s",
+    "all_pass": false,
+    "failure_hint": "file_or_path"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "FileNotFoundError: [Errno 2] No such file or directory: 'classification_report.txt'"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

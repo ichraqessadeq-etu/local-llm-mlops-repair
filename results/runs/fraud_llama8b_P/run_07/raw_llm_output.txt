@@ -1,0 +1,111 @@
+Here is the code for the CI/CD pipeline as per your requirements:
+
+**pipeline.py**
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow.sklearn
+import mlflow
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        mlflow.log_error(f"Error loading data: {str(e)}")
+        raise
+
+def preprocess_data(data):
+    try:
+        X = data.drop(['Class'], axis=1)
+        y = data['Class']
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        scaler = StandardScaler()
+        X_train_scaled = scaler.fit_transform(X_train)
+        return X_train_scaled, y_train, X_test, y_test
+    except Exception as e:
+        mlflow.log_error(f"Error preprocessing data: {str(e)}")
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random_forest")
+        return model
+    except Exception as e:
+        mlflow.log_error(f"Error training model: {str(e)}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/fraud.csv')
+    assert data.shape[0] > 0
+
+def test_preprocess_data():
+    data = load_data('data/fraud.csv')
+    X_train, y_train, X_test, y_test = preprocess_data(data)
+    assert X_train.shape[0] > 0
+    assert y_train.shape[0] > 0
+
+def test_train_model():
+    data = load_data('data/fraud.csv')
+    X_train, y_train, X_test, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    assert model is not None
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Train model
+        run: |
+          mlflow run . --no-remote
+
+      - name: Test pipeline
+        run: |
+          pytest test_pipeline.py
+
+      - name: Deploy model
+        run: |
+          mlflow models serve -m random_forest
+```
+
+**requirements.txt**
+```bash
+mlflow==1.30.1
+scikit-learn==1.0.2
+pandas==1.0.5
+numpy==1.19.5
+```
+
+Note that you'll need to create a `data/fraud.csv` file with the relevant data for the pipeline to work. Also, this is just a basic example and you may need to modify it to fit your specific use case.

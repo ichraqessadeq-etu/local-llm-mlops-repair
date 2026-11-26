@@ -1,0 +1,201 @@
+{
+  "run": 9,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: With n_samples=0, test_size=0.2 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters."
+  },
+  "repair_seconds": 801.4,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 9
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:20: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 3.32s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "Exception: Failed to train model: could not convert string to float: 'Clouds'"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1470,
+        "completion_tokens": 704,
+        "truncated": false,
+        "seconds": 266.8
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 9
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        Train a RandomForestClassifier model.\n    \n        Args:\n            X_train (pd.DataFrame): Training features.\n            y_train (pd.Series): Training target.\n    \n        Returns:\n            RandomForestClassifier: Trained model.\n        \"\"\"\n        try:\n            with mlflow.start_run():\n                mlflow.log_param(\"model\", \"RandomForestClassifier\")\n                model = RandomForestClassifier(n_estimators=100, random_state=42)\n                model.fit(X_train, y_train)\n                mlflow.sklearn.log_model(model, \"model\")\n                mlflow.log_metric(\"accuracy\", accuracy_score(y_train, model.predict(X_train)))\n                return model\n        except Exception as e:\n>           raise Exception(f\"Failed to train model: {e}\")\nE           Exception: Failed to train model: could not convert string to float: 'Rain'\n\npipeline.py:61: Exception\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - Exception: Failed to train model:...\n1 failed, 2 passed in 4.09s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "Exception: Failed to train model: could not convert string to float: 'Clouds'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2531,
+        "completion_tokens": 792,
+        "truncated": false,
+        "seconds": 252.9
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 9
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            n_test = n_samples - n_train\n    \n        if n_train + n_test > n_samples:\n            raise ValueError(\n                \"The sum of train_size and test_size = %d, \"\n                \"should be smaller than the number of \"\n                \"samples %d. Reduce test_size and/or \"\n                \"train_size.\" % (n_train + n_test, n_samples)\n            )\n    \n        n_train, n_test = int(n_train), int(n_test)\n    \n        if n_train == 0:\n            raise ValueError(\n                \"With n_samples={}, test_size={} and train_size={}, the \"\n                \"resulting train set will be empty. Adjust any of the \"\n>               \"aforementioned parameters.\".format(n_samples, test_size, train_size)\n            )\nE           ValueError: With n_samples=0, test_size=0.2 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters.\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\model_selection\\_split.py:2101: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert not True\nFAILED test_pipeline.py::test_train_model - ValueError: With n_samples=0, tes...\n2 failed, 1 passed in 3.73s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: With n_samples=0, test_size=0.2 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters."
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3749,
+        "completion_tokens": 786,
+        "truncated": false,
+        "seconds": 281.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 9
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            n_test = n_samples - n_train\n    \n        if n_train + n_test > n_samples:\n            raise ValueError(\n                \"The sum of train_size and test_size = %d, \"\n                \"should be smaller than the number of \"\n                \"samples %d. Reduce test_size and/or \"\n                \"train_size.\" % (n_train + n_test, n_samples)\n            )\n    \n        n_train, n_test = int(n_train), int(n_test)\n    \n        if n_train == 0:\n            raise ValueError(\n                \"With n_samples={}, test_size={} and train_size={}, the \"\n                \"resulting train set will be empty. Adjust any of the \"\n>               \"aforementioned parameters.\".format(n_samples, test_size, train_size)\n            )\nE           ValueError: With n_samples=0, test_size=0.2 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters.\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\model_selection\\_split.py:2101: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert not True\nFAILED test_pipeline.py::test_train_model - ValueError: With n_samples=0, tes...\n2 failed, 1 passed in 3.66s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: With n_samples=0, test_size=0.2 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters."
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

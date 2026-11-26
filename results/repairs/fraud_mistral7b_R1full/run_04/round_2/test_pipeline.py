@@ -1,0 +1,24 @@
+from pipeline import load_data, preprocess_data, train_model
+import pytest
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.utils.multiclass import type_of_target
+
+def test_load_data():
+    data = load_data("data/fraud.csv")
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    data = load_data("data/fraud.csv")
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+
+def test_train_model():
+    data = load_data("data/fraud.csv")
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    y_train = y_train.astype('int')
+    model = train_model(X_train, y_train)
+    # Add assertions for model evaluation here
+
+pytest.main(["-v", __file__])

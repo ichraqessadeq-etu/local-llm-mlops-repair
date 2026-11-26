@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+0      288.28      0.0      0.0   ...       0
+40563  282.12      0.0      0.0          90  ...   23          6      9           0
+
+[40564 rows x 10 columns]
+
+    def preprocess_data(data):
+        """Preprocess data to split into features (X) and target (y)."""
+        try:
+            # Encode categorical variables
+            encoder = LabelEncoder()
+            data['weather_main'] = encoder.fit_transform(data['weather_main'])
+            data['IsHoliday'] = encoder.fit_transform(data['IsHoliday'])
+            # Split into features (X) and target (y)
+            X = data.drop(columns=['Congestion'])
+            y = data['Congestion']
+            return (X, y)
+        except Exception as e:
+>           raise Exception(f'Error preprocessing data: {e}')
+E           Exception: Error preprocessing data: name 'LabelEncoder' is not defined
+
+pipeline.py:28: Exception
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_preprocess_data - Exception: Error preprocessin...
+FAILED test_pipeline.py::test_train_model - Exception: Error preprocessing da...
+2 failed, 1 passed in 3.33s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

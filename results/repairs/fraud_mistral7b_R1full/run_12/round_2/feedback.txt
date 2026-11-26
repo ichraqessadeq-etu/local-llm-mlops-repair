@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+9999   55505.0  1.217761  0.362682  ... -0.021877  0.036317      0
+
+[10000 rows x 30 columns]
+y_train = 0        26.00
+1       136.90
+2       526.19
+3        12.99
+4         1.00
+         ...  
+9995    209.00
+9996      4.94
+9997     60.00
+9998     42.80
+9999      9.99
+Name: Amount, Length: 10000, dtype: float64
+random_state = 42
+
+    def train_model(X_train, y_train, random_state=42):
+>       with mlflow.start_run():
+E       NameError: name 'mlflow' is not defined
+
+pipeline.py:14: NameError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_pipeline - NameError: name 'mlflow' is not defined
+1 failed in 3.83s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

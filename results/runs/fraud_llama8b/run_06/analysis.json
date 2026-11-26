@@ -1,0 +1,51 @@
+{
+  "run": 6,
+  "cost": {
+    "prompt_tokens": 244,
+    "completion_tokens": 795,
+    "truncated": false,
+    "seconds": 181.6
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 3
+  },
+  "pytest": {
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "returncode": 0,
+    "tail": "...                                                                      [100%]\n3 passed in 10.83s",
+    "all_pass": true
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

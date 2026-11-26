@@ -1,0 +1,234 @@
+{
+  "run": 20,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": false,
+  "rvh_round0": true,
+  "rvh_final": true,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "TypeError: cannot unpack non-iterable NoneType object"
+  },
+  "repair_seconds": 1426.3,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 17
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\fraud_mistral7b_R1full\\run_20\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:5: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 5.09s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1523,
+        "completion_tokens": 917,
+        "truncated": false,
+        "seconds": 406.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_rng",
+              "detail": "np.random.randint(...) with no global seed set",
+              "lineno": 13
+            },
+            {
+              "kind": "RVH",
+              "rule": "unseeded_rng",
+              "detail": "np.random.rand(...) with no global seed set",
+              "lineno": 10
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        self.data = pd.DataFrame(\n>           np.random.rand(100, 28),\n            columns=[\"V1\", \"V2\", ..., \"V28\", \"Amount\"]\n        )\nE       NameError: name 'np' is not defined\n\ntest_pipeline.py:10: NameError\n_______________ TestPipeline.test_train_model_with_random_state _______________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model_with_random_state>\n\n    def setUp(self):\n        self.data = pd.DataFrame(\n>           np.random.rand(100, 28),\n            columns=[\"V1\", \"V2\", ..., \"V28\", \"Amount\"]\n        )\nE       NameError: name 'np' is not defined\n\ntest_pipeline.py:10: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'np' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'np...\nFAILED test_pipeline.py::TestPipeline::test_train_model_with_random_state - N...\n4 failed in 4.02s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: cannot unpack non-iterable NoneType object"
+      },
+      "is_rvh": true,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3031,
+        "completion_tokens": 952,
+        "truncated": false,
+        "seconds": 529.4
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        self.data = pd.DataFrame(\n>           np.random.rand(100, 28),\n            columns=[\"V1\", \"V2\", ..., \"V28\", \"Amount\"]\n        )\nE       NameError: name 'np' is not defined\n\ntest_pipeline.py:10: NameError\n_______________ TestPipeline.test_train_model_with_random_state _______________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model_with_random_state>\n\n    def setUp(self):\n        self.data = pd.DataFrame(\n>           np.random.rand(100, 28),\n            columns=[\"V1\", \"V2\", ..., \"V28\", \"Amount\"]\n        )\nE       NameError: name 'np' is not defined\n\ntest_pipeline.py:10: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'np' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'np...\nFAILED test_pipeline.py::TestPipeline::test_train_model_with_random_state - N...\n4 failed in 3.45s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: cannot unpack non-iterable NoneType object"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=no, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3485,
+        "completion_tokens": 593,
+        "truncated": false,
+        "seconds": 490.2
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_rng",
+              "detail": "np.random.randint(...) with no global seed set",
+              "lineno": 14
+            },
+            {
+              "kind": "RVH",
+              "rule": "unseeded_rng",
+              "detail": "np.random.rand(...) with no global seed set",
+              "lineno": 11
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def _check_values_indices_shape_match(\n        values: np.ndarray, index: Index, columns: Index\n    ) -> None:\n        \"\"\"\n        Check that the shape implied by our axes matches the actual shape of the\n        data.\n        \"\"\"\n        if values.shape[1] != len(columns) or values.shape[0] != len(index):\n            # Could let this raise in Block constructor, but we get a more\n            #  helpful exception message this way.\n            if values.shape[0] == 0:\n                raise ValueError(\"Empty data passed with indices specified.\")\n    \n            passed = values.shape\n            implied = (len(index), len(columns))\n>           raise ValueError(f\"Shape of passed values is {passed}, indices imply {implied}\")\nE           ValueError: Shape of passed values is (100, 28), indices imply (100, 5)\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\internals\\construction.py:393: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - ValueError: Shape of ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - ValueError: Sha...\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: Shape o...\nFAILED test_pipeline.py::TestPipeline::test_train_model_with_random_state - V...\n4 failed in 4.18s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: cannot unpack non-iterable NoneType object"
+      },
+      "is_rvh": true,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

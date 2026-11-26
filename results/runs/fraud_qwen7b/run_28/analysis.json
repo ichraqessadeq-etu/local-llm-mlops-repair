@@ -1,0 +1,52 @@
+{
+  "run": 28,
+  "cost": {
+    "prompt_tokens": 261,
+    "completion_tokens": 878,
+    "truncated": false,
+    "seconds": 189.1
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 7
+  },
+  "pytest": {
+    "passed": 2,
+    "failed": 1,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "1       0\n2       0\n3       0\n4       0\n       ..\n9995    0\n9996    0\n9997    0\n9998    0\n9999    0\nName: Class, Length: 10000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log it using MLflow.\"\"\"\n        with mlflow.start_run():\n            mlflow.log_param(\"model\", \"RandomForestClassifier\")\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, \"model\", signature=infer_signature(X_train, y_train))\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:26: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n1 failed, 2 passed in 8.67s",
+    "all_pass": false,
+    "failure_hint": "other"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

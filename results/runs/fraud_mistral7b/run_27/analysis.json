@@ -1,0 +1,59 @@
+{
+  "run": 27,
+  "cost": {
+    "prompt_tokens": 284,
+    "completion_tokens": 697,
+    "truncated": false,
+    "seconds": 149.9
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": true,
+      "rvh_violations": [
+        {
+          "kind": "RVH",
+          "rule": "unseeded_estimator",
+          "detail": "RandomForestClassifier(...) called without random_state",
+          "lineno": 19
+        }
+      ],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 2,
+    "asserts": 0
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 2,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "_________________________ TestPipeline.test_load_data _________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_load_data>\n\n    def test_load_data(self):\n        data = load_data('data/fraud.csv')\n>       self.assertIsInstance(data, pd.DataFrame)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:7: NameError\n______________________ TestPipeline.test_preprocess_data ______________________\n\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def test_preprocess_data(self):\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       self.assertIsInstance(X, pd.DataFrame)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:12: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\n2 failed in 3.76s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "AttributeError: 'NoneType' object has no attribute 'predict'"
+  },
+  "is_rvh": true,
+  "is_iih": false
+}

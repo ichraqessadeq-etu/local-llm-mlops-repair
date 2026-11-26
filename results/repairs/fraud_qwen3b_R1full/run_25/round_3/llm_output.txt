@@ -1,0 +1,95 @@
+It seems there is still an issue with the import of the `preprocess_data` function in the `test_pipeline.py` file. Let's ensure that the `preprocess_data` function is correctly imported and that the file paths are correctly specified.
+
+### pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except FileNotFoundError:
+        raise ValueError("File not found")
+    except pd.errors.ParserError:
+        raise ValueError("Invalid CSV format")
+
+def preprocess_data(data):
+    try:
+        # Assume 'Class' is the target column
+        X = data.drop('Class', axis=1)
+        y = data['Class']
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        return X_train, X_test, y_train, y_test
+    except KeyError:
+        raise ValueError("Target column 'Class' not found")
+
+def train_model(X_train, y_train):
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        return model
+    except Exception as e:
+        mlflow.log_exception(e)
+        raise e
+
+def evaluate_model(model, X_test, y_test):
+    try:
+        y_pred = model.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+        return accuracy
+    except Exception as e:
+        mlflow.log_exception(e)
+        raise e
+```
+
+### test_pipeline.py
+
+```python
+import pytest
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+from pipeline import load_data, preprocess_data  # Import both load_data and preprocess_data from pipeline.py
+
+def test_load_data():
+    data = load_data('data/fraud.csv')
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    data = load_data('data/fraud.csv')
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    assert isinstance(X_train, pd.DataFrame)
+    assert isinstance(X_test, pd.DataFrame)
+    assert isinstance(y_train, pd.Series)
+    assert isinstance(y_test, pd.Series)
+
+def test_train_model():
+    data = load_data('data/fraud.csv')
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+
+def test_evaluate_model():
+    data = load_data('data/fraud.csv')
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    accuracy = evaluate_model(model, X_test, y_test)
+    assert isinstance(accuracy, float)
+```
+
+### Explanation
+
+1. **Import Statement**: In `test_pipeline.py`, we explicitly import both the `load_data` and `preprocess_data` functions from the `pipeline` module. This ensures that both functions are available for use in the test cases.
+2. **File Path**: Make sure that the file path `'data/fraud.csv'` is correct and accessible from the directory where the tests are run.
+
+These changes should resolve the `NameError` issues and allow the tests to pass.

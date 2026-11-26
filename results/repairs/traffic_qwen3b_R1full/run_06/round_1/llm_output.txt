@@ -1,0 +1,120 @@
+To address the issue of converting strings to floats in the `load_data` function, we need to ensure that all numeric columns are converted correctly. The error indicates that the 'Rain' column is causing the issue because it contains non-numeric values. We can handle this by checking the data types of each column and converting non-numeric values to NaN or a suitable numeric value.
+
+Here's the corrected version of the `pipeline.py` and `test_pipeline.py` files:
+
+### pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+import logging
+import numpy as np
+
+logging.basicConfig(level=logging.INFO)
+
+def load_data(file_path):
+    """Load data from a CSV file and handle non-numeric values."""
+    try:
+        data = pd.read_csv(file_path)
+        logging.info("Data loaded successfully.")
+        
+        # Handle non-numeric values in numeric columns
+        for column in data.select_dtypes(include=[np.number]).columns:
+            data[column] = pd.to_numeric(data[column], errors='coerce')
+        
+        # Fill NaN values with the mean of the column
+        data.fillna(data.mean(), inplace=True)
+        
+        return data
+    except Exception as e:
+        logging.error(f"Failed to load data: {e}")
+        raise
+
+def preprocess_data(data):
+    """Preprocess the data by splitting it into features and target."""
+    try:
+        features = data.drop('Congestion', axis=1)
+        target = data['Congestion']
+        X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
+        logging.info("Data preprocessed successfully.")
+        return X_train, X_test, y_train, y_test
+    except Exception as e:
+        logging.error(f"Failed to preprocess data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model."""
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        logging.info("Model trained successfully.")
+        return model
+    except Exception as e:
+        logging.error(f"Failed to train model: {e}")
+        raise
+
+def main():
+    file_path = 'data/traffic.csv'
+    try:
+        data = load_data(file_path)
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_train)
+        
+        # Log model to MLflow
+        mlflow.set_experiment("traffic-congestion")
+        with mlflow.start_run():
+            mlflow.log_param("n_estimators", 100)
+            mlflow.log_metric("accuracy", accuracy_score(y_test, model.predict(X_test)))
+            mlflow.sklearn.log_model(model, "random_forest_model")
+        
+        logging.info("Pipeline executed successfully.")
+    except Exception as e:
+        logging.error(f"Pipeline execution failed: {e}")
+
+if __name__ == "__main__":
+    main()
+```
+
+### test_pipeline.py
+
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    try:
+        data = load_data('data/traffic.csv')
+        assert isinstance(data, pd.DataFrame)
+        assert 'Congestion' in data.columns
+        # Check for non-numeric values in numeric columns
+        for column in data.select_dtypes(include=[np.number]).columns:
+            assert data[column].dtype in [np.int64, np.float64], f"Column {column} is not numeric."
+    except Exception as e:
+        pytest.fail(f"Test failed: {e}")
+
+def test_preprocess_data():
+    try:
+        data = load_data('data/traffic.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        assert isinstance(X_train, pd.DataFrame)
+        assert isinstance(X_test, pd.DataFrame)
+        assert isinstance(y_train, pd.Series)
+        assert isinstance(y_test, pd.Series)
+    except Exception as e:
+        pytest.fail(f"Test failed: {e}")
+
+def test_train_model():
+    try:
+        data = load_data('data/traffic.csv')
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        model = train_model(X_train, y_train)
+        assert isinstance(model, RandomForestClassifier)
+    except Exception as e:
+        pytest.fail(f"Test failed: {e}")
+```
+
+These changes ensure that the `load_data` function handles non-numeric values in numeric columns by converting them to NaN and filling them with the mean of the column. This should resolve the `ValueError` and allow the tests to pass.

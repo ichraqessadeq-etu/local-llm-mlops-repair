@@ -1,0 +1,98 @@
+It seems there is a misunderstanding. The error `NameError: name 'RandomForestClassifier' is not defined` indicates that the `RandomForestClassifier` class is not being recognized in the `test_pipeline.py` file. This could be due to the import statement not being included at the top of the file.
+
+Let's correct the imports and ensure that all necessary classes are imported.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """
+    Load data from a CSV file.
+    
+    Args:
+        file_path (str): Path to the CSV file.
+    
+    Returns:
+        pd.DataFrame: Loaded data.
+    """
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """
+    Preprocess the data by separating features and target.
+    
+    Args:
+        data (pd.DataFrame): Data to preprocess.
+    
+    Returns:
+        tuple: (X, y)
+    """
+    X = data.drop('Class', axis=1)
+    y = data['Class']
+    return X, y
+
+def train_model(X_train, y_train):
+    """
+    Train a RandomForest model.
+    
+    Args:
+        X_train (pd.DataFrame): Training features.
+        y_train (pd.Series): Training target.
+    
+    Returns:
+        RandomForestClassifier: Trained model.
+    """
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)  # Added random_state for reproducibility
+        model.fit(X_train, y_train)
+        mlflow.log_param("n_estimators", model.n_estimators)
+        mlflow.log_param("max_depth", model.max_depth)
+        mlflow.sklearn.log_model(model, "model")
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+        return model
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/fraud.csv')
+    assert isinstance(data, pd.DataFrame)
+    assert 'Class' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+    assert len(X) == len(y)
+
+def test_train_model():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert isinstance(model, RandomForestClassifier)
+```
+
+### Explanation
+
+1. **`pipeline.py`**:
+   - No changes needed as the imports are already correct.
+
+2. **`test_pipeline.py`**:
+   - Added the import statement for `RandomForestClassifier` at the top of the file.
+
+Now, running `pytest` should pass without any errors, and the static checks should also pass without any violations.

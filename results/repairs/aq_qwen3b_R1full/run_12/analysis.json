@@ -1,0 +1,201 @@
+{
+  "run": 12,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 483.7,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_qwen3b_R1full\\run_12\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model, save_model\npipeline.py:6: in <module>\n    from mlflow.models import save_model\nE   ImportError: cannot import name 'save_model' from 'mlflow.models' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\models\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 3.05s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ImportError: cannot import name 'save_model' from 'mlflow.models' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\models\\__init__.py)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1718,
+        "completion_tokens": 786,
+        "truncated": false,
+        "seconds": 138.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        try:\n            mlflow.set_experiment(\"AirQualityAnomalyDetection\")\n            with mlflow.start_run():\n                mlflow.log_params({\n                    \"n_estimators\": 100,\n                    \"random_state\": 42\n                })\n    \n                # Log the model\n                signature = infer_signature(X_train, model.predict(X_train))\n                save_model(model, file_path, signature=signature)\n                print(f\"Model saved at {file_path}\")\n        except Exception as e:\n>           raise ValueError(f\"Error saving model: {e}\")\nE           ValueError: Error saving model: name 'X_train' is not defined\n\npipeline.py:58: ValueError\n---------------------------- Captured stderr call -----------------------------\n2026/11/18 02:53:14 INFO mlflow.tracking.fluent: Experiment with name 'AirQualityAnomalyDetection' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_save_model - ValueError: Error saving model: na...\n4 failed in 4.52s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2930,
+        "completion_tokens": 761,
+        "truncated": false,
+        "seconds": 118.1
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        try:\n            mlflow.set_experiment(\"AirQualityAnomalyDetection\")\n            with mlflow.start_run():\n                mlflow.log_params({\n                    \"n_estimators\": 100,\n                    \"random_state\": 42\n                })\n    \n                # Log the model\n                signature = infer_signature(X_train, model.predict(X_train))\n                save_model(model, file_path, signature=signature)\n                print(f\"Model saved at {file_path}\")\n        except Exception as e:\n>           raise ValueError(f\"Error saving model: {e}\")\nE           ValueError: Error saving model: name 'X_train' is not defined\n\npipeline.py:58: ValueError\n---------------------------- Captured stderr call -----------------------------\n2026/11/18 02:55:21 INFO mlflow.tracking.fluent: Experiment with name 'AirQualityAnomalyDetection' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_save_model - ValueError: Error saving model: na...\n4 failed in 4.57s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3927,
+        "completion_tokens": 811,
+        "truncated": false,
+        "seconds": 227.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        try:\n            mlflow.set_experiment(\"AirQualityAnomalyDetection\")\n            with mlflow.start_run():\n                mlflow.log_params({\n                    \"n_estimators\": 100,\n                    \"random_state\": 42\n                })\n    \n                # Log the model\n                signature = infer_signature(X_train, model.predict(X_train))\n                save_model(model, file_path, signature=signature)\n                print(f\"Model saved at {file_path}\")\n        except Exception as e:\n>           raise ValueError(f\"Error saving model: {e}\")\nE           ValueError: Error saving model: name 'X_train' is not defined\n\npipeline.py:58: ValueError\n---------------------------- Captured stderr call -----------------------------\n2026/11/18 02:59:17 INFO mlflow.tracking.fluent: Experiment with name 'AirQualityAnomalyDetection' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_save_model - ValueError: Error saving model: na...\n4 failed in 4.67s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

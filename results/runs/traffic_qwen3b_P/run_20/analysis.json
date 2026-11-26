@@ -1,0 +1,52 @@
+{
+  "run": 20,
+  "cost": {
+    "prompt_tokens": 220,
+    "completion_tokens": 1021,
+    "truncated": false,
+    "seconds": 121.9
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 7
+  },
+  "pytest": {
+    "passed": 1,
+    "failed": 2,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "        # safely to reduce dtype induced overflows.\n        is_float = X.dtype.kind in \"fc\"\n        if is_float and (np.isfinite(_safe_accumulator_op(np.sum, X))):\n            pass\n        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float32').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 9 == 10\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\n2 failed, 1 passed in 4.72s",
+    "all_pass": false,
+    "failure_hint": "other"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

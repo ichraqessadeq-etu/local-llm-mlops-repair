@@ -1,0 +1,142 @@
+Here are the requested files:
+
+**pipeline.py**
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Loads the data from the CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        mlflow.log_error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    """Preprocesses the data by splitting into features and target, and scaling the features."""
+    try:
+        X = data.drop(['Class'], axis=1)
+        y = data['Class']
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+        return X_scaled, y
+    except Exception as e:
+        mlflow.log_error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Trains a RandomForestClassifier model on the preprocessed data."""
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random_forest")
+        return model
+    except Exception as e:
+        mlflow.log_error(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/fraud.csv')
+    assert data.shape[0] > 0
+
+def test_preprocess_data():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    assert X.shape[0] > 0
+    assert y.shape[0] > 0
+
+def test_train_model():
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert isinstance(model, RandomForestClassifier)
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Train model
+        run: |
+          python pipeline.py --file data/fraud.csv
+
+      - name: Test pipeline
+        run: |
+          pytest test_pipeline.py
+
+      - name: Log model to MLflow
+        run: |
+          mlflow run . --no-remote
+
+      - name: Deploy to production
+        uses: appleboy/ssh-action@v0.3.0
+        with:
+          host: ${{ secrets.PRODUCTION_HOST }}
+          username: ${{ secrets.PRODUCTION_USERNAME }}
+          password: ${{ secrets.PRODUCTION_PASSWORD }}
+          script: |
+            python pipeline.py --file data/fraud.csv --deploy
+```
+
+**requirements.txt**
+```bash
+mlflow==1.30.1
+scikit-learn==1.0.2
+pandas==1.3.5
+pytest==6.2.5
+```
+
+Note that you'll need to create a `secrets` file in your repository with your production host, username, and password.
+
+Also, you'll need to create a `data` directory with the `fraud.csv` file inside it.
+
+This pipeline assumes that you have a `requirements.txt` file with the necessary dependencies. You can add or remove dependencies as needed.
+
+The pipeline consists of the following steps:
+
+1. Checkout code
+2. Set up Python
+3. Install dependencies
+4. Train model
+5. Test pipeline
+6. Log model to MLflow
+7. Deploy to production
+
+The `train_model` step uses the `pipeline.py` script to train the model on the preprocessed data. The `test_pipeline` step uses the `test_pipeline.py` script to test the pipeline.
+
+The `deploy` step uses the `appleboy/ssh-action` to deploy the model to production. You'll need to create a `secrets` file with your production host, username, and password.
+
+Note that this is just an example pipeline and you may need to modify it to fit your specific use case.

@@ -1,0 +1,185 @@
+{
+  "run": 21,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": false,
+  "hint_round0": "other",
+  "hint_final": "other",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "IndentationError: expected an indented block (pipeline.py, line 12)"
+  },
+  "repair_seconds": 703.8,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": false
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "    mod = import_path(self.path, mode=importmode, root=self.config.rootpath)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\_pytest\\pathlib.py:567: in import_path\n    importlib.import_module(module_name)\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n<frozen importlib._bootstrap>:1006: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:983: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:967: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:677: in _load_unlocked\n    ???\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\_pytest\\assertion\\rewrite.py:186: in exec_module\n    exec(co, module.__dict__)\ntest_pipeline.py:1: in <module>\n    from pipeline import load_data, preprocess_data, train_model\nE     File \"C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\fraud_mistral7b_R2R1full\\run_21\\round_0\\pipeline.py\", line 12\nE       def train_model(X_train, y_train):\nE         ^\nE   IndentationError: expected an indented block\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.16s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "IndentationError: expected an indented block (pipeline.py, line 12)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1634,
+        "completion_tokens": 328,
+        "truncated": false,
+        "seconds": 184.5
+      },
+      "static": {
+        "pipeline": {
+          "parses": false
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "    mod = import_path(self.path, mode=importmode, root=self.config.rootpath)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\_pytest\\pathlib.py:567: in import_path\n    importlib.import_module(module_name)\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n<frozen importlib._bootstrap>:1006: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:983: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:967: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:677: in _load_unlocked\n    ???\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\_pytest\\assertion\\rewrite.py:186: in exec_module\n    exec(co, module.__dict__)\ntest_pipeline.py:1: in <module>\n    from pipeline import load_data, preprocess_data, train_model\nE     File \"C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\fraud_mistral7b_R2R1full\\run_21\\round_1\\pipeline.py\", line 12\nE       def train_model(X_train, y_train):\nE         ^\nE   IndentationError: expected an indented block\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.16s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "IndentationError: expected an indented block (pipeline.py, line 12)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2592,
+        "completion_tokens": 328,
+        "truncated": false,
+        "seconds": 242.7
+      },
+      "static": {
+        "pipeline": {
+          "parses": false
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "    mod = import_path(self.path, mode=importmode, root=self.config.rootpath)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\_pytest\\pathlib.py:567: in import_path\n    importlib.import_module(module_name)\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n<frozen importlib._bootstrap>:1006: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:983: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:967: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:677: in _load_unlocked\n    ???\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\_pytest\\assertion\\rewrite.py:186: in exec_module\n    exec(co, module.__dict__)\ntest_pipeline.py:1: in <module>\n    from pipeline import load_data, preprocess_data, train_model\nE     File \"C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\fraud_mistral7b_R2R1full\\run_21\\round_2\\pipeline.py\", line 12\nE       def train_model(X_train, y_train):\nE         ^\nE   IndentationError: expected an indented block\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.15s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "IndentationError: expected an indented block (pipeline.py, line 12)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3550,
+        "completion_tokens": 329,
+        "truncated": false,
+        "seconds": 276.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": false
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "    mod = import_path(self.path, mode=importmode, root=self.config.rootpath)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\_pytest\\pathlib.py:567: in import_path\n    importlib.import_module(module_name)\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n<frozen importlib._bootstrap>:1006: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:983: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:967: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:677: in _load_unlocked\n    ???\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\_pytest\\assertion\\rewrite.py:186: in exec_module\n    exec(co, module.__dict__)\ntest_pipeline.py:1: in <module>\n    from pipeline import load_data, preprocess_data, train_model\nE     File \"C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\fraud_mistral7b_R2R1full\\run_21\\round_3\\pipeline.py\", line 12\nE       def train_model(X_train, y_train):\nE         ^\nE   IndentationError: expected an indented block\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.16s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "IndentationError: expected an indented block (pipeline.py, line 12)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

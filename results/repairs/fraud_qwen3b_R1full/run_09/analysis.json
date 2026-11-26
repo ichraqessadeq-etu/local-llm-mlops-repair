@@ -1,0 +1,211 @@
+{
+  "run": 9,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9071,
+    "f1": 0.9,
+    "n_test": 2000
+  },
+  "repair_seconds": 760.4,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 5,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\ntest_pipeline.py:18: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        \"\"\"Test evaluating the model.\"\"\"\n>       data = pd.DataFrame({'Time': [1, 2], 'Class': [0, 1]})\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:25: NameError\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        \"\"\"Test running the entire pipeline.\"\"\"\n>       data = pd.DataFrame({'Time': [1, 2], 'Class': [0, 1]})\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:35: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not de...\nFAILED test_pipeline.py::test_run_pipeline - NameError: name 'pd' is not defined\n5 failed in 6.47s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1956,
+        "completion_tokens": 853,
+        "truncated": false,
+        "seconds": 222.4
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    \n            from mlflow import MlflowClient\n    \n            client = MlflowClient()\n            run = client.create_run(experiment_id=\"0\")\n    \n            # Log text to a file under the run's root artifact directory\n            client.log_text(run.info.run_id, \"text1\", \"file1.txt\")\n    \n            # Log text in a subdirectory of the run's root artifact directory\n            client.log_text(run.info.run_id, \"text2\", \"dir/file2.txt\")\n    \n            # Log HTML text\n            client.log_text(run.info.run_id, \"<h1>header</h1>\", \"index.html\")\n        \"\"\"\n        with self._log_artifact_helper(run_id, artifact_file) as tmp_path:\n>           with open(tmp_path, \"w\", encoding=\"utf-8\") as f:\nE           OSError: [Errno 22] Invalid argument: 'C:\\\\Users\\\\ADMIN\\\\AppData\\\\Local\\\\Temp\\\\tmpsr4wl11c\\\\              precision    recall  f1-score   support\\n\\n           0       1.00      1.00      1.00      1910\\n           1       0.99      0.90      0.94        90\\n\\n    accuracy                           0.99      2000\\n   macro avg       0.99      0.95      0.97      2000\\nweighted avg       0.99      0.99      0.99      2000\\n'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\client.py:1230: OSError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'train_test_sp...\nFAILED test_pipeline.py::test_run_pipeline - OSError: [Errno 22] Invalid argu...\n3 failed, 2 passed in 14.15s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3411,
+        "completion_tokens": 920,
+        "truncated": false,
+        "seconds": 211.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    \n            from mlflow import MlflowClient\n    \n            client = MlflowClient()\n            run = client.create_run(experiment_id=\"0\")\n    \n            # Log text to a file under the run's root artifact directory\n            client.log_text(run.info.run_id, \"text1\", \"file1.txt\")\n    \n            # Log text in a subdirectory of the run's root artifact directory\n            client.log_text(run.info.run_id, \"text2\", \"dir/file2.txt\")\n    \n            # Log HTML text\n            client.log_text(run.info.run_id, \"<h1>header</h1>\", \"index.html\")\n        \"\"\"\n        with self._log_artifact_helper(run_id, artifact_file) as tmp_path:\n>           with open(tmp_path, \"w\", encoding=\"utf-8\") as f:\nE           OSError: [Errno 22] Invalid argument: 'C:\\\\Users\\\\ADMIN\\\\AppData\\\\Local\\\\Temp\\\\tmpk6d_vcgf\\\\              precision    recall  f1-score   support\\n\\n           0       1.00      1.00      1.00      1910\\n           1       0.99      0.90      0.94        90\\n\\n    accuracy                           0.99      2000\\n   macro avg       0.99      0.95      0.97      2000\\nweighted avg       0.99      0.99      0.99      2000\\n'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\client.py:1230: OSError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'train_test_sp...\nFAILED test_pipeline.py::test_run_pipeline - OSError: [Errno 22] Invalid argu...\n3 failed, 2 passed in 23.16s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3402,
+        "completion_tokens": 920,
+        "truncated": false,
+        "seconds": 326.4
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    \n            from mlflow import MlflowClient\n    \n            client = MlflowClient()\n            run = client.create_run(experiment_id=\"0\")\n    \n            # Log text to a file under the run's root artifact directory\n            client.log_text(run.info.run_id, \"text1\", \"file1.txt\")\n    \n            # Log text in a subdirectory of the run's root artifact directory\n            client.log_text(run.info.run_id, \"text2\", \"dir/file2.txt\")\n    \n            # Log HTML text\n            client.log_text(run.info.run_id, \"<h1>header</h1>\", \"index.html\")\n        \"\"\"\n        with self._log_artifact_helper(run_id, artifact_file) as tmp_path:\n>           with open(tmp_path, \"w\", encoding=\"utf-8\") as f:\nE           OSError: [Errno 22] Invalid argument: 'C:\\\\Users\\\\ADMIN\\\\AppData\\\\Local\\\\Temp\\\\tmp7g55n_n_\\\\              precision    recall  f1-score   support\\n\\n           0       1.00      1.00      1.00      1910\\n           1       0.99      0.90      0.94        90\\n\\n    accuracy                           0.99      2000\\n   macro avg       0.99      0.95      0.97      2000\\nweighted avg       0.99      0.99      0.99      2000\\n'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\client.py:1230: OSError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'train_test_sp...\nFAILED test_pipeline.py::test_run_pipeline - OSError: [Errno 22] Invalid argu...\n3 failed, 2 passed in 13.45s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

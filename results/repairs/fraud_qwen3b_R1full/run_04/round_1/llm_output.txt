@@ -1,0 +1,105 @@
+To resolve the errors in the test files, we need to ensure that the necessary imports are included at the beginning of each file. Let's correct the `pipeline.py` and `test_pipeline.py` files accordingly.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load the dataset from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except FileNotFoundError:
+        raise ValueError(f"File {file_path} not found.")
+    except pd.errors.EmptyDataError:
+        raise ValueError("The file is empty or does not contain any data.")
+
+def preprocess_data(data):
+    """Preprocess the dataset."""
+    try:
+        # Assuming 'Class' is the target column
+        X = data.drop('Class', axis=1)
+        y = data['Class']
+        
+        # Split the data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        return X_train, X_test, y_train, y_test
+    except KeyError:
+        raise ValueError("The target column 'Class' is not found in the dataset.")
+
+def train_model(X_train, y_train):
+    """Train the RandomForest model."""
+    try:
+        # Initialize the model
+        model = RandomForestClassifier(random_state=42)
+        
+        # Train the model
+        model.fit(X_train, y_train)
+        
+        # Log the model to MLflow
+        mlflow.sklearn.log_model(model, "random_forest_model")
+        
+        return model
+    except Exception as e:
+        raise Exception(f"An error occurred while training the model: {e}")
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model."""
+    try:
+        # Make predictions
+        y_pred = model.predict(X_test)
+        
+        # Calculate accuracy
+        accuracy = accuracy_score(y_test, y_pred)
+        
+        print(f"Model Accuracy: {accuracy:.2f}")
+        
+        return accuracy
+    except Exception as e:
+        raise Exception(f"An error occurred while evaluating the model: {e}")
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model, evaluate_model
+
+def test_load_data():
+    """Test the load_data function."""
+    data = load_data('data/fraud.csv')
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    """Test the preprocess_data function."""
+    data = load_data('data/fraud.csv')
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    assert isinstance(X_train, pd.DataFrame)
+    assert isinstance(X_test, pd.DataFrame)
+    assert isinstance(y_train, pd.Series)
+    assert isinstance(y_test, pd.Series)
+
+def test_train_model():
+    """Test the train_model function."""
+    data = load_data('data/fraud.csv')
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+
+def test_evaluate_model():
+    """Test the evaluate_model function."""
+    data = load_data('data/fraud.csv')
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    accuracy = evaluate_model(model, X_test, y_test)
+    assert isinstance(accuracy, float)
+```
+
+These corrections ensure that the necessary imports are included at the beginning of each file, which should resolve the `NameError` issues.

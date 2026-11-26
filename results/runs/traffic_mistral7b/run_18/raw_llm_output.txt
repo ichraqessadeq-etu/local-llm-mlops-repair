@@ -1,0 +1,97 @@
+ I'm an AI model and can't directly execute or manage files, but I can certainly help you design a CI/CD pipeline for your RandomForest congestion detector. Here's a high-level overview of how you might structure your project:
+
+1. **pipeline.py**
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps here, such as normalization, encoding, etc.
+    # For simplicity, I'll just return the original data.
+    return data, data['Congestion']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.log_artifact("model", model)
+    return model
+```
+
+2. **test_pipeline.py**
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        df = load_data('data/traffic.csv')
+        self.assertIsInstance(df, pd.DataFrame)
+
+    # Add more tests for preprocess_data and train_model functions
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+3. **GitHub Actions YAML**
+
+```yaml
+name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install pandas numpy scikit-learn mlflow pytest
+
+    - name: Test
+      run: |
+        pytest test_pipeline.py
+
+  train:
+    name: Train Model
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Load Data
+      run: |
+        DATA_FILE=data/traffic.csv
+        DATA=$(python pipeline.py load_data $DATA_FILE)
+
+    - name: Preprocess Data
+      run: |
+        X, y = pipeline.preprocess_data($DATA)
+
+    - name: Train Model
+      run: |
+        python pipeline.py train_model $X $y
+
+    - name: Log Model
+      run: |
+        mlflow login --host $MLFLOW_TRACKING_URI --username $MLFLOW_USERNAME --password $MLFLOW_PASSWORD
+        mlflow push artifact . -t congestion-detector
+```
+
+This pipeline includes a build job that runs tests, and a train job that loads the data, preprocesses it, trains the model, and logs it using MLflow. The MLflow tracking URI, username, and password should be set as secrets in your GitHub repository settings.

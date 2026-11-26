@@ -1,0 +1,52 @@
+{
+  "run": 9,
+  "cost": {
+    "prompt_tokens": 166,
+    "completion_tokens": 823,
+    "truncated": false,
+    "seconds": 268.6
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 4
+  },
+  "pytest": {
+    "passed": 1,
+    "failed": 2,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "            data.fillna(data.mean(), inplace=True)\n    \n            # Scale features\n            scaler = StandardScaler()\n            X = scaler.fit_transform(data.drop('Congestion', axis=1))\n    \n            # Split data into features (X) and target (y)\n            y = data['Congestion']\n            return X, y\n        except Exception as e:\n>           mlflow.log_error(f\"Error preprocessing data: {str(e)}\")\nE           AttributeError: module 'mlflow' has no attribute 'log_error'\n\npipeline.py:29: AttributeError\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\runs\\traffic_llama8b\\run_09\\pipeline.py:19: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AttributeError: module 'mlflo...\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n2 failed, 1 passed, 2 warnings in 6.46s",
+    "all_pass": false,
+    "failure_hint": "other"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "AttributeError: module 'mlflow' has no attribute 'log_error'"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+>               "aforementioned parameters.".format(n_samples, test_size, train_size)
+            )
+E           ValueError: With n_samples=0, test_size=0.2 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters.
+
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\sklearn\model_selection\_split.py:2101: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_train_model():
+        try:
+            data = load_data('data/traffic.csv')
+            X_train, X_test, y_train, y_test = preprocess_data(data)
+            model = train_model(X_train, y_train)
+            assert isinstance(model, RandomForestClassifier)
+        except Exception as e:
+>           pytest.fail(f"Test failed: {e}")
+E           Failed: Test failed: With n_samples=0, test_size=0.2 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters.
+
+test_pipeline.py:34: Failed
+------------------------------ Captured log call ------------------------------
+ERROR    root:pipeline.py:36 Failed to preprocess data: With n_samples=0, test_size=0.2 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters.
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_preprocess_data - Failed: Test failed: With n_s...
+FAILED test_pipeline.py::test_train_model - Failed: Test failed: With n_sampl...
+2 failed, 1 passed in 3.26s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

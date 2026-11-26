@@ -1,0 +1,44 @@
+ The issue in the code is that the 'weather_main' column contains string values, which cannot be directly used for training a RandomForestClassifier. To fix this, we need to convert the 'weather_main' column to a numerical format before preprocessing the data. Here's the corrected code:
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+import mlflow
+import mlflow.sklearn
+import numpy as np
+
+def load_data(file_path):
+    data = pd.read_csv(file_path)
+    data['weather_main'] = pd.Categorical(data['weather_main']).codes
+    return data
+
+def preprocess_data(data):
+    return (data.drop('Congestion', axis=1), data['Congestion'])
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, 'random-forest')
+    return model
+```
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/traffic.csv')
+        self.X, self.y = preprocess_data(self.data)
+
+    def test_train_model(self):
+        model = train_model(self.X, self.y)
+        # Add assertions to check the model's performance and structure
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+This code converts the 'weather_main' column to a categorical variable using `pd.Categorical()` and its `codes` attribute. This way, the data can be used for training the RandomForestClassifier without any issues.

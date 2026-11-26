@@ -1,0 +1,61 @@
+ Apologies for the oversight. I've made the necessary corrections to the code based on the errors you provided. Here's the corrected `pipeline.py`:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+import warnings
+
+warnings.filterwarnings("ignore")
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any preprocessing steps here, such as normalization, encoding, etc.
+    # For simplicity, I'll assume no preprocessing is needed.
+    return data['Features'], data['Class']
+
+def train_model(X_train, y_train, random_state=42):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=random_state)
+        model.fit(X_train, y_train)
+        mlflow.log_artifact(f'model', model)
+        mlflow.log_param('num_trees', model.n_estimators)
+        mlflow.log_metric('train_loss', model.fit(X_train, y_train).score(X_train, y_train))
+        mlflow.log_metric('val_loss', model.fit(X_train, y_train).score(X_val, y_val))
+
+    return model
+```
+
+And here's the corrected `test_pipeline.py`:
+
+```python
+import unittest
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/fraud.csv')
+
+    def test_load_data(self):
+        self.assertIsInstance(self.data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        X, y = preprocess_data(self.data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        X_train, y_train = train_test_split(self.data['Features'], self.data['Class'], test_size=0.2, random_state=42)
+        model = train_model(X_train, y_train)
+        # Add more assertions here to test the model's performance
+
+    # Add more tests for edge cases and error handling
+```
+
+In the corrected code, I added the necessary import for `train_test_split` in the test_pipeline.py file. This should resolve the NameError issue.

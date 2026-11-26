@@ -1,0 +1,52 @@
+{
+  "run": 19,
+  "cost": {
+    "prompt_tokens": 220,
+    "completion_tokens": 1259,
+    "truncated": false,
+    "seconds": 156.8
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 4,
+    "asserts": 8
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 4,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "\ntest_pipeline.py:16: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:19 File not found: nonexistent_file.csv\n____________________________ test_preprocess_data _____________________________\nFixture \"data\" called directly. Fixtures are not meant to be called directly,\nbut are created automatically when test functions request them as parameters.\nSee https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and\nhttps://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.\n______________________________ test_train_model _______________________________\nFixture \"data\" called directly. Fixtures are not meant to be called directly,\nbut are created automatically when test functions request them as parameters.\nSee https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and\nhttps://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.\n_____________________________ test_evaluate_model _____________________________\nFixture \"data\" called directly. Fixtures are not meant to be called directly,\nbut are created automatically when test functions request them as parameters.\nSee https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and\nhttps://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - Failed: Fixture \"data\" called...\nFAILED test_pipeline.py::test_train_model - Failed: Fixture \"data\" called dir...\nFAILED test_pipeline.py::test_evaluate_model - Failed: Fixture \"data\" called ...\n4 failed in 4.04s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

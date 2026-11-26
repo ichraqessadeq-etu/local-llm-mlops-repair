@@ -1,0 +1,63 @@
+ The issue seems to be caused by using an outdated version of MLflow (1.30.1) that does not have the `track` function. To fix this, you should update MLflow to a more recent version.
+
+First, update MLflow to the latest version:
+
+```bash
+pip install --upgrade mlflow
+```
+
+After updating MLflow, the corrected files are as follows:
+
+```python
+# pipeline.py
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, log_param, start_run, pyfunc, log_params
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    data = data.dropna()
+    X = data.drop('Congestion', axis=1)
+    y = data['Congestion']
+    return (X, y)
+
+def train_model(X_train, y_train):
+    model = RandomForestClassifier(random_state=42)
+    model.fit(X_train, y_train)
+    return model
+
+def train(file_path):
+    data = load_data(file_path)
+    X, y = preprocess_data(data)
+    with start_run():
+        model = train_model(X_train, y_train)
+        pyfunc.log_model(model, 'model', registered_model_name='congestion_detector')
+        log_params({'temp_min': np.min(X['temp']), 'temp_max': np.max(X['temp'])})
+```
+
+```python
+# test_pipeline.py
+import pandas as pd
+import unittest
+from unittest.mock import patch
+import pipeline
+
+class TestPipeline(unittest.TestCase):
+    @patch('pipeline.pd.read_csv')
+    def test_load_data(self, mock_read_csv):
+        mock_data = {'temp': [1, 2, 3], 'rain_1h': [4, 5, 6]}
+        mock_read_csv.return_value = pd.DataFrame(mock_data)
+        result = pipeline.load_data('data/traffic.csv')
+        self.assertIsInstance(result, pd.DataFrame)
+
+    # Add more test cases for preprocess_data and train_model functions
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+After updating MLflow, the test should pass without any issues.

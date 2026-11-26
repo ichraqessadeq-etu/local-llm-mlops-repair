@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+                v = extract_array(v, extract_numpy=True)
+                res = maybe_convert_platform(v)
+                return res
+    
+            # we could have a 1-dim or 2-dim list here
+            # this is equiv of np.asarray, but does object conversion
+            # and platform dtype preservation
+            if is_list_like(values[0]):
+>               values = np.array([convert(v) for v in values])
+E               ValueError: could not broadcast input array from shape (100,8) into shape (100,)
+
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\pandas\core\internals\construction.py:540: ValueError
+============================== warnings summary ===============================
+test_pipeline.py::test_load_data
+test_pipeline.py::test_preprocess_data
+test_pipeline.py::test_train_model
+  C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\pandas\core\internals\construction.py:540: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+    values = np.array([convert(v) for v in values])
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_load_data - ValueError: could not broadcast inp...
+FAILED test_pipeline.py::test_preprocess_data - ValueError: could not broadca...
+FAILED test_pipeline.py::test_train_model - ValueError: could not broadcast i...
+3 failed, 3 warnings in 7.88s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

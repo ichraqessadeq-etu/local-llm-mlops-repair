@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+        try:
+            X = self._validate_data(
+                X,
+                reset=in_fit,
+                accept_sparse="csc",
+                dtype=dtype,
+                force_all_finite=force_all_finite,
+                copy=self.copy,
+            )
+        except ValueError as ve:
+            if "could not convert" in str(ve):
+                new_ve = ValueError(
+                    "Cannot use {} strategy with non-numeric data:\n{}".format(
+                        self.strategy, ve
+                    )
+                )
+>               raise new_ve from None
+E               ValueError: Cannot use mean strategy with non-numeric data:
+E               could not convert string to float: 'Clouds'
+
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\sklearn\impute\_base.py:285: ValueError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_preprocess_data - ValueError: Cannot use mean s...
+FAILED test_pipeline.py::test_train_model - ValueError: Cannot use mean strat...
+2 failed, 1 passed in 3.38s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

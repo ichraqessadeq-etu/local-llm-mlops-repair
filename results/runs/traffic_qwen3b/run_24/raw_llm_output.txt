@@ -1,0 +1,186 @@
+To create a production-ready CI/CD pipeline for a RandomForest congestion detector, we need to set up a pipeline that includes data loading, preprocessing, model training, and deployment. We'll use MLflow for tracking experiments and error handling for robustness. Below is a detailed guide to creating the pipeline, including the Python module `pipeline.py`, the pytest file `test_pipeline.py`, and the GitHub Actions YAML.
+
+### pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+def load_data(file_path):
+    """Load the dataset from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        logging.info("Data loaded successfully.")
+        return data
+    except Exception as e:
+        logging.error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    """Preprocess the data by encoding categorical variables and splitting into features and target."""
+    try:
+        # Encode categorical variables
+        data = pd.get_dummies(data, columns=['weather_main', 'IsHoliday'])
+        
+        # Define features and target
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+        
+        # Split the data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        logging.info("Data preprocessed successfully.")
+        return X_train, y_train, X_test, y_test
+    except Exception as e:
+        logging.error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model."""
+    try:
+        # Initialize the model
+        model = RandomForestClassifier(random_state=42)
+        
+        # Train the model
+        model.fit(X_train, y_train)
+        
+        logging.info("Model trained successfully.")
+        return model
+    except Exception as e:
+        logging.error(f"Error training model: {e}")
+        raise
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model's performance."""
+    try:
+        # Make predictions
+        y_pred = model.predict(X_test)
+        
+        # Calculate accuracy
+        accuracy = accuracy_score(y_test, y_pred)
+        
+        logging.info(f"Model accuracy: {accuracy:.2f}")
+        return accuracy
+    except Exception as e:
+        logging.error(f"Error evaluating model: {e}")
+        raise
+
+def run_pipeline(file_path):
+    """Run the entire pipeline."""
+    try:
+        # Load data
+        data = load_data(file_path)
+        
+        # Preprocess data
+        X_train, y_train, X_test, y_test = preprocess_data(data)
+        
+        # Train model
+        model = train_model(X_train, y_train)
+        
+        # Evaluate model
+        accuracy = evaluate_model(model, X_test, y_test)
+        
+        # Log experiment with MLflow
+        with mlflow.start_run():
+            mlflow.log_param("features", data.columns.tolist())
+            mlflow.log_metric("accuracy", accuracy)
+            mlflow.sklearn.log_model(model, "congestion_detector")
+        
+        logging.info("Pipeline completed successfully.")
+    except Exception as e:
+        logging.error(f"Pipeline failed: {e}")
+        raise
+```
+
+### test_pipeline.py
+
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model, evaluate_model, run_pipeline
+
+def test_load_data():
+    """Test loading data."""
+    data = load_data('data/traffic.csv')
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    """Test preprocessing data."""
+    data = load_data('data/traffic.csv')
+    X_train, y_train, X_test, y_test = preprocess_data(data)
+    assert isinstance(X_train, pd.DataFrame)
+    assert isinstance(y_train, pd.Series)
+    assert isinstance(X_test, pd.DataFrame)
+    assert isinstance(y_test, pd.Series)
+
+def test_train_model():
+    """Test training the model."""
+    data = load_data('data/traffic.csv')
+    X_train, y_train, X_test, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+
+def test_evaluate_model():
+    """Test evaluating the model."""
+    data = load_data('data/traffic.csv')
+    X_train, y_train, X_test, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    accuracy = evaluate_model(model, X_test, y_test)
+    assert isinstance(accuracy, float)
+
+def test_run_pipeline():
+    """Test running the entire pipeline."""
+    run_pipeline('data/traffic.csv')
+```
+
+### GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        pytest
+
+    - name: Train model
+      run: |
+        python pipeline.py
+```
+
+### Explanation
+
+1. **pipeline.py**: This file contains functions to load data, preprocess it, train a model, and evaluate its performance. It uses MLflow for logging experiments and error handling.
+
+2. **test_pipeline.py**: This file contains pytest tests to verify the correctness of the pipeline functions.
+
+3. **GitHub Actions YAML**: This file sets up a CI/CD pipeline that runs on every push to the `main` branch. It checks out the code, sets up Python, installs dependencies, runs tests, and trains the model.
+
+This setup ensures that the pipeline is robust, reliable, and can be easily integrated into a production environment.

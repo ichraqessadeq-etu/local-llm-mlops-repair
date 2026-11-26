@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+    dumper.represent(data)
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\yaml\representer.py:27: in represent
+    node = self.represent_data(data)
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\yaml\representer.py:48: in represent_data
+    node = self.yaml_representers[data_types[0]](self, data)
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\yaml\representer.py:207: in represent_dict
+    return self.represent_mapping('tag:yaml.org,2002:map', data)
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\yaml\representer.py:118: in represent_mapping
+    node_value = self.represent_data(item_value)
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\yaml\representer.py:58: in represent_data
+    node = self.yaml_representers[None](self, data)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <yaml.dumper.SafeDumper object at 0x0000024E171B4888>
+data = RandomForestClassifier(random_state=42)
+
+    def represent_undefined(self, data):
+>       raise RepresenterError("cannot represent an object", data)
+E       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))
+
+C:\Users\ADMIN\AppData\Roaming\Python\Python37\site-packages\yaml\representer.py:231: RepresenterError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::TestPipeline::test_preprocess_data - AssertionError:...
+FAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...
+2 failed, 1 passed in 104.94s (0:01:44)
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

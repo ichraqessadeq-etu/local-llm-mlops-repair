@@ -1,0 +1,211 @@
+{
+  "run": 27,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.998,
+    "f1": 0.9958,
+    "n_test": 2000
+  },
+  "repair_seconds": 965.1,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:17: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 3.72s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.998,
+        "f1": 0.9958,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1443,
+        "completion_tokens": 747,
+        "truncated": false,
+        "seconds": 316.9
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:23: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nfile_path = 'data/fraud.csv'\n\n    def train_and_deploy_model(file_path):\n        \"\"\"\n        Train model and deploy it to MLflow\n        \"\"\"\n        try:\n            data = load_data(file_path)\n            X, y = preprocess_data(data)\n            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n            model = train_model(X_train, y_train)\n            mlflow.sklearn.log_model(model, \"random_forest\")\n>           mlflow.models.create_version(name=\"random_forest\", current_stage=\"Staging\")\nE           AttributeError: module 'mlflow.models' has no attribute 'create_version'\n\npipeline.py:68: AttributeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:71 Error training and deploying model: module 'mlflow.models' has no attribute 'create_version'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_train_and_deploy_model - AttributeError: module...\n2 failed, 2 passed in 15.01s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.998,
+        "f1": 0.9958,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2617,
+        "completion_tokens": 730,
+        "truncated": false,
+        "seconds": 305.2
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:23: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nfile_path = 'data/fraud.csv'\n\n    def train_and_deploy_model(file_path):\n        \"\"\"\n        Train model and deploy it to MLflow\n        \"\"\"\n        try:\n            data = load_data(file_path)\n            X, y = preprocess_data(data)\n            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n            model = train_model(X_train, y_train)\n            mlflow.sklearn.log_model(model, \"random_forest\")\n>           mlflow.model.create_version(name=\"random_forest\", current_stage=\"Staging\")\nE           AttributeError: module 'mlflow' has no attribute 'model'\n\npipeline.py:68: AttributeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:71 Error training and deploying model: module 'mlflow' has no attribute 'model'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_train_and_deploy_model - AttributeError: module...\n2 failed, 2 passed in 14.54s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.998,
+        "f1": 0.9958,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3770,
+        "completion_tokens": 736,
+        "truncated": false,
+        "seconds": 343.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:23: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nfile_path = 'data/fraud.csv'\n\n    def train_and_deploy_model(file_path):\n        \"\"\"\n        Train model and deploy it to MLflow\n        \"\"\"\n        try:\n            data = load_data(file_path)\n            X, y = preprocess_data(data)\n            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n            model = train_model(X_train, y_train)\n            mlflow.sklearn.log_model(model, \"random_forest\")\n>           mlflow.model.log_version(name=\"random_forest\", current_stage=\"Staging\")\nE           AttributeError: module 'mlflow' has no attribute 'model'\n\npipeline.py:69: AttributeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:72 Error training and deploying model: module 'mlflow' has no attribute 'model'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_train_and_deploy_model - AttributeError: module...\n2 failed, 2 passed in 39.32s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.998,
+        "f1": 0.9958,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+  Apologies for the oversight. Here are the corrected versions of the files:
+
+1. **pipeline.py**
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps like filling missing values, encoding categorical variables, etc.
+    data['clouds_all'] = data['clouds_all'].astype(int)  # Convert 'clouds_all' to integer
+    X = data.drop('Congestion', axis=1)
+    y = data['Congestion']
+    return X, y
+
+def train_model(X_train, y_train, random_state=42):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=random_state)
+        model.fit(X_train, y_train)
+        mlflow.log_artifact(model, "models")
+        mlflow.log_metric("train_loss", model.fit_params['loss'])
+
+    return model
+```
+
+2. **test_pipeline.py**
+
+```python
+import unittest
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/traffic.csv')
+
+    def test_load_data(self):
+        self.assertIsInstance(self.data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        X, y = preprocess_data(self.data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        X_train, y_train = preprocess_data(self.data)
+        model = train_model(X_train, y_train)
+        # Add more assertions to test the model's performance if needed
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+In the corrected `pipeline.py`, I added a line to convert the 'clouds\_all' column to integer before creating the X dataframe. This should resolve the ValueError issue in the tests.

@@ -1,0 +1,143 @@
+Here is the code for the CI/CD pipeline:
+
+**pipeline.py**
+```python
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        mlflow.log_error(f"Error loading data: {str(e)}")
+        raise
+
+def preprocess_data(data):
+    try:
+        # Handle missing values
+        data.fillna(data.mean(), inplace=True)
+
+        # Convert categorical features
+        data['weather_main'] = pd.Categorical(data['weather_main']).codes
+        data['DayOfWeek'] = pd.Categorical(data['DayOfWeek']).codes
+        data['Month'] = pd.Categorical(data['Month']).codes
+
+        # Scale features
+        scaler = StandardScaler()
+        data[['temp', 'rain_1h', 'snow_1h', 'clouds_all']] = scaler.fit_transform(data[['temp', 'rain_1h', 'snow_1h', 'clouds_all']])
+
+        # Split data into X and y
+        X = data.drop(['Congestion', 'weather_main', 'DayOfWeek', 'Month'], axis=1)
+        y = data['Congestion']
+
+        return X, y
+    except Exception as e:
+        mlflow.log_error(f"Error preprocessing data: {str(e)}")
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        # Train RandomForest model
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+
+        # Log model to MLflow
+        mlflow.sklearn.log_model(model, "random_forest_model")
+
+        return model
+    except Exception as e:
+        mlflow.log_error(f"Error training model: {str(e)}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/traffic.csv')
+    assert data is not None
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert X is not None
+    assert y is not None
+
+def test_train_model():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert model is not None
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Train model
+        run: |
+          python pipeline.py --file data/traffic.csv --output model.pkl
+
+      - name: Test pipeline
+        run: |
+          pytest test_pipeline.py
+
+      - name: Deploy model
+        uses: actions/deploy@v1
+        with:
+          api-key: ${{ secrets.MLFLOW_API_KEY }}
+          model-name: random_forest_model
+          model-version: 1
+          artifact-path: model.pkl
+```
+
+**requirements.txt**
+```bash
+pandas==1.3.5
+numpy==1.21.4
+scikit-learn==1.0.2
+mlflow==1.24.0
+```
+
+Note that you'll need to replace `MLFLOW_API_KEY` with your actual MLflow API key in the GitHub Actions YAML file.
+
+This pipeline assumes that you have a `requirements.txt` file in your repository with the necessary dependencies. It also assumes that you have an MLflow API key set up in your repository's secrets.
+
+When you push changes to the `main` branch, the pipeline will be triggered, and it will:
+
+1. Checkout the code
+2. Set up a Python environment with version 3.8
+3. Install the dependencies from `requirements.txt`
+4. Train the RandomForest model using the `pipeline.py` script
+5. Run the tests in `test_pipeline.py`
+6. Deploy the model to MLflow using the `actions/deploy` action
+
+The pipeline will log any errors that occur during the training or deployment process to MLflow, so you can easily track and debug any issues.

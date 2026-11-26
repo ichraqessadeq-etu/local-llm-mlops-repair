@@ -1,0 +1,99 @@
+To resolve the `NameError` in the test files, we need to import the `pandas` library at the beginning of each file. Here are the corrected versions of `pipeline.py` and `test_pipeline.py`:
+
+### pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except FileNotFoundError:
+        raise ValueError("File not found")
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    try:
+        # Assume 'Class' is the target column
+        X = data.drop('Class', axis=1)
+        y = data['Class']
+        return X, y
+    except KeyError:
+        raise ValueError("Target column 'Class' not found")
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model."""
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        return model
+    except Exception as e:
+        raise ValueError(f"Model training failed: {e}")
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model."""
+    try:
+        y_pred = model.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        return accuracy
+    except Exception as e:
+        raise ValueError(f"Model evaluation failed: {e}")
+```
+
+### test_pipeline.py
+
+```python
+import pytest
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model, evaluate_model
+
+def test_load_data():
+    """Test loading data from a CSV file."""
+    data = load_data('data/fraud.csv')
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    """Test preprocessing the data."""
+    data = pd.DataFrame({
+        'Time': [1, 2, 3],
+        'V1': [4, 5, 6],
+        'Class': [0, 1, 0]
+    })
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+    assert len(X) == 3
+    assert len(y) == 3
+
+def test_train_model():
+    """Test training the model."""
+    data = pd.DataFrame({
+        'Time': [1, 2, 3],
+        'V1': [4, 5, 6],
+        'Class': [0, 1, 0]
+    })
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert isinstance(model, RandomForestClassifier)
+
+def test_evaluate_model():
+    """Test evaluating the model."""
+    data = pd.DataFrame({
+        'Time': [1, 2, 3],
+        'V1': [4, 5, 6],
+        'Class': [0, 1, 0]
+    })
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    accuracy = evaluate_model(model, X, y)
+    assert isinstance(accuracy, float)
+```
+
+These changes ensure that the `pandas` library is imported at the beginning of each file, which resolves the `NameError` in the test files.

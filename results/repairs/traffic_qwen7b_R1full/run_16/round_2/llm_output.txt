@@ -1,0 +1,79 @@
+The error indicates that there are non-numeric values in the dataset, specifically the column 'weather_main' which contains string values like 'Rain', 'Snow', etc. We need to preprocess this column to convert it into a numeric format that can be used by the RandomForestClassifier.
+
+Let's update the `preprocess_data` function to handle this.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess data to split into features and target."""
+    # Convert categorical columns to numerical using one-hot encoding
+    data = pd.get_dummies(data, columns=['weather_main', 'IsHoliday'], drop_first=True)
+    
+    X = data.drop(columns=['Congestion'])
+    y = data['Congestion']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier and log the model using MLflow."""
+    with mlflow.start_run():
+        mlflow.log_param("model", "RandomForestClassifier")
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "model")
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_metric("train_accuracy", accuracy)
+        return model
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+from sklearn.model_selection import train_test_split
+
+def test_load_data():
+    """Test the load_data function."""
+    data = load_data('data/traffic.csv')
+    assert not data.empty
+    assert 'Congestion' in data.columns
+
+def test_preprocess_data():
+    """Test the preprocess_data function."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert not X.empty
+    assert not y.empty
+    assert len(X) == len(y)
+
+def test_train_model():
+    """Test the train_model function."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+```
+
+### Explanation:
+
+1. **pipeline.py**:
+   - Added `pd.get_dummies` to convert categorical columns (`weather_main` and `IsHoliday`) to numerical using one-hot encoding. This ensures that all features are numeric and can be used by the RandomForestClassifier.
+
+2. **test_pipeline.py**:
+   - No changes needed as the test functions do not depend on the preprocessing of the data.
+
+This should resolve the `ValueError` and ensure that all tests pass.

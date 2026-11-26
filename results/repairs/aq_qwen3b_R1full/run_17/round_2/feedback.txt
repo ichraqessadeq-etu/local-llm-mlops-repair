@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+E       NameError: name 'load_data' is not defined
+
+test_pipeline.py:16: NameError
+______________________________ test_train_model _______________________________
+
+    def test_train_model():
+        """Test training the model."""
+>       data = load_data('data/air_quality.csv')
+E       NameError: name 'load_data' is not defined
+
+test_pipeline.py:23: NameError
+_____________________________ test_evaluate_model _____________________________
+
+    def test_evaluate_model():
+        """Test evaluating the model."""
+>       data = load_data('data/air_quality.csv')
+E       NameError: name 'load_data' is not defined
+
+test_pipeline.py:30: NameError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_load_data - NameError: name 'load_data' is not ...
+FAILED test_pipeline.py::test_preprocess_data - NameError: name 'load_data' i...
+FAILED test_pipeline.py::test_train_model - NameError: name 'load_data' is no...
+FAILED test_pipeline.py::test_evaluate_model - NameError: name 'load_data' is...
+4 failed in 2.91s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

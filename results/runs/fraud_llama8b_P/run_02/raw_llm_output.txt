@@ -1,0 +1,140 @@
+Here are the requested files:
+
+**pipeline.py**
+```python
+import mlflow.sklearn
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
+import numpy as np
+
+def load_data(file_path):
+    """Loads data from CSV file"""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    """Preprocesses data by scaling features and encoding target variable"""
+    try:
+        # Split data into features (X) and target (y)
+        X = data.drop('Class', axis=1)
+        y = data['Class']
+
+        # Scale features using StandardScaler
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+
+        # One-hot encode target variable
+        y_encoded = pd.get_dummies(y)
+
+        # Split data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X_scaled, y_encoded, test_size=0.2, random_state=42)
+
+        return X_train, X_test, y_train, y_test
+    except Exception as e:
+        print(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Trains a RandomForestClassifier model"""
+    try:
+        # Train model using RandomForestClassifier
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+
+        # Log model using MLflow
+        mlflow.sklearn.log_model(model, "random_forest_model")
+
+        return model
+    except Exception as e:
+        print(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/fraud.csv')
+    assert data is not None
+
+def test_preprocess_data():
+    data = load_data('data/fraud.csv')
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    assert X_train is not None
+    assert X_test is not None
+    assert y_train is not None
+    assert y_test is not None
+
+def test_train_model():
+    data = load_data('data/fraud.csv')
+    X_train, X_test, y_train, y_test = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    assert model is not None
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mlflow scikit-learn
+
+      - name: Run tests
+        run: |
+          pytest test_pipeline.py
+
+      - name: Train model
+        run: |
+          python pipeline.py train_model
+
+      - name: Log model to MLflow
+        run: |
+          mlflow.sklearn.log_model("random_forest_model", "random_forest_model")
+
+      - name: Deploy model
+        run: |
+          # Deploy model to production environment (e.g. AWS SageMaker, Azure ML)
+          # This step is not implemented in this example
+```
+Note that the `.github/workflows/ci_cd.yml` file assumes that the model will be deployed to a production environment (e.g. AWS SageMaker, Azure ML) after training. This step is not implemented in this example.
+
+Also, the `test_pipeline.py` file imports every name it uses from the `pipeline` module, as required. The test file uses the `pytest` framework to run the tests.
+
+The `pipeline.py` file uses the `mlflow` library to log the trained model to MLflow. The `train_model` function trains a `RandomForestClassifier` model using the `scikit-learn` library.
+
+The `.github/workflows/ci_cd.yml` file uses the `actions` framework to define a CI/CD pipeline that runs on push to the `main` branch. The pipeline consists of several steps:
+
+1. Checkout code
+2. Set up Python 3.7
+3. Install dependencies
+4. Run tests
+5. Train model
+6. Log model to MLflow
+7. Deploy model to production environment (not implemented in this example)

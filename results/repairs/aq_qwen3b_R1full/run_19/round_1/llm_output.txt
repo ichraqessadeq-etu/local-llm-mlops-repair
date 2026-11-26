@@ -1,0 +1,94 @@
+To address the issues and ensure that all tests pass, we need to make a few changes to the `pipeline.py` and `test_pipeline.py` files. Specifically, we need to ensure that the `train_test_split` function is imported from `sklearn.model_selection` and that the `RandomForestClassifier` is initialized with a `random_state` parameter.
+
+### Corrected `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except FileNotFoundError:
+        print("Error: File not found.")
+        return None
+
+def preprocess_data(data):
+    """Preprocess the data by splitting into features and target."""
+    try:
+        X = data.drop('Anomaly', axis=1)
+        y = data['Anomaly']
+        return X, y
+    except KeyError:
+        print("Error: Target column 'Anomaly' not found.")
+        return None
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model."""
+    try:
+        model = RandomForestClassifier(random_state=42)  # Initialize with random_state
+        model.fit(X_train, y_train)
+        return model
+    except Exception as e:
+        print(f"Error training model: {e}")
+        return None
+
+def main():
+    file_path = 'data/air_quality.csv'
+    data = load_data(file_path)
+    if data is not None:
+        X, y = preprocess_data(data)
+        if X is not None and y is not None:
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+            model = train_model(X_train, y_train)
+            if model is not None:
+                y_pred = model.predict(X_test)
+                accuracy = accuracy_score(y_test, y_pred)
+                print(f"Model accuracy: {accuracy}")
+                mlflow.log_metric("accuracy", accuracy)
+                mlflow.log_artifact("model.pkl", artifact_path="model")
+
+if __name__ == "__main__":
+    main()
+```
+
+### Corrected `test_pipeline.py`
+
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    file_path = 'data/air_quality.csv'
+    data = load_data(file_path)
+    assert data is not None
+
+def test_preprocess_data():
+    file_path = 'data/air_quality.csv'
+    data = load_data(file_path)
+    X, y = preprocess_data(data)
+    assert X is not None and y is not None
+
+def test_train_model():
+    file_path = 'data/air_quality.csv'
+    data = load_data(file_path)
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+```
+
+### Explanation of Changes
+
+1. **Import `train_test_split`**: We added `from sklearn.model_selection import train_test_split` to ensure that the `train_test_split` function is available for use.
+
+2. **Initialize `RandomForestClassifier` with `random_state`**: We set `random_state=42` when initializing the `RandomForestClassifier` to ensure reproducibility of the results.
+
+3. **Add `assert model is not None`**: This ensures that the model is not `None` before attempting to use it for prediction and accuracy calculation.
+
+These changes should resolve the issues and ensure that all tests pass.

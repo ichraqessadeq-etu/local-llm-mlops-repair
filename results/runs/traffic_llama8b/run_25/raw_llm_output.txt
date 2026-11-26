@@ -1,0 +1,135 @@
+Here is the code for the production-ready CI/CD pipeline:
+
+**pipeline.py**
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+def load_data(file_path):
+    """Load data from CSV file"""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        logging.error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    """Preprocess data by encoding categorical variables and scaling numerical variables"""
+    try:
+        # Encode categorical variables
+        data['weather_main'] = pd.Categorical(data['weather_main']).codes
+        data['Hour'] = pd.Categorical(data['Hour']).codes
+        data['DayOfWeek'] = pd.Categorical(data['DayOfWeek']).codes
+        data['Month'] = pd.Categorical(data['Month']).codes
+
+        # Scale numerical variables
+        scaler = StandardScaler()
+        data[['temp', 'rain_1h', 'snow_1h', 'clouds_all']] = scaler.fit_transform(data[['temp', 'rain_1h', 'snow_1h', 'clouds_all']])
+
+        # Split data into features (X) and target (y)
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+
+        return X, y
+    except Exception as e:
+        logging.error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model"""
+    try:
+        mlflow.sklearn.log_params(RandomForestClassifier(n_estimators=100))
+        model = RandomForestClassifier(n_estimators=100)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random_forest_model")
+        return model
+    except Exception as e:
+        logging.error(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/traffic.csv')
+    assert data.shape[0] > 0
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert X.shape[0] > 0
+    assert y.shape[0] > 0
+
+def test_train_model():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert model is not None
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Train model
+        run: |
+          python pipeline.py --file data/traffic.csv
+
+      - name: Test pipeline
+        run: |
+          pytest test_pipeline.py
+
+      - name: Deploy model
+        uses: actions/checkout@v2
+        run: |
+          mlflow models serve -m models/random_forest_model
+
+      - name: Monitor model
+        uses: actions/checkout@v2
+        run: |
+          mlflow ui
+```
+
+This pipeline assumes that you have the following files in your repository:
+
+* `data/traffic.csv`: the dataset for training the model
+* `requirements.txt`: the list of dependencies required for the pipeline
+* `pipeline.py`: the Python module containing the functions for loading data, preprocessing data, and training the model
+* `test_pipeline.py`: the pytest file containing the tests for the pipeline
+
+The pipeline consists of the following steps:
+
+1. **Checkout code**: checks out the code from the repository
+2. **Install dependencies**: installs the dependencies required for the pipeline
+3. **Train model**: trains the model using the `pipeline.py` module
+4. **Test pipeline**: runs the tests in `test_pipeline.py` to ensure that the pipeline is working correctly
+5. **Deploy model**: deploys the trained model using MLflow
+6. **Monitor model**: monitors the performance of the deployed model using MLflow
+
+Note that this is just an example pipeline and you may need to modify it to fit your specific use case. Additionally, you will need to install the MLflow and pytest packages in your repository.

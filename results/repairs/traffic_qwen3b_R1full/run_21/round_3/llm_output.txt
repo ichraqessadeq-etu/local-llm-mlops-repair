@@ -1,0 +1,102 @@
+The issue persists because the `RandomForestRegressor` class is not being imported correctly. Let's ensure that the class is imported from the `sklearn.ensemble` module in both `pipeline.py` and `test_pipeline.py`.
+
+### `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except FileNotFoundError:
+        raise ValueError(f"File not found: {file_path}")
+    except pd.errors.EmptyDataError:
+        raise ValueError("The file is empty or contains no data.")
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    try:
+        # Convert 'IsHoliday' to binary
+        data['IsHoliday'] = data['IsHoliday'].map({True: 1, False: 0})
+        
+        # Encode categorical variables
+        data = pd.get_dummies(data, columns=['weather_main', 'DayOfWeek', 'Month'])
+        
+        # Split features and target
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+        
+        return X, y
+    except Exception as e:
+        raise ValueError(f"Preprocessing error: {e}")
+
+def train_model(X_train, y_train):
+    """Train the model."""
+    try:
+        model = RandomForestRegressor(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        
+        # Log the model to MLflow
+        mlflow.sklearn.log_model(model, "random_forest_model")
+        
+        return model
+    except Exception as e:
+        raise ValueError(f"Training error: {e}")
+```
+
+### `test_pipeline.py`
+
+```python
+import pytest
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test loading data."""
+    data = load_data('data/traffic.csv')
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    """Test preprocessing data."""
+    data = pd.DataFrame({
+        'temp': [20, 22, 18],
+        'rain_1h': [0.1, 0.2, 0.0],
+        'snow_1h': [0.0, 0.0, 0.1],
+        'clouds_all': [50, 70, 30],
+        'weather_main': ['sunny', 'rainy', 'snowy'],
+        'IsHoliday': [True, False, True],
+        'Hour': [10, 14, 18],
+        'DayOfWeek': ['Monday', 'Wednesday', 'Friday'],
+        'Month': [1, 4, 7]
+    })
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+
+def test_train_model():
+    """Test training the model."""
+    data = pd.DataFrame({
+        'temp': [20, 22, 18],
+        'rain_1h': [0.1, 0.2, 0.0],
+        'snow_1h': [0.0, 0.0, 0.1],
+        'clouds_all': [50, 70, 30],
+        'weather_main': ['sunny', 'rainy', 'snowy'],
+        'IsHoliday': [True, False, True],
+        'Hour': [10, 14, 18],
+        'DayOfWeek': ['Monday', 'Wednesday', 'Friday'],
+        'Month': [1, 4, 7],
+        'Congestion': [1, 0, 1]
+    })
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert isinstance(model, RandomForestRegressor)
+```
+
+These changes ensure that the `RandomForestRegressor` class is imported correctly, resolving the `NameError` issues.

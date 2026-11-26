@@ -1,0 +1,52 @@
+{
+  "run": 12,
+  "cost": {
+    "prompt_tokens": 164,
+    "completion_tokens": 1500,
+    "truncated": true,
+    "seconds": 190.3
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 6,
+    "asserts": 11
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 0,
+    "errors": 5,
+    "returncode": 1,
+    "tail": "    def test_data():\n        # Create a sample DataFrame for testing\n        data = {\n            'temp': [20, 22, 18, 25],\n            'rain_1h': [0.0, 0.1, 0.2, 0.0],\n            'snow_1h': [0.0, 0.0, 0.0, 0.1],\n            'clouds_all': [50, 60, 70, 80],\n            'weather_main': ['Sunny', 'Rainy', 'Snowy', 'Sunny'],\n            'IsHoliday': [False, True, False, True],\n            'Hour': [9, 10, 11, 12],\n            'DayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],\n            'Month': [1, 2, 3, 4],\n            'Congestion': [0, 1, 0, 1]\n        }\n>       return pd.DataFrame(data)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:19: NameError\n=========================== short test summary info ===========================\nERROR test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not de...\nERROR test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not def...\nERROR test_pipeline.py::test_run_pipeline - NameError: name 'pd' is not defined\n5 errors in 7.43s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

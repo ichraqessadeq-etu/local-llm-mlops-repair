@@ -1,0 +1,68 @@
+ I apologize for the oversight. Here are the corrected files:
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_param, log_artifact, start_run, log_metric
+import numpy as np
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps like filling NaN, encoding categorical variables, scaling features, etc.
+    # For simplicity, I'm assuming the data is clean and doesn't require preprocessing.
+    data = data.copy()
+    data.rename(columns={'Features': 'feature'}, inplace=True)
+    return data['feature'], data['Congestion']
+
+def train_model(X_train, y_train):
+    with start_run(run_name="RandomForest_Congestion_Detector"):
+        try:
+            model = RandomForestClassifier(random_state=42)
+            model.fit(X_train, y_train)
+
+            log_param("learning_rate", model.get_params()['max_depth'])
+            log_artifact("model.pkl", (model))
+
+            return model
+        except Exception as e:
+            log_metric("training_error", 1)
+            print(f"An error occurred during training: {e}")
+```
+
+2. test_pipeline.py:
+
+```python
+import unittest
+import tempfile
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = pd.DataFrame({
+            'feature': [20, 25, 30, 22, 28],
+            'Congestion': [0, 1, 0, 1, 0]
+        })
+
+    def tearDown(self):
+        pass
+
+    def test_preprocess_data(self):
+        X, y = preprocess_data(self.data)
+        self.assertIsInstance(X, pd.Series)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        X_train, y_train = preprocess_data(self.data)
+        model = train_model(X_train, y_train)
+        self.assertIsInstance(model, RandomForestClassifier)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+In the corrected pipeline.py, I renamed the 'Features' column to 'feature' to match the column name in the test data. In test_pipeline.py, I created a simplified dataframe for testing purposes.

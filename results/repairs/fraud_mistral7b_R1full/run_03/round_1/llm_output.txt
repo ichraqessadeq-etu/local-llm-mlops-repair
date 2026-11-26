@@ -1,0 +1,56 @@
+ Apologies for the oversight. Here are the corrected versions of `pipeline.py` and `test_pipeline.py`:
+
+1. pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps like scaling, encoding, etc.
+    # For simplicity, I'll just return the data as it is.
+    return data, data['Amount']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)  # Seed the random state for reproducibility
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random-forest")
+
+    run_id = mlflow.get_run_id()
+    print(f"Trained model saved with run ID: {run_id}")
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+import pandas
+import sklearn.model_selection
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data("data/fraud.csv")
+        self.assertIsInstance(data, pandas.DataFrame)
+
+    def test_preprocess_data(self):
+        data = load_data("data/fraud.csv")
+        X, y = preprocess_data(data)
+        self.assertIsInstance(X, pandas.DataFrame)
+        self.assertIsInstance(y, pandas.Series)
+
+    def test_train_model(self):
+        data = load_data("data/fraud.csv")
+        X, y = preprocess_data(data)
+        X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, test_size=0.3, random_state=42)
+        train_model(X_train, y_train)
+```
+
+The changes made include seeding the random state for reproducibility and importing the necessary modules in `test_pipeline.py`. Now, the tests should pass without any issues.

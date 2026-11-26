@@ -1,0 +1,78 @@
+  I apologize for the confusion. It seems that the issue is still related to the `mlflow` package version. To fix the issue, you can either:
+
+1. Update the `mlflow` package to a compatible version (1.30.1 might not be compatible with Python 3.7.7). You can do this by adding the following line to your `requirements.txt` file:
+
+```
+mlflow==1.22.0
+```
+
+2. If updating the `mlflow` package is not an option, you can create a virtual environment with a compatible Python version and install the required packages there.
+
+Here's the corrected `pipeline.py` and `test_pipeline.py` files:
+
+1. pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import PyFuncModel, log_model, log_artifact, set_tracking_uri
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps here
+    X = data.drop('Class', axis=1)
+    y = data['Class']
+    return X, y
+
+def train_model(X_train, y_train, random_state=42):
+    model = RandomForestClassifier(random_state=random_state)
+    model.fit(X_train, y_train)
+    return model
+
+def set_mlflow_tracking_uri(uri):
+    set_tracking_uri(uri)
+
+def save_model(model, model_name):
+    with PyFuncModel.create_context() as ctx:
+        model = PyFuncModel(model, input_schema=ctx.get_schema(X_train), output_schema=ctx.get_schema(y_train))
+        log_model(model, "model", registered_model_name=model_name)
+        log_artifact(model.model_uri, f"models/{model_name}")
+```
+
+2. test_pipeline.py
+
+```python
+import pytest
+import os
+from pipeline import load_data, preprocess_data, train_model, save_model, set_mlflow_tracking_uri
+
+@pytest.fixture(scope="module")
+def data():
+    return load_data("data/fraud.csv")
+
+def test_preprocess_data(data):
+    X, y = preprocess_data(data)
+    assert len(X.shape) == 2
+    assert len(y) == data.shape[0]
+
+def test_train_model(data):
+    X, y = preprocess_data(data)
+    model = train_model(X_train=X, y_train=y)
+    # Add your custom assertions here to check the model's performance
+
+def test_save_model(data):
+    X, y = preprocess_data(data)
+    model = train_model(X_train=X, y_train=y)
+    save_model(model, "random_forest_fraud_detector")
+    # Add your custom assertions here to check the saved model
+
+def test_set_mlflow_tracking_uri():
+    uri = "mlflow://localhost:5000"
+    set_mlflow_tracking_uri(uri)
+    assert os.environ.get("MLflow_TRACKING_URI") == uri
+```
+
+These changes should resolve the reported issues and ensure that the tests pass and no reproducibility violations remain.

@@ -1,0 +1,32 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+_________________________ TestPipeline.test_load_data _________________________
+
+self = <test_pipeline.TestPipeline testMethod=test_load_data>
+
+    def test_load_data(self):
+        data = load_data('data/fraud.csv')
+>       self.assertIsInstance(data, pd.DataFrame)
+E       NameError: name 'pd' is not defined
+
+test_pipeline.py:7: NameError
+______________________ TestPipeline.test_preprocess_data ______________________
+
+self = <test_pipeline.TestPipeline testMethod=test_preprocess_data>
+
+    def test_preprocess_data(self):
+        data = load_data('data/fraud.csv')
+        X, y = preprocess_data(data)
+>       self.assertIsInstance(X, pd.DataFrame)
+E       NameError: name 'pd' is not defined
+
+test_pipeline.py:12: NameError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...
+FAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...
+2 failed in 4.63s
+```
+Static checks of the same files report:
+- pipeline.py: reproducibility violation: {'kind': 'RVH', 'rule': 'unseeded_estimator', 'detail': 'RandomForestClassifier(...) called without random_state', 'lineno': 17}
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

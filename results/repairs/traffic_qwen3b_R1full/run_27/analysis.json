@@ -1,0 +1,201 @@
+{
+  "run": 27,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 421.9,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "                model = RandomForestClassifier(n_estimators=100, random_state=42)\n    \n                # Train the model\n                model.fit(X_train, y_train)\n    \n                # Log model parameters\n                mlflow.log_param(\"n_estimators\", model.n_estimators)\n                mlflow.log_param(\"random_state\", model.random_state)\n    \n                # Evaluate the model\n                y_pred = model.predict(X_test)\n                accuracy = accuracy_score(y_test, y_pred)\n                mlflow.log_metric(\"accuracy\", accuracy)\n    \n                return model\n        except Exception as e:\n>           raise ValueError(f\"Training error: {e}\")\nE           ValueError: Training error: name 'X_test' is not defined\n\npipeline.py:56: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - ValueError: Training error: name ...\n3 failed in 6.86s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1594,
+        "completion_tokens": 880,
+        "truncated": false,
+        "seconds": 156.5
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            with mlflow.start_run():\n                # Initialize the model\n                model = RandomForestClassifier(n_estimators=100, random_state=42)\n    \n                # Train the model\n                model.fit(X_train, y_train)\n    \n                # Log model parameters\n                mlflow.log_param(\"n_estimators\", model.n_estimators)\n                mlflow.log_param(\"random_state\", model.random_state)\n    \n                # Evaluate the model\n                y_pred = model.predict(X_test)\n                accuracy = accuracy_score(y_test, y_pred)\n                mlflow.log_metric(\"accuracy\", accuracy)\n    \n                return model\n        except Exception as e:\n>           raise ValueError(f\"Training error: {e}\")\nE           ValueError: Training error: Found input variables with inconsistent numbers of samples: [32451, 8113]\n\npipeline.py:56: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Training error: Found...\n1 failed, 2 passed in 4.20s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2831,
+        "completion_tokens": 807,
+        "truncated": false,
+        "seconds": 130.5
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            with mlflow.start_run():\n                # Initialize the model\n                model = RandomForestClassifier(n_estimators=100, random_state=42)\n    \n                # Train the model\n                model.fit(X_train, y_train)\n    \n                # Log model parameters\n                mlflow.log_param(\"n_estimators\", model.n_estimators)\n                mlflow.log_param(\"random_state\", model.random_state)\n    \n                # Evaluate the model\n                y_pred = model.predict(X_test)\n                accuracy = accuracy_score(y_test, y_pred)\n                mlflow.log_metric(\"accuracy\", accuracy)\n    \n                return model\n        except Exception as e:\n>           raise ValueError(f\"Training error: {e}\")\nE           ValueError: Training error: Found input variables with inconsistent numbers of samples: [32451, 8113]\n\npipeline.py:56: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Training error: Found...\n1 failed, 2 passed in 4.08s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3995,
+        "completion_tokens": 807,
+        "truncated": false,
+        "seconds": 134.9
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            with mlflow.start_run():\n                # Initialize the model\n                model = RandomForestClassifier(n_estimators=100, random_state=42)\n    \n                # Train the model\n                model.fit(X_train, y_train)\n    \n                # Log model parameters\n                mlflow.log_param(\"n_estimators\", model.n_estimators)\n                mlflow.log_param(\"random_state\", model.random_state)\n    \n                # Evaluate the model\n                y_pred = model.predict(X_test)\n                accuracy = accuracy_score(y_test, y_pred)\n                mlflow.log_metric(\"accuracy\", accuracy)\n    \n                return model\n        except Exception as e:\n>           raise ValueError(f\"Training error: {e}\")\nE           ValueError: Training error: Found input variables with inconsistent numbers of samples: [32451, 8113]\n\npipeline.py:56: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Training error: Found...\n1 failed, 2 passed in 4.19s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

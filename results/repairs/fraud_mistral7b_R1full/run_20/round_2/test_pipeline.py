@@ -1,0 +1,42 @@
+import unittest
+import tempfile
+import pandas as pd
+from unittest.mock import patch
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = pd.DataFrame(
+            np.random.rand(100, 28),
+            columns=["V1", "V2", ..., "V28", "Amount"]
+        )
+        self.data["Class"] = np.random.randint(0, 2, size=100)
+        self.data_path = tempfile.NamedTemporaryFile(delete=False).name + ".csv"
+        self.data.to_csv(self.data_path)
+
+    def tearDown(self):
+        try:
+            os.remove(self.data_path)
+        except FileNotFoundError:
+            pass
+
+    def test_load_data(self):
+        loaded_data = load_data(self.data_path)
+        self.assertEqual(len(loaded_data), 100)
+
+    def test_preprocess_data(self):
+        np.random.seed(42)
+        X, y = preprocess_data(self.data)
+        # Add your assertions here
+
+    def test_train_model(self):
+        np.random.seed(42)
+        X_train, X_test, y_train, y_test = train_test_split(self.data.drop("Class", axis=1), self.data["Class"], test_size=0.3, random_state=42)
+        model = train_model(X_train, y_train)
+        # Add your assertions here
+
+    @patch("pipeline.train_model", return_value=None)
+    def test_train_model_with_random_state(self, mock_train_model):
+        # Test that the random_state parameter is passed to train_model
+        train_model(self.data.drop("Class", axis=1), self.data["Class"], random_state=43)
+        mock_train_model.assert_called_once_with(self.data.drop("Class", axis=1), self.data["Class"], random_state=43)

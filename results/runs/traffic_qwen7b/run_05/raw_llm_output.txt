@@ -1,0 +1,131 @@
+Sure, here's a production-ready CI/CD pipeline for a RandomForest congestion detector. This pipeline includes a Python module `pipeline.py` with functions for loading and preprocessing data, training the model, and a pytest file `test_pipeline.py` for testing. Additionally, a GitHub Actions YAML file is provided to automate the pipeline.
+
+### 1. Python Module `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess data and split into features and target."""
+    X = data.drop(columns=['Congestion'])
+    y = data['Congestion']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier and log it using MLflow."""
+    with mlflow.start_run():
+        mlflow.log_param("model", "RandomForestClassifier")
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "model")
+        mlflow.log_metric("accuracy", accuracy_score(y_train, model.predict(X_train)))
+        return model
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model on test data and log the accuracy."""
+    with mlflow.start_run():
+        y_pred = model.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        mlflow.log_metric("test_accuracy", accuracy)
+        return accuracy
+```
+
+### 2. Pytest File `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model, evaluate_model
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+    assert len(X) == len(y)
+
+def test_train_model():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+    test_accuracy = evaluate_model(model, X_test, y_test)
+    assert test_accuracy > 0.5
+```
+
+### 3. GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline for RandomForest Congestion Detector
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: pytest test_pipeline.py
+
+    - name: Train and log model
+      run: |
+        python pipeline.py
+```
+
+### 4. `requirements.txt`
+
+```txt
+pandas
+scikit-learn
+mlflow
+pytest
+```
+
+### 5. Directory Structure
+
+```
+.
+├── data
+│   └── traffic.csv
+├── pipeline.py
+├── test_pipeline.py
+├── .github
+│   └── workflows
+│       └── ci-cd.yml
+└── requirements.txt
+```
+
+### Explanation
+
+1. **`pipeline.py`**: Contains functions to load data, preprocess data, train a RandomForest model, and evaluate the model. It also logs the model and metrics using MLflow.
+2. **`test_pipeline.py`**: Contains pytest tests to ensure the data preprocessing, model training, and evaluation functions work as expected.
+3. **GitHub Actions YAML**: Automates the pipeline on push or pull request to the `main` branch. It checks out the code, sets up Python, installs dependencies, runs tests, and trains the model.
+
+This setup ensures a robust CI/CD pipeline for your RandomForest congestion detector, with automated testing and model logging using MLflow.

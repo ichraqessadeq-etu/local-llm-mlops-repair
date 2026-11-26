@@ -1,0 +1,260 @@
+{
+  "run": 27,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": false,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9071,
+    "f1": 0.9,
+    "n_test": 2000
+  },
+  "repair_seconds": 716.4,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 9
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "..FF                                                                     [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:19: NameError\n____________________________ test_save_load_model _____________________________\n\n    def test_save_load_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:28: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_save_load_model - NameError: name 'train_test_s...\n2 failed, 2 passed in 3.89s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 0,
+      "phase": "R2",
+      "step": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 9
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "...F                                                                     [100%]\n================================== FAILURES ===================================\n____________________________ test_save_load_model _____________________________\n\n    def test_save_load_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        model_path = 'model'\n>       save_model(model, model_path)\nE       NameError: name 'save_model' is not defined\n\ntest_pipeline.py:33: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_save_load_model - NameError: name 'save_model' ...\n1 failed, 3 passed in 20.26s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1263,
+        "completion_tokens": 688,
+        "truncated": false,
+        "seconds": 238.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 9
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        if mlflow_model is None:\n            mlflow_model = Model()\n    \n        custom_model_config_kwargs = {\n            CONFIG_KEY_CLOUDPICKLE_VERSION: cloudpickle.__version__,\n        }\n        if isinstance(python_model, PythonModel):\n            saved_python_model_subpath = \"python_model.pkl\"\n            with open(os.path.join(path, saved_python_model_subpath), \"wb\") as out:\n                cloudpickle.dump(python_model, out)\n            custom_model_config_kwargs[CONFIG_KEY_PYTHON_MODEL] = saved_python_model_subpath\n        else:\n            raise MlflowException(\n                message=(\n                    \"`python_model` must be a subclass of `PythonModel`. Instead, found an\"\n                    \" object of type: {python_model_type}\".format(python_model_type=type(python_model))\n                ),\n>               error_code=INVALID_PARAMETER_VALUE,\n            )\nE           mlflow.exceptions.MlflowException: `python_model` must be a subclass of `PythonModel`. Instead, found an object of type: <class 'sklearn.ensemble._forest.RandomForestClassifier'>\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\pyfunc\\model.py:172: MlflowException\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_save_load_model - mlflow.exceptions.MlflowExcep...\n1 failed, 3 passed in 19.18s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2393,
+        "completion_tokens": 742,
+        "truncated": false,
+        "seconds": 228.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 9
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "...F                                                                     [100%]\n================================== FAILURES ===================================\n____________________________ test_save_load_model _____________________________\n\n    def test_save_load_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        model_path = 'model'\n        save_model(model, model_path)\n        loaded_model = load_model(model_path)\n>       assert isinstance(loaded_model, RandomForestClassifier)\nE       assert False\nE        +  where False = isinstance(mlflow.pyfunc.loaded_model:\\n  flavor: mlflow.pyfunc.model\\n, RandomForestClassifier)\n\ntest_pipeline.py:35: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_save_load_model - assert False\n1 failed, 3 passed in 21.02s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3486,
+        "completion_tokens": 744,
+        "truncated": false,
+        "seconds": 249.2
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 9
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "...F                                                                     [100%]\n================================== FAILURES ===================================\n____________________________ test_save_load_model _____________________________\n\n    def test_save_load_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        model_path = 'model'\n        save_model(model, model_path)\n        loaded_model = load_model(model_path)\n>       assert isinstance(loaded_model.predict(None, pd.DataFrame(X_test)), list)\nE       TypeError: predict() takes 2 positional arguments but 3 were given\n\ntest_pipeline.py:35: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_save_load_model - TypeError: predict() takes 2 ...\n1 failed, 3 passed in 21.00s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

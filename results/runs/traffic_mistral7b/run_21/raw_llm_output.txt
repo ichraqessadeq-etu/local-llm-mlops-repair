@@ -1,0 +1,80 @@
+ I'm an AI model and can't directly execute or manage files, but I can certainly help you design the structure and code for your CI/CD pipeline. Here's a simplified example of what you're asking for:
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import trace_experiment, log_param, log_artifact, start_run, log_metric
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps like filling NaN, encoding categorical variables, scaling features, etc.
+    # For simplicity, I'm assuming the data is clean and doesn't require preprocessing.
+    return data['Features'], data['Congestion']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run(run_name="RandomForest_Congestion_Detector"):
+        try:
+            model = RandomForestClassifier()
+            model.fit(X_train, y_train)
+
+            log_param("learning_rate", model.get_params()['max_depth'])
+            log_artifact("model.pkl", (model))
+
+            return model
+        except Exception as e:
+            log_metric("training_error", 1)
+            print(f"An error occurred during training: {e}")
+```
+
+2. test_pipeline.py:
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data("data/traffic.csv")
+        self.assertIsInstance(data, pd.DataFrame)
+
+    # Add more tests for preprocess_data and train_model functions as needed
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+3. GitHub Actions YAML:
+
+```yaml
+name: CI/CD for Traffic Congestion Detector
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python environment
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install pandas mlflow pytest
+
+    - name: Test pipeline
+      run: pytest test_pipeline.py
+
+    - name: Train and log model
+      run: python pipeline.py
+```
+
+This pipeline uses MLflow for model training, tracking parameters, and logging artifacts. It also uses pytest for testing the pipeline functions. The GitHub Actions workflow runs on every push and pull request, ensuring that the code is tested and the model is trained and logged correctly.

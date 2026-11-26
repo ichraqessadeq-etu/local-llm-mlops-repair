@@ -1,0 +1,20 @@
+{
+  "source_sha256": "0b3679ac15173f79c6dc6c5ef8a0798d806fa5c5d7f05c84a5fa711bd1b05f07",
+  "source_rows": 48204,
+  "rows_after_dedup": 40575,
+  "rows": 40564,
+  "threshold_vehicles_per_hour": 5835.0,
+  "prevalence": 0.1001,
+  "features": [
+    "temp",
+    "rain_1h",
+    "snow_1h",
+    "clouds_all",
+    "weather_main",
+    "IsHoliday",
+    "Hour",
+    "DayOfWeek",
+    "Month"
+  ],
+  "csv_sha256": "d103536ecf9a56daf03252d1bca19d269f6ba11738177885fa586932c1898299"
+}

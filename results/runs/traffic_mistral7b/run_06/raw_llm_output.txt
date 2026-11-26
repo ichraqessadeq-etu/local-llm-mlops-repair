@@ -1,0 +1,84 @@
+ I'm an AI model and can't directly execute or manage files, but I can certainly help you design the structure and code for your CI/CD pipeline. Here's a simplified version of what you're asking for.
+
+1. pipeline.py
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+import mlflow
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps like filling NaN, encoding categorical variables, scaling features, etc.
+    # For simplicity, I'm assuming that the data is already preprocessed.
+    return data['Features'], data['Congestion']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.log_artifact(f'model', local_model=model)
+        mlflow.log_param('num_trees', model.n_estimators)
+        mlflow.log_metric('train_loss', model.fit_score(X_train, y_train))
+    return model
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/traffic.csv')
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    # Add more tests for train_model and error handling
+```
+
+3. GitHub Actions YAML
+
+```yaml
+name: CI/CD for Traffic Congestion Detector
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install pandas mlflow pytest
+
+    - name: Test
+      run: pytest test_pipeline.py
+
+    - name: Train and Log Model
+      run: python pipeline.py
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: model
+        path: .mlflow/artifacts
+```
+
+This pipeline loads the data, preprocesses it, trains a RandomForest model, and logs the model and metrics using MLflow. It also includes a test suite for the pipeline functions and GitHub Actions for continuous integration and deployment. Error handling can be added as needed, such as validation checks in the load_data function or exception handling in the train_model function.

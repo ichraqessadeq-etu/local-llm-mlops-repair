@@ -1,0 +1,60 @@
+{
+  "run": 9,
+  "pass_round0": true,
+  "pass_final": true,
+  "rounds_used": 0,
+  "pass_after_R2_phase": null,
+  "hint_round0": null,
+  "hint_final": null,
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9296,
+    "f1": 0.8571,
+    "n_test": 1452
+  },
+  "repair_seconds": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 3
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "...                                                                      [100%]\n3 passed in 11.11s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9296,
+        "f1": 0.8571,
+        "n_test": 1452
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

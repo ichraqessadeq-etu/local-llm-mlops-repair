@@ -1,0 +1,77 @@
+ I'm an AI model and can't directly execute or manage files, but I can certainly help you design the structure and code for your CI/CD pipeline. Here's a basic outline for your requirements:
+
+1. **pipeline.py**
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, track, pyfunc, run_local
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Preprocessing steps like filling NaN, encoding categorical variables, etc.
+    # For simplicity, I'm assuming that the data is already preprocessed.
+    return data['Features'].values, data['Congestion'].values
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.pyfunc.log_model(model, "model")
+        track(model.score(X_train, y_train))
+```
+
+2. **test_pipeline.py**
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/traffic.csv')
+        self.X, self.y = preprocess_data(self.data)
+
+    def test_train_model(self):
+        train_model(self.X, self.y)
+        # Add more tests as needed
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+3. **GitHub Actions YAML**
+
+```yaml
+name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install pandas mlflow pytest
+
+    - name: Test Pipeline
+      run: |
+        pytest test_pipeline.py
+
+    - name: Train Model
+      run: |
+        mlflow run . --track-run --python pipeline.py
+```
+
+This pipeline uses MLflow for model training and tracking, pytest for testing, and GitHub Actions for CI/CD. The `train_model` function logs the trained model as an artifact and tracks the model's score. The GitHub Actions workflow runs tests and trains the model on every push or pull request.

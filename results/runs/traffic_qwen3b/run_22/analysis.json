@@ -1,0 +1,52 @@
+{
+  "run": 22,
+  "cost": {
+    "prompt_tokens": 164,
+    "completion_tokens": 1500,
+    "truncated": true,
+    "seconds": 159.7
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 4,
+    "asserts": 7
+  },
+  "pytest": {
+    "passed": 1,
+    "failed": 3,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "            'IsHoliday': [0, 1, 0],\n            'Hour': [10, 14, 18],\n            'DayOfWeek': [1, 2, 3],\n            'Month': [1, 2, 3],\n            'Congestion': ['Low', 'Medium', 'High']\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:31: NameError\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        \"\"\"Test the entire pipeline.\"\"\"\n        with pytest.raises(ValueError):\n>           run_pipeline(\"nonexistent_file.csv\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\ntest_pipeline.py:50: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline error: File not found: nonexistent_file.csv\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_run_pipeline - Failed: DID NOT RAISE <class 'Va...\n3 failed, 1 passed in 3.38s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

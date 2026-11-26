@@ -1,0 +1,51 @@
+{
+  "run": 14,
+  "cost": {
+    "prompt_tokens": 166,
+    "completion_tokens": 960,
+    "truncated": false,
+    "seconds": 248.8
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 3,
+    "asserts": 4
+  },
+  "pytest": {
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "returncode": 0,
+    "tail": "...                                                                      [100%]\n============================== warnings summary ===============================\ntest_pipeline.py::test_preprocess_data\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\runs\\traffic_llama8b\\run_14\\pipeline.py:20: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with 'numeric_only=None') is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.\n    data.fillna(data.mean(), inplace=True)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 2 warnings in 22.06s",
+    "all_pass": true
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "ValueError: Classification metrics can't handle a mix of binary and continuous targets"
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

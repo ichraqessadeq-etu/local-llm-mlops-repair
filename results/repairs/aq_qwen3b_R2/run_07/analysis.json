@@ -1,0 +1,100 @@
+{
+  "run": 7,
+  "pass_round0": false,
+  "pass_final": true,
+  "rounds_used": 1,
+  "hint_round0": "other",
+  "hint_final": null,
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 11
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\nDuring handling of the above exception, another exception occurred:\n\n    def test_preprocess_data():\n        \"\"\"Test preprocessing data.\"\"\"\n        try:\n            data = pipeline.load_data('data/air_quality.csv')\n            X_train, X_test, y_train, y_test = pipeline.preprocess_data(data)\n            assert isinstance(X_train, pd.DataFrame)\n            assert isinstance(X_test, pd.DataFrame)\n            assert isinstance(y_train, pd.Series)\n            assert isinstance(y_test, pd.Series)\n            assert X_train.shape[0] > 0\n            assert X_test.shape[0] > 0\n            assert y_train.shape[0] > 0\n            assert y_test.shape[0] > 0\n        except Exception as e:\n>           pytest.fail(f\"Test failed: {e}\")\nE           Failed: Test failed: name 'pd' is not defined\n\ntest_pipeline.py:27: Failed\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: Test failed: name 'pd' is n...\nFAILED test_pipeline.py::test_preprocess_data - Failed: Test failed: name 'pd...\n2 failed, 2 passed in 4.25s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 1 import(s): import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 11
+      },
+      "pytest": {
+        "passed": 4,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "....                                                                     [100%]\n4 passed in 4.03s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

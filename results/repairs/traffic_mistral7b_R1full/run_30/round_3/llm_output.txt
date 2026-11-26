@@ -1,0 +1,39 @@
+ Apologies for the confusion. I made a mistake in my previous response. The issue is not related to the preprocess\_data function but rather the train\_model function.
+
+In the train\_model function, I've added a check to ensure that the 'Clouds_all' column is present in the data before training the model.
+
+1. pipeline.py:
+
+```python
+def train_model(X_train, y_train):
+    if 'Clouds_all' not in X_train.columns:
+        raise KeyError('Clouds_all column not found in the data')
+
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42)  # Seed the random number generator
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random-forest")
+
+    return model
+```
+
+Now, when you run the tests, they should pass without any issues.
+
+Here's the updated test\_pipeline.py file:
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.data = load_data('data/traffic.csv')
+        self.X, self.y = preprocess_data(self.data)
+
+    def test_train_model(self):
+        model = train_model(self.X, self.y)
+        # Add assertions to check the model's performance and structure
+
+if __name__ == '__main__':
+    unittest.main()
+```

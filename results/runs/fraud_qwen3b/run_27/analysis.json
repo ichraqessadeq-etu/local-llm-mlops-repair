@@ -1,0 +1,60 @@
+{
+  "run": 27,
+  "cost": {
+    "prompt_tokens": 261,
+    "completion_tokens": 1002,
+    "truncated": false,
+    "seconds": 100.7
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": true,
+      "rvh_violations": [
+        {
+          "kind": "RVH",
+          "rule": "unseeded_estimator",
+          "detail": "RandomForestClassifier(...) called without random_state",
+          "lineno": 29
+        }
+      ],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 4,
+    "asserts": 3
+  },
+  "pytest": {
+    "passed": 4,
+    "failed": 0,
+    "errors": 0,
+    "returncode": 0,
+    "tail": "....                                                                     [100%]\n4 passed in 15.20s",
+    "all_pass": true
+  },
+  "functional": {
+    "functional_ok": true,
+    "auprc": 0.9167,
+    "f1": 0.905,
+    "n_test": 2000
+  },
+  "is_rvh": true,
+  "is_iih": false
+}

@@ -1,0 +1,89 @@
+ I'll provide you with a basic structure for the requested components. Please note that this is a simplified example and may need to be adjusted based on your specific project requirements, error handling policies, and MLflow configuration.
+
+1. pipeline.py:
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, pyfunc, track
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps here (e.g., normalization, encoding, feature engineering)
+    X = data.drop('Class', axis=1)
+    y = data['Class']
+    return X, y
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.pyfunc.log_model(model, "model")
+        mlflow.log_artifact("model.pkl", "model")
+        track(f"Training loss: {model.loss_}")
+        track(f"Training accuracy: {model.score(X_train, y_train)}")
+```
+
+2. test_pipeline.py:
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data("data/fraud.csv")
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        data = load_data("data/fraud.csv")
+        X, y = preprocess_data(data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    # Add more tests for train_model and other functions as needed
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+3. GitHub Actions YAML:
+
+```yaml
+name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install pandas mlflow pytest
+
+    - name: Test pipeline
+      run: pytest test_pipeline.py
+
+    - name: Train model
+      run: python pipeline.py data/fraud.csv
+
+    - name: Upload artifacts
+      uses: mlflow/mlflow-github-action@v1
+      with:
+        track_run_on_push: true
+        artifact_path: ./mlruns
+```
+
+This pipeline uses GitHub Actions to run tests and train the model on every push or pull request. The trained model is logged as an artifact using MLflow. You may need to adjust the YAML file to fit your specific project needs and MLflow configuration.

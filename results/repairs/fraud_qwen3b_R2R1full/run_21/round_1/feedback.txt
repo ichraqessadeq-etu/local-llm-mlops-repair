@@ -1,0 +1,31 @@
+Running pytest on your files in the target environment (Python 3.7.7, pytest 7.4.4, MLflow 1.30.1, scikit-learn 1.0.2, pandas 1.3.5, numpy 1.21.6) gives:
+```
+.F..                                                                     [100%]
+================================== FAILURES ===================================
+____________________________ test_preprocess_data _____________________________
+
+    def test_preprocess_data():
+        """Test preprocessing the data."""
+        data = pd.DataFrame({
+            'Time': [1, 2, 3],
+            'V1': [4, 5, 6],
+            'Class': [0, 1, 0]
+        })
+        X, y = preprocess_data(data)
+        assert X.shape == (3, 2)
+        assert y.shape == (3,)
+>       assert X.columns.tolist() == ['V1']
+E       AssertionError: assert ['Time', 'V1'] == ['V1']
+E         At index 0 diff: 'Time' != 'V1'
+E         Left contains one more item: 'V1'
+E         Use -v to get more diff
+
+test_pipeline.py:27: AssertionError
+=========================== short test summary info ===========================
+FAILED test_pipeline.py::test_preprocess_data - AssertionError: assert ['Time...
+1 failed, 3 passed in 3.80s
+```
+Static checks of the same files report:
+- no violation found by the static detectors
+Fix the files so that every test passes and no violation remains.
+Return the corrected files in full: first pipeline.py in one ```python block, then test_pipeline.py in a second ```python block. Do not omit any function.

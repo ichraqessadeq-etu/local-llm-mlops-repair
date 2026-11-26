@@ -1,0 +1,79 @@
+Certainly! The error you're encountering is due to the `train_test_split` function not being imported from the `sklearn.model_selection` module. Let's correct this by importing the necessary function.
+
+Here's the corrected version of `pipeline.py` and `test_pipeline.py`:
+
+### 1. Python Module `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from mlflow import log_param, log_metric
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess data to split into features and target."""
+    X = data.drop(columns=['Congestion'])
+    y = data['Congestion']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier model."""
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
+    
+    # Log model parameters and metrics
+    log_param("n_estimators", model.n_estimators)
+    log_param("random_state", model.random_state)
+    
+    y_pred = model.predict(X_train)
+    accuracy = accuracy_score(y_train, y_pred)
+    log_metric("train_accuracy", accuracy)
+    
+    # Save the model to a file
+    model_path = "random_forest_model.pkl"
+    model.save(model_path)
+    
+    return model
+```
+
+### 2. Pytest File `test_pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/traffic.csv')
+    assert not data.empty
+    assert 'Congestion' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert not X.empty
+    assert not y.empty
+    assert len(X) == len(y)
+
+def test_train_model():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None
+    assert model.__class__.__name__ == 'RandomForestClassifier'
+```
+
+### Explanation:
+
+1. **Python Module `pipeline.py`**:
+   - No changes are needed here.
+
+2. **Pytest File `test_pipeline.py`**:
+   - The `train_test_split` function is now imported from `sklearn.model_selection`.
+
+This should resolve the `NameError` and ensure that your tests pass. Make sure to update your MLflow version if possible to use the `log_model` function.

@@ -1,0 +1,59 @@
+{
+  "run": 19,
+  "cost": {
+    "prompt_tokens": 198,
+    "completion_tokens": 793,
+    "truncated": false,
+    "seconds": 170.9
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": true,
+      "rvh_violations": [
+        {
+          "kind": "RVH",
+          "rule": "unseeded_estimator",
+          "detail": "RandomForestClassifier(...) called without random_state",
+          "lineno": 16
+        }
+      ],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 1,
+    "asserts": 0
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 1,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "\n[40564 rows x 10 columns]\n\n    def test_train_model(data):\n>       X, y = preprocess_data(data)\n\ntest_pipeline.py:10: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ndata =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\n\n    def preprocess_data(data):\n        # Perform necessary data preprocessing like handling missing values, encoding categorical variables, etc.\n        # For simplicity, let's assume no preprocessing is needed\n>       return data[Features], data['Congestion']\nE       NameError: name 'Features' is not defined\n\npipeline.py:12: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'Features' is not...\n1 failed in 3.56s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": false,
+    "error": "NameError: name 'Features' is not defined"
+  },
+  "is_rvh": true,
+  "is_iih": false
+}

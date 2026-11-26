@@ -1,0 +1,54 @@
+{
+  "run": 6,
+  "cost": {
+    "prompt_tokens": 220,
+    "completion_tokens": 1500,
+    "truncated": true,
+    "seconds": 167.8
+  },
+  "extraction": {
+    "n_blocks": 4,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 4,
+    "asserts": 0
+  },
+  "pytest": {
+    "passed": 2,
+    "failed": 2,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "self = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n        data = pd.DataFrame({\n            'temp': [20, 22, 18],\n            'rain_1h': [0.1, 0.2, 0.0],\n            'snow_1h': [0.0, 0.0, 0.1],\n            'clouds_all': [50, 60, 70],\n            'weather_main': ['sunny', 'rainy', 'snowy'],\n            'IsHoliday': [0, 1, 0],\n            'Hour': [10, 14, 18],\n            'DayOfWeek': ['Monday', 'Wednesday', 'Friday'],\n            'Month': ['January', 'March', 'May'],\n            'Congestion': [0, 1, 0]\n        })\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       self.assertIsInstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:41: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - KeyError: \"['Co...\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'Ra...\n2 failed, 2 passed in 8.89s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": true,
+    "auprc": 0.7925,
+    "f1": 0.7041,
+    "n_test": 8113
+  },
+  "is_rvh": false,
+  "is_iih": false
+}

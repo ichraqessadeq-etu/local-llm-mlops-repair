@@ -1,0 +1,85 @@
+Sure, let's fix the files so that every test passes. The issue is that the `RandomForestClassifier` class is not imported in the `pipeline.py` file. We need to import it from `sklearn.ensemble`.
+
+Here are the corrected files:
+
+### 1. Python Module `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        raise ValueError(f"Error loading data: {e}")
+
+def preprocess_data(data):
+    """Preprocess data for model training."""
+    try:
+        X = data.drop(columns=['Anomaly'])
+        y = data['Anomaly']
+        return X, y
+    except Exception as e:
+        raise ValueError(f"Error preprocessing data: {e}")
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier model."""
+    try:
+        with mlflow.start_run():
+            mlflow.log_param("model", "RandomForestClassifier")
+            model = RandomForestClassifier(n_estimators=100, random_state=42)
+            model.fit(X_train, y_train)
+            mlflow.sklearn.log_model(model, "model")
+            mlflow.log_metric("accuracy", accuracy_score(y_train, model.predict(X_train)))
+            return model
+    except Exception as e:
+        raise ValueError(f"Error training model: {e}")
+```
+
+### 2. Pytest File `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+from sklearn.ensemble import RandomForestClassifier
+
+def test_load_data():
+    """Test loading data."""
+    data = load_data('data/air_quality.csv')
+    assert isinstance(data, pd.DataFrame)
+    assert not data.empty
+
+def test_preprocess_data():
+    """Test preprocessing data."""
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+    assert not X.empty
+    assert not y.empty
+
+def test_train_model():
+    """Test training model."""
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert model is not None
+    assert isinstance(model, RandomForestClassifier)
+```
+
+### Explanation:
+
+1. **pipeline.py**:
+   - The `RandomForestClassifier` class is now imported from `sklearn.ensemble`.
+
+2. **test_pipeline.py**:
+   - The `RandomForestClassifier` class is imported at the beginning of the file.
+
+With these changes, the `test_train_model` function should now pass without any issues.

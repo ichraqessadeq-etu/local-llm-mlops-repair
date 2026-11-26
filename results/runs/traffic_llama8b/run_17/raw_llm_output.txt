@@ -1,0 +1,125 @@
+Here is the code for the production-ready CI/CD pipeline:
+
+**pipeline.py**
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow
+import logging
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        logging.error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    try:
+        # One-hot encoding for categorical features
+        data = pd.get_dummies(data, columns=['weather_main', 'IsHoliday', 'DayOfWeek', 'Month'])
+        
+        # Scale numerical features
+        scaler = StandardScaler()
+        data[['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'Hour']] = scaler.fit_transform(data[['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'Hour']])
+        
+        # Split data into features (X) and target (y)
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+        
+        return X, y
+    except Exception as e:
+        logging.error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        # Train a RandomForest classifier
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        
+        # Log the model with MLflow
+        mlflow.sklearn.log_model(model, "random_forest_model")
+        
+        return model
+    except Exception as e:
+        logging.error(f"Error training model: {e}")
+        raise
+```
+
+**test_pipeline.py**
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/traffic.csv')
+        self.assertIsNotNone(data)
+    
+    def test_preprocess_data(self):
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        self.assertIsNotNone(X)
+        self.assertIsNotNone(y)
+    
+    def test_train_model(self):
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        model = train_model(X, y)
+        self.assertIsNotNone(model)
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+        
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+        
+      - name: Run tests
+        run: |
+          pytest test_pipeline.py
+        
+      - name: Train model
+        run: |
+          python pipeline.py --file data/traffic.csv --output model.pkl
+        
+      - name: Deploy model
+        uses: actions/upload-artifact@v2
+        with:
+          name: model.pkl
+          path: model.pkl
+        
+      - name: Log model with MLflow
+        uses: actions/mlflow@v2
+        with:
+          mlflow-tracking-uri: 'https://example.com/mlflow'
+          mlflow-model-name: 'random_forest_model'
+          mlflow-model-path: 'model.pkl'
+```
+
+Note: You'll need to replace the `requirements.txt` file with the actual dependencies required for your project. Also, you'll need to set up an MLflow tracking server and update the `mlflow-tracking-uri` in the GitHub Actions YAML.
+
+This pipeline assumes that you have a `requirements.txt` file in the root of your repository with the dependencies required for your project. The pipeline will install these dependencies using `pip` and then run the tests using `pytest`. If the tests pass, the pipeline will train the model using the `pipeline.py` script and then deploy the model to an MLflow tracking server.

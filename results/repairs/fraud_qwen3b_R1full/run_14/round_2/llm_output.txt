@@ -1,0 +1,120 @@
+It seems there was a misunderstanding in the previous response. The error you're encountering is due to the fact that `mlflow.log_exception` is not available in the version of MLflow you're using (1.30.1). In MLflow 1.30.1, the `log_exception` function was removed, and instead, you should use `mlflow.log_metric` to log exceptions.
+
+Let's update the `pipeline.py` and `test_pipeline.py` files accordingly.
+
+### pipeline.py
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File {file_path} not found.")
+    except pd.errors.EmptyDataError:
+        raise pd.errors.EmptyDataError("The CSV file is empty.")
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    try:
+        # Assume 'Class' is the target column
+        X = data.drop('Class', axis=1)
+        y = data['Class']
+        
+        # Split the data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        return X_train, y_train
+    except KeyError:
+        raise KeyError("The target column 'Class' is missing in the data.")
+
+def train_model(X_train, y_train):
+    """Train a RandomForest classifier."""
+    try:
+        # Initialize the model
+        model = RandomForestClassifier(random_state=42)
+        
+        # Train the model
+        model.fit(X_train, y_train)
+        
+        # Log the model to MLflow
+        mlflow.sklearn.log_model(model, "random_forest_model")
+        
+        return model
+    except Exception as e:
+        mlflow.log_metric("exception", str(e))
+        raise Exception("Failed to train the model.")
+
+def predict(model, X_test):
+    """Predict using the trained model."""
+    try:
+        y_pred = model.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        mlflow.log_metric("accuracy", accuracy)
+        return y_pred
+    except Exception as e:
+        mlflow.log_metric("exception", str(e))
+        raise Exception("Failed to predict.")
+
+def main():
+    file_path = 'data/fraud.csv'
+    try:
+        data = load_data(file_path)
+        X_train, y_train = preprocess_data(data)
+        model = train_model(X_train, y_train)
+        y_pred = predict(model, X_train)
+        print(f"Accuracy: {accuracy_score(y_test, y_pred):.2f}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+if __name__ == "__main__":
+    main()
+```
+
+### test_pipeline.py
+
+```python
+import pytest
+import pandas as pd
+import numpy as np
+from pipeline import load_data, preprocess_data, train_model, predict
+
+def test_load_data():
+    data = load_data('data/fraud.csv')
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    data = load_data('data/fraud.csv')
+    X_train, y_train = preprocess_data(data)
+    assert isinstance(X_train, pd.DataFrame)
+    assert isinstance(y_train, pd.Series)
+
+def test_train_model():
+    data = load_data('data/fraud.csv')
+    X_train, y_train = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+
+def test_predict():
+    data = load_data('data/fraud.csv')
+    X_train, y_train = preprocess_data(data)
+    model = train_model(X_train, y_train)
+    y_pred = predict(model, X_train)
+    assert isinstance(y_pred, np.ndarray)
+```
+
+### Explanation
+
+1. **MLflow Logging**: Updated the `train_model` function to log exceptions using `mlflow.log_metric("exception", str(e))`.
+2. **Test Function Fixes**: Ensured that the test functions are correctly using `assert` statements for type checking and to ensure that the functions are being called correctly.
+
+These changes should resolve the errors and ensure that all tests pass.

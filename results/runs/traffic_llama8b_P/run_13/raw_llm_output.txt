@@ -1,0 +1,110 @@
+Here is the code for the CI/CD pipeline:
+
+**pipeline.py**
+```python
+import mlflow
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        mlflow.set_context("failed")
+        mlflow.log_param("error", str(e))
+        raise
+
+def preprocess_data(data):
+    try:
+        X = data.drop(['Congestion'], axis=1)
+        y = data['Congestion']
+        scaler = StandardScaler()
+        X = scaler.fit_transform(X)
+        return train_test_split(X, y, test_size=0.2, random_state=42)
+    except Exception as e:
+        mlflow.set_context("failed")
+        mlflow.log_param("error", str(e))
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random_forest")
+        return model
+    except Exception as e:
+        mlflow.set_context("failed")
+        mlflow.log_param("error", str(e))
+        raise
+```
+
+**test_pipeline.py**
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data("data/traffic.csv")
+    assert data.shape[0] > 0
+
+def test_preprocess_data():
+    data = load_data("data/traffic.csv")
+    X, y = preprocess_data(data)
+    assert X.shape[0] > 0
+    assert y.shape[0] > 0
+
+def test_train_model():
+    data = load_data("data/traffic.csv")
+    X, y = preprocess_data(data)
+    model = train_model(X[0], y[0])
+    assert isinstance(model, RandomForestClassifier)
+```
+
+**.github/workflows/ci_cd.yml**
+```yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          mlflow install
+
+      - name: Run CI/CD pipeline
+        run: |
+          python pipeline.py
+          pytest test_pipeline.py
+
+      - name: Deploy to production
+        uses: actions/deploy@v1
+        with:
+          env: production
+```
+
+**requirements.txt**
+```bash
+mlflow==1.30.1
+pandas==1.0.3
+scikit-learn==1.0.2
+```
+
+This pipeline assumes that the `traffic.csv` file is located in the `data` directory. The `pipeline.py` module contains the functions for loading data, preprocessing data, and training the model. The `test_pipeline.py` module contains the test cases for these functions. The `.github/workflows/ci_cd.yml` file defines the CI/CD pipeline, which runs the tests and deploys the model to production if the tests pass. The `requirements.txt` file lists the dependencies required for the pipeline.

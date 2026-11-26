@@ -1,0 +1,105 @@
+ I'm an AI model and can't directly execute or manage files, but I can certainly help you design the structure and code for your CI/CD pipeline. Here's a simplified example of how you might set up your project:
+
+1. pipeline.py
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Perform necessary preprocessing like filling missing values, encoding categorical variables, etc.
+    # For simplicity, let's assume the data is already preprocessed
+    return data['Features'], data['Congestion']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.sklearn.log_model(model, "random-forest")
+
+    return model
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data('data/traffic.csv')
+        # Add assertions to check if the data is loaded correctly
+
+    def test_preprocess_data(self):
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        # Add assertions to check if the preprocessing is done correctly
+
+    def test_train_model(self):
+        data = load_data('data/traffic.csv')
+        X, y = preprocess_data(data)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        model = train_model(X_train, y_train)
+        # Add assertions to check if the model is trained correctly
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+3. GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Test Pipeline
+      run: pytest test_pipeline.py
+
+    - name: Train and Log Model
+      run: python pipeline.py
+
+    - name: Upload Model
+      uses: mlflow/mlflow-github-action@v1
+      with:
+        track: dev
+        artifact: model
+```
+
+In this example, I've used MLflow for model training and logging, and pytest for testing. The GitHub Actions workflow is set up to trigger on pushes to the main branch. It installs dependencies, runs tests, trains the model, logs it to MLflow, and then uploads the model as an artifact.
+
+Please note that you'll need to create a requirements.txt file to list your project's dependencies. Also, you should adjust the preprocessing and testing steps according to your specific needs.
+
+Lastly, don't forget to initialize your GitHub repository with MLflow's tracking server URL:
+
+```bash
+mlflow init --tracking-uri mlflow.local
+```
+
+For using MLflow with a remote tracking server, please refer to the official MLflow documentation.

@@ -1,0 +1,61 @@
+{
+  "run": 5,
+  "cost": {
+    "prompt_tokens": 317,
+    "completion_tokens": 939,
+    "truncated": false,
+    "seconds": 102.6
+  },
+  "extraction": {
+    "n_blocks": 3,
+    "python_parse": [
+      "OK",
+      "OK"
+    ],
+    "yaml_parses": true
+  },
+  "static": {
+    "pipeline": {
+      "parses": true,
+      "is_rvh": true,
+      "rvh_violations": [
+        {
+          "kind": "RVH",
+          "rule": "unseeded_estimator",
+          "detail": "RandomForestClassifier(...) called without random_state",
+          "lineno": 31
+        }
+      ],
+      "is_iih": false,
+      "iih_violations": []
+    },
+    "test": {
+      "parses": true,
+      "is_rvh": false,
+      "rvh_violations": [],
+      "is_iih": false,
+      "iih_violations": []
+    }
+  },
+  "strength": {
+    "tests": 4,
+    "asserts": 5
+  },
+  "pytest": {
+    "passed": 0,
+    "failed": 4,
+    "errors": 0,
+    "returncode": 1,
+    "tail": "\nmodel = RandomForestClassifier(), experiment_name = 'fraud_detection'\nrun_name = 'run_1'\n\n    def save_model(model, experiment_name, run_name):\n        \"\"\"Save the model using MLflow.\"\"\"\n        try:\n            mlflow.set_experiment(experiment_name)\n            with mlflow.start_run(run_name=run_name):\n                mlflow.sklearn.log_model(model, \"model\")\n                mlflow.log_metric(\"accuracy\", accuracy_score(y_train, model.predict(X_train)))\n            return mlflow.get_run_id()\n        except Exception as e:\n>           raise Exception(f\"An error occurred while saving the model: {e}\")\nE           Exception: An error occurred while saving the model: name 'y_train' is not defined\n\npipeline.py:46: Exception\n---------------------------- Captured stderr call -----------------------------\n2026/11/25 03:50:16 INFO mlflow.tracking.fluent: Experiment with name 'fraud_detection' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_save_model - Exception: An error occurred while...\n4 failed in 17.59s",
+    "all_pass": false,
+    "failure_hint": "import_or_missing_name"
+  },
+  "functional": {
+    "functional_ok": true,
+    "auprc": 0.9035,
+    "f1": 0.9,
+    "n_test": 2000
+  },
+  "is_rvh": true,
+  "is_iih": false
+}

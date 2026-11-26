@@ -1,0 +1,187 @@
+To create a production-ready CI/CD pipeline for a RandomForest congestion detector, we will follow these steps:
+
+1. **Create the `pipeline.py` module**: This module will contain functions to load data, preprocess it, and train the model.
+2. **Create the `test_pipeline.py` file**: This file will contain pytest tests to validate the functionality of the `pipeline.py` module.
+3. **Create a GitHub Actions YAML file**: This file will define the CI/CD pipeline.
+
+### Step 1: Create `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        logging.info("Data loaded successfully.")
+        return data
+    except Exception as e:
+        logging.error(f"Error loading data: {e}")
+        raise
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    try:
+        # Define features and target
+        features = ['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month']
+        target = 'Congestion'
+        
+        # Split the data into features and target
+        X = data[features]
+        y = data[target]
+        
+        # Split the data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        logging.info("Data preprocessed successfully.")
+        return X_train, X_test, y_train, y_test
+    except Exception as e:
+        logging.error(f"Error preprocessing data: {e}")
+        raise
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model."""
+    try:
+        # Initialize the model
+        model = RandomForestClassifier(random_state=42)
+        
+        # Train the model
+        model.fit(X_train, y_train)
+        logging.info("Model trained successfully.")
+        return model
+    except Exception as e:
+        logging.error(f"Error training model: {e}")
+        raise
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model."""
+    try:
+        # Make predictions
+        y_pred = model.predict(X_test)
+        
+        # Calculate accuracy
+        accuracy = accuracy_score(y_test, y_pred)
+        logging.info(f"Model accuracy: {accuracy:.2f}")
+        return accuracy
+    except Exception as e:
+        logging.error(f"Error evaluating model: {e}")
+        raise
+
+def run_pipeline(file_path):
+    """Run the entire pipeline."""
+    try:
+        # Load data
+        data = load_data(file_path)
+        
+        # Preprocess data
+        X_train, X_test, y_train, y_test = preprocess_data(data)
+        
+        # Train model
+        model = train_model(X_train, y_train)
+        
+        # Evaluate model
+        evaluate_model(model, X_test, y_test)
+        
+        # Log model to MLflow
+        mlflow.start_run()
+        mlflow.sklearn.log_model(model, "congestion_detector")
+        mlflow.log_param("features", features)
+        mlflow.log_param("target", target)
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.end_run()
+        logging.info("Pipeline run successfully.")
+    except Exception as e:
+        logging.error(f"Error running pipeline: {e}")
+        raise
+```
+
+### Step 2: Create `test_pipeline.py`
+
+```python
+import pytest
+from pipeline import load_data, preprocess_data, train_model, evaluate_model, run_pipeline
+
+@pytest.fixture
+def test_data():
+    # Create a test dataset
+    data = {
+        'temp': [20, 22, 18, 25, 21],
+        'rain_1h': [0, 0.5, 0, 0.3, 0.2],
+        'snow_1h': [0, 0.1, 0, 0.2, 0],
+        'clouds_all': [50, 60, 40, 70, 55],
+        'weather_main': ['Sunny', 'Rainy', 'Sunny', 'Snowy', 'Cloudy'],
+        'IsHoliday': [False, True, False, True, False],
+        'Hour': [10, 15, 20, 22, 18],
+        'DayOfWeek': ['Monday', 'Wednesday', 'Friday', 'Saturday', 'Sunday'],
+        'Month': [1, 2, 3, 4, 5],
+        'Congestion': [0, 1, 0, 1, 0]
+    }
+    return pd.DataFrame(data)
+
+def test_load_data(test_data):
+    """Test loading data."""
+    try:
+        loaded_data = load_data(test_data)
+        assert isinstance(loaded_data, pd.DataFrame)
+        assert len(loaded_data) == 5
+        logging.info("Test load_data passed.")
+    except Exception as e:
+        logging.error(f"Test load_data failed: {e}")
+        raise
+
+def test_preprocess_data(test_data):
+    """Test preprocessing data."""
+    try:
+        X_train, X_test, y_train, y_test = preprocess_data(test_data)
+        assert isinstance(X_train, pd.DataFrame)
+        assert isinstance(X_test, pd.DataFrame)
+        assert isinstance(y_train, pd.Series)
+        assert isinstance(y_test, pd.Series)
+        assert len(X_train) == 3
+        assert len(X_test) == 2
+        logging.info("Test preprocess_data passed.")
+    except Exception as e:
+        logging.error(f"Test preprocess_data failed: {e}")
+        raise
+
+def test_train_model(test_data):
+    """Test training the model."""
+    try:
+        X_train, X_test, y_train, y_test = preprocess_data(test_data)
+        model = train_model(X_train, y_train)
+        assert isinstance(model, RandomForestClassifier)
+        logging.info("Test train_model passed.")
+    except Exception as e:
+        logging.error(f"Test train_model failed: {e}")
+        raise
+
+def test_evaluate_model(test_data):
+    """Test evaluating the model."""
+    try:
+        X_train, X_test, y_train, y_test = preprocess_data(test_data)
+        model = train_model(X_train, y_train)
+        accuracy = evaluate_model(model, X_test, y_test)
+        assert isinstance(accuracy, float)
+        logging.info("Test evaluate_model passed.")
+    except Exception as e:
+        logging.error(f"Test evaluate_model failed: {e}")
+        raise
+
+def test_run_pipeline(test_data):
+    """Test running the pipeline."""
+    try:
+        run_pipeline(test_data)
+        logging.info("Test run_pipeline passed.")
+    except Exception as e:
+        logging.error(f"Test run_pipeline failed: {e}")
+        raise
+
+if __name__ == "__main__":

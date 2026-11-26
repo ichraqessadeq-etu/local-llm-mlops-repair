@@ -1,0 +1,25 @@
+from sklearn.model_selection import train_test_split
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test data loading function."""
+    data = load_data('data/traffic.csv')
+    assert not data.empty
+    assert 'Congestion' in data.columns
+
+def test_preprocess_data():
+    """Test data preprocessing function."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert X.shape[0] == y.shape[0]
+    assert X.shape[1] == len(['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month'])
+
+def test_train_model():
+    """Test model training function."""
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model.named_steps['rf'] is not None
+    assert model.named_steps['rf'].n_estimators == 100

@@ -1,0 +1,91 @@
+ I'll provide you with the necessary components for your request. Let's break it down into three parts: `pipeline.py`, `test_pipeline.py`, and the GitHub Actions YAML file.
+
+1. `pipeline.py`:
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, pyfunc, track
+
+def load_data(file_path):
+    df = pd.read_csv(file_path)
+    return df
+
+def preprocess_data(data):
+    # Perform any necessary preprocessing (e.g., normalization, encoding categorical variables)
+    # For simplicity, I'll just drop the 'weather_main' column as it's not numeric
+    data.drop('weather_main', axis=1, inplace=True)
+    X = data.drop('Congestion', axis=1)
+    y = data['Congestion']
+    return X, y
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.pyfunc.log_model(model, "model")
+        print(f"Model with version {mlflow.get_run_id()} has been logged.")
+```
+
+2. `test_pipeline.py`:
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def setUp(self):
+        self.file_path = "data/traffic.csv"
+
+    def test_load_data(self):
+        data = load_data(self.file_path)
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        data = load_data(self.file_path)
+        X, y = preprocess_data(data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        data = load_data(self.file_path)
+        X, y = preprocess_data(data)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+        train_model(X_train, y_train)
+```
+
+3. GitHub Actions YAML:
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install mlflow scikit-learn pandas pytest
+    - name: Test pipeline
+      run: |
+        python -m pytest test_pipeline.py
+    - name: Train and log model
+      run: |
+        python pipeline.py
+        mlflow login --host $MLFLOW_TRACKING_URI --username $MLFLOW_USERNAME --password $MLFLOW_PASSWORD
+        mlflow push --track-runs --source .
+```
+
+This setup uses GitHub Actions to run the tests and train the model whenever there's a push to the main branch. It also logs the model using MLflow. Make sure to set the environment variables `MLFLOW_TRACKING_URI`, `MLFLOW_USERNAME`, and `MLFLOW_PASSWORD` in your GitHub repository settings.

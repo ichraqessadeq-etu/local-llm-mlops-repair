@@ -1,0 +1,157 @@
+The error you're encountering is due to the presence of missing values in the `Congestion` column, which is causing the `train_model` function to fail. To resolve this, we need to handle missing values appropriately before training the model. We can either drop the rows with missing values or fill them with a suitable value.
+
+Here are the corrected versions of the files:
+
+### 1. Pipeline Module (`pipeline.py`)
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    logging.info("Loading data from %s", file_path)
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        logging.error("Error loading data: %s", e)
+        raise
+
+def preprocess_data(data):
+    """Preprocess the data."""
+    logging.info("Preprocessing data")
+    try:
+        # Drop columns with missing values
+        data.dropna(inplace=True)
+        
+        # Convert categorical variables to numerical
+        data['weather_main'] = data['weather_main'].astype('category').cat.codes
+        
+        # Convert DayOfWeek to numeric
+        data['DayOfWeek'] = data['DayOfWeek'].map({'Monday': 1, 'Tuesday': 2, 'Wednesday': 3, 'Thursday': 4, 'Friday': 5, 'Saturday': 6, 'Sunday': 7})
+        
+        # Split features and target
+        X = data.drop('Congestion', axis=1)
+        y = data['Congestion']
+        
+        return X, y
+    except Exception as e:
+        logging.error("Error preprocessing data: %s", e)
+        raise
+
+def train_model(X_train, y_train):
+    """Train a RandomForest model."""
+    logging.info("Training model")
+    try:
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        return model
+    except Exception as e:
+        logging.error("Error training model: %s", e)
+        raise
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model."""
+    logging.info("Evaluating model")
+    try:
+        y_pred = model.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        logging.info("Accuracy: %.2f", accuracy)
+        return accuracy
+    except Exception as e:
+        logging.error("Error evaluating model: %s", e)
+        raise
+
+def run_pipeline(file_path):
+    """Run the entire pipeline."""
+    try:
+        data = load_data(file_path)
+        X, y = preprocess_data(data)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        with mlflow.start_run():
+            model = train_model(X_train, y_train)
+            evaluate_model(model, X_test, y_test)
+        
+        logging.info("Pipeline completed successfully")
+    except Exception as e:
+        logging.error("Pipeline failed: %s", e)
+        raise
+```
+
+### 2. Test File (`test_pipeline.py`)
+
+```python
+import pytest
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model, evaluate_model, run_pipeline
+
+def test_load_data():
+    """Test loading data."""
+    data = load_data('data/traffic.csv')
+    assert isinstance(data, pd.DataFrame)
+
+def test_preprocess_data():
+    """Test preprocessing data."""
+    data = pd.DataFrame({
+        'temp': [20, 22, 21],
+        'rain_1h': [0.5, 0.3, 0.2],
+        'snow_1h': [0, 0.1, 0],
+        'clouds_all': [50, 60, 70],
+        'weather_main': ['Clouds', 'Rain', 'Snow'],
+        'IsHoliday': [False, True, False],
+        'Hour': [10, 14, 18],
+        'DayOfWeek': ['Monday', 'Tuesday', 'Wednesday']
+    })
+    X, y = preprocess_data(data)
+    assert isinstance(X, pd.DataFrame)
+    assert isinstance(y, pd.Series)
+    assert X.shape == (3, 8)
+    assert y.shape == (3,)
+
+def test_train_model():
+    """Test training the model."""
+    data = pd.DataFrame({
+        'temp': [20, 22, 21],
+        'rain_1h': [0.5, 0.3, 0.2],
+        'snow_1h': [0, 0.1, 0],
+        'clouds_all': [50, 60, 70],
+        'weather_main': ['Clouds', 'Rain', 'Snow'],
+        'IsHoliday': [False, True, False],
+        'Hour': [10, 14, 18],
+        'DayOfWeek': ['Monday', 'Tuesday', 'Wednesday']
+    })
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    assert isinstance(model, RandomForestClassifier)
+
+def test_evaluate_model():
+    """Test evaluating the model."""
+    data = pd.DataFrame({
+        'temp': [20, 22, 21],
+        'rain_1h': [0.5, 0.3, 0.2],
+        'snow_1h': [0, 0.1, 0],
+        'clouds_all': [50, 60, 70],
+        'weather_main': ['Clouds', 'Rain', 'Snow'],
+        'IsHoliday': [False, True, False],
+        'Hour': [10, 14, 18],
+        'DayOfWeek': ['Monday', 'Tuesday', 'Wednesday']
+    })
+    X, y = preprocess_data(data)
+    model = train_model(X, y)
+    evaluate_model(model, X, y)
+
+def test_run_pipeline():
+    """Test running the entire pipeline."""
+    run_pipeline('data/traffic.csv')
+```
+
+These corrected files should now work correctly with the specified Python version and dependencies. The missing values in the `Congestion` column are handled by dropping them, which should resolve the error.

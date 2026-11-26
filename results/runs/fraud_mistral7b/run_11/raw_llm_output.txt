@@ -1,0 +1,88 @@
+ I'll provide you with the basic structure and code snippets for the requested components. You can adjust and expand them according to your specific needs.
+
+1. pipeline.py
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_artifact, pyfunc, track
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    # Add any necessary preprocessing steps here
+    return data, data['Amount']
+
+def train_model(X_train, y_train):
+    with mlflow.start_run():
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
+        mlflow.pyfunc.log_model(model, "model")
+        mlflow.log_artifact(artifact_path="model", artifact_rel_path="models")
+        print(f"Model trained and logged with run_id: {mlflow.get_run_id()}")
+        track(f"Model trained successfully")
+```
+
+2. test_pipeline.py
+
+```python
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data("data/fraud.csv")
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        data = load_data("data/fraud.csv")
+        X, y = preprocess_data(data)
+        self.assertIsInstance(X, pd.DataFrame)
+        self.assertIsInstance(y, pd.Series)
+
+    def test_train_model(self):
+        data = load_data("data/fraud.csv")
+        X, y = preprocess_data(data)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+        train_model(X_train, y_train)
+        # Add assertions to check the model's performance on the test set if needed
+```
+
+3. GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install pandas mlflow pytest
+
+    - name: Test
+      run: |
+        pytest test_pipeline.py
+
+    - name: Train and log model
+      run: |
+        python pipeline.py
+```
+
+This setup uses GitHub Actions to run tests and train the model on every push to the main branch. It also uses MLflow to track the runs and log the model. You can further customize the pipeline by adding more preprocessing steps, error handling, and model evaluation metrics.

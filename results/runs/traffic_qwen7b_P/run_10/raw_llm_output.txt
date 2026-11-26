@@ -1,0 +1,151 @@
+### 1. Python Module `pipeline.py`
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import LabelEncoder
+from sklearn.impute import SimpleImputer
+from mlflow import log_param, log_metric, log_model
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess data for model training."""
+    # Separate features and target
+    X = data.drop(columns=['Congestion'])
+    y = data['Congestion']
+    
+    # Encode categorical variables
+    categorical_features = ['weather_main', 'IsHoliday']
+    for feature in categorical_features:
+        le = LabelEncoder()
+        X[feature] = le.fit_transform(X[feature])
+    
+    # Handle missing values
+    imputer = SimpleImputer(strategy='mean')
+    X = imputer.fit_transform(X)
+    
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier model."""
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
+    
+    # Log model parameters and metrics
+    log_param('n_estimators', 100)
+    log_param('random_state', 42)
+    
+    # Log model
+    log_model(model, artifact_path="model")
+    
+    return model
+
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model on test data."""
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    log_metric('accuracy', accuracy)
+    return accuracy
+```
+
+### 2. Pytest File `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model, evaluate_model
+
+def test_load_data():
+    data = load_data('data/traffic.csv')
+    assert isinstance(data, pd.DataFrame)
+    assert 'Congestion' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    assert isinstance(X, np.ndarray)
+    assert isinstance(y, np.ndarray)
+    assert X.shape[0] == data.shape[0]
+    assert y.shape[0] == data.shape[0]
+
+def test_train_model():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+    assert model.n_estimators == 100
+    assert model.random_state == 42
+
+def test_evaluate_model():
+    data = load_data('data/traffic.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    accuracy = evaluate_model(model, X_test, y_test)
+    assert isinstance(accuracy, float)
+    assert 0 <= accuracy <= 1
+```
+
+### 3. GitHub Actions YAML
+
+```yaml
+name: CI/CD Pipeline for Traffic Congestion Detector
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: pytest test_pipeline.py
+
+    - name: Train model and log to MLflow
+      run: |
+        python pipeline.py
+      env:
+        MLFLOW_TRACKING_URI: https://mlflow.example.com  # Replace with your MLflow tracking URI
+        MLFLOW_EXPERIMENT_NAME: traffic-congestion-detector
+```
+
+### 4. `requirements.txt`
+
+```txt
+pandas==1.3.3
+numpy==1.21.2
+scikit-learn==1.0.2
+mlflow==1.30.1
+pytest==6.2.5
+```
+
+### Notes:
+1. **MLflow Tracking URI**: Replace `https://mlflow.example.com` with your actual MLflow tracking URI.
+2. **Environment**: Ensure that the target environment has Python 3.7, scikit-learn 1.0.2, and mlflow 1.30.1 installed.
+3. **Error Handling**: The provided code includes basic error handling and logging. You can extend this as needed.
+4. **Model Evaluation**: The `evaluate_model` function logs the accuracy metric. You can add more metrics as needed.

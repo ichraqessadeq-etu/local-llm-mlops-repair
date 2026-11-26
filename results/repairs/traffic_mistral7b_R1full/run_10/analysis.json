@@ -1,0 +1,221 @@
+{
+  "run": 10,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": false,
+  "rvh_round0": true,
+  "rvh_final": true,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ModuleNotFoundError: No module named 'randomforest_opus'"
+  },
+  "repair_seconds": 1244.8,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 16
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 2,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_R1full\\run_10\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:3: in <module>\n    import randomforest as rf\nE   ModuleNotFoundError: No module named 'randomforest'\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 2.80s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ModuleNotFoundError: No module named 'randomforest'"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1510,
+        "completion_tokens": 623,
+        "truncated": false,
+        "seconds": 302.1
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 18
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": false
+        }
+      },
+      "strength": {
+        "tests": null,
+        "asserts": null
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "    importlib.import_module(module_name)\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n<frozen importlib._bootstrap>:1006: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:983: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:967: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:677: in _load_unlocked\n    ???\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\_pytest\\assertion\\rewrite.py:177: in exec_module\n    source_stat, co = _rewrite_test(fn, self.config)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\_pytest\\assertion\\rewrite.py:359: in _rewrite_test\n    tree = ast.parse(source, filename=strfn)\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\ast.py:35: in parse\n    return compile(source, filename, mode, PyCF_ONLY_AST)\nE     File \"C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_R1full\\run_10\\round_1\\test_pipeline.py\", line 13\nE       def test_train_model(self):\nE         ^\nE   IndentationError: expected an indented block\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.20s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ModuleNotFoundError: No module named 'randomforest_opus'"
+      },
+      "is_rvh": true,
+      "is_iih": false,
+      "weakened": null
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2845,
+        "completion_tokens": 592,
+        "truncated": false,
+        "seconds": 384.1
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 18
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": false
+        }
+      },
+      "strength": {
+        "tests": null,
+        "asserts": null
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "    importlib.import_module(module_name)\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n<frozen importlib._bootstrap>:1006: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:983: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:967: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:677: in _load_unlocked\n    ???\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\_pytest\\assertion\\rewrite.py:177: in exec_module\n    source_stat, co = _rewrite_test(fn, self.config)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\_pytest\\assertion\\rewrite.py:359: in _rewrite_test\n    tree = ast.parse(source, filename=strfn)\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\ast.py:35: in parse\n    return compile(source, filename, mode, PyCF_ONLY_AST)\nE     File \"C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_R1full\\run_10\\round_2\\test_pipeline.py\", line 13\nE       def test_train_model(self):\nE         ^\nE   IndentationError: expected an indented block\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.19s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ModuleNotFoundError: No module named 'randomforest_opus'"
+      },
+      "is_rvh": true,
+      "is_iih": false,
+      "weakened": null
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3962,
+        "completion_tokens": 595,
+        "truncated": false,
+        "seconds": 558.6
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 18
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_R1full\\run_10\\round_3\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:3: in <module>\n    import randomforest_opus as rf\nE   ModuleNotFoundError: No module named 'randomforest_opus'\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 2.94s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ModuleNotFoundError: No module named 'randomforest_opus'"
+      },
+      "is_rvh": true,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

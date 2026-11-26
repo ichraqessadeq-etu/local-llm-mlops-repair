@@ -1,0 +1,248 @@
+{
+  "run": 16,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": false,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 271.2,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def test_log_model():\n        \"\"\"Test logging the model using MLflow.\"\"\"\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       log_model(model, 'AirQualityAnomalyDetection', 'Run1')\n\ntest_pipeline.py:30: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmodel = RandomForestClassifier(random_state=42)\nexperiment_name = 'AirQualityAnomalyDetection', run_name = 'Run1'\n\n    def log_model(model, experiment_name, run_name):\n        \"\"\"Log the model using MLflow.\"\"\"\n>       with mlflow.start_run(experiment_name=experiment_name, run_name=run_name):\nE       TypeError: start_run() got an unexpected keyword argument 'experiment_name'\n\npipeline.py:31: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_log_model - TypeError: start_run() got an unexp...\n4 failed in 4.35s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 0,
+      "phase": "R2",
+      "step": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n_______________________________ test_log_model ________________________________\n\n    def test_log_model():\n        \"\"\"Test logging the model using MLflow.\"\"\"\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       log_model(model, 'AirQualityAnomalyDetection', 'Run1')\n\ntest_pipeline.py:32: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmodel = RandomForestClassifier(random_state=42)\nexperiment_name = 'AirQualityAnomalyDetection', run_name = 'Run1'\n\n    def log_model(model, experiment_name, run_name):\n        \"\"\"Log the model using MLflow.\"\"\"\n>       with mlflow.start_run(experiment_name=experiment_name, run_name=run_name):\nE       TypeError: start_run() got an unexpected keyword argument 'experiment_name'\n\npipeline.py:31: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_log_model - TypeError: start_run() got an unexp...\n1 failed, 3 passed in 4.18s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1280,
+        "completion_tokens": 754,
+        "truncated": false,
+        "seconds": 117.5
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n_______________________________ test_log_model ________________________________\n\n    def test_log_model():\n        \"\"\"Test logging the model using MLflow.\"\"\"\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       log_model(model, experiment_name='AirQualityAnomalyDetection', run_name='Run1')\n\ntest_pipeline.py:32: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmodel = RandomForestClassifier(random_state=42)\nexperiment_name = 'AirQualityAnomalyDetection', run_name = 'Run1'\n\n    def log_model(model, experiment_name, run_name):\n        \"\"\"Log the model using MLflow.\"\"\"\n>       with mlflow.start_run(experiment_name=experiment_name, run_name=run_name):\nE       TypeError: start_run() got an unexpected keyword argument 'experiment_name'\n\npipeline.py:31: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_log_model - TypeError: start_run() got an unexp...\n1 failed, 3 passed in 4.19s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2449,
+        "completion_tokens": 791,
+        "truncated": false,
+        "seconds": 116.5
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n_______________________________ test_log_model ________________________________\n\n    def test_log_model():\n        \"\"\"Test logging the model using MLflow.\"\"\"\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       log_model(model, experiment_name='AirQualityAnomalyDetection', run_name='Run1')\n\ntest_pipeline.py:32: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmodel = RandomForestClassifier(random_state=42)\nexperiment_name = 'AirQualityAnomalyDetection', run_name = 'Run1'\n\n    def log_model(model, experiment_name, run_name):\n        \"\"\"Log the model using MLflow.\"\"\"\n>       with mlflow.start_run(experiment_name=experiment_name, run_name=run_name):\nE       TypeError: start_run() got an unexpected keyword argument 'experiment_name'\n\npipeline.py:31: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_log_model - TypeError: start_run() got an unexp...\n1 failed, 3 passed in 4.36s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=no, test=no"
+      ],
+      "cost": {
+        "prompt_tokens": 3655,
+        "completion_tokens": 153,
+        "truncated": false,
+        "seconds": 37.2
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "================================== FAILURES ===================================\n_______________________________ test_log_model ________________________________\n\n    def test_log_model():\n        \"\"\"Test logging the model using MLflow.\"\"\"\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       log_model(model, experiment_name='AirQualityAnomalyDetection', run_name='Run1')\n\ntest_pipeline.py:32: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmodel = RandomForestClassifier(random_state=42)\nexperiment_name = 'AirQualityAnomalyDetection', run_name = 'Run1'\n\n    def log_model(model, experiment_name, run_name):\n        \"\"\"Log the model using MLflow.\"\"\"\n>       with mlflow.start_run(experiment_name=experiment_name, run_name=run_name):\nE       TypeError: start_run() got an unexpected keyword argument 'experiment_name'\n\npipeline.py:31: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_log_model - TypeError: start_run() got an unexp...\n1 failed, 3 passed in 4.47s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

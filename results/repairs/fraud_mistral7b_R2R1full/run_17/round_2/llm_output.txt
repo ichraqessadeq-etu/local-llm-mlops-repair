@@ -1,0 +1,53 @@
+ ```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from mlflow import log_param, log_artifact, start_run, pyfunc, end_run
+from sklearn.utils.multiclass import type_of_target
+import yaml
+
+def load_data(file_path):
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    data = data.dropna()
+    return (data, data['Amount'].astype('int'))
+
+def train_model(X_train, y_train):
+    with start_run():
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
+        pyfunc.log_model(model, 'random_forest')
+        model_yaml = yaml.safe_dump(model)
+        log_artifact(model_yaml, 'model.yaml')
+    return model
+```
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+import pandas as pd
+import unittest
+from pipeline import load_data, preprocess_data, train_model
+
+class TestPipeline(unittest.TestCase):
+    def test_load_data(self):
+        data = load_data("data/fraud.csv")
+        self.assertIsInstance(data, pd.DataFrame)
+
+    def test_preprocess_data(self):
+        data, _ = preprocess_data(load_data("data/fraud.csv"))
+        self.assertIsInstance(data, tuple)
+        self.assertIsInstance(data[0], pd.DataFrame)
+        self.assertIsInstance(data[1], pd.Series)
+
+    def test_train_model(self):
+        X, y = preprocess_data(load_data("data/fraud.csv"))
+        model = train_model(X_train=X, y_train=y)
+        self.assertIsInstance(model, RandomForestClassifier)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+The issue in the original code was that the `pyfunc.log_model` function logs the model as a pickle file by default, but the yaml dumper used in the test file was not able to handle the pickled object. To fix this, I added a line to dump the model as a yaml object using `yaml.safe_dump` and then logged it as an artifact. This should resolve the yaml representer error and allow the tests to pass.

@@ -1,0 +1,84 @@
+Sure, I'll fix the files so that every test passes and no violation remains. Here are the corrected versions of `pipeline.py` and `test_pipeline.py`.
+
+### 1. `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        raise ValueError(f"Error loading data: {e}")
+
+def preprocess_data(data):
+    """Preprocess data by separating features and target."""
+    try:
+        X = data.drop(columns=['Class'])
+        y = data['Class']
+        return X, y
+    except Exception as e:
+        raise ValueError(f"Error preprocessing data: {e}")
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier and log it using MLflow."""
+    try:
+        with mlflow.start_run():
+            model = RandomForestClassifier(n_estimators=100, random_state=42)
+            model.fit(X_train, y_train)
+            mlflow.log_param("n_estimators", 100)
+            mlflow.log_param("random_state", 42)
+            mlflow.sklearn.log_model(model, "model")
+            y_pred = model.predict(X_train)
+            accuracy = accuracy_score(y_train, y_pred)
+            mlflow.log_metric("train_accuracy", accuracy)
+            return model
+    except Exception as e:
+        raise ValueError(f"Error training model: {e}")
+```
+
+### 2. `test_pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    """Test data loading function."""
+    data = load_data('data/fraud.csv')
+    assert not data.empty, "Data is empty"
+    assert 'Class' in data.columns, "Target column 'Class' is missing"
+
+def test_preprocess_data():
+    """Test data preprocessing function."""
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    assert not X.empty, "Features are empty"
+    assert not y.empty, "Target is empty"
+    assert len(X) == len(y), "Feature and target lengths do not match"
+
+def test_train_model():
+    """Test model training function."""
+    data = load_data('data/fraud.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert model is not None, "Model is None"
+    assert hasattr(model, 'predict'), "Model does not have a predict method"
+```
+
+### Explanation:
+
+1. **`pipeline.py`**: The code remains unchanged as it does not contain the `train_test_split` function, which is used in the tests.
+
+2. **`test_pipeline.py`**: The `train_test_split` function is imported from `sklearn.model_selection` at the beginning of the file. This ensures that the function is available for use in the tests.
+
+With these changes, the `pytest` tests should pass without any errors.

@@ -1,0 +1,248 @@
+{
+  "run": 26,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 3,
+  "pass_after_R2_phase": false,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 596.7,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "E       NameError: name 'pd' is not defined\n\ntest_pipeline.py:11: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n>       data = pd.read_csv(\"data/fraud.csv\")\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:20: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        \"\"\"Test the evaluate_model function.\"\"\"\n>       data = pd.read_csv(\"data/fraud.csv\")\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:27: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not de...\n4 failed, 1 passed in 7.16s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 0,
+      "phase": "R2",
+      "step": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 4,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "1731    0\n4742    0\n4521    0\n       ..\n6412    0\n8285    0\n7853    0\n1095    0\n6929    0\nName: Class, Length: 2000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier model.\"\"\"\n        try:\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n            return model\n        except Exception as e:\n>           raise Exception(f\"An error occurred while training the model: {e}\")\nE           Exception: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]\n\npipeline.py:34: Exception\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_evaluate_model - Exception: An error occurred w...\n1 failed, 4 passed in 10.55s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 1452,
+        "completion_tokens": 1117,
+        "truncated": false,
+        "seconds": 170.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            return model\n        except Exception as e:\n>           raise Exception(f\"An error occurred while training the model: {e}\")\nE           Exception: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]\n\npipeline.py:34: Exception\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_run_pipeline():\n        \"\"\"Test the run_pipeline function.\"\"\"\n        try:\n            run_pipeline(\"data/fraud.csv\")\n        except Exception as e:\n>           pytest.fail(f\"Pipeline failed: {e}\")\nE           Failed: Pipeline failed: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]\n\ntest_pipeline.py:39: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline failed: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - Exception: An error occurred whil...\nFAILED test_pipeline.py::test_evaluate_model - Exception: An error occurred w...\nFAILED test_pipeline.py::test_run_pipeline - Failed: Pipeline failed: An erro...\n3 failed, 2 passed in 4.12s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 2991,
+        "completion_tokens": 1117,
+        "truncated": false,
+        "seconds": 170.9
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            return model\n        except Exception as e:\n>           raise Exception(f\"An error occurred while training the model: {e}\")\nE           Exception: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]\n\npipeline.py:34: Exception\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_run_pipeline():\n        \"\"\"Test the run_pipeline function.\"\"\"\n        try:\n            run_pipeline(\"data/fraud.csv\")\n        except Exception as e:\n>           pytest.fail(f\"Pipeline failed: {e}\")\nE           Failed: Pipeline failed: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]\n\ntest_pipeline.py:39: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline failed: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - Exception: An error occurred whil...\nFAILED test_pipeline.py::test_evaluate_model - Exception: An error occurred w...\nFAILED test_pipeline.py::test_run_pipeline - Failed: Pipeline failed: An erro...\n3 failed, 2 passed in 4.22s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "notes": [
+        "returned: pipeline=yes, test=yes"
+      ],
+      "cost": {
+        "prompt_tokens": 3472,
+        "completion_tokens": 1117,
+        "truncated": false,
+        "seconds": 255.8
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            return model\n        except Exception as e:\n>           raise Exception(f\"An error occurred while training the model: {e}\")\nE           Exception: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]\n\npipeline.py:34: Exception\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_run_pipeline():\n        \"\"\"Test the run_pipeline function.\"\"\"\n        try:\n            run_pipeline(\"data/fraud.csv\")\n        except Exception as e:\n>           pytest.fail(f\"Pipeline failed: {e}\")\nE           Failed: Pipeline failed: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]\n\ntest_pipeline.py:39: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline failed: An error occurred while training the model: Found input variables with inconsistent numbers of samples: [8000, 2000]\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - Exception: An error occurred whil...\nFAILED test_pipeline.py::test_evaluate_model - Exception: An error occurred w...\nFAILED test_pipeline.py::test_run_pipeline - Failed: Pipeline failed: An erro...\n3 failed, 2 passed in 4.09s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

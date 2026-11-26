@@ -1,0 +1,107 @@
+### 1. Python Module: `pipeline.py`
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import mlflow
+import mlflow.sklearn
+
+def load_data(file_path):
+    """Load data from a CSV file."""
+    return pd.read_csv(file_path)
+
+def preprocess_data(data):
+    """Preprocess data by splitting into features and target."""
+    X = data.drop(columns=['Anomaly'])
+    y = data['Anomaly']
+    return X, y
+
+def train_model(X_train, y_train):
+    """Train a RandomForestClassifier and log the model using MLflow."""
+    with mlflow.start_run():
+        model = RandomForestClassifier(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_train)
+        accuracy = accuracy_score(y_train, y_pred)
+        mlflow.log_param("n_estimators", 100)
+        mlflow.log_metric("train_accuracy", accuracy)
+        mlflow.sklearn.log_model(model, "random_forest_model")
+    return model
+```
+
+### 2. Pytest File: `test_pipeline.py`
+
+```python
+import pandas as pd
+from pipeline import load_data, preprocess_data, train_model
+
+def test_load_data():
+    data = load_data('data/air_quality.csv')
+    assert not data.empty
+    assert 'Anomaly' in data.columns
+
+def test_preprocess_data():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    assert X.shape[1] == 15  # 15 features
+    assert y.shape[0] == X.shape[0]  # Same number of samples
+
+def test_train_model():
+    data = load_data('data/air_quality.csv')
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = train_model(X_train, y_train)
+    assert isinstance(model, RandomForestClassifier)
+    y_pred = model.predict(X_test)
+    assert len(y_pred) == len(y_test)
+```
+
+### 3. GitHub Actions YAML: `.github/workflows/ci_cd.yml`
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install mlflow==1.30.1 scikit-learn==1.0.2 pytest
+
+    - name: Run tests
+      run: pytest test_pipeline.py
+
+    - name: Train model and log to MLflow
+      run: |
+        mlflow server --backend-store-uri file:///mlflow --default-artifact-root file:///mlflow --host 0.0.0.0 --port 5000 &
+        sleep 10
+        python pipeline.py
+      env:
+        MLFLOW_TRACKING_URI: http://localhost:5000
+```
+
+### Notes:
+1. **MLflow Server**: The MLflow server is started in the background to log the model. The `sleep 10` command ensures that the server has enough time to start.
+2. **Error Handling**: The code does not include explicit error handling. For a production environment, you should add error handling to manage exceptions and ensure the pipeline is robust.
+3. **Environment**: The pipeline is designed to run on a machine with Python 3.7, MLflow 1.30.1, and scikit-learn 1.0.2. Make sure these dependencies are installed in your environment.
+4. **Data Splitting**: The data is split into training and test sets using `train_test_split` with a test size of 20% and a random state of 42 for reproducibility.
