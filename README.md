@@ -1,5 +1,7 @@
 # Execution-guided repair of LLM-generated MLOps pipelines with local open-weight models
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24551862.svg)](https://doi.org/10.5281/zenodo.24551862)
+
 Code, generations, repairs and analysis scripts of the study
 *Execution-Guided Self-Healing of LLM-Generated MLOps Pipelines with Locally Run Open-Weight Models*
 (I. Essadeq, S. Nouh, K. Kandali; manuscript submitted to *Machine Learning with Applications*).
@@ -124,4 +126,4 @@ Model outputs in `results/` are released for research reproducibility; each mode
 
 ## Citation and licence
 
-See `CITATION.cff`. Code: MIT (see `LICENSE`).
+Archived on Zenodo: [10.5281/zenodo.24551862](https://doi.org/10.5281/zenodo.24551862) (this DOI always resolves to the latest version). See `CITATION.cff`. Code: MIT (see `LICENSE`).
