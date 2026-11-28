@@ -1,0 +1,102 @@
+{
+  "run": 17,
+  "pass_round0": false,
+  "pass_final": true,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": null,
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "AttributeError: 'RandomForestRegressor' object has no attribute 'predict_proba'"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        try:\n            X = self._validate_data(\n                X,\n                reset=in_fit,\n                accept_sparse=\"csc\",\n                dtype=dtype,\n                force_all_finite=force_all_finite,\n                copy=self.copy,\n            )\n        except ValueError as ve:\n            if \"could not convert\" in str(ve):\n                new_ve = ValueError(\n                    \"Cannot use {} strategy with non-numeric data:\\n{}\".format(\n                        self.strategy, ve\n                    )\n                )\n>               raise new_ve from None\nE               ValueError: Cannot use mean strategy with non-numeric data:\nE               could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\impute\\_base.py:285: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - ValueError: Cannot use mean s...\nFAILED test_pipeline.py::test_train_model - ValueError: Cannot use mean strat...\n2 failed, 1 passed in 5.13s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Cannot use mean strategy with non-numeric data:\ncould not convert string to float: 'Clouds'"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 1 import(s): from sklearn.model_selection import train_test_split",
+        "pipeline: added schema shim (categorical encoding, imputation)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "...                                                                      [100%]\n3 passed in 15.63s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: 'RandomForestRegressor' object has no attribute 'predict_proba'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}
