@@ -1,0 +1,13 @@
+--- round_d1/pipeline.py
++++ round_2/pipeline.py
+@@ -45 +45,2 @@
+         raise Exception(f"Failed to train model: {e}")
++
+--- round_d1/test_pipeline.py
++++ round_2/test_pipeline.py
+@@ -25,2 +25,4 @@
+     assert isinstance(model, RandomForestClassifier)
+-    assert model.is_fitted()
++    # Check if the model is fitted by checking if the feature importance is not empty
++    assert not model.feature_importances_.size == 0
++

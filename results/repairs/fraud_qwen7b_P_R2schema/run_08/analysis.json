@@ -1,0 +1,141 @@
+{
+  "run": 8,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\ntest_pipeline.py:12: AssertionError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:18: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:26: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'train_test_sp...\n3 failed, 1 passed in 5.82s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "1670    0\n6087    0\n6669    0\n       ..\n5734    0\n5191    0\n5390    0\n860     0\n7270    0\nName: Class, Length: 8000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log it using MLflow.\"\"\"\n        with mlflow.start_run():\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, \"model\")\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:23: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\nFAILED test_pipeline.py::test_evaluate_model - AttributeError: module 'mlflow...\n3 failed, 1 passed in 14.92s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "1670    0\n6087    0\n6669    0\n       ..\n5734    0\n5191    0\n5390    0\n860     0\n7270    0\nName: Class, Length: 8000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log it using MLflow.\"\"\"\n        with mlflow.start_run():\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, \"model\")\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:23: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\nFAILED test_pipeline.py::test_evaluate_model - AttributeError: module 'mlflow...\n3 failed, 1 passed in 14.92s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 8
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

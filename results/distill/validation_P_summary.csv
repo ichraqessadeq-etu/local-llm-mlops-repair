@@ -1,0 +1,5 @@
+groupe,n,brut,R2schema_passent,R3_passent,R2schema_fonct,R3_fonct,R3_gagne,R3_perd,p_passent,p_fonct,affaiblis_R3
+total,240,31,95,106,109,126,11,0,0.001,0.0,0
+aq,80,13,33,35,35,41,2,0,0.5,0.0312,0
+fraud,80,9,28,34,34,42,6,0,0.0312,0.0078,0
+traffic,80,9,34,37,40,43,3,0,0.25,0.25,0

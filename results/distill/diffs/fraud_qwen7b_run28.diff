@@ -1,0 +1,7 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -25,3 +25,3 @@
+         model.fit(X_train, y_train)
+-        mlflow.log_model(model, "model", signature=infer_signature(X_train, y_train))
++        mlflow.sklearn.log_model(model, "model", signature=infer_signature(X_train, y_train))
+         mlflow.log_metric("accuracy", accuracy_score(y_train, model.predict(X_train)))

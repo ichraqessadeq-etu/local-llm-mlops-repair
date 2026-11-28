@@ -1,0 +1,15 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -36,3 +36,3 @@
+         # Log model and metrics
+-        mlflow.log_model(model, "model")
++        mlflow.sklearn.log_model(model, "model")
+         mlflow.log_param("n_estimators", 100)
+@@ -41 +41,2 @@
+         return model
++
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -27 +27,2 @@
+     assert len(predictions) == len(y_test)
++

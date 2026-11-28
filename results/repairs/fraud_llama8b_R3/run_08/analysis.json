@@ -1,0 +1,141 @@
+{
+  "run": 8,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        -0.01414355, -0.0100005 ]])\ny_train = 9254    0\n1561    0\n1670    0\n6087    0\n6669    0\n       ..\n5734    0\n5191    0\n5390    0\n860     0\n7270    0\nName: Class, Length: 8000, dtype: int64\n\n    def train_model(X_train, y_train):\n        try:\n>           mlflow.sklearn.log_params(RandomForestClassifier(n_estimators=100, random_state=42))\nE           AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'\n\npipeline.py:33: AttributeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:39 Error training model: module 'mlflow.sklearn' has no attribute 'log_params'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow.sk...\n1 failed, 2 passed in 20.89s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: mlflow.sklearn.log_params -> mlflow.log_params (catalogue)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        :param params: Dictionary of param_name: String -> value: (String, but will be string-ified if\n                       not)\n        :returns: None\n    \n        .. code-block:: python\n            :caption: Example\n    \n            import mlflow\n    \n            params = {\"learning_rate\": 0.01, \"n_estimators\": 10}\n    \n            # Log a batch of parameters\n            with mlflow.start_run():\n                mlflow.log_params(params)\n        \"\"\"\n        run_id = _get_or_start_run().info.run_id\n>       params_arr = [Param(key, str(value)) for key, value in params.items()]\nE       AttributeError: 'RandomForestClassifier' object has no attribute 'items'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\fluent.py:702: AttributeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:39 Error training model: 'RandomForestClassifier' object has no attribute 'items'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: 'RandomForestClas...\n1 failed, 2 passed in 15.67s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        :param params: Dictionary of param_name: String -> value: (String, but will be string-ified if\n                       not)\n        :returns: None\n    \n        .. code-block:: python\n            :caption: Example\n    \n            import mlflow\n    \n            params = {\"learning_rate\": 0.01, \"n_estimators\": 10}\n    \n            # Log a batch of parameters\n            with mlflow.start_run():\n                mlflow.log_params(params)\n        \"\"\"\n        run_id = _get_or_start_run().info.run_id\n>       params_arr = [Param(key, str(value)) for key, value in params.items()]\nE       AttributeError: 'RandomForestClassifier' object has no attribute 'items'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\fluent.py:702: AttributeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:39 Error training model: 'RandomForestClassifier' object has no attribute 'items'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: 'RandomForestClas...\n1 failed, 2 passed in 15.67s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

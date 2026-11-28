@@ -1,0 +1,141 @@
+{
+  "run": 13,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "AttributeError: module 'mlflow' has no attribute 'set_context'"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:16: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ndata =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\n\n    def preprocess_data(data):\n        try:\n            X = data.drop(['Congestion'], axis=1)\n            y = data['Congestion']\n            scaler = StandardScaler()\n            X = scaler.fit_transform(X)\n            return train_test_split(X, y, test_size=0.2, random_state=42)\n        except Exception as e:\n>           mlflow.set_context(\"failed\")\nE           AttributeError: module 'mlflow' has no attribute 'set_context'\n\npipeline.py:24: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AttributeError: module 'mlflo...\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n2 failed, 1 passed in 8.80s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'set_context'"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:17: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ndata =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\n\n    def preprocess_data(data):\n        try:\n            X = data.drop(['Congestion'], axis=1)\n            y = data['Congestion']\n            scaler = StandardScaler()\n            X = scaler.fit_transform(X)\n            return train_test_split(X, y, test_size=0.2, random_state=42)\n        except Exception as e:\n>           mlflow.set_context(\"failed\")\nE           AttributeError: module 'mlflow' has no attribute 'set_context'\n\npipeline.py:24: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AttributeError: module 'mlflo...\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n2 failed, 1 passed in 7.92s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'set_context'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:17: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ndata =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\n\n    def preprocess_data(data):\n        try:\n            X = data.drop(['Congestion'], axis=1)\n            y = data['Congestion']\n            scaler = StandardScaler()\n            X = scaler.fit_transform(X)\n            return train_test_split(X, y, test_size=0.2, random_state=42)\n        except Exception as e:\n>           mlflow.set_context(\"failed\")\nE           AttributeError: module 'mlflow' has no attribute 'set_context'\n\npipeline.py:24: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AttributeError: module 'mlflo...\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n2 failed, 1 passed in 7.92s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'set_context'"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 4
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "run": 20,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 2,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "AttributeError: type object 'PyFuncModel' has no attribute 'from_sklearn'"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 15
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_20\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:3: in <module>\n    import pipeline\npipeline.py:5: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.45s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: added 1 import(s): import mlflow",
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier",
+        "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        else:\n            # If np.array(..) gives ComplexWarning, then we convert the warning\n            # to an error. This is needed because specifying a non complex\n            # dtype to the function converts complex to real dtype,\n            # thereby passing the test made in the lines following the scope\n            # of warnings context manager.\n            with warnings.catch_warnings():\n                try:\n                    warnings.simplefilter(\"error\", ComplexWarning)\n                    if dtype is not None and np.dtype(dtype).kind in \"iu\":\n                        # Conversion float -> int should not contain NaN or\n                        # inf (numpy#14412). We cannot use casting='safe' because\n                        # then conversion float -> int would be disallowed.\n                        array = np.asarray(array, order=order)\n                        if array.dtype.kind == \"f\":\n                            _assert_all_finite(array, allow_nan=False, msg_dtype=dtype)\n                        array = array.astype(dtype, casting=\"unsafe\", copy=False)\n                    else:\n>                       array = np.asarray(array, order=order, dtype=dtype)\nE                       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: could n...\n1 failed in 7.85s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "pipeline: added schema shim (categorical encoding, imputation)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "       [282.12,   0.  ,   0.  , ...,  23.  ,   6.  ,   9.  ]])\ny_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        model = RandomForestClassifier(random_state=42)\n        with mlflow.start_run():\n            model.fit(X_train, y_train)\n>           pyfunc.log_model(pyfunc.PyFuncModel.from_sklearn(model), artifact_path='model')\nE           AttributeError: type object 'PyFuncModel' has no attribute 'from_sklearn'\n\npipeline.py:19: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: typ...\n1 failed in 11.54s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: type object 'PyFuncModel' has no attribute 'from_sklearn'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "       [282.12,   0.  ,   0.  , ...,  23.  ,   6.  ,   9.  ]])\ny_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        model = RandomForestClassifier(random_state=42)\n        with mlflow.start_run():\n            model.fit(X_train, y_train)\n>           pyfunc.log_model(pyfunc.PyFuncModel.from_sklearn(model), artifact_path='model')\nE           AttributeError: type object 'PyFuncModel' has no attribute 'from_sklearn'\n\npipeline.py:19: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: typ...\n1 failed in 11.54s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: type object 'PyFuncModel' has no attribute 'from_sklearn'"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "run": 5,
+  "pass_round0": false,
+  "pass_final": true,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": null,
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 3
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "0           10             15            2...   4      4        1\n4           50             55            60  ...          5      5        0\n\n[5 rows x 14 columns]\n\n    def test_save_model(data):\n        \"\"\"Test the save_model function.\"\"\"\n        try:\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            model = train_model(X_train, y_train)\n            save_model(model, \"air_quality_experiment\", \"air_quality_run\")\n            logging.info(\"Model saving test passed.\")\n        except Exception as e:\n>           logging.error(f\"Model saving test failed: {e}\")\nE           NameError: name 'logging' is not defined\n\ntest_pipeline.py:64: NameError\n---------------------------- Captured stderr call -----------------------------\n2026/11/27 13:54:27 INFO mlflow.tracking.fluent: Experiment with name 'air_quality_experiment' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'logging' is not de...\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'logging' is ...\nFAILED test_pipeline.py::test_train_model - NameError: name 'logging' is not ...\nFAILED test_pipeline.py::test_save_model - NameError: name 'logging' is not d...\n4 failed in 26.14s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.metrics import accuracy_score; import logging"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 3
+      },
+      "pytest": {
+        "passed": 4,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "....                                                                     [100%]\n4 passed in 24.71s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

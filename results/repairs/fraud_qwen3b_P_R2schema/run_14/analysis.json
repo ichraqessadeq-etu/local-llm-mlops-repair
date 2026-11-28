@@ -1,0 +1,141 @@
+{
+  "run": 14,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 3,
+        "returncode": 1,
+        "tail": "\ntest_pipeline.py:9: NameError\n___________________ ERROR at setup of test_preprocess_data ____________________\n\n    @pytest.fixture\n    def mock_data():\n        X, y = make_classification(n_samples=1000, n_features=25, n_informative=20, n_redundant=5, random_state=42)\n>       df = pd.DataFrame(X, columns=[f'V{i}' for i in range(1, 26)])\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:9: NameError\n_____________________ ERROR at setup of test_train_model ______________________\n\n    @pytest.fixture\n    def mock_data():\n        X, y = make_classification(n_samples=1000, n_features=25, n_informative=20, n_redundant=5, random_state=42)\n>       df = pd.DataFrame(X, columns=[f'V{i}' for i in range(1, 26)])\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:9: NameError\n=========================== short test summary info ===========================\nERROR test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not de...\nERROR test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\n3 errors in 5.89s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    \n                # Train the model\n                model.fit(X_train, y_train)\n    \n                # Log the model\n                mlflow.sklearn.log_model(model, \"random_forest_model\")\n    \n                # Log metrics\n                y_pred = model.predict(X_test)\n                accuracy = accuracy_score(y_test, y_pred)\n                classification_report_str = classification_report(y_test, y_pred)\n    \n                mlflow.log_metric(\"accuracy\", accuracy)\n                mlflow.log_text(\"classification_report\", classification_report_str)\n    \n                return model\n        except Exception as e:\n>           mlflow.log_exception(e)\nE           AttributeError: module 'mlflow' has no attribute 'log_exception'\n\npipeline.py:53: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - TypeError: argument of type 'method...\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n2 failed, 1 passed in 12.50s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    \n                # Train the model\n                model.fit(X_train, y_train)\n    \n                # Log the model\n                mlflow.sklearn.log_model(model, \"random_forest_model\")\n    \n                # Log metrics\n                y_pred = model.predict(X_test)\n                accuracy = accuracy_score(y_test, y_pred)\n                classification_report_str = classification_report(y_test, y_pred)\n    \n                mlflow.log_metric(\"accuracy\", accuracy)\n                mlflow.log_text(\"classification_report\", classification_report_str)\n    \n                return model\n        except Exception as e:\n>           mlflow.log_exception(e)\nE           AttributeError: module 'mlflow' has no attribute 'log_exception'\n\npipeline.py:53: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - TypeError: argument of type 'method...\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n2 failed, 1 passed in 12.50s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

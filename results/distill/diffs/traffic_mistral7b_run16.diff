@@ -1,0 +1,26 @@
+--- round_d1/pipeline.py
++++ round_2/pipeline.py
+@@ -1,5 +1,6 @@
+ import pandas as pd
+-import random_forest as rf
+-from sklearn.model_selection import train_test_split
++from sklearn.ensemble import RandomForestClassifier
+ from mlflow import log_artifact, start_run, log_param, log_metric, end_run
++
++Features = ['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month']
+ 
+@@ -13,3 +14,3 @@
+     with start_run():
+-        model = rf.RandomForestClassifier(random_state=42)
++        model = RandomForestClassifier(random_state=42)
+         model.fit(X_train, y_train)
+@@ -17,2 +18,2 @@
+         log_metric('train_score', model.score(X_train, y_train))
+-        log_metric('test_score', model.score(X_test, y_test))+        log_metric('test_score', model.score(X_test, y_test))
+--- round_d1/test_pipeline.py
++++ round_2/test_pipeline.py
+@@ -3,2 +3,4 @@
+ from pipeline import load_data, preprocess_data, train_model
++
++Features = ['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month']
+ 

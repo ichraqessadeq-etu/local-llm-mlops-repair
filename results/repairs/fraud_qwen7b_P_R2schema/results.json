@@ -1,0 +1,2700 @@
+{
+  "meta": {
+    "utc": "2026-11-27T16:03:54.167522+00:00",
+    "strategy": "R2schema",
+    "backend": "none",
+    "repair_model": "none",
+    "generation_model": "qwen2.5-coder:7b",
+    "src": "C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\runs\\fraud_qwen7b_P",
+    "max_rounds": 5,
+    "temperature": 0.3,
+    "max_tokens": 1500,
+    "tail_lines": 40,
+    "script_sha256": "34ec48f147063e2c58d905c719936232481bbe831a9d42bcb4278240f7771446",
+    "m2_sha256": "ceb5a1c16afff4a83321f817eea84c9b7c325a65a55f4cdc856a227b2179cb50",
+    "data_sha256": "6d0f4f0fe874d2086be56b9428f41ed0261c52ae0e4a774e640f827c6be3b163",
+    "generator_python": "3.13.0",
+    "resumed": true,
+    "schema": {
+      "columns": [
+        "Time",
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5",
+        "V6",
+        "V7",
+        "V8",
+        "V9",
+        "V10",
+        "V11",
+        "V12",
+        "V13",
+        "V14",
+        "V15",
+        "V16",
+        "V17",
+        "V18",
+        "V19",
+        "V20",
+        "V21",
+        "V22",
+        "V23",
+        "V24",
+        "V25",
+        "V26",
+        "V27",
+        "V28",
+        "Amount",
+        "Class"
+      ],
+      "categories": {}
+    },
+    "schema_script": "c1b6f74e7c580721c7f774086cc2d29c653ab1d25062dbfa09fba4364cb453d8"
+  },
+  "summary": {
+    "n": 20,
+    "pass_round0": 1,
+    "failing_round0": 19,
+    "repaired": 6,
+    "repaired_by_round": {
+      "1": 6,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    },
+    "repaired_weakened": 0,
+    "pass_final": 7,
+    "functional_ok_final": 15,
+    "rvh_round0": 9,
+    "rvh_final": 1,
+    "repair_seconds_total": 0.0
+  },
+  "runs": [
+    {
+      "run": 1,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "assertion",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".FF                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 29\nE       assert 30 == 29\n\ntest_pipeline.py:11: AssertionError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:17: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n2 failed, 1 passed in 6.44s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 29\nE       assert 30 == 29\n\ntest_pipeline.py:12: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\n1 failed, 2 passed in 16.16s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 29\nE       assert 30 == 29\n\ntest_pipeline.py:12: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\n1 failed, 2 passed in 16.16s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 11
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..FF                                                                     [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:20: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:29: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'train_test_sp...\n2 failed, 2 passed in 5.59s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 11
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "1561    0\n1670    0\n6087    0\n6669    0\n       ..\n5734    0\n5191    0\n5390    0\n860     0\n7270    0\nName: Class, Length: 8000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log it using MLflow.\"\"\"\n        with mlflow.start_run():\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, \"random_forest_model\")\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:23: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\nFAILED test_pipeline.py::test_evaluate_model - AttributeError: module 'mlflow...\n2 failed, 2 passed in 14.98s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "1561    0\n1670    0\n6087    0\n6669    0\n       ..\n5734    0\n5191    0\n5390    0\n860     0\n7270    0\nName: Class, Length: 8000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log it using MLflow.\"\"\"\n        with mlflow.start_run():\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, \"random_forest_model\")\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:23: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\nFAILED test_pipeline.py::test_evaluate_model - AttributeError: module 'mlflow...\n2 failed, 2 passed in 14.98s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 11
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 23
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 7
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "y_train = 0       0\n1       0\n2       0\n3       0\n4       0\n       ..\n9995    0\n9996    0\n9997    0\n9998    0\n9999    0\nName: Class, Length: 10000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log the model using MLflow.\"\"\"\n        with mlflow.start_run():\n            model = RandomForestClassifier()\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, \"model\")\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:25: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n1 failed, 2 passed in 12.01s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 7
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "y_train = 0       0\n1       0\n2       0\n3       0\n4       0\n       ..\n9995    0\n9996    0\n9997    0\n9998    0\n9999    0\nName: Class, Length: 10000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log the model using MLflow.\"\"\"\n        with mlflow.start_run():\n            model = RandomForestClassifier(random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, 'model')\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:23: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n1 failed, 2 passed in 12.25s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "y_train = 0       0\n1       0\n2       0\n3       0\n4       0\n       ..\n9995    0\n9996    0\n9997    0\n9998    0\n9999    0\nName: Class, Length: 10000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log the model using MLflow.\"\"\"\n        with mlflow.start_run():\n            model = RandomForestClassifier(random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, 'model')\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:23: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n1 failed, 2 passed in 12.25s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 7
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 4,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 22
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 7
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:22: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 5.59s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9096,
+            "f1": 0.905,
+            "n_test": 2000
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 7
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 15.66s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 5,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test training the model.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:23: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        \"\"\"Test evaluating the model.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:31: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'train_test_sp...\n2 failed, 2 passed in 3.57s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 4,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "....                                                                     [100%]\n4 passed in 15.81s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 6,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 21
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:19: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 8.05s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "y_train = 9254    0\n1561    0\n1670    0\n6087    0\n6669    0\n       ..\n5734    0\n5191    0\n5390    0\n860     0\n7270    0\nName: Class, Length: 8000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log it with MLflow.\"\"\"\n        with mlflow.start_run():\n            model = RandomForestClassifier(random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, 'model')\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:23: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n1 failed, 2 passed in 10.45s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "y_train = 9254    0\n1561    0\n1670    0\n6087    0\n6669    0\n       ..\n5734    0\n5191    0\n5390    0\n860     0\n7270    0\nName: Class, Length: 8000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log it with MLflow.\"\"\"\n        with mlflow.start_run():\n            model = RandomForestClassifier(random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, 'model')\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:23: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n1 failed, 2 passed in 10.45s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 7,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 9
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..FF                                                                     [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:19: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:27: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'train_test_sp...\n2 failed, 2 passed in 5.51s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 9
+          },
+          "pytest": {
+            "passed": 4,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "....                                                                     [100%]\n4 passed in 27.01s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 8,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 3,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\ntest_pipeline.py:12: AssertionError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:18: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:26: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'train_test_sp...\n3 failed, 1 passed in 5.82s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 3,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "1670    0\n6087    0\n6669    0\n       ..\n5734    0\n5191    0\n5390    0\n860     0\n7270    0\nName: Class, Length: 8000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log it using MLflow.\"\"\"\n        with mlflow.start_run():\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, \"model\")\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:23: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\nFAILED test_pipeline.py::test_evaluate_model - AttributeError: module 'mlflow...\n3 failed, 1 passed in 14.92s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 1,
+            "failed": 3,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "1670    0\n6087    0\n6669    0\n       ..\n5734    0\n5191    0\n5390    0\n860     0\n7270    0\nName: Class, Length: 8000, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier and log it using MLflow.\"\"\"\n        with mlflow.start_run():\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_model(model, \"model\")\nE           AttributeError: module 'mlflow' has no attribute 'log_model'\n\npipeline.py:23: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\nFAILED test_pipeline.py::test_evaluate_model - AttributeError: module 'mlflow...\n3 failed, 1 passed in 14.92s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow' has no attribute 'log_model'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 8
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 9,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 7
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test model training.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:22: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 5.42s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 7
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 15.55s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 10,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "assertion",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".FF                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       assert isinstance(X, np.ndarray)\nE       NameError: name 'np' is not defined\n\ntest_pipeline.py:12: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:21: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'np' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n2 failed, 1 passed in 17.93s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import numpy as np"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        assert isinstance(X, np.ndarray)\n>       assert isinstance(y, np.ndarray)\nE       AssertionError: assert False\nE        +  where False = isinstance(0       0\\n1       0\\n2       0\\n3       0\\n4       0\\n       ..\\n9995    0\\n9996    0\\n9997    0\\n9998    0\\n9999    0\\nName: Class, Length: 10000, dtype: int64, <class 'numpy.ndarray'>)\nE        +    where <class 'numpy.ndarray'> = np.ndarray\n\ntest_pipeline.py:15: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 17.71s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        assert isinstance(X, np.ndarray)\n>       assert isinstance(y, np.ndarray)\nE       AssertionError: assert False\nE        +  where False = isinstance(0       0\\n1       0\\n2       0\\n3       0\\n4       0\\n       ..\\n9995    0\\n9996    0\\n9997    0\\n9998    0\\n9999    0\\nName: Class, Length: 10000, dtype: int64, <class 'numpy.ndarray'>)\nE        +    where <class 'numpy.ndarray'> = np.ndarray\n\ntest_pipeline.py:15: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 17.71s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 8
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 11,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": true,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9068,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 23
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 7
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 15.64s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9068,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": true,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 12,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "assertion",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9124,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 24
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".FF                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 29  # 30 features minus the target\nE       assert 30 == 29\n\ntest_pipeline.py:12: AssertionError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:18: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n2 failed, 1 passed in 5.49s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9092,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 2 import(s): from sklearn.metrics import accuracy_score; from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 29  # 30 features minus the target\nE       assert 30 == 29\n\ntest_pipeline.py:14: AssertionError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        y_pred = model.predict(X_test)\n>       assert isinstance(y_pred, pd.Series)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([0, 0, 0, ..., 0, 0, 0], dtype=int64), <class 'pandas.core.series.Series'>)\nE        +    where <class 'pandas.core.series.Series'> = pd.Series\n\ntest_pipeline.py:23: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - AssertionError: assert False\n2 failed, 1 passed in 15.33s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9124,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 29  # 30 features minus the target\nE       assert 30 == 29\n\ntest_pipeline.py:14: AssertionError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        y_pred = model.predict(X_test)\n>       assert isinstance(y_pred, pd.Series)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([0, 0, 0, ..., 0, 0, 0], dtype=int64), <class 'pandas.core.series.Series'>)\nE        +    where <class 'pandas.core.series.Series'> = pd.Series\n\ntest_pipeline.py:23: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - AssertionError: assert False\n2 failed, 1 passed in 15.33s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9124,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 13,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "assertion",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 10
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        \"\"\"Test the preprocess_data function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n>       assert isinstance(X_train, np.ndarray)\nE       NameError: name 'np' is not defined\n\ntest_pipeline.py:14: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:26: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'np' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n2 failed, 1 passed in 16.34s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import numpy as np"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 10
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        \"\"\"Test the preprocess_data function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        assert isinstance(X_train, np.ndarray)\n        assert isinstance(X_test, np.ndarray)\n>       assert isinstance(y_train, np.ndarray)\nE       AssertionError: assert False\nE        +  where False = isinstance(9254    0\\n1561    0\\n1670    0\\n6087    0\\n6669    0\\n       ..\\n5734    0\\n5191    0\\n5390    0\\n860     0\\n7270    0\\nName: Class, Length: 8000, dtype: int64, <class 'numpy.ndarray'>)\nE        +    where <class 'numpy.ndarray'> = np.ndarray\n\ntest_pipeline.py:18: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 16.93s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        \"\"\"Test the preprocess_data function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        assert isinstance(X_train, np.ndarray)\n        assert isinstance(X_test, np.ndarray)\n>       assert isinstance(y_train, np.ndarray)\nE       AssertionError: assert False\nE        +  where False = isinstance(9254    0\\n1561    0\\n1670    0\\n6087    0\\n6669    0\\n       ..\\n5734    0\\n5191    0\\n5390    0\\n860     0\\n7270    0\\nName: Class, Length: 8000, dtype: int64, <class 'numpy.ndarray'>)\nE        +    where <class 'numpy.ndarray'> = np.ndarray\n\ntest_pipeline.py:18: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 16.93s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 10
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 14,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "assertion",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 21
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:22: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 5.68s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9086,
+            "f1": 0.905,
+            "n_test": 2000
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        assert isinstance(model, RandomForestClassifier)\n        y_pred = model.predict(X_test)\n>       assert isinstance(y_pred, pd.Series)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([0, 0, 0, ..., 0, 0, 0], dtype=int64), <class 'pandas.core.series.Series'>)\nE        +    where <class 'pandas.core.series.Series'> = pd.Series\n\ntest_pipeline.py:28: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AssertionError: assert False\n1 failed, 2 passed in 15.95s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        assert isinstance(model, RandomForestClassifier)\n        y_pred = model.predict(X_test)\n>       assert isinstance(y_pred, pd.Series)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([0, 0, 0, ..., 0, 0, 0], dtype=int64), <class 'pandas.core.series.Series'>)\nE        +    where <class 'pandas.core.series.Series'> = pd.Series\n\ntest_pipeline.py:28: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AssertionError: assert False\n1 failed, 2 passed in 15.95s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 8
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 15,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 22
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:19: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 5.43s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9101,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 16.95s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 16,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:22: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 5.51s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        assert isinstance(model, RandomForestClassifier)\n        y_pred = model.predict(X_test)\n>       assert not y_pred.empty\nE       AttributeError: 'numpy.ndarray' object has no attribute 'empty'\n\ntest_pipeline.py:28: AttributeError\n---------------------------- Captured stdout call -----------------------------\nModel trained with accuracy: 1.0\n              precision    recall  f1-score   support\n\n           0       1.00      1.00      1.00      7598\n           1       1.00      1.00      1.00       402\n\n    accuracy                           1.00      8000\n   macro avg       1.00      1.00      1.00      8000\nweighted avg       1.00      1.00      1.00      8000\n\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: 'numpy.ndarray' o...\n1 failed, 2 passed in 16.34s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        assert isinstance(model, RandomForestClassifier)\n        y_pred = model.predict(X_test)\n>       assert not y_pred.empty\nE       AttributeError: 'numpy.ndarray' object has no attribute 'empty'\n\ntest_pipeline.py:28: AttributeError\n---------------------------- Captured stdout call -----------------------------\nModel trained with accuracy: 1.0\n              precision    recall  f1-score   support\n\n           0       1.00      1.00      1.00      7598\n           1       1.00      1.00      1.00       402\n\n    accuracy                           1.00      8000\n   macro avg       1.00      1.00      1.00      8000\nweighted avg       1.00      1.00      1.00      8000\n\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: 'numpy.ndarray' o...\n1 failed, 2 passed in 16.34s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 8
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 17,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "assertion",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 28
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 9
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 3,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\ntest_pipeline.py:12: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:19: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:27: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'np' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'train_test_sp...\n3 failed, 1 passed in 5.60s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9125,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 3 import(s): from sklearn.ensemble import RandomForestClassifier; import numpy as np; from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 9
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F..                                                                     [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        assert isinstance(X, np.ndarray)\n>       assert isinstance(y, np.ndarray)\nE       AssertionError: assert False\nE        +  where False = isinstance(0       0\\n1       0\\n2       0\\n3       0\\n4       0\\n       ..\\n9995    0\\n9996    0\\n9997    0\\n9998    0\\n9999    0\\nName: Class, Length: 10000, dtype: int64, <class 'numpy.ndarray'>)\nE        +    where <class 'numpy.ndarray'> = np.ndarray\n\ntest_pipeline.py:16: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 3 passed in 27.25s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 3,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F..                                                                     [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        assert isinstance(X, np.ndarray)\n>       assert isinstance(y, np.ndarray)\nE       AssertionError: assert False\nE        +  where False = isinstance(0       0\\n1       0\\n2       0\\n3       0\\n4       0\\n       ..\\n9995    0\\n9996    0\\n9997    0\\n9998    0\\n9999    0\\nName: Class, Length: 10000, dtype: int64, <class 'numpy.ndarray'>)\nE        +    where <class 'numpy.ndarray'> = np.ndarray\n\ntest_pipeline.py:16: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 3 passed in 27.25s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 9
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 18,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": "assertion",
+      "hint_final": "assertion",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 5
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 29\nE       assert 30 == 29\n\ntest_pipeline.py:14: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\n1 failed, 2 passed in 16.10s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 29\nE       assert 30 == 29\n\ntest_pipeline.py:14: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\n1 failed, 2 passed in 16.10s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 5
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 19,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "assertion",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 7
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:22: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 5.32s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 7
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        assert isinstance(model, RandomForestClassifier)\n        y_pred = model.predict(X_test)\n>       assert isinstance(y_pred, pd.Series)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([0, 0, 0, ..., 0, 0, 0], dtype=int64), <class 'pandas.core.series.Series'>)\nE        +    where <class 'pandas.core.series.Series'> = pd.Series\n\ntest_pipeline.py:28: AssertionError\n---------------------------- Captured stdout call -----------------------------\nModel trained with accuracy: 1.0\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AssertionError: assert False\n1 failed, 2 passed in 16.07s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        assert isinstance(model, RandomForestClassifier)\n        y_pred = model.predict(X_test)\n>       assert isinstance(y_pred, pd.Series)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([0, 0, 0, ..., 0, 0, 0], dtype=int64), <class 'pandas.core.series.Series'>)\nE        +    where <class 'pandas.core.series.Series'> = pd.Series\n\ntest_pipeline.py:28: AssertionError\n---------------------------- Captured stdout call -----------------------------\nModel trained with accuracy: 1.0\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AssertionError: assert False\n1 failed, 2 passed in 16.07s",
+            "all_pass": false,
+            "failure_hint": "assertion"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 7
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 20,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 29
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "..FF                                                                     [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:19: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:26: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'train_test_sp...\n2 failed, 2 passed in 8.09s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9127,
+            "f1": 0.905,
+            "n_test": 2000
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 4,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "....                                                                     [100%]\n4 passed in 25.03s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9071,
+            "f1": 0.9,
+            "n_test": 2000
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "run": 6,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "assertion",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 45
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float64').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: Input contains NaN, infinity or a value too large for dtype('float64').\n---------------------------- Captured stderr call -----------------------------\n2026/11/27 16:42:26 INFO mlflow.tracking.fluent: Experiment with name 'fraud_detection' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: Input c...\n3 failed in 6.37s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 3 import(s): from sklearn.ensemble import RandomForestClassifier; import numpy as np; import pandas as pd",
+        "pipeline: added schema shim (categorical encoding, imputation)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float64').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: Input contains NaN, infinity or a value too large for dtype('float64').\n---------------------------- Captured stderr call -----------------------------\n2026/11/27 16:42:39 INFO mlflow.tracking.fluent: Experiment with name 'fraud_detection' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - AssertionError:...\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: Input c...\n2 failed, 1 passed in 6.20s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float64').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n---------------------------- Captured stdout call -----------------------------\nError training model: Input contains NaN, infinity or a value too large for dtype('float64').\n---------------------------- Captured stderr call -----------------------------\n2026/11/27 16:42:39 INFO mlflow.tracking.fluent: Experiment with name 'fraud_detection' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - AssertionError:...\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: Input c...\n2 failed, 1 passed in 6.20s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

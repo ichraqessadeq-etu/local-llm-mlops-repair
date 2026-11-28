@@ -1,0 +1,47 @@
+[
+ {
+  "famille": "F1 API MLflow inexistante",
+  "regle_possible": true,
+  "regle": "vérifier chaque appel/import mlflow contre le paquet installé (introspection) ; table de remplacement (log_model -> mlflow.sklearn.log_model, sklearn.log_params -> log_params) ; supprimer les imports inexistants"
+ },
+ {
+  "famille": "F2 Module inexistant",
+  "regle_possible": true,
+  "regle": "résoudre le nom (randomforest, random_forest) vers la classe sklearn la plus proche"
+ },
+ {
+  "famille": "F3 Variable de features non définie",
+  "regle_possible": true,
+  "regle": "définir la liste des features à partir du schéma (toutes les colonnes sauf la cible)"
+ },
+ {
+  "famille": "F4 Colonnes absentes",
+  "regle_possible": true,
+  "regle": "réconcilier les noms de colonnes avec le schéma (distance d'édition)"
+ },
+ {
+  "famille": "F5 Variable catégorielle non encodée",
+  "regle_possible": true,
+  "regle": "encoder les colonnes texte du schéma (get_dummies) avant l'apprentissage"
+ },
+ {
+  "famille": "F6 Mauvaise cible",
+  "regle_possible": true,
+  "regle": "imposer la colonne cible du schéma"
+ },
+ {
+  "famille": "F7 Attente du test fausse",
+  "regle_possible": false,
+  "regle": "modifier la valeur attendue d'un test : décision humaine (sinon on adapte le test au code)"
+ },
+ {
+  "famille": "F8 Interface entre fonctions",
+  "regle_possible": false,
+  "regle": "aligner signatures et retours : sémantique, au cas par cas"
+ },
+ {
+  "famille": "F9 Nom non défini (autre)",
+  "regle_possible": false,
+  "regle": "dépend du contexte"
+ }
+]

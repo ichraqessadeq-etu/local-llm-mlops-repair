@@ -1,0 +1,17 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -3,3 +3,3 @@
+ from sklearn.ensemble import RandomForestClassifier
+-from mlflow import trace_experiment, pyfunc, log_param, log_artifact
++from mlflow.pyfunc import PyFuncModel
+ 
+@@ -13,7 +13,6 @@
+     with mlflow.start_run():
+-        tracked_model = pyfunc.track_experiment('RandomForestCongestionDetector')
+         model = RandomForestClassifier(random_state=42)
+         model.fit(X_train, y_train)
+-        tracked_model.log_model(model)
+-        log_param('num_trees', model.n_estimators)
+-        log_artifact('model.pkl', model)+        model_artifact_path = mlflow.pyfunc.save_model(model, "model")
++        mlflow.pyfunc.log_model(model_artifact_path)
++        mlflow.log_param("num_trees", model.n_estimators)

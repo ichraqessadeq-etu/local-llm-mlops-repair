@@ -1,0 +1,23 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -1 +1,2 @@
++# pipeline.py
+ import pandas as pd
+@@ -5,2 +6,4 @@
+ import mlflow.sklearn
++
++Features = ['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH', 'AH', 'Hour', 'DayOfWeek', 'Month']
+ 
+@@ -17,2 +20,2 @@
+         mlflow.sklearn.log_model(model, 'anomaly_detector')
+-    return model+    return model
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -1 +1,2 @@
++# test_pipeline.py
+ from sklearn.model_selection import train_test_split
+@@ -13,4 +14 @@
+         # Add assertions to check the model's performance here
+-
+-if __name__ == "__main__":
+-    unittest.main()

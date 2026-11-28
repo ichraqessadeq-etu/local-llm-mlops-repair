@@ -1,0 +1,2489 @@
+{
+  "meta": {
+    "utc": "2026-11-27T14:13:49.862419+00:00",
+    "strategy": "R3",
+    "backend": "none",
+    "repair_model": "none",
+    "generation_model": "qwen2.5-coder:3b",
+    "src": "C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\runs\\aq_qwen3b_P",
+    "max_rounds": 5,
+    "temperature": 0.3,
+    "max_tokens": 1500,
+    "tail_lines": 40,
+    "script_sha256": "34ec48f147063e2c58d905c719936232481bbe831a9d42bcb4278240f7771446",
+    "m2_sha256": "ceb5a1c16afff4a83321f817eea84c9b7c325a65a55f4cdc856a227b2179cb50",
+    "data_sha256": "21448733d7e6219f6fb03bd13e0c90ffbd2294a46f371941bb85e95522ffc6df",
+    "generator_python": "3.13.0",
+    "resumed": true,
+    "schema": {
+      "columns": [
+        "PT08.S1(CO)",
+        "PT08.S2(NMHC)",
+        "PT08.S3(NOx)",
+        "PT08.S4(NO2)",
+        "PT08.S5(O3)",
+        "NOx(GT)",
+        "C6H6(GT)",
+        "T",
+        "RH",
+        "AH",
+        "Hour",
+        "DayOfWeek",
+        "Month",
+        "Anomaly"
+      ],
+      "categories": {}
+    },
+    "target": "Anomaly",
+    "prefer": "Classifier",
+    "catalog_versions": {
+      "mlflow": "1.30.1",
+      "numpy": "1.21.6",
+      "pandas": "1.3.5",
+      "sklearn": "1.0.2"
+    },
+    "rules_script": "fa9f688187b854344d219f30e4844c48f2c1228c296706b94dd3bd001aa442d4",
+    "catalog_sha256": "9343f8425f4ded118be365bedf140d82802dee168ff5196e131df447f8977e72"
+  },
+  "summary": {
+    "n": 20,
+    "pass_round0": 1,
+    "failing_round0": 19,
+    "repaired": 10,
+    "repaired_by_round": {
+      "1": 10,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    },
+    "repaired_weakened": 0,
+    "pass_final": 11,
+    "functional_ok_final": 9,
+    "rvh_round0": 6,
+    "rvh_final": 0,
+    "repair_seconds_total": 0.0
+  },
+  "runs": [
+    {
+      "run": 1,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 32
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 5
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 4,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        \"\"\"Test training the model.\"\"\"\n>       data = pd.DataFrame({\n            'PT08.S1(CO)': [1, 2, 3],\n            'Anomaly': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:21: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        \"\"\"Test evaluating the model.\"\"\"\n>       data = pd.DataFrame({\n            'PT08.S1(CO)': [1, 2, 3],\n            'Anomaly': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:31: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not de...\n4 failed in 15.31s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9416,
+            "f1": 0.8586,
+            "n_test": 1452
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 5
+          },
+          "pytest": {
+            "passed": 4,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "....                                                                     [100%]\n4 passed in 42.14s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 3,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        \"\"\"Test preprocessing data.\"\"\"\n        file_path = 'data/air_quality.csv'\n        data = load_data(file_path)\n        X, y = preprocess_data(data)\n>       assert isinstance(X, pd.DataFrame)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:15: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test training the model.\"\"\"\n        file_path = 'data/air_quality.csv'\n        data = load_data(file_path)\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:24: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n3 failed in 28.99s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 30.18s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": "blocks_not_extracted",
+      "hint_final": "blocks_not_extracted",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "blocks_not_extracted"
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": null,
+            "test": null
+          },
+          "strength": {
+            "tests": 0,
+            "asserts": 0
+          },
+          "pytest": {
+            "all_pass": false,
+            "failure_hint": "blocks_not_extracted"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "blocks_not_extracted"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "all_pass": false,
+            "failure_hint": "blocks_not_extracted"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "blocks_not_extracted"
+          },
+          "static": {
+            "pipeline": null,
+            "test": null
+          },
+          "strength": {
+            "tests": 0,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 4,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\nself = <test_pipeline.TestPipeline testMethod=test_evaluate_model>\n\n    def test_evaluate_model(self):\n        data = load_data(self.file_path)\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:28: NameError\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n        data = load_data(self.file_path)\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:21: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_evaluate_model - NameError: name ...\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'tr...\n2 failed, 2 passed in 12.08s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 4,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "....                                                                     [100%]\n4 passed in 18.21s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 5,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 3
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 4,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "0           10             15            2...   4      4        1\n4           50             55            60  ...          5      5        0\n\n[5 rows x 14 columns]\n\n    def test_save_model(data):\n        \"\"\"Test the save_model function.\"\"\"\n        try:\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            model = train_model(X_train, y_train)\n            save_model(model, \"air_quality_experiment\", \"air_quality_run\")\n            logging.info(\"Model saving test passed.\")\n        except Exception as e:\n>           logging.error(f\"Model saving test failed: {e}\")\nE           NameError: name 'logging' is not defined\n\ntest_pipeline.py:64: NameError\n---------------------------- Captured stderr call -----------------------------\n2026/11/27 14:19:17 INFO mlflow.tracking.fluent: Experiment with name 'air_quality_experiment' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'logging' is not de...\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'logging' is ...\nFAILED test_pipeline.py::test_train_model - NameError: name 'logging' is not ...\nFAILED test_pipeline.py::test_save_model - NameError: name 'logging' is not d...\n4 failed in 27.63s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.metrics import accuracy_score; import logging"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 3
+          },
+          "pytest": {
+            "passed": 4,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "....                                                                     [100%]\n4 passed in 26.52s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 6,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 31
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "X_train =    PT08.S1(CO)\n0            1\n1            2\n2            3\ny_train = 0    0\n1    1\n2    0\nName: Anomaly, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest model.\"\"\"\n        try:\n            with mlflow.start_run():\n                model = RandomForestClassifier()\n                model.fit(X_train, y_train)\n                mlflow.sklearn.log_model(model, 'model')\n                return model\n        except Exception as e:\n>           mlflow.log_exception(e)\nE           AttributeError: module 'mlflow' has no attribute 'log_exception'\n\npipeline.py:36: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: mod...\n1 failed, 3 passed in 27.97s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9411,
+            "f1": 0.8594,
+            "n_test": 1452
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier",
+            "pipeline: mlflow.log_exception n'existe pas dans l'environnement : import retir\u00e9, 2 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "            version tag value: v1\n            priority tag value: P1\n            --\n            child runs:\n                                         run_id params.child tags.mlflow.runName\n            0  7d175204675e40328e46d9a6a5a7ee6a          yes           CHILD_RUN\n        \"\"\"\n        global _active_run_stack\n        _validate_experiment_id_type(experiment_id)\n        # back compat for int experiment_id\n        experiment_id = str(experiment_id) if isinstance(experiment_id, int) else experiment_id\n        if len(_active_run_stack) > 0 and not nested:\n            raise Exception(\n                (\n                    \"Run with UUID {} is already active. To start a new run, first end the \"\n                    + \"current run with mlflow.end_run(). To start a nested \"\n                    + \"run, call start_run with nested=True\"\n>               ).format(_active_run_stack[0].info.run_id)\n            )\nE           Exception: Run with UUID 0dce56175c7749c9ae9c6fa485af8660 is already active. To start a new run, first end the current run with mlflow.end_run(). To start a nested run, call start_run with nested=True\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\fluent.py:277: Exception\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - Exception: Run with...\n1 failed, 3 passed in 29.18s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 3,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "            version tag value: v1\n            priority tag value: P1\n            --\n            child runs:\n                                         run_id params.child tags.mlflow.runName\n            0  7d175204675e40328e46d9a6a5a7ee6a          yes           CHILD_RUN\n        \"\"\"\n        global _active_run_stack\n        _validate_experiment_id_type(experiment_id)\n        # back compat for int experiment_id\n        experiment_id = str(experiment_id) if isinstance(experiment_id, int) else experiment_id\n        if len(_active_run_stack) > 0 and not nested:\n            raise Exception(\n                (\n                    \"Run with UUID {} is already active. To start a new run, first end the \"\n                    + \"current run with mlflow.end_run(). To start a nested \"\n                    + \"run, call start_run with nested=True\"\n>               ).format(_active_run_stack[0].info.run_id)\n            )\nE           Exception: Run with UUID 0dce56175c7749c9ae9c6fa485af8660 is already active. To start a new run, first end the current run with mlflow.end_run(). To start a nested run, call start_run with nested=True\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\fluent.py:277: Exception\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - Exception: Run with...\n1 failed, 3 passed in 29.18s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 7,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 5,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 4,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        \"\"\"Test evaluating the model.\"\"\"\n>       data = pd.DataFrame({\n            'PT08.S1(CO)': [1, 2, 3],\n            'Anomaly': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:33: NameError\n__________________________________ test_main __________________________________\n\n    def test_main():\n        \"\"\"Test the main function.\"\"\"\n        with pytest.raises(ValueError):\n>           main(\"nonexistent_file.csv\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\ntest_pipeline.py:45: Failed\n---------------------------- Captured stdout call -----------------------------\nError: File not found.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not de...\nFAILED test_pipeline.py::test_main - Failed: DID NOT RAISE <class 'ValueError'>\n4 failed, 1 passed in 13.01s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 5,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 4,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n    \n            return X_train, X_test, y_train, y_test\n        except KeyError:\n>           raise ValueError(\"Missing column in the data.\")\nE           ValueError: Missing column in the data.\n\npipeline.py:29: ValueError\n__________________________________ test_main __________________________________\n\n    def test_main():\n        \"\"\"Test the main function.\"\"\"\n        with pytest.raises(ValueError):\n>           main(\"nonexistent_file.csv\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\ntest_pipeline.py:47: Failed\n---------------------------- Captured stdout call -----------------------------\nError: File not found.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - ValueError: Missing column in...\nFAILED test_pipeline.py::test_train_model - ValueError: Missing column in the...\nFAILED test_pipeline.py::test_evaluate_model - ValueError: Missing column in ...\nFAILED test_pipeline.py::test_main - Failed: DID NOT RAISE <class 'ValueError'>\n4 failed, 1 passed in 15.10s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 1,
+            "failed": 4,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n    \n            return X_train, X_test, y_train, y_test\n        except KeyError:\n>           raise ValueError(\"Missing column in the data.\")\nE           ValueError: Missing column in the data.\n\npipeline.py:29: ValueError\n__________________________________ test_main __________________________________\n\n    def test_main():\n        \"\"\"Test the main function.\"\"\"\n        with pytest.raises(ValueError):\n>           main(\"nonexistent_file.csv\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\ntest_pipeline.py:47: Failed\n---------------------------- Captured stdout call -----------------------------\nError: File not found.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - ValueError: Missing column in...\nFAILED test_pipeline.py::test_train_model - ValueError: Missing column in the...\nFAILED test_pipeline.py::test_evaluate_model - ValueError: Missing column in ...\nFAILED test_pipeline.py::test_main - Failed: DID NOT RAISE <class 'ValueError'>\n4 failed, 1 passed in 15.10s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 5,
+            "asserts": 8
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 8,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 25
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 28
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 6,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 4,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "E       NameError: name 'pd' is not defined\n\ntest_pipeline.py:17: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n>       X, y = pd.DataFrame(), pd.Series()\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:22: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        \"\"\"Test the evaluate_model function.\"\"\"\n>       model = RandomForestClassifier()\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:28: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'RandomForestC...\n4 failed, 1 passed in 16.11s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9419,
+            "f1": 0.8661,
+            "n_test": 1452
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd",
+            "test: injected random_state into estimators/splits"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 6,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    def evaluate_model(model, X_test, y_test):\n        \"\"\"Evaluate the model's performance.\"\"\"\n        try:\n            y_pred = model.predict(X_test)\n            accuracy = accuracy_score(y_test, y_pred)\n            return accuracy\n        except Exception as e:\n>           raise MlflowException(f'Error evaluating model: {e}')\nE           mlflow.exceptions.MlflowException: Error evaluating model: This RandomForestClassifier instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.\n\npipeline.py:38: MlflowException\n============================== warnings summary ===============================\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_qwen3b_P_R3\\run_08\\round_1\\test_pipeline.py:24: DeprecationWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.\n    X, y = (pd.DataFrame(), pd.Series())\n\ntest_pipeline.py::test_evaluate_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_qwen3b_P_R3\\run_08\\round_1\\test_pipeline.py:31: DeprecationWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.\n    X, y = (pd.DataFrame(), pd.Series())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - mlflow.exceptions.MlflowException...\nFAILED test_pipeline.py::test_evaluate_model - mlflow.exceptions.MlflowExcept...\n2 failed, 3 passed, 2 warnings in 14.25s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 3,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    def evaluate_model(model, X_test, y_test):\n        \"\"\"Evaluate the model's performance.\"\"\"\n        try:\n            y_pred = model.predict(X_test)\n            accuracy = accuracy_score(y_test, y_pred)\n            return accuracy\n        except Exception as e:\n>           raise MlflowException(f'Error evaluating model: {e}')\nE           mlflow.exceptions.MlflowException: Error evaluating model: This RandomForestClassifier instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.\n\npipeline.py:38: MlflowException\n============================== warnings summary ===============================\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_qwen3b_P_R3\\run_08\\round_1\\test_pipeline.py:24: DeprecationWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.\n    X, y = (pd.DataFrame(), pd.Series())\n\ntest_pipeline.py::test_evaluate_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_qwen3b_P_R3\\run_08\\round_1\\test_pipeline.py:31: DeprecationWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.\n    X, y = (pd.DataFrame(), pd.Series())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - mlflow.exceptions.MlflowException...\nFAILED test_pipeline.py::test_evaluate_model - mlflow.exceptions.MlflowExcept...\n2 failed, 3 passed, 2 warnings in 14.25s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 6,
+            "asserts": 6
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 9,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 5
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 4,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    def test_train_model():\n        data = load_data('data/air_quality.csv')\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:18: NameError\n____________________________ test_predict_anomaly _____________________________\n\n    def test_predict_anomaly():\n        data = load_data('data/air_quality.csv')\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n        predictions = predict_anomaly(model, X)\n>       assert isinstance(predictions, np.ndarray)\nE       NameError: name 'np' is not defined\n\ntest_pipeline.py:25: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_predict_anomaly - NameError: name 'np' is not d...\n4 failed in 18.53s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 3 import(s): from sklearn.ensemble import RandomForestClassifier; import numpy as np; import pandas as pd"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 5
+          },
+          "pytest": {
+            "passed": 4,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "....                                                                     [100%]\n4 passed in 16.72s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 10,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "file_or_path",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 5,
+            "asserts": 10
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 5,
+            "returncode": 1,
+            "tail": "            'PT08.S1(CO)': [10, 20, 30],\n            'PT08.S2(NMHC)': [40, 50, 60],\n            'PT08.S3(NOx)': [70, 80, 90],\n            'PT08.S4(NO2)': [100, 110, 120],\n            'PT08.S5(O3)': [130, 140, 150],\n            'NOx(GT)': [160, 170, 180],\n            'C6H6(GT)': [190, 200, 210],\n            'T': [220, 230, 240],\n            'RH': [250, 260, 270],\n            'AH': [280, 290, 300],\n            'Hour': [1, 2, 3],\n            'DayOfWeek': [4, 5, 6],\n            'Month': [7, 8, 9],\n            'Anomaly': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:9: NameError\n=========================== short test summary info ===========================\nERROR test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not de...\nERROR test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not def...\nERROR test_pipeline.py::test_run_pipeline - NameError: name 'pd' is not defined\n5 errors in 13.38s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 5,
+            "asserts": 10
+          },
+          "pytest": {
+            "passed": 4,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    \n            assert not isinstance(handle, str)\n            handles.append(handle)\n    \n        elif isinstance(handle, str):\n            # Check whether the filename is to be opened in binary mode.\n            # Binary mode does not support 'encoding' and 'newline'.\n            if ioargs.encoding and \"b\" not in ioargs.mode:\n                # Encoding\n                handle = open(\n                    handle,\n                    ioargs.mode,\n                    encoding=ioargs.encoding,\n                    errors=errors,\n>                   newline=\"\",\n                )\nE               FileNotFoundError: [Errno 2] No such file or directory: 'empty.csv'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\io\\common.py:707: FileNotFoundError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:20 File not found.\nERROR    root:pipeline.py:20 File not found.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - FileNotFoundError: [Errno 2] No suc...\n1 failed, 4 passed in 29.20s",
+            "all_pass": false,
+            "failure_hint": "file_or_path"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 4,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    \n            assert not isinstance(handle, str)\n            handles.append(handle)\n    \n        elif isinstance(handle, str):\n            # Check whether the filename is to be opened in binary mode.\n            # Binary mode does not support 'encoding' and 'newline'.\n            if ioargs.encoding and \"b\" not in ioargs.mode:\n                # Encoding\n                handle = open(\n                    handle,\n                    ioargs.mode,\n                    encoding=ioargs.encoding,\n                    errors=errors,\n>                   newline=\"\",\n                )\nE               FileNotFoundError: [Errno 2] No such file or directory: 'empty.csv'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\io\\common.py:707: FileNotFoundError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:20 File not found.\nERROR    root:pipeline.py:20 File not found.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - FileNotFoundError: [Errno 2] No suc...\n1 failed, 4 passed in 29.20s",
+            "all_pass": false,
+            "failure_hint": "file_or_path"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 5,
+            "asserts": 10
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 11,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 2,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\nself = <test_pipeline.TestPipeline testMethod=test_evaluate_model>\n\n    def test_evaluate_model(self):\n        data = load_data(self.file_path)\n        features, target = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:28: NameError\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n        data = load_data(self.file_path)\n        features, target = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:21: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_evaluate_model - NameError: name ...\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'tr...\n2 failed, 2 passed in 13.30s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 4,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "....                                                                     [100%]\n4 passed in 15.91s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 12,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 28.30s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 13,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "import_or_missing_name",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 32
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 6,
+            "asserts": 10
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 6,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\nfile_path = 'data/air_quality.csv'\n\n    def run_pipeline(file_path):\n        \"\"\"Run the entire pipeline.\"\"\"\n        try:\n            data = load_data(file_path)\n            X, y = preprocess_data(data)\n            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n            model = train_model(X_train, y_train)\n            y_pred = predict(model, X_test)\n>           accuracy = evaluate_model(y_true, y_pred)\nE           NameError: name 'y_true' is not defined\n\npipeline.py:78: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:82 Pipeline failed: name 'y_true' is not defined\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_predict - NameError: name 'RandomForestClassifi...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not de...\nFAILED test_pipeline.py::test_run_pipeline - NameError: name 'y_true' is not ...\n6 failed in 11.67s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 3 import(s): from sklearn.ensemble import RandomForestClassifier; import numpy as np; import pandas as pd",
+            "test: injected random_state into estimators/splits"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 6,
+            "asserts": 10
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 3,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\ntest_pipeline.py:42: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nfile_path = 'data/air_quality.csv'\n\n    def run_pipeline(file_path):\n        \"\"\"Run the entire pipeline.\"\"\"\n        try:\n            data = load_data(file_path)\n            X, y = preprocess_data(data)\n            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n            model = train_model(X_train, y_train)\n            y_pred = predict(model, X_test)\n>           accuracy = evaluate_model(y_true, y_pred)\nE           NameError: name 'y_true' is not defined\n\npipeline.py:78: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:82 Pipeline failed: name 'y_true' is not defined\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - FileNotFoundError: [Errno 2] No suc...\nFAILED test_pipeline.py::test_predict - sklearn.exceptions.NotFittedError: Th...\nFAILED test_pipeline.py::test_run_pipeline - NameError: name 'y_true' is not ...\n3 failed, 3 passed in 12.23s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 3,
+            "failed": 3,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\ntest_pipeline.py:42: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nfile_path = 'data/air_quality.csv'\n\n    def run_pipeline(file_path):\n        \"\"\"Run the entire pipeline.\"\"\"\n        try:\n            data = load_data(file_path)\n            X, y = preprocess_data(data)\n            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n            model = train_model(X_train, y_train)\n            y_pred = predict(model, X_test)\n>           accuracy = evaluate_model(y_true, y_pred)\nE           NameError: name 'y_true' is not defined\n\npipeline.py:78: NameError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:82 Pipeline failed: name 'y_true' is not defined\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - FileNotFoundError: [Errno 2] No suc...\nFAILED test_pipeline.py::test_predict - sklearn.exceptions.NotFittedError: Th...\nFAILED test_pipeline.py::test_run_pipeline - NameError: name 'y_true' is not ...\n3 failed, 3 passed in 12.23s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 6,
+            "asserts": 10
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 14,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 52
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 3,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "            pass\n        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float64').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:61 Error training model: Input contains NaN, infinity or a value too large for dtype('float64').\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\n3 failed in 4.98s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd",
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        is_float = X.dtype.kind in \"fc\"\n        if is_float and (np.isfinite(_safe_accumulator_op(np.sum, X))):\n            pass\n        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float64').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:46 Error training model: Input contains NaN, infinity or a value too large for dtype('float64').\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\n1 failed, 2 passed in 5.30s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        is_float = X.dtype.kind in \"fc\"\n        if is_float and (np.isfinite(_safe_accumulator_op(np.sum, X))):\n            pass\n        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float64').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:46 Error training model: Input contains NaN, infinity or a value too large for dtype('float64').\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\n1 failed, 2 passed in 5.30s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 15,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 5,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 5,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float64').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:53 Error training model: Input contains NaN, infinity or a value too large for dtype('float64').\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\nFAILED test_pipeline.py::test_evaluate_model - ValueError: Input contains NaN...\nFAILED test_pipeline.py::test_save_model - ValueError: Input contains NaN, in...\n5 failed in 5.70s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd",
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 5,
+            "asserts": 8
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 3,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "            pass\n        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float64').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:53 Error training model: Input contains NaN, infinity or a value too large for dtype('float64').\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\nFAILED test_pipeline.py::test_evaluate_model - ValueError: Input contains NaN...\nFAILED test_pipeline.py::test_save_model - ValueError: Input contains NaN, in...\n3 failed, 2 passed in 5.44s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 3,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "            pass\n        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float64').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:53 Error training model: Input contains NaN, infinity or a value too large for dtype('float64').\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\nFAILED test_pipeline.py::test_evaluate_model - ValueError: Input contains NaN...\nFAILED test_pipeline.py::test_save_model - ValueError: Input contains NaN, in...\n3 failed, 2 passed in 5.44s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 5,
+            "asserts": 8
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 16,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 5
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 4,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "test_pipeline.py:11: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/air_quality.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:17: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        data = load_data('data/air_quality.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:24: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'train_test_sp...\n4 failed in 5.39s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 3 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd; from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 5
+          },
+          "pytest": {
+            "passed": 4,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "....                                                                     [100%]\n4 passed in 5.32s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 0.9406,
+            "f1": 0.8632,
+            "n_test": 1452
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 17,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 3,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\n    def test_preprocess_data():\n        \"\"\"Test preprocessing data.\"\"\"\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n>       assert isinstance(X_train, pd.DataFrame)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:13: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test training the model.\"\"\"\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:23: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n3 failed in 10.80s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 11.00s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 18,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 4,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\ndata =    PT08.S1(CO)  PT08.S2(NMHC)  PT08.S3(NOx)  ...  DayOfWeek  Month  Anomaly\n0           10             15            2...   3      4        1\n4           50             55            60  ...          4      5        0\n\n[5 rows x 14 columns]\n\n    def test_save_model(data):\n        \"\"\"Test the save_model function.\"\"\"\n        try:\n            X, y = preprocess_data(data)\n            model = train_model(X, y)\n            save_model(model, 'model.pkl')\n            logging.info(\"Model saving test passed.\")\n        except Exception as e:\n>           logging.error(f\"Model saving test failed: {e}\")\nE           NameError: name 'logging' is not defined\n\ntest_pipeline.py:63: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'logging' is not de...\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'logging' is ...\nFAILED test_pipeline.py::test_train_model - NameError: name 'logging' is not ...\nFAILED test_pipeline.py::test_save_model - NameError: name 'logging' is not d...\n4 failed in 10.92s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import logging"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 4
+          },
+          "pytest": {
+            "passed": 4,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "....                                                                     [100%]\n4 passed in 9.83s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 19,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": false,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 7
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 4,
+            "returncode": 1,
+            "tail": "test_pipeline.py:7: NameError\n_____________________ ERROR at setup of test_train_model ______________________\n\n    @pytest.fixture\n    def data():\n        # Load a sample dataset\n>       data = pd.read_csv('data/air_quality.csv')\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:7: NameError\n____________________ ERROR at setup of test_evaluate_model ____________________\n\n    @pytest.fixture\n    def data():\n        # Load a sample dataset\n>       data = pd.read_csv('data/air_quality.csv')\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:7: NameError\n=========================== short test summary info ===========================\nERROR test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not de...\nERROR test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not def...\n4 errors in 5.05s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 4,
+            "asserts": 7
+          },
+          "pytest": {
+            "passed": 4,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "....                                                                     [100%]\n4 passed in 18.56s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 20,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 2,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "import_or_missing_name",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 38
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 3,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        \"\"\"Test training the model.\"\"\"\n>       data = pd.DataFrame({\n            'PT08.S1(CO)': [1, 2, 3],\n            'PT08.S2(NMHC)': [4, 5, 6],\n            'PT08.S3(NOx)': [7, 8, 9],\n            'PT08.S4(NO2)': [10, 11, 12],\n            'PT08.S5(O3)': [13, 14, 15],\n            'NOx(GT)': [16, 17, 18],\n            'C6H6(GT)': [19, 20, 21],\n            'T': [22, 23, 24],\n            'RH': [25, 26, 27],\n            'AH': [28, 29, 30],\n            'Hour': [31, 32, 33],\n            'DayOfWeek': [34, 35, 36],\n            'Month': [37, 38, 39],\n            'Anomaly': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:35: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\n3 failed in 5.25s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "y_train = 1    1\n2    0\nName: Anomaly, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest classifier.\"\"\"\n        try:\n            with mlflow.start_run():\n                mlflow.log_param('n_estimators', 100)\n                mlflow.log_param('max_depth', 10)\n                model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)\n                model.fit(X_train, y_train)\n                mlflow.sklearn.log_model(model, 'anomaly_detector')\n                y_pred = model.predict(X_test)\n                accuracy = accuracy_score(y_test, y_pred)\n                mlflow.log_metric('accuracy', accuracy)\n                return model\n        except Exception as e:\n>           mlflow.log_exception(e)\nE           AttributeError: module 'mlflow' has no attribute 'log_exception'\n\npipeline.py:39: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\n1 failed, 2 passed in 14.06s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "notes": [
+            "pipeline: mlflow.log_exception n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "X_train =    PT08.S1(CO)  PT08.S2(NMHC)  PT08.S3(NOx)  ...  Hour  DayOfWeek  Month\n1            2              5             8  ...   32         35     38\n2            3              6             9  ...    33         36     39\n\n[2 rows x 13 columns]\ny_train = 1    1\n2    0\nName: Anomaly, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest classifier.\"\"\"\n        try:\n            with mlflow.start_run():\n                mlflow.log_param('n_estimators', 100)\n                mlflow.log_param('max_depth', 10)\n                model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)\n                model.fit(X_train, y_train)\n                mlflow.sklearn.log_model(model, 'anomaly_detector')\n>               y_pred = model.predict(X_test)\nE               NameError: name 'X_test' is not defined\n\npipeline.py:34: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'X_test' is not d...\n1 failed, 2 passed in 15.01s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 3,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "X_train =    PT08.S1(CO)  PT08.S2(NMHC)  PT08.S3(NOx)  ...  Hour  DayOfWeek  Month\n1            2              5             8  ...   32         35     38\n2            3              6             9  ...    33         36     39\n\n[2 rows x 13 columns]\ny_train = 1    1\n2    0\nName: Anomaly, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest classifier.\"\"\"\n        try:\n            with mlflow.start_run():\n                mlflow.log_param('n_estimators', 100)\n                mlflow.log_param('max_depth', 10)\n                model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)\n                model.fit(X_train, y_train)\n                mlflow.sklearn.log_model(model, 'anomaly_detector')\n>               y_pred = model.predict(X_test)\nE               NameError: name 'X_test' is not defined\n\npipeline.py:34: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'X_test' is not d...\n1 failed, 2 passed in 15.01s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: too many values to unpack (expected 2)"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 6
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    }
+  ]
+}

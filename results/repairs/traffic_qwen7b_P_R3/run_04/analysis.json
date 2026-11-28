@@ -1,0 +1,150 @@
+{
+  "run": 4,
+  "pass_round0": false,
+  "pass_final": true,
+  "rounds_used": 2,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": null,
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.828,
+    "f1": 0.7614,
+    "n_test": 8113
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "..F                                                                      [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:19: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n1 failed, 2 passed in 9.72s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =          temp  rain_1h  snow_1h  clouds_all  ... IsHoliday  Hour  DayOfWeek  Month\n5653   291.25     1.02      0.0    ...  4     11\n15795  295.89     0.00      0.0           1  ...         0    18          6      9\n\n[32451 rows x 9 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Rain'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: could not convert str...\n1 failed, 2 passed in 9.37s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "pipeline: added schema shim (categorical encoding, imputation)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "...                                                                      [100%]\n3 passed in 12.03s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.828,
+        "f1": 0.7614,
+        "n_test": 8113
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

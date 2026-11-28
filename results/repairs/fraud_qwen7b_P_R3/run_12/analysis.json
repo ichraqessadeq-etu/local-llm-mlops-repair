@@ -1,0 +1,157 @@
+{
+  "run": 12,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "assertion",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9124,
+    "f1": 0.9,
+    "n_test": 2000
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 24
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".FF                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 29  # 30 features minus the target\nE       assert 30 == 29\n\ntest_pipeline.py:12: AssertionError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:18: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n2 failed, 1 passed in 6.42s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9112,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 2 import(s): from sklearn.metrics import accuracy_score; from sklearn.model_selection import train_test_split"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 29  # 30 features minus the target\nE       assert 30 == 29\n\ntest_pipeline.py:14: AssertionError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        y_pred = model.predict(X_test)\n>       assert isinstance(y_pred, pd.Series)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([0, 0, 0, ..., 0, 0, 0], dtype=int64), <class 'pandas.core.series.Series'>)\nE        +    where <class 'pandas.core.series.Series'> = pd.Series\n\ntest_pipeline.py:23: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - AssertionError: assert False\n2 failed, 1 passed in 18.42s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9124,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def test_preprocess_data():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n>       assert X.shape[1] == 29  # 30 features minus the target\nE       assert 30 == 29\n\ntest_pipeline.py:14: AssertionError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/fraud.csv')\n        X, y = preprocess_data(data)\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n        model = train_model(X_train, y_train)\n        y_pred = model.predict(X_test)\n>       assert isinstance(y_pred, pd.Series)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([0, 0, 0, ..., 0, 0, 0], dtype=int64), <class 'pandas.core.series.Series'>)\nE        +    where <class 'pandas.core.series.Series'> = pd.Series\n\ntest_pipeline.py:23: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert 30 == 29\nFAILED test_pipeline.py::test_train_model - AssertionError: assert False\n2 failed, 1 passed in 18.42s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9124,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

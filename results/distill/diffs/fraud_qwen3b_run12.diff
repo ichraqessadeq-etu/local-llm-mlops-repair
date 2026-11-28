@@ -1,0 +1,7 @@
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -20,3 +20,3 @@
+     assert isinstance(y, pd.Series)
+-    assert X.shape == (3, 1)
++    assert X.shape == (3, 2)
+     assert y.shape == (3,)

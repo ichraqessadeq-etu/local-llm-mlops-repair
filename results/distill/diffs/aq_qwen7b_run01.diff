@@ -1,0 +1,10 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -20,3 +20,3 @@
+     with mlflow.start_run():
+-        model = RandomForestClassifier(random_state=42)
++        model = RandomForestClassifier(random_state=42, max_depth=5)
+         model.fit(X_train, y_train)
+@@ -28,2 +28,2 @@
+         mlflow.sklearn.log_model(model, 'model')
+-    return model+    return model

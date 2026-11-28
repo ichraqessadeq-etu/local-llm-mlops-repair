@@ -1,0 +1,141 @@
+{
+  "run": 29,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:38 Data preprocessed successfully.\n_____________________________ test_evaluate_model _____________________________\n\ndata =           Time        V1        V2        V3  ...       V27       V28  Amount  Class\n0      81072.0  0.152504 -0.52987...      0\n9999   55505.0  1.217761  0.362682  0.440734  ... -0.021877  0.036317    9.99      0\n\n[10000 rows x 31 columns]\n\n    def test_evaluate_model(data):\n>       model = train_model(*preprocess_data(data))\nE       TypeError: train_model() takes 2 positional arguments but 4 were given\n\ntest_pipeline.py:23: TypeError\n----------------------------- Captured log setup ------------------------------\nINFO     pipeline:pipeline.py:16 Data loaded successfully.\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:38 Data preprocessed successfully.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - TypeError: train_model() takes 2 ...\nFAILED test_pipeline.py::test_evaluate_model - TypeError: train_model() takes...\n4 failed in 5.83s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "----------------------------- Captured log setup ------------------------------\nINFO     pipeline:pipeline.py:16 Data loaded successfully.\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:38 Data preprocessed successfully.\n_____________________________ test_evaluate_model _____________________________\n\ndata =           Time        V1        V2        V3  ...       V27       V28  Amount  Class\n0      81072.0  0.152504 -0.52987...      0\n9999   55505.0  1.217761  0.362682  0.440734  ... -0.021877  0.036317    9.99      0\n\n[10000 rows x 31 columns]\n\n    def test_evaluate_model(data):\n>       model = train_model(*preprocess_data(data))\nE       TypeError: train_model() takes 2 positional arguments but 4 were given\n\ntest_pipeline.py:25: TypeError\n----------------------------- Captured log setup ------------------------------\nINFO     pipeline:pipeline.py:16 Data loaded successfully.\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:38 Data preprocessed successfully.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - TypeError: train_model() takes 2 ...\nFAILED test_pipeline.py::test_evaluate_model - TypeError: train_model() takes...\n2 failed, 2 passed in 5.82s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "----------------------------- Captured log setup ------------------------------\nINFO     pipeline:pipeline.py:16 Data loaded successfully.\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:38 Data preprocessed successfully.\n_____________________________ test_evaluate_model _____________________________\n\ndata =           Time        V1        V2        V3  ...       V27       V28  Amount  Class\n0      81072.0  0.152504 -0.52987...      0\n9999   55505.0  1.217761  0.362682  0.440734  ... -0.021877  0.036317    9.99      0\n\n[10000 rows x 31 columns]\n\n    def test_evaluate_model(data):\n>       model = train_model(*preprocess_data(data))\nE       TypeError: train_model() takes 2 positional arguments but 4 were given\n\ntest_pipeline.py:25: TypeError\n----------------------------- Captured log setup ------------------------------\nINFO     pipeline:pipeline.py:16 Data loaded successfully.\n------------------------------ Captured log call ------------------------------\nINFO     pipeline:pipeline.py:38 Data preprocessed successfully.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - TypeError: train_model() takes 2 ...\nFAILED test_pipeline.py::test_evaluate_model - TypeError: train_model() takes...\n2 failed, 2 passed in 5.82s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

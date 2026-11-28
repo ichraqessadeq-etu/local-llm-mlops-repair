@@ -1,0 +1,19 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -1 +1,2 @@
++# pipeline.py
+ import pandas as pd
+@@ -4,3 +5,3 @@
+ from sklearn.ensemble import RandomForestClassifier
+-from mlflow import log_artifact, track, start_run, pyfunc, log_param
++from mlflow import log_artifact, log_param, start_run, pyfunc, log_params
+ 
+@@ -25,2 +26,3 @@
+         model = train_model(X_train, y_train)
+-        pyfunc.log_model(model, 'model', registered_model_name='congestion_detector')+        pyfunc.log_model(model, 'model', registered_model_name='congestion_detector')
++        log_params({'temp_min': np.min(X['temp']), 'temp_max': np.max(X['temp'])})
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -1 +1,2 @@
++# test_pipeline.py
+ import pandas as pd

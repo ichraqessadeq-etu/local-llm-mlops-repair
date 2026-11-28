@@ -1,0 +1,14 @@
+--- round_d1/pipeline.py
++++ round_2/pipeline.py
+@@ -17,2 +17,5 @@
+     data = data.dropna()
++    
++    # Convert categorical columns to numerical
++    data['weather_main'] = data['weather_main'].astype('category').cat.codes
+     
+--- round_d1/test_pipeline.py
++++ round_2/test_pipeline.py
+@@ -30,2 +30,2 @@
+     assert isinstance(y_pred, np.ndarray)
+-    assert not y_pred.empty
++    assert len(y_pred) > 0

@@ -1,0 +1,158 @@
+{
+  "run": 6,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9406,
+    "f1": 0.8632,
+    "n_test": 1452
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 31
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "X_train =    PT08.S1(CO)\n0            1\n1            2\n2            3\ny_train = 0    0\n1    1\n2    0\nName: Anomaly, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest model.\"\"\"\n        try:\n            with mlflow.start_run():\n                model = RandomForestClassifier()\n                model.fit(X_train, y_train)\n                mlflow.sklearn.log_model(model, 'model')\n                return model\n        except Exception as e:\n>           mlflow.log_exception(e)\nE           AttributeError: module 'mlflow' has no attribute 'log_exception'\n\npipeline.py:36: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: mod...\n1 failed, 3 passed in 27.97s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9411,
+        "f1": 0.8594,
+        "n_test": 1452
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier",
+        "pipeline: mlflow.log_exception n'existe pas dans l'environnement : import retir\u00e9, 2 appel(s) neutralis\u00e9(s)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            version tag value: v1\n            priority tag value: P1\n            --\n            child runs:\n                                         run_id params.child tags.mlflow.runName\n            0  7d175204675e40328e46d9a6a5a7ee6a          yes           CHILD_RUN\n        \"\"\"\n        global _active_run_stack\n        _validate_experiment_id_type(experiment_id)\n        # back compat for int experiment_id\n        experiment_id = str(experiment_id) if isinstance(experiment_id, int) else experiment_id\n        if len(_active_run_stack) > 0 and not nested:\n            raise Exception(\n                (\n                    \"Run with UUID {} is already active. To start a new run, first end the \"\n                    + \"current run with mlflow.end_run(). To start a nested \"\n                    + \"run, call start_run with nested=True\"\n>               ).format(_active_run_stack[0].info.run_id)\n            )\nE           Exception: Run with UUID 0dce56175c7749c9ae9c6fa485af8660 is already active. To start a new run, first end the current run with mlflow.end_run(). To start a nested run, call start_run with nested=True\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\fluent.py:277: Exception\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - Exception: Run with...\n1 failed, 3 passed in 29.18s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            version tag value: v1\n            priority tag value: P1\n            --\n            child runs:\n                                         run_id params.child tags.mlflow.runName\n            0  7d175204675e40328e46d9a6a5a7ee6a          yes           CHILD_RUN\n        \"\"\"\n        global _active_run_stack\n        _validate_experiment_id_type(experiment_id)\n        # back compat for int experiment_id\n        experiment_id = str(experiment_id) if isinstance(experiment_id, int) else experiment_id\n        if len(_active_run_stack) > 0 and not nested:\n            raise Exception(\n                (\n                    \"Run with UUID {} is already active. To start a new run, first end the \"\n                    + \"current run with mlflow.end_run(). To start a nested \"\n                    + \"run, call start_run with nested=True\"\n>               ).format(_active_run_stack[0].info.run_id)\n            )\nE           Exception: Run with UUID 0dce56175c7749c9ae9c6fa485af8660 is already active. To start a new run, first end the current run with mlflow.end_run(). To start a nested run, call start_run with nested=True\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\fluent.py:277: Exception\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - Exception: Run with...\n1 failed, 3 passed in 29.18s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

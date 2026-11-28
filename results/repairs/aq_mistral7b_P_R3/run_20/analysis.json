@@ -1,0 +1,150 @@
+{
+  "run": 20,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 14
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def setUp(self):\n        self.data = load_data(\"data/air_quality.csv\")\n>       self.X, self.y = preprocess_data(self.data)\n\ntest_pipeline.py:7: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ndata =       PT08.S1(CO)  PT08.S2(NMHC)  PT08.S3(NOx)  ...  DayOfWeek  Month  Anomaly\n0          1360.0         1046.0       ...    4        0\n7257       1071.0         1047.0         654.0  ...          0      4        0\n\n[7258 rows x 14 columns]\n\n    def preprocess_data(data):\n>       return data[Features], data['Anomaly']\nE       NameError: name 'Features' is not defined\n\npipeline.py:10: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'Fe...\n1 failed in 4.72s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "NameError: name 'Features' is not defined"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: added 1 import(s): import mlflow",
+        "pipeline: injected random_state into estimators/splits",
+        "pipeline: d\u00e9fini Features depuis le sch\u00e9ma"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\__init__.py:241: in dump_all\n    dumper.represent(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:27: in represent\n    node = self.represent_data(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:48: in represent_data\n    node = self.yaml_representers[data_types[0]](self, data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:207: in represent_dict\n    return self.represent_mapping('tag:yaml.org,2002:map', data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:118: in represent_mapping\n    node_value = self.represent_data(item_value)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:58: in represent_data\n    node = self.yaml_representers[None](self, data)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <yaml.dumper.SafeDumper object at 0x000001C8E8C187C8>\ndata = RandomForestClassifier(random_state=42)\n\n    def represent_undefined(self, data):\n>       raise RepresenterError(\"cannot represent an object\", data)\nE       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:231: RepresenterError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...\n1 failed in 6.14s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\__init__.py:241: in dump_all\n    dumper.represent(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:27: in represent\n    node = self.represent_data(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:48: in represent_data\n    node = self.yaml_representers[data_types[0]](self, data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:207: in represent_dict\n    return self.represent_mapping('tag:yaml.org,2002:map', data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:118: in represent_mapping\n    node_value = self.represent_data(item_value)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:58: in represent_data\n    node = self.yaml_representers[None](self, data)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <yaml.dumper.SafeDumper object at 0x000001C8E8C187C8>\ndata = RandomForestClassifier(random_state=42)\n\n    def represent_undefined(self, data):\n>       raise RepresenterError(\"cannot represent an object\", data)\nE       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:231: RepresenterError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...\n1 failed in 6.14s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

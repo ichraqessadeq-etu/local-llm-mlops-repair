@@ -1,0 +1,14 @@
+--- round_d1/pipeline.py
++++ round_2/pipeline.py
+@@ -59,2 +59,3 @@
+     try:
++        y_pred = predict(model, X_test)  # Ensure y_pred is defined before using it
+         accuracy = accuracy_score(y_test, y_pred)
+@@ -85 +86,2 @@
+     print(f"Model accuracy: {accuracy:.2f}")
++
+--- round_d1/test_pipeline.py
++++ round_2/test_pipeline.py
+@@ -50 +50,2 @@
+     assert isinstance(accuracy, float), "Accuracy should be a float."
++

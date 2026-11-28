@@ -1,0 +1,51 @@
+### test = aq
+|--- loc_pipeline <= 17.50
+|   |--- class: False
+|--- loc_pipeline >  17.50
+|   |--- loc_pipeline <= 45.50
+|   |   |--- loc_test <= 24.50
+|   |   |   |--- class: True
+|   |   |--- loc_test >  24.50
+|   |   |   |--- class: True
+|   |--- loc_pipeline >  45.50
+|   |   |--- loc_pipeline <= 79.50
+|   |   |   |--- class: False
+|   |   |--- loc_pipeline >  79.50
+|   |   |   |--- class: True
+
+### test = fraud
+|--- loc_test <= 20.00
+|   |--- hint_import_or_missing_name <= 0.50
+|   |   |--- loc_pipeline <= 43.50
+|   |   |   |--- class: False
+|   |   |--- loc_pipeline >  43.50
+|   |   |   |--- class: True
+|   |--- hint_import_or_missing_name >  0.50
+|   |   |--- loc_pipeline <= 18.50
+|   |   |   |--- class: True
+|   |   |--- loc_pipeline >  18.50
+|   |   |   |--- class: True
+|--- loc_test >  20.00
+|   |--- exc_ValueError <= 0.50
+|   |   |--- loc_pipeline <= 69.50
+|   |   |   |--- class: True
+|   |   |--- loc_pipeline >  69.50
+|   |   |   |--- class: False
+|   |--- exc_ValueError >  0.50
+|   |   |--- class: False
+
+### test = traffic
+|--- asserts <= 6.50
+|   |--- loc_test <= 27.00
+|   |   |--- hint0_import_or_missing_name <= 0.50
+|   |   |   |--- class: False
+|   |   |--- hint0_import_or_missing_name >  0.50
+|   |   |   |--- class: True
+|   |--- loc_test >  27.00
+|   |   |--- class: False
+|--- asserts >  6.50
+|   |--- loc_pipeline <= 46.50
+|   |   |--- class: True
+|   |--- loc_pipeline >  46.50
+|   |   |--- class: False
+

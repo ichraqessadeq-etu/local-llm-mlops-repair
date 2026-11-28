@@ -1,0 +1,20 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -1 +1,2 @@
++# pipeline.py
+ import pandas as pd
+@@ -4,3 +5,3 @@
+ from sklearn.ensemble import RandomForestClassifier
+-from mlflow import log_artifact, track, pyfunc, start_run, end_run
++from mlflow import log_artifact, log_metric, pyfunc, start_run, end_run
+ 
+@@ -17,3 +18,3 @@
+         pyfunc.log_model(model, 'model')
+-        track(model.score(X_train, y_train))
+-    return model+        log_metric('train_score', model.score(X_train, y_train))
++    return model
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -1 +1,2 @@
++# test_pipeline.py
+ import pandas as pd

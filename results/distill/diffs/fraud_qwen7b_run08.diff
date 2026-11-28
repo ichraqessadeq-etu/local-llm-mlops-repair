@@ -1,0 +1,18 @@
+--- round_d1/pipeline.py
++++ round_3/pipeline.py
+@@ -30 +30,2 @@
+     return model
++
+--- round_d1/test_pipeline.py
++++ round_3/test_pipeline.py
+@@ -3,2 +3,3 @@
+ import pandas as pd
++import numpy as np
+ from pipeline import load_data, preprocess_data, train_model
+@@ -28,3 +29,4 @@
+     predictions = model.predict(X_test)
+-    assert isinstance(predictions, pd.Series)
+-    assert not predictions.empty
++    assert isinstance(predictions, np.ndarray)
++    assert len(predictions) > 0
++

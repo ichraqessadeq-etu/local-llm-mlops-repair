@@ -1,0 +1,141 @@
+{
+  "run": 1,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 10
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 4,
+        "returncode": 1,
+        "tail": "\n    @pytest.fixture\n    def data():\n        # Load a sample dataset for testing\n>       data = pd.DataFrame({\n            'temp': [20, 22, 18, 25, 21],\n            'rain_1h': [0, 1, 0, 1, 0],\n            'snow_1h': [0, 0, 1, 0, 0],\n            'clouds_all': [50, 70, 30, 80, 60],\n            'weather_main': ['Clear', 'Clouds', 'Rain', 'Snow', 'Clear'],\n            'IsHoliday': [0, 1, 0, 1, 0],\n            'Hour': [8, 14, 10, 16, 12],\n            'DayOfWeek': [1, 2, 3, 4, 5],\n            'Month': [1, 2, 3, 4, 5],\n            'Congestion': [0, 1, 0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:7: NameError\n=========================== short test summary info ===========================\nERROR test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not de...\nERROR test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_save_model - NameError: name 'pd' is not defined\n4 errors in 7.92s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 3 import(s): from sklearn.ensemble import RandomForestClassifier; import mlflow; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 10
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "data =    temp  rain_1h  snow_1h  clouds_all  ...  Hour  DayOfWeek  Month  Congestion\n0    20        0        0          50  ...    4           1\n4    21        0        0          60  ...    12          5      5           0\n\n[5 rows x 10 columns]\n\n    def test_save_model(data):\n        \"\"\"Test the save_model function.\"\"\"\n        try:\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            model = train_model(X_train, y_train)\n            save_model(model, \"congestion_detector\")\n            assert mlflow.get_experiment_by_name(\"congestion_detector\") is not None, \"Experiment should be saved.\"\n        except Exception as e:\n>           pytest.fail(f\"Test failed: {e}\")\nE           Failed: Test failed: Experiment should be saved.\nE           assert None is not None\nE            +  where None = <function get_experiment_by_name at 0x000001A8FC116CA8>('congestion_detector')\nE            +    where <function get_experiment_by_name at 0x000001A8FC116CA8> = mlflow.get_experiment_by_name\n\ntest_pipeline.py:63: Failed\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: Test failed: argument of ty...\nFAILED test_pipeline.py::test_save_model - Failed: Test failed: Experiment sh...\n2 failed, 2 passed in 18.64s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "data =    temp  rain_1h  snow_1h  clouds_all  ...  Hour  DayOfWeek  Month  Congestion\n0    20        0        0          50  ...    4           1\n4    21        0        0          60  ...    12          5      5           0\n\n[5 rows x 10 columns]\n\n    def test_save_model(data):\n        \"\"\"Test the save_model function.\"\"\"\n        try:\n            X_train, X_test, y_train, y_test = preprocess_data(data)\n            model = train_model(X_train, y_train)\n            save_model(model, \"congestion_detector\")\n            assert mlflow.get_experiment_by_name(\"congestion_detector\") is not None, \"Experiment should be saved.\"\n        except Exception as e:\n>           pytest.fail(f\"Test failed: {e}\")\nE           Failed: Test failed: Experiment should be saved.\nE           assert None is not None\nE            +  where None = <function get_experiment_by_name at 0x000001A8FC116CA8>('congestion_detector')\nE            +    where <function get_experiment_by_name at 0x000001A8FC116CA8> = mlflow.get_experiment_by_name\n\ntest_pipeline.py:63: Failed\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - Failed: Test failed: argument of ty...\nFAILED test_pipeline.py::test_save_model - Failed: Test failed: Experiment sh...\n2 failed, 2 passed in 18.64s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 10
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

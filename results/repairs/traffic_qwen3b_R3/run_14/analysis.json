@@ -1,0 +1,157 @@
+{
+  "run": 14,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.8154,
+    "f1": 0.7278,
+    "n_test": 8113
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 30
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ">       X, y = preprocess_data(pd.DataFrame())\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:18: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test training the model.\"\"\"\n>       X, y = pd.DataFrame(), pd.Series([0, 1, 0, 1])\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:23: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        \"\"\"Test evaluating the model.\"\"\"\n>       X, y = pd.DataFrame(), pd.Series([0, 1, 0, 1])\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:29: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not de...\n3 failed, 2 passed in 12.34s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.8154,
+        "f1": 0.7278,
+        "n_test": 8113
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd",
+        "test: injected random_state into estimators/splits"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ">       model.fit(X, y)\n\ntest_pipeline.py:33: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:665: in check_array\n    dtype_orig = np.result_type(*dtypes_orig)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nargs = (), kwargs = {}, relevant_args = ()\n\n>   ???\nE   ValueError: at least one array or dtype is required\n\n<__array_function__ internals>:6: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - KeyError: \"None of [Index(['w...\nFAILED test_pipeline.py::test_train_model - ValueError: at least one array or...\nFAILED test_pipeline.py::test_evaluate_model - ValueError: at least one array...\n3 failed, 2 passed in 12.88s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.8154,
+        "f1": 0.7278,
+        "n_test": 8113
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ">       model.fit(X, y)\n\ntest_pipeline.py:33: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:665: in check_array\n    dtype_orig = np.result_type(*dtypes_orig)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nargs = (), kwargs = {}, relevant_args = ()\n\n>   ???\nE   ValueError: at least one array or dtype is required\n\n<__array_function__ internals>:6: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - KeyError: \"None of [Index(['w...\nFAILED test_pipeline.py::test_train_model - ValueError: at least one array or...\nFAILED test_pipeline.py::test_evaluate_model - ValueError: at least one array...\n3 failed, 2 passed in 12.88s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.8154,
+        "f1": 0.7278,
+        "n_test": 8113
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 5
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

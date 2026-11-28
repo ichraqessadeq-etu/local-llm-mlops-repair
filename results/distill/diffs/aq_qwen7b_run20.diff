@@ -1,0 +1,15 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -46 +46,2 @@
+         raise Exception(f"Failed to make predictions: {e}")
++
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -27,3 +27,3 @@
+     X, y = preprocess_data(data)
+-    assert X.shape == (2, 14)
++    assert X.shape == (2, 13)
+     assert y.shape == (2,)
+@@ -52 +52,2 @@
+     assert len(predictions) == len(y_test)
++

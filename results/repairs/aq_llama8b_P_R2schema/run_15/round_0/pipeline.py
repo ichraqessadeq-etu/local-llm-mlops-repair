@@ -1,0 +1,46 @@
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import mlflow.sklearn
+import mlflow
+
+def load_data(file_path):
+    try:
+        data = pd.read_csv(file_path)
+        return data
+    except Exception as e:
+        mlflow.log_error(f"Error loading data: {str(e)}")
+        raise
+
+def preprocess_data(data):
+    try:
+        # Drop unnecessary columns
+        data.drop(['Hour', 'DayOfWeek', 'Month'], axis=1, inplace=True)
+        
+        # Scale data
+        scaler = StandardScaler()
+        data[['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH', 'AH']] = scaler.fit_transform(data[['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH', 'AH']])
+        
+        # Split data into features (X) and target (y)
+        X = data.drop('Anomaly', axis=1)
+        y = data['Anomaly']
+        
+        return X, y
+    except Exception as e:
+        mlflow.log_error(f"Error preprocessing data: {str(e)}")
+        raise
+
+def train_model(X_train, y_train):
+    try:
+        # Train a RandomForest classifier
+        model = RandomForestClassifier(n_estimators=100)
+        model.fit(X_train, y_train)
+        
+        # Log the model as an MLflow artifact
+        mlflow.sklearn.log_model(model, "random_forest_model")
+        
+        return model
+    except Exception as e:
+        mlflow.log_error(f"Error training model: {str(e)}")
+        raise

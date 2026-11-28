@@ -1,0 +1,35 @@
+--- round_d1/test_pipeline.py
++++ round_3/test_pipeline.py
+@@ -19,8 +19,26 @@
+ 
+-def test_train_model(data):
+-    model = train_model(*preprocess_data(data))
+-    assert isinstance(model, RandomForestClassifier)
++def test_train_model():
++    # Load data
++    data = load_data('data/fraud.csv')
++    
++    # Preprocess data
++    X_train, y_train, _, _ = preprocess_data(data)
++    
++    # Train model
++    model = train_model(X_train, y_train)
++    
++    # Assert that the model is not None
++    assert model is not None
+ 
+-def test_evaluate_model(data):
+-    model = train_model(*preprocess_data(data))
+-    evaluate_model(model, *preprocess_data(data))
++def test_evaluate_model():
++    # Load data
++    data = load_data('data/fraud.csv')
++    
++    # Preprocess data
++    X_train, y_train, X_test, y_test = preprocess_data(data)
++    
++    # Train model
++    model = train_model(X_train, y_train)
++    
++    # Evaluate model
++    evaluate_model(model, X_test, y_test)

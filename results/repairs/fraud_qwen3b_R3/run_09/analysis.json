@@ -1,0 +1,149 @@
+{
+  "run": 9,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9071,
+    "f1": 0.9,
+    "n_test": 2000
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 5,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\ntest_pipeline.py:18: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        \"\"\"Test evaluating the model.\"\"\"\n>       data = pd.DataFrame({'Time': [1, 2], 'Class': [0, 1]})\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:25: NameError\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        \"\"\"Test running the entire pipeline.\"\"\"\n>       data = pd.DataFrame({'Time': [1, 2], 'Class': [0, 1]})\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:35: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not de...\nFAILED test_pipeline.py::test_run_pipeline - NameError: name 'pd' is not defined\n5 failed in 5.88s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 3 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd; from sklearn.model_selection import train_test_split"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            client.log_text(run.info.run_id, \"<h1>header</h1>\", \"index.html\")\n        \"\"\"\n        with self._log_artifact_helper(run_id, artifact_file) as tmp_path:\n>           with open(tmp_path, \"w\", encoding=\"utf-8\") as f:\nE           OSError: [Errno 22] Invalid argument: 'C:\\\\Users\\\\ADMIN\\\\AppData\\\\Local\\\\Temp\\\\tmpkfd1m7oe\\\\              precision    recall  f1-score   support\\n\\n           0       1.00      1.00      1.00      1910\\n           1       0.99      0.90      0.94        90\\n\\n    accuracy                           0.99      2000\\n   macro avg       0.99      0.95      0.97      2000\\nweighted avg       0.99      0.99      0.99      2000\\n'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\client.py:1230: OSError\n============================== warnings summary ===============================\ntest_pipeline.py::test_evaluate_model\ntest_pipeline.py::test_evaluate_model\ntest_pipeline.py::test_evaluate_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\metrics\\_classification.py:1318: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.\n    _warn_prf(average, modifier, msg_start, len(result))\n\ntest_pipeline.py::test_evaluate_model\ntest_pipeline.py::test_evaluate_model\ntest_pipeline.py::test_evaluate_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\metrics\\_classification.py:1318: UndefinedMetricWarning: Recall and F-score are ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.\n    _warn_prf(average, modifier, msg_start, len(result))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_evaluate_model - OSError: [Errno 22] Invalid ar...\nFAILED test_pipeline.py::test_run_pipeline - OSError: [Errno 22] Invalid argu...\n2 failed, 3 passed, 6 warnings in 9.22s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 3,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            client.log_text(run.info.run_id, \"<h1>header</h1>\", \"index.html\")\n        \"\"\"\n        with self._log_artifact_helper(run_id, artifact_file) as tmp_path:\n>           with open(tmp_path, \"w\", encoding=\"utf-8\") as f:\nE           OSError: [Errno 22] Invalid argument: 'C:\\\\Users\\\\ADMIN\\\\AppData\\\\Local\\\\Temp\\\\tmpkfd1m7oe\\\\              precision    recall  f1-score   support\\n\\n           0       1.00      1.00      1.00      1910\\n           1       0.99      0.90      0.94        90\\n\\n    accuracy                           0.99      2000\\n   macro avg       0.99      0.95      0.97      2000\\nweighted avg       0.99      0.99      0.99      2000\\n'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\tracking\\client.py:1230: OSError\n============================== warnings summary ===============================\ntest_pipeline.py::test_evaluate_model\ntest_pipeline.py::test_evaluate_model\ntest_pipeline.py::test_evaluate_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\metrics\\_classification.py:1318: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.\n    _warn_prf(average, modifier, msg_start, len(result))\n\ntest_pipeline.py::test_evaluate_model\ntest_pipeline.py::test_evaluate_model\ntest_pipeline.py::test_evaluate_model\n  C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\metrics\\_classification.py:1318: UndefinedMetricWarning: Recall and F-score are ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.\n    _warn_prf(average, modifier, msg_start, len(result))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_evaluate_model - OSError: [Errno 22] Invalid ar...\nFAILED test_pipeline.py::test_run_pipeline - OSError: [Errno 22] Invalid argu...\n2 failed, 3 passed, 6 warnings in 9.22s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 7
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

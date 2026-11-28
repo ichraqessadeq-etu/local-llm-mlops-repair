@@ -1,0 +1,33 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -5,2 +5,3 @@
+ import mlflow.sklearn
++from sklearn.utils.multiclass import type_of_target
+ 
+@@ -10,3 +11,3 @@
+ def preprocess_data(data):
+-    return (data, data['Amount'])
++    return (data, data['Amount'].astype(int))
+ 
+@@ -17,2 +18,14 @@
+         mlflow.sklearn.log_model(model, 'random_forest')
+-    return model+    return model
++
++def type_of_target(y):
++    if y.dtype == np.int8 or y.dtype == np.int16 or y.dtype == np.int32 or y.dtype == np.int64:
++        return "multiclass"
++    elif y.dtype == np.uint8 or y.dtype == np.uint16 or y.dtype == np.uint32 or y.dtype == np.uint64:
++        return "multiclass-multioutput"
++    elif y.dtype == np.bool:
++        return "binary"
++    elif y.dtype == np.float16 or y.dtype == np.float32 or y.dtype == np.float64:
++        return "continuous"
++    else:
++        raise ValueError("Unknown label type: %r" % y.dtype)
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -2,3 +2,3 @@
+ import pytest
+-from pipeline import load_data, preprocess_data, train_model
++from pipeline import load_data, preprocess_data, train_model, type_of_target
+ 

@@ -1,0 +1,3197 @@
+{
+  "meta": {
+    "utc": "2026-11-28T01:52:55.366924+00:00",
+    "strategy": "R3",
+    "backend": "none",
+    "repair_model": "none",
+    "generation_model": "mistral:7b",
+    "src": "C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\runs\\traffic_mistral7b_P",
+    "max_rounds": 5,
+    "temperature": 0.3,
+    "max_tokens": 1500,
+    "tail_lines": 40,
+    "script_sha256": "34ec48f147063e2c58d905c719936232481bbe831a9d42bcb4278240f7771446",
+    "m2_sha256": "ceb5a1c16afff4a83321f817eea84c9b7c325a65a55f4cdc856a227b2179cb50",
+    "data_sha256": "d103536ecf9a56daf03252d1bca19d269f6ba11738177885fa586932c1898299",
+    "generator_python": "3.13.0",
+    "resumed": true,
+    "schema": {
+      "columns": [
+        "temp",
+        "rain_1h",
+        "snow_1h",
+        "clouds_all",
+        "weather_main",
+        "IsHoliday",
+        "Hour",
+        "DayOfWeek",
+        "Month",
+        "Congestion"
+      ],
+      "categories": {
+        "weather_main": [
+          "Clear",
+          "Clouds",
+          "Drizzle",
+          "Fog",
+          "Haze",
+          "Mist",
+          "Rain",
+          "Smoke",
+          "Snow",
+          "Squall",
+          "Thunderstorm"
+        ]
+      }
+    },
+    "target": "Congestion",
+    "prefer": "Classifier",
+    "catalog_versions": {
+      "mlflow": "1.30.1",
+      "numpy": "1.21.6",
+      "pandas": "1.3.5",
+      "sklearn": "1.0.2"
+    },
+    "rules_script": "fa9f688187b854344d219f30e4844c48f2c1228c296706b94dd3bd001aa442d4",
+    "catalog_sha256": "9343f8425f4ded118be365bedf140d82802dee168ff5196e131df447f8977e72"
+  },
+  "summary": {
+    "n": 20,
+    "pass_round0": 1,
+    "failing_round0": 19,
+    "repaired": 3,
+    "repaired_by_round": {
+      "1": 3,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    },
+    "repaired_weakened": 0,
+    "pass_final": 4,
+    "functional_ok_final": 3,
+    "rvh_round0": 20,
+    "rvh_final": 1,
+    "repair_seconds_total": 0.0
+  },
+  "runs": [
+    {
+      "run": 1,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 14
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 2,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 1,
+            "returncode": 2,
+            "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_01\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:3: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:4: in <module>\n    from mlflow import log_artifact, track, pyfunc, start_run, end_run\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.38s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 2,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F                                                                       [100%]\n================================== FAILURES ===================================\n______________________ TestPipeline.test_preprocess_data ______________________\n\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\nmock_dataframe = <MagicMock name='DataFrame' id='1723271097224'>\n\n    @patch('pipeline.pd.DataFrame')\n    def test_preprocess_data(self, mock_dataframe):\n        mock_data = {'features': [1, 2, 3], 'Congestion': [0, 1, 0]}\n        mock_dataframe.return_value = mock_data\n        result, _ = preprocess_data(mock_data)\n>       expected_X = mock_data[['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month']]\nE       TypeError: unhashable type: 'list'\n\ntest_pipeline.py:19: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - TypeError: unha...\n1 failed, 1 passed in 7.34s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 1,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": ".F                                                                       [100%]\n================================== FAILURES ===================================\n______________________ TestPipeline.test_preprocess_data ______________________\n\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\nmock_dataframe = <MagicMock name='DataFrame' id='1723271097224'>\n\n    @patch('pipeline.pd.DataFrame')\n    def test_preprocess_data(self, mock_dataframe):\n        mock_data = {'features': [1, 2, 3], 'Congestion': [0, 1, 0]}\n        mock_dataframe.return_value = mock_data\n        result, _ = preprocess_data(mock_data)\n>       expected_X = mock_data[['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday', 'Hour', 'DayOfWeek', 'Month']]\nE       TypeError: unhashable type: 'list'\n\ntest_pipeline.py:19: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - TypeError: unha...\n1 failed, 1 passed in 7.34s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 2,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 1.0,
+        "f1": 1.0,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 15
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: could n...\n1 failed in 8.07s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": ".                                                                        [100%]\n1 passed in 18.00s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 1.0,
+            "f1": 1.0,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow.pyfunc' has no attribute 'fit'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 14
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def setUp(self):\n        self.data = load_data(\"data/traffic.csv\")\n        self.X, self.y = preprocess_data(self.data)\n>       self.X_train, self.y_train, self.X_test, self.y_test = train_test_split(self.X, self.y, test_size=0.3, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:9: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'tr...\n1 failed in 7.49s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "NameError: name 'mlflow' is not defined"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\ntest_pipeline.py:13: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nX_train =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n10274  263.46      0.0      0.0   ...       0\n15795  295.89      0.0      0.0           1  ...   18          6      9           0\n\n[28394 rows x 10 columns]\ny_train =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n40194  304.91      0.0      0.0   ...       0\n38018  302.75      0.0      0.0           1  ...   18          5      6           0\n\n[12170 rows x 10 columns]\n\n    def train_model(X_train, y_train):\n        with mlflow.start_run():\n            model = RandomForestClassifier(random_state=42)\n>           model = pyfunc.fit(model, X_train, y_train)\nE           AttributeError: module 'mlflow.pyfunc' has no attribute 'fit'\n\npipeline.py:16: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: mod...\n1 failed in 7.77s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow.pyfunc' has no attribute 'fit'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\ntest_pipeline.py:13: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nX_train =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n10274  263.46      0.0      0.0   ...       0\n15795  295.89      0.0      0.0           1  ...   18          6      9           0\n\n[28394 rows x 10 columns]\ny_train =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n40194  304.91      0.0      0.0   ...       0\n38018  302.75      0.0      0.0           1  ...   18          5      6           0\n\n[12170 rows x 10 columns]\n\n    def train_model(X_train, y_train):\n        with mlflow.start_run():\n            model = RandomForestClassifier(random_state=42)\n>           model = pyfunc.fit(model, X_train, y_train)\nE           AttributeError: module 'mlflow.pyfunc' has no attribute 'fit'\n\npipeline.py:16: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: mod...\n1 failed in 7.77s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow.pyfunc' has no attribute 'fit'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 4,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 14
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 2,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 1,
+            "returncode": 2,
+            "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_04\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:3: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:4: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.77s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 1 import(s): import pandas as pd",
+            "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 0 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 2,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    def test_load_data(self, mock_read_csv):\n        mock_data = pd.DataFrame()\n        mock_read_csv.return_value = mock_data\n        result = load_data('data/traffic.csv')\n>       self.assertEqual(result, mock_data)\n\ntest_pipeline.py:12: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = Empty DataFrame\nColumns: []\nIndex: []\n\n    @final\n    def __nonzero__(self):\n        raise ValueError(\n>           f\"The truth value of a {type(self).__name__} is ambiguous. \"\n            \"Use a.empty, a.bool(), a.item(), a.any() or a.all().\"\n        )\nE       ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1538: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - ValueError: The truth...\n1 failed, 1 passed in 7.31s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 1,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    def test_load_data(self, mock_read_csv):\n        mock_data = pd.DataFrame()\n        mock_read_csv.return_value = mock_data\n        result = load_data('data/traffic.csv')\n>       self.assertEqual(result, mock_data)\n\ntest_pipeline.py:12: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = Empty DataFrame\nColumns: []\nIndex: []\n\n    @final\n    def __nonzero__(self):\n        raise ValueError(\n>           f\"The truth value of a {type(self).__name__} is ambiguous. \"\n            \"Use a.empty, a.bool(), a.item(), a.any() or a.all().\"\n        )\nE       ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1538: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - ValueError: The truth...\n1 failed, 1 passed in 7.31s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 2,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 5,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 2,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 14
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 1,
+            "returncode": 2,
+            "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_05\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:4: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.64s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits",
+            "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: could n...\n1 failed in 8.01s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\__init__.py:241: in dump_all\n    dumper.represent(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:27: in represent\n    node = self.represent_data(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:48: in represent_data\n    node = self.yaml_representers[data_types[0]](self, data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:207: in represent_dict\n    return self.represent_mapping('tag:yaml.org,2002:map', data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:118: in represent_mapping\n    node_value = self.represent_data(item_value)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:58: in represent_data\n    node = self.yaml_representers[None](self, data)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <yaml.dumper.SafeDumper object at 0x0000026381009248>\ndata = RandomForestClassifier(random_state=42)\n\n    def represent_undefined(self, data):\n>       raise RepresenterError(\"cannot represent an object\", data)\nE       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:231: RepresenterError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...\n1 failed in 9.96s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 3,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\__init__.py:241: in dump_all\n    dumper.represent(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:27: in represent\n    node = self.represent_data(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:48: in represent_data\n    node = self.yaml_representers[data_types[0]](self, data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:207: in represent_dict\n    return self.represent_mapping('tag:yaml.org,2002:map', data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:118: in represent_mapping\n    node_value = self.represent_data(item_value)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:58: in represent_data\n    node = self.yaml_representers[None](self, data)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <yaml.dumper.SafeDumper object at 0x0000026381009248>\ndata = RandomForestClassifier(random_state=42)\n\n    def represent_undefined(self, data):\n>       raise RepresenterError(\"cannot represent an object\", data)\nE       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:231: RepresenterError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...\n1 failed in 9.96s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 6,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 2,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 14
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 1,
+            "returncode": 2,
+            "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_06\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:4: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.38s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 1 import(s): from sklearn.model_selection import train_test_split",
+            "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =          temp  rain_1h  snow_1h  clouds_all  ... IsHoliday  Hour  DayOfWeek  Month\n10274  263.46      0.0      0.0    ...  4     11\n15795  295.89      0.0      0.0           1  ...         0    18          6      9\n\n[28394 rows x 9 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: could n...\n1 failed in 8.01s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\n    def check_consistent_length(*arrays):\n        \"\"\"Check that all arrays have consistent first dimensions.\n    \n        Checks whether all objects in arrays have the same shape or length.\n    \n        Parameters\n        ----------\n        *arrays : list or tuple of input objects.\n            Objects that will be checked for consistent length.\n        \"\"\"\n    \n        lengths = [_num_samples(X) for X in arrays if X is not None]\n        uniques = np.unique(lengths)\n        if len(uniques) > 1:\n            raise ValueError(\n                \"Found input variables with inconsistent numbers of samples: %r\"\n>               % [int(l) for l in lengths]\n            )\nE           ValueError: Found input variables with inconsistent numbers of samples: [28394, 12170]\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:334: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: Found i...\n1 failed in 8.07s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 3,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\n    def check_consistent_length(*arrays):\n        \"\"\"Check that all arrays have consistent first dimensions.\n    \n        Checks whether all objects in arrays have the same shape or length.\n    \n        Parameters\n        ----------\n        *arrays : list or tuple of input objects.\n            Objects that will be checked for consistent length.\n        \"\"\"\n    \n        lengths = [_num_samples(X) for X in arrays if X is not None]\n        uniques = np.unique(lengths)\n        if len(uniques) > 1:\n            raise ValueError(\n                \"Found input variables with inconsistent numbers of samples: %r\"\n>               % [int(l) for l in lengths]\n            )\nE           ValueError: Found input variables with inconsistent numbers of samples: [28394, 12170]\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:334: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: Found i...\n1 failed in 8.07s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 7,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 14
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 2,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 1,
+            "returncode": 2,
+            "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_07\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:3: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:4: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.49s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 1 import(s): import pandas as pd",
+            "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 0 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 2,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    def test_load_data(self, mock_read_csv):\n        mock_data = pd.DataFrame()\n        mock_read_csv.return_value = mock_data\n        result = load_data('data/traffic.csv')\n>       self.assertEqual(result, mock_data)\n\ntest_pipeline.py:12: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = Empty DataFrame\nColumns: []\nIndex: []\n\n    @final\n    def __nonzero__(self):\n        raise ValueError(\n>           f\"The truth value of a {type(self).__name__} is ambiguous. \"\n            \"Use a.empty, a.bool(), a.item(), a.any() or a.all().\"\n        )\nE       ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1538: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - ValueError: The truth...\n1 failed, 1 passed in 7.31s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 1,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "    def test_load_data(self, mock_read_csv):\n        mock_data = pd.DataFrame()\n        mock_read_csv.return_value = mock_data\n        result = load_data('data/traffic.csv')\n>       self.assertEqual(result, mock_data)\n\ntest_pipeline.py:12: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = Empty DataFrame\nColumns: []\nIndex: []\n\n    @final\n    def __nonzero__(self):\n        raise ValueError(\n>           f\"The truth value of a {type(self).__name__} is ambiguous. \"\n            \"Use a.empty, a.bool(), a.item(), a.any() or a.all().\"\n        )\nE       ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1538: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - ValueError: The truth...\n1 failed, 1 passed in 7.31s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 2,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 8,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 2,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 14
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 1,
+            "returncode": 2,
+            "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_08\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:4: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.42s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits",
+            "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: could n...\n1 failed in 7.98s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\__init__.py:241: in dump_all\n    dumper.represent(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:27: in represent\n    node = self.represent_data(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:48: in represent_data\n    node = self.yaml_representers[data_types[0]](self, data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:207: in represent_dict\n    return self.represent_mapping('tag:yaml.org,2002:map', data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:118: in represent_mapping\n    node_value = self.represent_data(item_value)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:58: in represent_data\n    node = self.yaml_representers[None](self, data)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <yaml.dumper.SafeDumper object at 0x0000020EE0F7DF88>\ndata = RandomForestClassifier(random_state=42)\n\n    def represent_undefined(self, data):\n>       raise RepresenterError(\"cannot represent an object\", data)\nE       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:231: RepresenterError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...\n1 failed in 9.87s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 3,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\__init__.py:241: in dump_all\n    dumper.represent(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:27: in represent\n    node = self.represent_data(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:48: in represent_data\n    node = self.yaml_representers[data_types[0]](self, data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:207: in represent_dict\n    return self.represent_mapping('tag:yaml.org,2002:map', data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:118: in represent_mapping\n    node_value = self.represent_data(item_value)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:58: in represent_data\n    node = self.yaml_representers[None](self, data)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <yaml.dumper.SafeDumper object at 0x0000020EE0F7DF88>\ndata = RandomForestClassifier(random_state=42)\n\n    def represent_undefined(self, data):\n>       raise RepresenterError(\"cannot represent an object\", data)\nE       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:231: RepresenterError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...\n1 failed in 9.87s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 9,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow.sklearn' has no attribute 'sklearn_model_operator'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 14
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ny_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n>       with mlflow.start_run():\nE       NameError: name 'mlflow' is not defined\n\npipeline.py:13: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'ml...\n1 failed in 7.37s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "NameError: name 'mlflow' is not defined"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\n[40564 rows x 10 columns]\ny_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        with mlflow.start_run():\n            model = RandomForestClassifier(random_state=42)\n>           model = sklearn.sklearn_model_operator.fit(model, X_train, y_train)\nE           AttributeError: module 'mlflow.sklearn' has no attribute 'sklearn_model_operator'\n\npipeline.py:16: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: mod...\n1 failed in 7.90s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow.sklearn' has no attribute 'sklearn_model_operator'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\n[40564 rows x 10 columns]\ny_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        with mlflow.start_run():\n            model = RandomForestClassifier(random_state=42)\n>           model = sklearn.sklearn_model_operator.fit(model, X_train, y_train)\nE           AttributeError: module 'mlflow.sklearn' has no attribute 'sklearn_model_operator'\n\npipeline.py:16: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: mod...\n1 failed in 7.90s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: module 'mlflow.sklearn' has no attribute 'sklearn_model_operator'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 10,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 15
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n>       model = train_model(self.X_train, self.y_train)\nE       AttributeError: 'TestPipeline' object has no attribute 'X_train'\n\ntest_pipeline.py:11: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: 'Te...\n1 failed in 7.42s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n>       model = train_model(self.X_train, self.y_train)\nE       AttributeError: 'TestPipeline' object has no attribute 'X_train'\n\ntest_pipeline.py:11: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: 'Te...\n1 failed in 7.14s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n>       model = train_model(self.X_train, self.y_train)\nE       AttributeError: 'TestPipeline' object has no attribute 'X_train'\n\ntest_pipeline.py:11: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: 'Te...\n1 failed in 7.14s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 11,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 2,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "TypeError: _isdir: path should be string, bytes or os.PathLike, not RandomForestClassifier"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 19
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 1,
+            "returncode": 2,
+            "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_11\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:5: in <module>\n    from mlflow import log_artifact, track, pyfunc, start_run, end_run\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.40s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 1 import(s): from sklearn.model_selection import train_test_split",
+            "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =          temp  rain_1h  snow_1h  clouds_all  ... IsHoliday  Hour  DayOfWeek  Month\n10274  263.46      0.0      0.0    ...  4     11\n15795  295.89      0.0      0.0           1  ...         0    18          6      9\n\n[28394 rows x 9 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: could n...\n1 failed, 2 passed in 8.05s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\n    def check_consistent_length(*arrays):\n        \"\"\"Check that all arrays have consistent first dimensions.\n    \n        Checks whether all objects in arrays have the same shape or length.\n    \n        Parameters\n        ----------\n        *arrays : list or tuple of input objects.\n            Objects that will be checked for consistent length.\n        \"\"\"\n    \n        lengths = [_num_samples(X) for X in arrays if X is not None]\n        uniques = np.unique(lengths)\n        if len(uniques) > 1:\n            raise ValueError(\n                \"Found input variables with inconsistent numbers of samples: %r\"\n>               % [int(l) for l in lengths]\n            )\nE           ValueError: Found input variables with inconsistent numbers of samples: [28394, 12170]\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:334: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: Found i...\n1 failed, 2 passed in 8.07s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "TypeError: _isdir: path should be string, bytes or os.PathLike, not RandomForestClassifier"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 3,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "\n    def check_consistent_length(*arrays):\n        \"\"\"Check that all arrays have consistent first dimensions.\n    \n        Checks whether all objects in arrays have the same shape or length.\n    \n        Parameters\n        ----------\n        *arrays : list or tuple of input objects.\n            Objects that will be checked for consistent length.\n        \"\"\"\n    \n        lengths = [_num_samples(X) for X in arrays if X is not None]\n        uniques = np.unique(lengths)\n        if len(uniques) > 1:\n            raise ValueError(\n                \"Found input variables with inconsistent numbers of samples: %r\"\n>               % [int(l) for l in lengths]\n            )\nE           ValueError: Found input variables with inconsistent numbers of samples: [28394, 12170]\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:334: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: Found i...\n1 failed, 2 passed in 8.07s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "TypeError: _isdir: path should be string, bytes or os.PathLike, not RandomForestClassifier"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 12,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 20
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 1,
+            "returncode": 2,
+            "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_12\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:4: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.37s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 2 import(s): import pandas as pd; from sklearn.model_selection import train_test_split",
+            "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 0 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\__init__.py:241: in dump_all\n    dumper.represent(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:27: in represent\n    node = self.represent_data(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:48: in represent_data\n    node = self.yaml_representers[data_types[0]](self, data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:207: in represent_dict\n    return self.represent_mapping('tag:yaml.org,2002:map', data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:118: in represent_mapping\n    node_value = self.represent_data(item_value)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:58: in represent_data\n    node = self.yaml_representers[None](self, data)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <yaml.dumper.SafeDumper object at 0x000001DE9FE97408>\ndata = RandomForestClassifier(random_state=42)\n\n    def represent_undefined(self, data):\n>       raise RepresenterError(\"cannot represent an object\", data)\nE       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:231: RepresenterError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...\n1 failed, 2 passed in 10.43s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\__init__.py:241: in dump_all\n    dumper.represent(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:27: in represent\n    node = self.represent_data(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:48: in represent_data\n    node = self.yaml_representers[data_types[0]](self, data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:207: in represent_dict\n    return self.represent_mapping('tag:yaml.org,2002:map', data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:118: in represent_mapping\n    node_value = self.represent_data(item_value)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:58: in represent_data\n    node = self.yaml_representers[None](self, data)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <yaml.dumper.SafeDumper object at 0x000001DE9FE97408>\ndata = RandomForestClassifier(random_state=42)\n\n    def represent_undefined(self, data):\n>       raise RepresenterError(\"cannot represent an object\", data)\nE       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:231: RepresenterError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...\n1 failed, 2 passed in 10.43s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 13,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 2,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 16
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 1,
+            "returncode": 2,
+            "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_13\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:3: in <module>\n    import pipeline\npipeline.py:5: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.41s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits",
+            "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 2 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        else:\n            # If np.array(..) gives ComplexWarning, then we convert the warning\n            # to an error. This is needed because specifying a non complex\n            # dtype to the function converts complex to real dtype,\n            # thereby passing the test made in the lines following the scope\n            # of warnings context manager.\n            with warnings.catch_warnings():\n                try:\n                    warnings.simplefilter(\"error\", ComplexWarning)\n                    if dtype is not None and np.dtype(dtype).kind in \"iu\":\n                        # Conversion float -> int should not contain NaN or\n                        # inf (numpy#14412). We cannot use casting='safe' because\n                        # then conversion float -> int would be disallowed.\n                        array = np.asarray(array, order=order)\n                        if array.dtype.kind == \"f\":\n                            _assert_all_finite(array, allow_nan=False, msg_dtype=dtype)\n                        array = array.astype(dtype, casting=\"unsafe\", copy=False)\n                    else:\n>                       array = np.asarray(array, order=order, dtype=dtype)\nE                       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: could n...\n1 failed in 7.84s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\__init__.py:241: in dump_all\n    dumper.represent(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:27: in represent\n    node = self.represent_data(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:48: in represent_data\n    node = self.yaml_representers[data_types[0]](self, data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:207: in represent_dict\n    return self.represent_mapping('tag:yaml.org,2002:map', data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:118: in represent_mapping\n    node_value = self.represent_data(item_value)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:58: in represent_data\n    node = self.yaml_representers[None](self, data)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <yaml.dumper.SafeDumper object at 0x000001E6E0281248>\ndata = RandomForestClassifier(random_state=42)\n\n    def represent_undefined(self, data):\n>       raise RepresenterError(\"cannot represent an object\", data)\nE       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:231: RepresenterError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...\n1 failed in 11.72s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 3,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\__init__.py:241: in dump_all\n    dumper.represent(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:27: in represent\n    node = self.represent_data(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:48: in represent_data\n    node = self.yaml_representers[data_types[0]](self, data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:207: in represent_dict\n    return self.represent_mapping('tag:yaml.org,2002:map', data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:118: in represent_mapping\n    node_value = self.represent_data(item_value)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:58: in represent_data\n    node = self.yaml_representers[None](self, data)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <yaml.dumper.SafeDumper object at 0x000001E6E0281248>\ndata = RandomForestClassifier(random_state=42)\n\n    def represent_undefined(self, data):\n>       raise RepresenterError(\"cannot represent an object\", data)\nE       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:231: RepresenterError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...\n1 failed in 11.72s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 14,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 1.0,
+        "f1": 1.0,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 15
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 2,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: could n...\n1 failed, 2 passed in 8.25s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier",
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 17.58s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 1.0,
+            "f1": 1.0,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 15,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 16
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 1,
+            "returncode": 2,
+            "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_15\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:3: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:4: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.44s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits",
+            "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n        with patch('pipeline.train_model') as mock_train_model:\n>           train_model(self.X_train, self.y_train)\nE           AttributeError: 'TestPipeline' object has no attribute 'X_train'\n\ntest_pipeline.py:13: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: 'Te...\n1 failed in 7.22s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n        with patch('pipeline.train_model') as mock_train_model:\n>           train_model(self.X_train, self.y_train)\nE           AttributeError: 'TestPipeline' object has no attribute 'X_train'\n\ntest_pipeline.py:13: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: 'Te...\n1 failed in 7.22s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 16,
+      "pass_round0": true,
+      "pass_final": true,
+      "rounds_used": 0,
+      "pass_after_R2_phase": null,
+      "hint_round0": null,
+      "hint_final": null,
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": true,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "repair_seconds": 0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 15
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 3,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 3,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": "...                                                                      [100%]\n3 passed in 6.94s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 17,
+      "pass_round0": false,
+      "pass_final": true,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "other",
+      "hint_final": null,
+      "weakened_final": false,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": true,
+        "auprc": 1.0,
+        "f1": 1.0,
+        "n_test": 8113
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 15
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: could n...\n1 failed in 8.27s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: injected random_state into estimators/splits",
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 1,
+            "failed": 0,
+            "errors": 0,
+            "returncode": 0,
+            "tail": ".                                                                        [100%]\n1 passed in 17.48s",
+            "all_pass": true
+          },
+          "functional": {
+            "functional_ok": true,
+            "auprc": 1.0,
+            "f1": 1.0,
+            "n_test": 8113
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        }
+      ]
+    },
+    {
+      "run": 18,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 1,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 14
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 1,
+            "returncode": 2,
+            "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_18\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:4: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.50s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits",
+            "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n>       model = train_model(self.X_train, self.y_train)\nE       AttributeError: 'TestPipeline' object has no attribute 'X_train'\n\ntest_pipeline.py:10: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: 'Te...\n1 failed in 7.40s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "F                                                                        [100%]\n================================== FAILURES ===================================\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n>       model = train_model(self.X_train, self.y_train)\nE       AttributeError: 'TestPipeline' object has no attribute 'X_train'\n\ntest_pipeline.py:10: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: 'Te...\n1 failed in 7.40s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 19,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 2,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "TypeError: log_artifact() missing 1 required positional argument: 'local_path'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 16
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ny_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n>       with mlflow.start_run(run_name=\"RandomForestCongestionDetector\"):\nE       NameError: name 'mlflow' is not defined\n\npipeline.py:13: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'ml...\n1 failed in 7.38s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "NameError: name 'mlflow' is not defined"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ny_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        with mlflow.start_run(run_name='RandomForestCongestionDetector'):\n>           mlflow.log_artifact(file_path='data/traffic.csv')\nE           TypeError: log_artifact() got an unexpected keyword argument 'file_path'\n\npipeline.py:15: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - TypeError: log_arti...\n1 failed in 8.03s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "TypeError: log_artifact() got an unexpected keyword argument 'file_path'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "notes": [
+            "pipeline: mot-cl\u00e9 'file_path' retir\u00e9 de 1 appel(s) \u00e0 log_artifact()"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ny_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        with mlflow.start_run(run_name='RandomForestCongestionDetector'):\n>           mlflow.log_artifact()\nE           TypeError: log_artifact() missing 1 required positional argument: 'local_path'\n\npipeline.py:15: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - TypeError: log_arti...\n1 failed in 8.16s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "TypeError: log_artifact() missing 1 required positional argument: 'local_path'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 3,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ny_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        with mlflow.start_run(run_name='RandomForestCongestionDetector'):\n>           mlflow.log_artifact()\nE           TypeError: log_artifact() missing 1 required positional argument: 'local_path'\n\npipeline.py:15: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - TypeError: log_arti...\n1 failed in 8.16s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "TypeError: log_artifact() missing 1 required positional argument: 'local_path'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    },
+    {
+      "run": 20,
+      "pass_round0": false,
+      "pass_final": false,
+      "rounds_used": 2,
+      "pass_after_R2_phase": null,
+      "hint_round0": "import_or_missing_name",
+      "hint_final": "other",
+      "weakened_final": null,
+      "rvh_round0": true,
+      "rvh_final": false,
+      "functional_final": {
+        "functional_ok": false,
+        "error": "AttributeError: type object 'PyFuncModel' has no attribute 'from_sklearn'"
+      },
+      "repair_seconds": 0.0,
+      "rounds": [
+        {
+          "round": 0,
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": true,
+              "rvh_violations": [
+                {
+                  "kind": "RVH",
+                  "rule": "unseeded_estimator",
+                  "detail": "RandomForestClassifier(...) called without random_state",
+                  "lineno": 15
+                }
+              ],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 0,
+            "errors": 1,
+            "returncode": 2,
+            "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_20\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:3: in <module>\n    import pipeline\npipeline.py:5: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.45s",
+            "all_pass": false,
+            "failure_hint": "import_or_missing_name"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+          },
+          "is_rvh": true,
+          "is_iih": false
+        },
+        {
+          "round": 1,
+          "notes": [
+            "pipeline: added 1 import(s): import mlflow",
+            "pipeline: injected random_state into estimators/splits",
+            "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier",
+            "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "        else:\n            # If np.array(..) gives ComplexWarning, then we convert the warning\n            # to an error. This is needed because specifying a non complex\n            # dtype to the function converts complex to real dtype,\n            # thereby passing the test made in the lines following the scope\n            # of warnings context manager.\n            with warnings.catch_warnings():\n                try:\n                    warnings.simplefilter(\"error\", ComplexWarning)\n                    if dtype is not None and np.dtype(dtype).kind in \"iu\":\n                        # Conversion float -> int should not contain NaN or\n                        # inf (numpy#14412). We cannot use casting='safe' because\n                        # then conversion float -> int would be disallowed.\n                        array = np.asarray(array, order=order)\n                        if array.dtype.kind == \"f\":\n                            _assert_all_finite(array, allow_nan=False, msg_dtype=dtype)\n                        array = array.astype(dtype, casting=\"unsafe\", copy=False)\n                    else:\n>                       array = np.asarray(array, order=order, dtype=dtype)\nE                       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: could n...\n1 failed in 7.85s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "ValueError: could not convert string to float: 'Clouds'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 2,
+          "notes": [
+            "pipeline: added schema shim (categorical encoding, imputation)"
+          ],
+          "cost": {
+            "seconds": 0.0
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "       [282.12,   0.  ,   0.  , ...,  23.  ,   6.  ,   9.  ]])\ny_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        model = RandomForestClassifier(random_state=42)\n        with mlflow.start_run():\n            model.fit(X_train, y_train)\n>           pyfunc.log_model(pyfunc.PyFuncModel.from_sklearn(model), artifact_path='model')\nE           AttributeError: type object 'PyFuncModel' has no attribute 'from_sklearn'\n\npipeline.py:19: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: typ...\n1 failed in 11.54s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: type object 'PyFuncModel' has no attribute 'from_sklearn'"
+          },
+          "is_rvh": false,
+          "is_iih": false,
+          "weakened": false
+        },
+        {
+          "round": 3,
+          "stopped": "no_applicable_fix",
+          "pytest": {
+            "passed": 0,
+            "failed": 1,
+            "errors": 0,
+            "returncode": 1,
+            "tail": "       [282.12,   0.  ,   0.  , ...,  23.  ,   6.  ,   9.  ]])\ny_train = 0        0\n1        0\n2        0\n3        0\n4        0\n        ..\n40559    0\n40560    0\n40561    0\n40562    0\n40563    0\nName: Congestion, Length: 40564, dtype: int64\n\n    def train_model(X_train, y_train):\n        model = RandomForestClassifier(random_state=42)\n        with mlflow.start_run():\n            model.fit(X_train, y_train)\n>           pyfunc.log_model(pyfunc.PyFuncModel.from_sklearn(model), artifact_path='model')\nE           AttributeError: type object 'PyFuncModel' has no attribute 'from_sklearn'\n\npipeline.py:19: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: typ...\n1 failed in 11.54s",
+            "all_pass": false,
+            "failure_hint": "other"
+          },
+          "functional": {
+            "functional_ok": false,
+            "error": "AttributeError: type object 'PyFuncModel' has no attribute 'from_sklearn'"
+          },
+          "static": {
+            "pipeline": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            },
+            "test": {
+              "parses": true,
+              "is_rvh": false,
+              "rvh_violations": [],
+              "is_iih": false,
+              "iih_violations": []
+            }
+          },
+          "strength": {
+            "tests": 1,
+            "asserts": 0
+          },
+          "is_rvh": false,
+          "is_iih": false
+        }
+      ]
+    }
+  ]
+}

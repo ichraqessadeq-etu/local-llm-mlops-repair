@@ -3,8 +3,10 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24551862.svg)](https://doi.org/10.5281/zenodo.24551862)
 
 Code, generations, repairs and analysis scripts of the study
-*Execution-Guided Self-Healing of LLM-Generated MLOps Pipelines with Locally Run Open-Weight Models*
-(I. Essadeq, S. Nouh, K. Kandali; manuscript submitted to *Machine Learning with Applications*).
+*From Model Repairs to Rules: Execution-Guided Self-Healing of LLM-Generated MLOps Pipelines with Locally Run
+Open-Weight Models* (I. Essadeq, S. Nouh, K. Kandali; manuscript submitted to *Array*). Version 2.0.0 adds the
+rules distilled from the model's repairs (R3), their validation on unseen generations and the analyses of the
+distillation; version 1.0.0 matches an earlier version of the manuscript without R3.
 
 Four open-weight models, quantised to 4 bits and served by [Ollama](https://ollama.com) on a laptop without a GPU
 (Intel Core i7-8665U, 16 GB RAM), generate an MLOps pipeline (`pipeline.py`, `test_pipeline.py`, a GitHub Actions
@@ -29,6 +31,7 @@ Models (Ollama tags, Q4_K_M): `qwen2.5-coder:3b`, `qwen2.5-coder:7b`, `llama3.1:
 | R2 | none: deterministic corrector, no model |
 | R2+R1full | R2 first, then R1full |
 | R2schema | R2 + fixes that read the data schema (encoding of text columns, imputation, column names), no model |
+| R3 | none: R2schema + four rules distilled from the model's successful repairs (MLflow API, module, features, label) |
 | P | no repair: two preventive sentences added to the generation prompt |
 
 ## Main results
@@ -40,8 +43,13 @@ Models (Ollama tags, Q4_K_M): `qwen2.5-coder:3b`, `qwen2.5-coder:7b`, `llama3.1:
 | R1full (model alone) | 40 | 51 | 43 |
 | R2+R1full (hybrid) | **61** | **87** | 50 |
 | R2schema (no model) | 46 | 68 | 61 |
-| Cascade R2schema → model (simulated) | 61 | 87 | **72** |
+| Cascade R2schema → model (simulated) | 61 | 87 | 72 |
+| R3 (no model) | 54 | 86 | 83 |
+| Cascade R3 → model (simulated) | **62** | **95** | **87** |
 
+R3 makes 223 of the 320 pipelines pass without any model call (cascade R2schema → model: 220, 24.5 h of model
+time) and yields 163 working detectors (145). On the 240 preventive generations, not used to design the rules,
+R3 makes 106 pass against 95 for R2schema (11 discordant pairs to 0, exact McNemar p = 0.001).
 Preventive prompt: 31/240 pass, against 51/320 with the base prompt (p = 0.34).
 Feedback ablation (air quality, 25 failures): R0 0, R1static 0, R1exec 17, R1full 15.
 
@@ -54,6 +62,18 @@ scripts/detectors.py              RVH / IIH static detectors
 scripts/repair_loop.py            repair loop: R0, R1static, R1exec, R1full, R2, R2+R1full, oracles, functional harness
 scripts/icais_r2_corrector.py     deterministic corrector R2
 scripts/repair_schema.py          R2schema (R2 + data schema), no model
+scripts/repair_rules.py           R3 = R2schema + rules distilled from the model's repairs, no model
+scripts/build_api_catalog.py      catalogue of MLflow / scikit-learn names and parameters, to run with the pinned
+                                  Python 3.7 environment; output: scripts/api_catalog.json (read by repair_rules.py)
+scripts/export_repairs.py         copies a repair series into results/repairs/ without MLflow runs or data copies
+scripts/distill/                  analyses of the distillation (outputs in results/distill/, labelled in French):
+                                    distill_extract.py      diffs between R2 and the model's successful repairs
+                                    distill_classify.py     families F1-F10 of the 145 failures left by R2schema
+                                    compare_r3.py           R3 against the other strategies (Table "R3")
+                                    compare_validation_P.py R3 against R2schema on the 240 preventive generations
+                                    classify_P.py, why_f1_P.py  families and stacked defects of those generations
+                                    stats_r3_article.py     McNemar tests and pass@k
+                                    router_feasibility.py   decision tree deciding when to call the model
 scripts/prepare_fraud.py          fraud subsample from OpenML 1597 (MD5 checked, seed 42)
 scripts/prepare_traffic.py        traffic data and congestion label
 scripts/analyze_final.py          statistics of the paper (Fisher, Holm, McNemar, GEE, residual errors, rounds, cost)
@@ -84,6 +104,18 @@ cd results
 python ../scripts/analyze_final.py        # -> analysis_final.json
 python ../scripts/analyze_cascade.py
 python ../scripts/analyze_prevention.py
+cd ../scripts/distill                     # distillation (R3), outputs in results/distill/
+python distill_classify.py && python compare_r3.py && python compare_validation_P.py
+python classify_P.py && python stats_r3_article.py && python router_feasibility.py
+```
+
+R3 was run on the 145 base generations that fail after R2schema (`<task>_<model>_R3`), on the 175 that pass
+after R2schema (`<task>_<model>_R3pass`, to check that the rules do not break them), and, with R2schema, on the
+preventive generations (`<task>_<model>_P_R2schema`, `<task>_<model>_P_R3`):
+
+```bash
+python repair_rules.py --src runs/traffic_qwen7b --data-name traffic.csv --out repairs/traffic_qwen7b_R3 \
+       --pytest-python <path/to/python3.7>
 ```
 
 ## Running new generations and repairs (local, free)

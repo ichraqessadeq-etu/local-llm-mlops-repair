@@ -1,0 +1,157 @@
+{
+  "run": 5,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9071,
+    "f1": 0.9,
+    "n_test": 2000
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 31
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\nmodel = RandomForestClassifier(), experiment_name = 'fraud_detection'\nrun_name = 'run_1'\n\n    def save_model(model, experiment_name, run_name):\n        \"\"\"Save the model using MLflow.\"\"\"\n        try:\n            mlflow.set_experiment(experiment_name)\n            with mlflow.start_run(run_name=run_name):\n                mlflow.sklearn.log_model(model, \"model\")\n                mlflow.log_metric(\"accuracy\", accuracy_score(y_train, model.predict(X_train)))\n            return mlflow.get_run_id()\n        except Exception as e:\n>           raise Exception(f\"An error occurred while saving the model: {e}\")\nE           Exception: An error occurred while saving the model: name 'y_train' is not defined\n\npipeline.py:46: Exception\n---------------------------- Captured stderr call -----------------------------\n2026/11/27 15:51:48 INFO mlflow.tracking.fluent: Experiment with name 'fraud_detection' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\nFAILED test_pipeline.py::test_save_model - Exception: An error occurred while...\n4 failed in 25.09s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9097,
+        "f1": 0.905,
+        "n_test": 2000
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\ntest_pipeline.py:32: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmodel = RandomForestClassifier(random_state=42)\nexperiment_name = 'fraud_detection', run_name = 'run_1'\n\n    def save_model(model, experiment_name, run_name):\n        \"\"\"Save the model using MLflow.\"\"\"\n        try:\n            mlflow.set_experiment(experiment_name)\n            with mlflow.start_run(run_name=run_name):\n                mlflow.sklearn.log_model(model, 'model')\n                mlflow.log_metric('accuracy', accuracy_score(y_train, model.predict(X_train)))\n            return mlflow.get_run_id()\n        except Exception as e:\n>           raise Exception(f'An error occurred while saving the model: {e}')\nE           Exception: An error occurred while saving the model: name 'y_train' is not defined\n\npipeline.py:45: Exception\n---------------------------- Captured stderr call -----------------------------\n2026/11/27 15:52:22 INFO mlflow.tracking.fluent: Experiment with name 'fraud_detection' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_save_model - Exception: An error occurred while...\n1 failed, 3 passed in 24.73s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\ntest_pipeline.py:32: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmodel = RandomForestClassifier(random_state=42)\nexperiment_name = 'fraud_detection', run_name = 'run_1'\n\n    def save_model(model, experiment_name, run_name):\n        \"\"\"Save the model using MLflow.\"\"\"\n        try:\n            mlflow.set_experiment(experiment_name)\n            with mlflow.start_run(run_name=run_name):\n                mlflow.sklearn.log_model(model, 'model')\n                mlflow.log_metric('accuracy', accuracy_score(y_train, model.predict(X_train)))\n            return mlflow.get_run_id()\n        except Exception as e:\n>           raise Exception(f'An error occurred while saving the model: {e}')\nE           Exception: An error occurred while saving the model: name 'y_train' is not defined\n\npipeline.py:45: Exception\n---------------------------- Captured stderr call -----------------------------\n2026/11/27 15:52:22 INFO mlflow.tracking.fluent: Experiment with name 'fraud_detection' does not exist. Creating a new experiment.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_save_model - Exception: An error occurred while...\n1 failed, 3 passed in 24.73s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

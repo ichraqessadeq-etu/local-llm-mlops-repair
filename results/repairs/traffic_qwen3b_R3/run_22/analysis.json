@@ -1,0 +1,141 @@
+{
+  "run": 22,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "assertion",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            'IsHoliday': [0, 1, 0],\n            'Hour': [10, 14, 18],\n            'DayOfWeek': [1, 2, 3],\n            'Month': [1, 2, 3],\n            'Congestion': ['Low', 'Medium', 'High']\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:31: NameError\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        \"\"\"Test the entire pipeline.\"\"\"\n        with pytest.raises(ValueError):\n>           run_pipeline(\"nonexistent_file.csv\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\ntest_pipeline.py:50: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline error: File not found: nonexistent_file.csv\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_run_pipeline - Failed: DID NOT RAISE <class 'Va...\n3 failed, 1 passed in 13.20s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            'Month': [1, 2, 3],\n            'Congestion': ['Low', 'Medium', 'High']\n        })\n        X, y = preprocess_data(data)\n>       assert X.shape == (3, 10)\nE       assert (3, 13) == (3, 10)\nE         At index 1 diff: 13 != 10\nE         Use -v to get more diff\n\ntest_pipeline.py:26: AssertionError\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        \"\"\"Test the entire pipeline.\"\"\"\n        with pytest.raises(ValueError):\n>           run_pipeline(\"nonexistent_file.csv\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\ntest_pipeline.py:52: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline error: File not found: nonexistent_file.csv\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert (3, 13) == (3, 10)\nFAILED test_pipeline.py::test_run_pipeline - Failed: DID NOT RAISE <class 'Va...\n2 failed, 2 passed in 11.82s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            'Month': [1, 2, 3],\n            'Congestion': ['Low', 'Medium', 'High']\n        })\n        X, y = preprocess_data(data)\n>       assert X.shape == (3, 10)\nE       assert (3, 13) == (3, 10)\nE         At index 1 diff: 13 != 10\nE         Use -v to get more diff\n\ntest_pipeline.py:26: AssertionError\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        \"\"\"Test the entire pipeline.\"\"\"\n        with pytest.raises(ValueError):\n>           run_pipeline(\"nonexistent_file.csv\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\ntest_pipeline.py:52: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline error: File not found: nonexistent_file.csv\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - assert (3, 13) == (3, 10)\nFAILED test_pipeline.py::test_run_pipeline - Failed: DID NOT RAISE <class 'Va...\n2 failed, 2 passed in 11.82s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

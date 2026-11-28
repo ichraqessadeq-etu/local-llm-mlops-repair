@@ -1,0 +1,142 @@
+{
+  "run": 13,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "value = \"Input contains NaN, infinity or a value too large for dtype('float32').\"\ntimestamp = 1795823394193, step = 0\n\n    def _validate_metric(key, value, timestamp, step):\n        \"\"\"\n        Check that a metric with the specified key, value, timestamp, and step is valid and raise an\n        exception if it isn't.\n        \"\"\"\n        _validate_metric_name(key)\n        # value must be a Number\n        # since bool is an instance of Number check for bool additionally\n        if not _is_numeric(value):\n            raise MlflowException(\n                \"Got invalid value %s for metric '%s' (timestamp=%s). Please specify value as a valid \"\n                \"double (64-bit floating point)\" % (value, key, timestamp),\n>               INVALID_PARAMETER_VALUE,\n            )\nE           mlflow.exceptions.MlflowException: Got invalid value Input contains NaN, infinity or a value too large for dtype('float32'). for metric 'error' (timestamp=1795823394193). Please specify value as a valid double (64-bit floating point)\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\utils\\validation.py:127: MlflowException\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - mlflow.exceptions.MlflowException...\n3 failed in 9.57s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd",
+        "pipeline: added schema shim (categorical encoding, imputation)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nkey = 'error', value = \"name 'X_test' is not defined\", timestamp = 1795823415053\nstep = 0\n\n    def _validate_metric(key, value, timestamp, step):\n        \"\"\"\n        Check that a metric with the specified key, value, timestamp, and step is valid and raise an\n        exception if it isn't.\n        \"\"\"\n        _validate_metric_name(key)\n        # value must be a Number\n        # since bool is an instance of Number check for bool additionally\n        if not _is_numeric(value):\n            raise MlflowException(\n                \"Got invalid value %s for metric '%s' (timestamp=%s). Please specify value as a valid \"\n                \"double (64-bit floating point)\" % (value, key, timestamp),\n>               INVALID_PARAMETER_VALUE,\n            )\nE           mlflow.exceptions.MlflowException: Got invalid value name 'X_test' is not defined for metric 'error' (timestamp=1795823415053). Please specify value as a valid double (64-bit floating point)\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\utils\\validation.py:127: MlflowException\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - mlflow.exceptions.MlflowException...\n1 failed, 2 passed in 11.18s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nkey = 'error', value = \"name 'X_test' is not defined\", timestamp = 1795823415053\nstep = 0\n\n    def _validate_metric(key, value, timestamp, step):\n        \"\"\"\n        Check that a metric with the specified key, value, timestamp, and step is valid and raise an\n        exception if it isn't.\n        \"\"\"\n        _validate_metric_name(key)\n        # value must be a Number\n        # since bool is an instance of Number check for bool additionally\n        if not _is_numeric(value):\n            raise MlflowException(\n                \"Got invalid value %s for metric '%s' (timestamp=%s). Please specify value as a valid \"\n                \"double (64-bit floating point)\" % (value, key, timestamp),\n>               INVALID_PARAMETER_VALUE,\n            )\nE           mlflow.exceptions.MlflowException: Got invalid value name 'X_test' is not defined for metric 'error' (timestamp=1795823415053). Please specify value as a valid double (64-bit floating point)\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\utils\\validation.py:127: MlflowException\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - mlflow.exceptions.MlflowException...\n1 failed, 2 passed in 11.18s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "run": 10,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "file_or_path",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 10
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 5,
+        "returncode": 1,
+        "tail": "            'PT08.S1(CO)': [10, 20, 30],\n            'PT08.S2(NMHC)': [40, 50, 60],\n            'PT08.S3(NOx)': [70, 80, 90],\n            'PT08.S4(NO2)': [100, 110, 120],\n            'PT08.S5(O3)': [130, 140, 150],\n            'NOx(GT)': [160, 170, 180],\n            'C6H6(GT)': [190, 200, 210],\n            'T': [220, 230, 240],\n            'RH': [250, 260, 270],\n            'AH': [280, 290, 300],\n            'Hour': [1, 2, 3],\n            'DayOfWeek': [4, 5, 6],\n            'Month': [7, 8, 9],\n            'Anomaly': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:9: NameError\n=========================== short test summary info ===========================\nERROR test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not de...\nERROR test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nERROR test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not def...\nERROR test_pipeline.py::test_run_pipeline - NameError: name 'pd' is not defined\n5 errors in 13.38s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 10
+      },
+      "pytest": {
+        "passed": 4,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    \n            assert not isinstance(handle, str)\n            handles.append(handle)\n    \n        elif isinstance(handle, str):\n            # Check whether the filename is to be opened in binary mode.\n            # Binary mode does not support 'encoding' and 'newline'.\n            if ioargs.encoding and \"b\" not in ioargs.mode:\n                # Encoding\n                handle = open(\n                    handle,\n                    ioargs.mode,\n                    encoding=ioargs.encoding,\n                    errors=errors,\n>                   newline=\"\",\n                )\nE               FileNotFoundError: [Errno 2] No such file or directory: 'empty.csv'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\io\\common.py:707: FileNotFoundError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:20 File not found.\nERROR    root:pipeline.py:20 File not found.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - FileNotFoundError: [Errno 2] No suc...\n1 failed, 4 passed in 29.20s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 4,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    \n            assert not isinstance(handle, str)\n            handles.append(handle)\n    \n        elif isinstance(handle, str):\n            # Check whether the filename is to be opened in binary mode.\n            # Binary mode does not support 'encoding' and 'newline'.\n            if ioargs.encoding and \"b\" not in ioargs.mode:\n                # Encoding\n                handle = open(\n                    handle,\n                    ioargs.mode,\n                    encoding=ioargs.encoding,\n                    errors=errors,\n>                   newline=\"\",\n                )\nE               FileNotFoundError: [Errno 2] No such file or directory: 'empty.csv'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\io\\common.py:707: FileNotFoundError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:20 File not found.\nERROR    root:pipeline.py:20 File not found.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - FileNotFoundError: [Errno 2] No suc...\n1 failed, 4 passed in 29.20s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 10
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

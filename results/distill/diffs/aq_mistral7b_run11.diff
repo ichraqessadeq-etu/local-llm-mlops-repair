@@ -1,0 +1,18 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -1 +1,2 @@
++# pipeline.py
+ import mlflow
+@@ -4,3 +5,2 @@
+ from sklearn.ensemble import RandomForestClassifier
+-from mlflow import log_artifact, pyfunc, track
+ 
+@@ -17,2 +17,3 @@
+         mlflow.pyfunc.log_model(model, 'model')
+-        print(f'Model trained and logged with MLflow run ID: {mlflow.get_run_id()}')+        mlflow.log_metric('model_training_time', mlflow.utils.time_since_epoch())
++        print(f'Model trained and logged with MLflow run ID: {mlflow.get_run_id()}')
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -1 +1,2 @@
++# test_pipeline.py
+ import pandas as pd

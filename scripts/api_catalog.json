@@ -1,0 +1,787 @@
+{
+ "modules": {
+  "mlflow": {
+   "ActiveRun": "__attr__",
+   "MlflowClient": "__attr__",
+   "MlflowException": "__attr__",
+   "active_run": [],
+   "artifacts": "__attr__",
+   "autolog": [
+    "log_input_examples",
+    "log_model_signatures",
+    "log_models",
+    "disable",
+    "exclusive",
+    "disable_for_unsupported_versions",
+    "silent"
+   ],
+   "azure": "__attr__",
+   "catboost": "__attr__",
+   "client": "__attr__",
+   "create_experiment": [
+    "name",
+    "artifact_location",
+    "tags"
+   ],
+   "data": "__attr__",
+   "delete_experiment": [
+    "experiment_id"
+   ],
+   "delete_run": [
+    "run_id"
+   ],
+   "delete_tag": [
+    "key"
+   ],
+   "diviner": "__attr__",
+   "end_run": [
+    "status"
+   ],
+   "entities": "__attr__",
+   "environment_variables": "__attr__",
+   "evaluate": [
+    "model",
+    "data",
+    "targets",
+    "model_type",
+    "dataset_name",
+    "dataset_path",
+    "feature_names",
+    "evaluators",
+    "evaluator_config",
+    "custom_metrics",
+    "validation_thresholds",
+    "baseline_model",
+    "env_manager"
+   ],
+   "exceptions": "__attr__",
+   "fastai": "__attr__",
+   "get_artifact_uri": [
+    "artifact_path"
+   ],
+   "get_experiment": [
+    "experiment_id"
+   ],
+   "get_experiment_by_name": [
+    "name"
+   ],
+   "get_registry_uri": [],
+   "get_run": [
+    "run_id"
+   ],
+   "get_tracking_uri": [],
+   "gluon": "__attr__",
+   "h2o": "__attr__",
+   "is_tracking_uri_set": [],
+   "keras": "__attr__",
+   "last_active_run": [],
+   "lightgbm": "__attr__",
+   "list_experiments": [
+    "view_type",
+    "max_results"
+   ],
+   "list_run_infos": [
+    "experiment_id",
+    "run_view_type",
+    "max_results",
+    "order_by"
+   ],
+   "log_artifact": [
+    "local_path",
+    "artifact_path"
+   ],
+   "log_artifacts": [
+    "local_dir",
+    "artifact_path"
+   ],
+   "log_dict": [
+    "dictionary",
+    "artifact_file"
+   ],
+   "log_figure": [
+    "figure",
+    "artifact_file"
+   ],
+   "log_image": [
+    "image",
+    "artifact_file"
+   ],
+   "log_metric": [
+    "key",
+    "value",
+    "step"
+   ],
+   "log_metrics": [
+    "metrics",
+    "step"
+   ],
+   "log_param": [
+    "key",
+    "value"
+   ],
+   "log_params": [
+    "params"
+   ],
+   "log_text": [
+    "text",
+    "artifact_file"
+   ],
+   "mleap": "__attr__",
+   "models": "__attr__",
+   "onnx": "__attr__",
+   "paddle": "__attr__",
+   "pipelines": "__attr__",
+   "pmdarima": "__attr__",
+   "projects": "__attr__",
+   "prophet": "__attr__",
+   "protos": "__attr__",
+   "pyfunc": "__attr__",
+   "pyspark": "__attr__",
+   "pytorch": "__attr__",
+   "register_model": [
+    "model_uri",
+    "name",
+    "await_registration_for",
+    "tags"
+   ],
+   "run": [
+    "uri",
+    "entry_point",
+    "version",
+    "parameters",
+    "docker_args",
+    "experiment_name",
+    "experiment_id",
+    "backend",
+    "backend_config",
+    "use_conda",
+    "storage_dir",
+    "synchronous",
+    "run_id",
+    "run_name",
+    "env_manager",
+    "skip_image_build"
+   ],
+   "search_experiments": [
+    "view_type",
+    "max_results",
+    "filter_string",
+    "order_by"
+   ],
+   "search_runs": [
+    "experiment_ids",
+    "filter_string",
+    "run_view_type",
+    "max_results",
+    "order_by",
+    "output_format",
+    "search_all_experiments",
+    "experiment_names"
+   ],
+   "set_experiment": [
+    "experiment_name",
+    "experiment_id"
+   ],
+   "set_experiment_tag": [
+    "key",
+    "value"
+   ],
+   "set_experiment_tags": [
+    "tags"
+   ],
+   "set_registry_uri": [
+    "uri"
+   ],
+   "set_tag": [
+    "key",
+    "value"
+   ],
+   "set_tags": [
+    "tags"
+   ],
+   "set_tracking_uri": [
+    "uri"
+   ],
+   "shap": "__attr__",
+   "sklearn": "__attr__",
+   "spacy": "__attr__",
+   "spark": "__attr__",
+   "start_run": [
+    "run_id",
+    "experiment_id",
+    "run_name",
+    "nested",
+    "tags",
+    "description"
+   ],
+   "statsmodels": "__attr__",
+   "store": "__attr__",
+   "tensorflow": "__attr__",
+   "tracking": "__attr__",
+   "types": "__attr__",
+   "utils": "__attr__",
+   "version": "__attr__",
+   "warnings": "__attr__",
+   "xgboost": "__attr__"
+  },
+  "mlflow.artifacts": {
+   "BAD_REQUEST": "__attr__",
+   "INVALID_PARAMETER_VALUE": "__attr__",
+   "MlflowException": "__attr__",
+   "Optional": null,
+   "download_artifacts": [
+    "artifact_uri",
+    "run_id",
+    "artifact_path",
+    "dst_path"
+   ],
+   "get_artifact_repository": [
+    "artifact_uri"
+   ],
+   "json": "__attr__",
+   "load_dict": [
+    "artifact_uri"
+   ],
+   "load_image": [
+    "artifact_uri"
+   ],
+   "load_text": [
+    "artifact_uri"
+   ],
+   "pathlib": "__attr__",
+   "tempfile": "__attr__"
+  },
+  "mlflow.models": {
+   "EvaluationArtifact": "__attr__",
+   "EvaluationResult": "__attr__",
+   "FlavorBackend": "__attr__",
+   "MetricThreshold": "__attr__",
+   "Model": "__attr__",
+   "ModelInputExample": null,
+   "ModelSignature": "__attr__",
+   "add_libraries_to_model": [
+    "model_uri",
+    "run_id",
+    "registered_model_name"
+   ],
+   "evaluate": [
+    "model",
+    "data",
+    "targets",
+    "model_type",
+    "dataset_name",
+    "dataset_path",
+    "feature_names",
+    "evaluators",
+    "evaluator_config",
+    "custom_metrics",
+    "validation_thresholds",
+    "baseline_model",
+    "env_manager"
+   ],
+   "evaluation": "__attr__",
+   "flavor_backend": "__attr__",
+   "get_model_info": [
+    "model_uri"
+   ],
+   "infer_pip_requirements": [
+    "model_uri",
+    "flavor",
+    "fallback"
+   ],
+   "infer_signature": [
+    "model_input",
+    "model_output"
+   ],
+   "list_evaluators": [],
+   "model": "__attr__",
+   "signature": "__attr__",
+   "utils": "__attr__",
+   "validate_schema": [
+    "data",
+    "expected_schema"
+   ]
+  },
+  "mlflow.pyfunc": {
+   "Any": null,
+   "CODE": "__attr__",
+   "DATA": "__attr__",
+   "DEFAULT_AWAIT_MAX_SLEEP_SECONDS": "__attr__",
+   "ENV": "__attr__",
+   "FLAVOR_NAME": "__attr__",
+   "INVALID_PARAMETER_VALUE": "__attr__",
+   "Iterator": null,
+   "LOG_MODEL_PARAM_DOCS": "__attr__",
+   "MAIN": "__attr__",
+   "MLMODEL_FILE_NAME": "__attr__",
+   "MlflowException": "__attr__",
+   "Model": "__attr__",
+   "ModelInputExample": null,
+   "ModelSignature": "__attr__",
+   "PYTHON_VERSION": "__attr__",
+   "PY_VERSION": "__attr__",
+   "PyFuncInput": null,
+   "PyFuncModel": "__attr__",
+   "PyFuncOutput": null,
+   "PythonModel": "__attr__",
+   "PythonModelContext": "__attr__",
+   "RESOURCE_DOES_NOT_EXIST": "__attr__",
+   "Tuple": null,
+   "Union": null,
+   "add_to_model": null,
+   "append_to_uri_path": [
+    "uri"
+   ],
+   "cache_return_value_per_process": [
+    "fn"
+   ],
+   "collections": "__attr__",
+   "deepcopy": [
+    "x",
+    "memo",
+    "_nil"
+   ],
+   "deprecated": [
+    "alternative",
+    "since",
+    "impact"
+   ],
+   "experimental": [
+    "api_or_type"
+   ],
+   "find_free_port": [],
+   "format_docstring": [
+    "param_docs"
+   ],
+   "get_default_conda_env": [],
+   "get_default_pip_requirements": [],
+   "get_major_minor_py_version": [
+    "py_version"
+   ],
+   "get_model_dependencies": [
+    "model_uri",
+    "format"
+   ],
+   "get_nfs_cache_root_dir": [],
+   "get_or_create_nfs_tmp_dir": [],
+   "get_or_create_tmp_dir": [],
+   "importlib": "__attr__",
+   "is_in_databricks_runtime": [],
+   "load_model": [
+    "model_uri",
+    "suppress_warnings",
+    "dst_path"
+   ],
+   "load_pyfunc": [
+    "model_uri",
+    "suppress_warnings"
+   ],
+   "loader_template": "__attr__",
+   "log_model": [
+    "artifact_path",
+    "loader_module",
+    "data_path",
+    "code_path",
+    "conda_env",
+    "python_model",
+    "artifacts",
+    "registered_model_name",
+    "signature",
+    "input_example",
+    "await_registration_for",
+    "pip_requirements",
+    "extra_pip_requirements"
+   ],
+   "logging": "__attr__",
+   "mlflow": "__attr__",
+   "model": "__attr__",
+   "np": "__attr__",
+   "os": "__attr__",
+   "pandas": "__attr__",
+   "save_model": null,
+   "signal": "__attr__",
+   "spark_udf": [
+    "spark",
+    "model_uri",
+    "result_type",
+    "env_manager"
+   ],
+   "subprocess": "__attr__",
+   "sys": "__attr__",
+   "tempfile": "__attr__",
+   "threading": "__attr__",
+   "write_to": [
+    "filename",
+    "data"
+   ],
+   "yaml": "__attr__"
+  },
+  "mlflow.sklearn": {
+   "DEFAULT_AWAIT_MAX_SLEEP_SECONDS": "__attr__",
+   "FLAVOR_NAME": "__attr__",
+   "INPUT_EXAMPLE_SAMPLE_ROWS": "__attr__",
+   "INTERNAL_ERROR": "__attr__",
+   "INVALID_PARAMETER_VALUE": "__attr__",
+   "LOG_MODEL_PARAM_DOCS": "__attr__",
+   "MLFLOW_AUTOLOGGING": "__attr__",
+   "MLMODEL_FILE_NAME": "__attr__",
+   "MlflowAutologgingQueueingClient": "__attr__",
+   "MlflowClient": "__attr__",
+   "MlflowException": "__attr__",
+   "Model": "__attr__",
+   "ModelInputExample": null,
+   "ModelSignature": "__attr__",
+   "OrderedDict": "__attr__",
+   "SERIALIZATION_FORMAT_CLOUDPICKLE": "__attr__",
+   "SERIALIZATION_FORMAT_PICKLE": "__attr__",
+   "SUPPORTED_SERIALIZATION_FORMATS": "__attr__",
+   "Version": "__attr__",
+   "autolog": [
+    "log_input_examples",
+    "log_model_signatures",
+    "log_models",
+    "disable",
+    "exclusive",
+    "disable_for_unsupported_versions",
+    "silent",
+    "max_tuning_runs",
+    "log_post_training_metrics",
+    "serialization_format",
+    "registered_model_name",
+    "pos_label"
+   ],
+   "autologging_integration": [
+    "name"
+   ],
+   "deepcopy": [
+    "x",
+    "memo",
+    "_nil"
+   ],
+   "defaultdict": "__attr__",
+   "disable_autologging": [],
+   "eval_and_log_metrics": [
+    "model",
+    "X",
+    "y_true",
+    "prefix",
+    "sample_weight",
+    "pos_label"
+   ],
+   "format_docstring": [
+    "param_docs"
+   ],
+   "functools": "__attr__",
+   "get_autologging_config": [
+    "flavor_name",
+    "config_key",
+    "default_value"
+   ],
+   "get_default_conda_env": [
+    "include_cloudpickle"
+   ],
+   "get_default_pip_requirements": [
+    "include_cloudpickle"
+   ],
+   "get_instance_method_first_arg_value": [
+    "method",
+    "call_pos_args",
+    "call_kwargs"
+   ],
+   "gorilla": "__attr__",
+   "inspect": "__attr__",
+   "load_model": [
+    "model_uri",
+    "dst_path"
+   ],
+   "log_model": [
+    "sk_model",
+    "artifact_path",
+    "conda_env",
+    "code_paths",
+    "serialization_format",
+    "registered_model_name",
+    "signature",
+    "input_example",
+    "await_registration_for",
+    "pip_requirements",
+    "extra_pip_requirements",
+    "pyfunc_predict_fn"
+   ],
+   "logging": "__attr__",
+   "mlflow": "__attr__",
+   "np": "__attr__",
+   "os": "__attr__",
+   "pickle": "__attr__",
+   "pyfunc": "__attr__",
+   "resolve_input_example_and_signature": [
+    "get_input_example",
+    "infer_model_signature",
+    "log_input_example",
+    "log_model_signature",
+    "logger"
+   ],
+   "safe_patch": [
+    "autologging_integration",
+    "destination",
+    "function_name",
+    "patch_function",
+    "manage_run"
+   ],
+   "save_model": [
+    "sk_model",
+    "path",
+    "conda_env",
+    "code_paths",
+    "mlflow_model",
+    "serialization_format",
+    "signature",
+    "input_example",
+    "pip_requirements",
+    "extra_pip_requirements",
+    "pyfunc_predict_fn"
+   ],
+   "update_wrapper_extended": [
+    "wrapper",
+    "wrapped"
+   ],
+   "weakref": "__attr__",
+   "write_to": [
+    "filename",
+    "data"
+   ],
+   "yaml": "__attr__"
+  },
+  "mlflow.tracking": {
+   "MlflowClient": "__attr__",
+   "artifact_utils": "__attr__",
+   "client": "__attr__",
+   "context": "__attr__",
+   "default_experiment": "__attr__",
+   "fluent": "__attr__",
+   "get_registry_uri": [],
+   "get_tracking_uri": [],
+   "is_tracking_uri_set": [],
+   "metric_value_conversion_utils": "__attr__",
+   "registry": "__attr__",
+   "set_registry_uri": [
+    "uri"
+   ],
+   "set_tracking_uri": [
+    "uri"
+   ]
+  }
+ },
+ "python": "3.7.7",
+ "sklearn_estimators": {
+  "ARDRegression": "sklearn.linear_model",
+  "AdaBoostClassifier": "sklearn.ensemble",
+  "AdaBoostRegressor": "sklearn.ensemble",
+  "AdditiveChi2Sampler": "sklearn.kernel_approximation",
+  "AffinityPropagation": "sklearn.cluster",
+  "AgglomerativeClustering": "sklearn.cluster",
+  "BaggingClassifier": "sklearn.ensemble",
+  "BaggingRegressor": "sklearn.ensemble",
+  "BayesianGaussianMixture": "sklearn.mixture",
+  "BayesianRidge": "sklearn.linear_model",
+  "BernoulliNB": "sklearn.naive_bayes",
+  "BernoulliRBM": "sklearn.neural_network",
+  "Binarizer": "sklearn.preprocessing",
+  "Birch": "sklearn.cluster",
+  "CCA": "sklearn.cross_decomposition",
+  "CalibratedClassifierCV": "sklearn.calibration",
+  "CategoricalNB": "sklearn.naive_bayes",
+  "ClassifierChain": "sklearn.multioutput",
+  "ColumnTransformer": "sklearn.compose",
+  "ComplementNB": "sklearn.naive_bayes",
+  "CountVectorizer": "sklearn.feature_extraction.text",
+  "DBSCAN": "sklearn.cluster",
+  "DecisionTreeClassifier": "sklearn.tree",
+  "DecisionTreeRegressor": "sklearn.tree",
+  "DictVectorizer": "sklearn.feature_extraction",
+  "DictionaryLearning": "sklearn.decomposition",
+  "DummyClassifier": "sklearn.dummy",
+  "DummyRegressor": "sklearn.dummy",
+  "ElasticNet": "sklearn.linear_model",
+  "ElasticNetCV": "sklearn.linear_model",
+  "EllipticEnvelope": "sklearn.covariance",
+  "EmpiricalCovariance": "sklearn.covariance",
+  "ExtraTreeClassifier": "sklearn.tree",
+  "ExtraTreeRegressor": "sklearn.tree",
+  "ExtraTreesClassifier": "sklearn.ensemble",
+  "ExtraTreesRegressor": "sklearn.ensemble",
+  "FactorAnalysis": "sklearn.decomposition",
+  "FastICA": "sklearn.decomposition",
+  "FeatureAgglomeration": "sklearn.cluster",
+  "FeatureHasher": "sklearn.feature_extraction",
+  "FeatureUnion": "sklearn.pipeline",
+  "FunctionTransformer": "sklearn.preprocessing",
+  "GammaRegressor": "sklearn.linear_model",
+  "GaussianMixture": "sklearn.mixture",
+  "GaussianNB": "sklearn.naive_bayes",
+  "GaussianProcessClassifier": "sklearn.gaussian_process",
+  "GaussianProcessRegressor": "sklearn.gaussian_process",
+  "GaussianRandomProjection": "sklearn.random_projection",
+  "GenericUnivariateSelect": "sklearn.feature_selection",
+  "GradientBoostingClassifier": "sklearn.ensemble",
+  "GradientBoostingRegressor": "sklearn.ensemble",
+  "GraphicalLasso": "sklearn.covariance",
+  "GraphicalLassoCV": "sklearn.covariance",
+  "GridSearchCV": "sklearn.model_selection",
+  "HalvingGridSearchCV": "sklearn.model_selection",
+  "HalvingRandomSearchCV": "sklearn.model_selection",
+  "HashingVectorizer": "sklearn.feature_extraction.text",
+  "HistGradientBoostingClassifier": "sklearn.ensemble",
+  "HistGradientBoostingRegressor": "sklearn.ensemble",
+  "HuberRegressor": "sklearn.linear_model",
+  "IncrementalPCA": "sklearn.decomposition",
+  "IsolationForest": "sklearn.ensemble",
+  "Isomap": "sklearn.manifold",
+  "IsotonicRegression": "sklearn.isotonic",
+  "IterativeImputer": "sklearn.impute",
+  "KBinsDiscretizer": "sklearn.preprocessing",
+  "KMeans": "sklearn.cluster",
+  "KNNImputer": "sklearn.impute",
+  "KNeighborsClassifier": "sklearn.neighbors",
+  "KNeighborsRegressor": "sklearn.neighbors",
+  "KNeighborsTransformer": "sklearn.neighbors",
+  "KernelCenterer": "sklearn.preprocessing",
+  "KernelDensity": "sklearn.neighbors",
+  "KernelPCA": "sklearn.decomposition",
+  "KernelRidge": "sklearn.kernel_ridge",
+  "LabelBinarizer": "sklearn.preprocessing",
+  "LabelEncoder": "sklearn.preprocessing",
+  "LabelPropagation": "sklearn.semi_supervised",
+  "LabelSpreading": "sklearn.semi_supervised",
+  "Lars": "sklearn.linear_model",
+  "LarsCV": "sklearn.linear_model",
+  "Lasso": "sklearn.linear_model",
+  "LassoCV": "sklearn.linear_model",
+  "LassoLars": "sklearn.linear_model",
+  "LassoLarsCV": "sklearn.linear_model",
+  "LassoLarsIC": "sklearn.linear_model",
+  "LatentDirichletAllocation": "sklearn.decomposition",
+  "LedoitWolf": "sklearn.covariance",
+  "LinearDiscriminantAnalysis": "sklearn.discriminant_analysis",
+  "LinearRegression": "sklearn.linear_model",
+  "LinearSVC": "sklearn.svm",
+  "LinearSVR": "sklearn.svm",
+  "LocalOutlierFactor": "sklearn.neighbors",
+  "LocallyLinearEmbedding": "sklearn.manifold",
+  "LogisticRegression": "sklearn.linear_model",
+  "LogisticRegressionCV": "sklearn.linear_model",
+  "MDS": "sklearn.manifold",
+  "MLPClassifier": "sklearn.neural_network",
+  "MLPRegressor": "sklearn.neural_network",
+  "MaxAbsScaler": "sklearn.preprocessing",
+  "MeanShift": "sklearn.cluster",
+  "MinCovDet": "sklearn.covariance",
+  "MinMaxScaler": "sklearn.preprocessing",
+  "MiniBatchDictionaryLearning": "sklearn.decomposition",
+  "MiniBatchKMeans": "sklearn.cluster",
+  "MiniBatchSparsePCA": "sklearn.decomposition",
+  "MissingIndicator": "sklearn.impute",
+  "MultiLabelBinarizer": "sklearn.preprocessing",
+  "MultiOutputClassifier": "sklearn.multioutput",
+  "MultiOutputRegressor": "sklearn.multioutput",
+  "MultiTaskElasticNet": "sklearn.linear_model",
+  "MultiTaskElasticNetCV": "sklearn.linear_model",
+  "MultiTaskLasso": "sklearn.linear_model",
+  "MultiTaskLassoCV": "sklearn.linear_model",
+  "MultinomialNB": "sklearn.naive_bayes",
+  "NMF": "sklearn.decomposition",
+  "NearestCentroid": "sklearn.neighbors",
+  "NearestNeighbors": "sklearn.neighbors",
+  "NeighborhoodComponentsAnalysis": "sklearn.neighbors",
+  "Normalizer": "sklearn.preprocessing",
+  "NuSVC": "sklearn.svm",
+  "NuSVR": "sklearn.svm",
+  "Nystroem": "sklearn.kernel_approximation",
+  "OAS": "sklearn.covariance",
+  "OPTICS": "sklearn.cluster",
+  "OneClassSVM": "sklearn.svm",
+  "OneHotEncoder": "sklearn.preprocessing",
+  "OneVsOneClassifier": "sklearn.multiclass",
+  "OneVsRestClassifier": "sklearn.multiclass",
+  "OrdinalEncoder": "sklearn.preprocessing",
+  "OrthogonalMatchingPursuit": "sklearn.linear_model",
+  "OrthogonalMatchingPursuitCV": "sklearn.linear_model",
+  "OutputCodeClassifier": "sklearn.multiclass",
+  "PCA": "sklearn.decomposition",
+  "PLSCanonical": "sklearn.cross_decomposition",
+  "PLSRegression": "sklearn.cross_decomposition",
+  "PLSSVD": "sklearn.cross_decomposition",
+  "PassiveAggressiveClassifier": "sklearn.linear_model",
+  "PassiveAggressiveRegressor": "sklearn.linear_model",
+  "PatchExtractor": "sklearn.feature_extraction.image",
+  "Perceptron": "sklearn.linear_model",
+  "Pipeline": "sklearn.pipeline",
+  "PoissonRegressor": "sklearn.linear_model",
+  "PolynomialCountSketch": "sklearn.kernel_approximation",
+  "PolynomialFeatures": "sklearn.preprocessing",
+  "PowerTransformer": "sklearn.preprocessing",
+  "QuadraticDiscriminantAnalysis": "sklearn.discriminant_analysis",
+  "QuantileRegressor": "sklearn.linear_model",
+  "QuantileTransformer": "sklearn.preprocessing",
+  "RANSACRegressor": "sklearn.linear_model",
+  "RBFSampler": "sklearn.kernel_approximation",
+  "RFE": "sklearn.feature_selection",
+  "RFECV": "sklearn.feature_selection",
+  "RadiusNeighborsClassifier": "sklearn.neighbors",
+  "RadiusNeighborsRegressor": "sklearn.neighbors",
+  "RadiusNeighborsTransformer": "sklearn.neighbors",
+  "RandomForestClassifier": "sklearn.ensemble",
+  "RandomForestRegressor": "sklearn.ensemble",
+  "RandomTreesEmbedding": "sklearn.ensemble",
+  "RandomizedSearchCV": "sklearn.model_selection",
+  "RegressorChain": "sklearn.multioutput",
+  "Ridge": "sklearn.linear_model",
+  "RidgeCV": "sklearn.linear_model",
+  "RidgeClassifier": "sklearn.linear_model",
+  "RidgeClassifierCV": "sklearn.linear_model",
+  "RobustScaler": "sklearn.preprocessing",
+  "SGDClassifier": "sklearn.linear_model",
+  "SGDOneClassSVM": "sklearn.linear_model",
+  "SGDRegressor": "sklearn.linear_model",
+  "SVC": "sklearn.svm",
+  "SVR": "sklearn.svm",
+  "SelectFdr": "sklearn.feature_selection",
+  "SelectFpr": "sklearn.feature_selection",
+  "SelectFromModel": "sklearn.feature_selection",
+  "SelectFwe": "sklearn.feature_selection",
+  "SelectKBest": "sklearn.feature_selection",
+  "SelectPercentile": "sklearn.feature_selection",
+  "SelfTrainingClassifier": "sklearn.semi_supervised",
+  "SequentialFeatureSelector": "sklearn.feature_selection",
+  "ShrunkCovariance": "sklearn.covariance",
+  "SimpleImputer": "sklearn.impute",
+  "SkewedChi2Sampler": "sklearn.kernel_approximation",
+  "SparseCoder": "sklearn.decomposition",
+  "SparsePCA": "sklearn.decomposition",
+  "SparseRandomProjection": "sklearn.random_projection",
+  "SpectralBiclustering": "sklearn.cluster",
+  "SpectralClustering": "sklearn.cluster",
+  "SpectralCoclustering": "sklearn.cluster",
+  "SpectralEmbedding": "sklearn.manifold",
+  "SplineTransformer": "sklearn.preprocessing",
+  "StackingClassifier": "sklearn.ensemble",
+  "StackingRegressor": "sklearn.ensemble",
+  "StandardScaler": "sklearn.preprocessing",
+  "TSNE": "sklearn.manifold",
+  "TfidfTransformer": "sklearn.feature_extraction.text",
+  "TfidfVectorizer": "sklearn.feature_extraction.text",
+  "TheilSenRegressor": "sklearn.linear_model",
+  "TransformedTargetRegressor": "sklearn.compose",
+  "TruncatedSVD": "sklearn.decomposition",
+  "TweedieRegressor": "sklearn.linear_model",
+  "VarianceThreshold": "sklearn.feature_selection",
+  "VotingClassifier": "sklearn.ensemble",
+  "VotingRegressor": "sklearn.ensemble"
+ },
+ "versions": {
+  "mlflow": "1.30.1",
+  "numpy": "1.21.6",
+  "pandas": "1.3.5",
+  "sklearn": "1.0.2"
+ }
+}

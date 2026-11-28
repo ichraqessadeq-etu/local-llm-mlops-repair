@@ -1,0 +1,41 @@
+--- round_0/pipeline.py
++++ round_2/pipeline.py
+@@ -1 +1,2 @@
++# pipeline.py
+ import pandas as pd
+@@ -25,3 +26,3 @@
+         # Split data into features (X) and target (y)
+-        X = data.drop(['Anomaly', 'PT08.S1(CO)_mean', 'PT08.S2(NMHC)_mean', 'PT08.S3(NOx)_mean', 'PT08.S4(NO2)_mean', 'PT08.S5(O3)_mean', 'NOx(GT)_mean', 'C6H6(GT)_mean', 'T_mean', 'RH_mean', 'AH_mean'], axis=1)
++        X = data.drop(['Anomaly', 'PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH', 'AH'], axis=1)
+         y = data['Anomaly']
+@@ -39,3 +40,3 @@
+         print(f"Error preprocessing data: {e}")
+-        return None
++        return None, None, None, None
+ 
+@@ -43,10 +44,14 @@
+     try:
+-        # Train RandomForestClassifier model
+-        model = RandomForestClassifier(n_estimators=100, random_state=42)
+-        model.fit(X_train, y_train)
++        # Check if y_train is not None
++        if y_train is not None:
++            # Train RandomForestClassifier model
++            model = RandomForestClassifier(n_estimators=100, random_state=42)
++            model.fit(X_train, y_train)
+ 
+-        # Log model to MLflow
+-        mlflow.sklearn.log_model(model, "random_forest_model")
++            # Log model to MLflow
++            mlflow.sklearn.log_model(model, "random_forest_model")
+ 
+-        return model
++            return model
++        else:
++            return None
+     except Exception as e:
+--- round_0/test_pipeline.py
++++ round_2/test_pipeline.py
+@@ -1 +1,2 @@
++# test_pipeline.py
+ import pytest

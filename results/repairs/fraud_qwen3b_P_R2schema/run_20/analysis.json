@@ -1,0 +1,141 @@
+{
+  "run": 20,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            'Time': [1, 2, 3],\n            'V1': [4, 5, 6],\n            'Class': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:24: NameError\n_______________________________ test_log_model ________________________________\n\n    def test_log_model():\n        \"\"\"Test logging the model.\"\"\"\n>       data = pd.DataFrame({\n            'Time': [1, 2, 3],\n            'V1': [4, 5, 6],\n            'Class': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:35: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_log_model - NameError: name 'pd' is not defined\n4 failed in 7.28s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            'Class': [0, 1, 0]\n        })\n        X_train, y_train, _, _ = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       log_model(model, 'fraud_detection', 'run_1', 'model')\n\ntest_pipeline.py:44: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmodel = RandomForestClassifier(random_state=42)\nexperiment_name = 'fraud_detection', run_name = 'run_1', artifact_path = 'model'\n\n    def log_model(model, experiment_name, run_name, artifact_path):\n        \"\"\"Log the trained model using MLflow.\"\"\"\n        try:\n            # Start a new MLflow run\n>           with mlflow.start_run(experiment_name=experiment_name, run_name=run_name):\nE           TypeError: start_run() got an unexpected keyword argument 'experiment_name'\n\npipeline.py:55: TypeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:60 Error logging model: start_run() got an unexpected keyword argument 'experiment_name'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_log_model - TypeError: start_run() got an unexp...\n1 failed, 3 passed in 7.11s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            'Class': [0, 1, 0]\n        })\n        X_train, y_train, _, _ = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       log_model(model, 'fraud_detection', 'run_1', 'model')\n\ntest_pipeline.py:44: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nmodel = RandomForestClassifier(random_state=42)\nexperiment_name = 'fraud_detection', run_name = 'run_1', artifact_path = 'model'\n\n    def log_model(model, experiment_name, run_name, artifact_path):\n        \"\"\"Log the trained model using MLflow.\"\"\"\n        try:\n            # Start a new MLflow run\n>           with mlflow.start_run(experiment_name=experiment_name, run_name=run_name):\nE           TypeError: start_run() got an unexpected keyword argument 'experiment_name'\n\npipeline.py:55: TypeError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:60 Error logging model: start_run() got an unexpected keyword argument 'experiment_name'\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_log_model - TypeError: start_run() got an unexp...\n1 failed, 3 passed in 7.11s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 6
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "run": 13,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "assertion",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 10
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        \"\"\"Test the preprocess_data function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n>       assert isinstance(X_train, np.ndarray)\nE       NameError: name 'np' is not defined\n\ntest_pipeline.py:14: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:26: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'np' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n2 failed, 1 passed in 16.54s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import numpy as np"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 10
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        \"\"\"Test the preprocess_data function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        assert isinstance(X_train, np.ndarray)\n        assert isinstance(X_test, np.ndarray)\n>       assert isinstance(y_train, np.ndarray)\nE       AssertionError: assert False\nE        +  where False = isinstance(9254    0\\n1561    0\\n1670    0\\n6087    0\\n6669    0\\n       ..\\n5734    0\\n5191    0\\n5390    0\\n860     0\\n7270    0\\nName: Class, Length: 8000, dtype: int64, <class 'numpy.ndarray'>)\nE        +    where <class 'numpy.ndarray'> = np.ndarray\n\ntest_pipeline.py:18: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 15.45s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        \"\"\"Test the preprocess_data function.\"\"\"\n        data = load_data('data/fraud.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        assert isinstance(X_train, np.ndarray)\n        assert isinstance(X_test, np.ndarray)\n>       assert isinstance(y_train, np.ndarray)\nE       AssertionError: assert False\nE        +  where False = isinstance(9254    0\\n1561    0\\n1670    0\\n6087    0\\n6669    0\\n       ..\\n5734    0\\n5191    0\\n5390    0\\n860     0\\n7270    0\\nName: Class, Length: 8000, dtype: int64, <class 'numpy.ndarray'>)\nE        +    where <class 'numpy.ndarray'> = np.ndarray\n\ntest_pipeline.py:18: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 15.45s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 10
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

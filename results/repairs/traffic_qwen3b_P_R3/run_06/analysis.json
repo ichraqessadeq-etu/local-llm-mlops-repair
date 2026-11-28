@@ -1,0 +1,149 @@
+{
+  "run": 6,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.7925,
+    "f1": 0.7041,
+    "n_test": 8113
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "self = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n        data = pd.DataFrame({\n            'temp': [20, 22, 18],\n            'rain_1h': [0.1, 0.2, 0.0],\n            'snow_1h': [0.0, 0.0, 0.1],\n            'clouds_all': [50, 60, 70],\n            'weather_main': ['sunny', 'rainy', 'snowy'],\n            'IsHoliday': [0, 1, 0],\n            'Hour': [10, 14, 18],\n            'DayOfWeek': ['Monday', 'Wednesday', 'Friday'],\n            'Month': ['January', 'March', 'May'],\n            'Congestion': [0, 1, 0]\n        })\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       self.assertIsInstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:41: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - KeyError: \"['Co...\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'Ra...\n2 failed, 2 passed in 20.24s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.7925,
+        "f1": 0.7041,
+        "n_test": 8113
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        Returns\n        -------\n        dropped : Index\n            Will be same type as self, except for RangeIndex.\n    \n        Raises\n        ------\n        KeyError\n            If not all of the labels are found in the selected axis\n        \"\"\"\n        arr_dtype = \"object\" if self.dtype == \"object\" else None\n        labels = com.index_labels_to_array(labels, dtype=arr_dtype)\n        indexer = self.get_indexer_for(labels)\n        mask = indexer == -1\n        if mask.any():\n            if errors != \"ignore\":\n>               raise KeyError(f\"{labels[mask]} not found in axis\")\nE               KeyError: \"['Congestion'] not found in axis\"\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\indexes\\base.py:6017: KeyError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:37 Error preprocessing data: \"['Congestion'] not found in axis\"\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - KeyError: \"['Co...\n1 failed, 3 passed in 27.73s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.7925,
+        "f1": 0.7041,
+        "n_test": 8113
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        Returns\n        -------\n        dropped : Index\n            Will be same type as self, except for RangeIndex.\n    \n        Raises\n        ------\n        KeyError\n            If not all of the labels are found in the selected axis\n        \"\"\"\n        arr_dtype = \"object\" if self.dtype == \"object\" else None\n        labels = com.index_labels_to_array(labels, dtype=arr_dtype)\n        indexer = self.get_indexer_for(labels)\n        mask = indexer == -1\n        if mask.any():\n            if errors != \"ignore\":\n>               raise KeyError(f\"{labels[mask]} not found in axis\")\nE               KeyError: \"['Congestion'] not found in axis\"\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\indexes\\base.py:6017: KeyError\n------------------------------ Captured log call ------------------------------\nERROR    root:pipeline.py:37 Error preprocessing data: \"['Congestion'] not found in axis\"\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - KeyError: \"['Co...\n1 failed, 3 passed in 27.73s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.7925,
+        "f1": 0.7041,
+        "n_test": 8113
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -35,2 +35,2 @@
+     except Exception as e:
+-        raise ValueError(f'Error training model: {e}')+        raise ValueError(f'Error training model: {e}')
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -30,2 +30,2 @@
+     assert isinstance(predictions, np.ndarray)
+-    assert not predictions.empty
++    assert len(predictions) > 0

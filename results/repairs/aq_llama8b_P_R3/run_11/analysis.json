@@ -1,0 +1,141 @@
+{
+  "run": 11,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "assertion",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:6: NameError\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n>       assert isinstance(X_train, pd.DataFrame)\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:11: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:20: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n3 failed in 12.36s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n>       assert isinstance(X_train, pd.DataFrame)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([[-0.79117524, -0.60605663,  2.88269938, ...,  0.72589441,\\n        -0.01899731,  1.69781509],\\n       [ 1.4034089...007, -1.42287192],\\n       [-1.2546278 , -1.52369951,  2.26975743, ..., -1.47330204,\\n        -1.01814582, -0.57177547]]), <class 'pandas.core.frame.DataFrame'>)\nE        +    where <class 'pandas.core.frame.DataFrame'> = pd.DataFrame\n\ntest_pipeline.py:13: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 11.82s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n>       assert isinstance(X_train, pd.DataFrame)\nE       AssertionError: assert False\nE        +  where False = isinstance(array([[-0.79117524, -0.60605663,  2.88269938, ...,  0.72589441,\\n        -0.01899731,  1.69781509],\\n       [ 1.4034089...007, -1.42287192],\\n       [-1.2546278 , -1.52369951,  2.26975743, ..., -1.47330204,\\n        -1.01814582, -0.57177547]]), <class 'pandas.core.frame.DataFrame'>)\nE        +    where <class 'pandas.core.frame.DataFrame'> = pd.DataFrame\n\ntest_pipeline.py:13: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 11.82s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

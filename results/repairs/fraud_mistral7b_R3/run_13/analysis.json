@@ -1,0 +1,155 @@
+{
+  "run": 13,
+  "pass_round0": false,
+  "pass_final": true,
+  "rounds_used": 2,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": null,
+  "weakened_final": false,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "AttributeError: 'NoneType' object has no attribute 'predict'"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 17
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        slice(1, 3, None)\n    \n        >>> non_monotonic_index = pd.Index(list('abcb'))\n        >>> non_monotonic_index.get_loc('b')\n        array([False,  True, False,  True])\n        \"\"\"\n        if method is None:\n            if tolerance is not None:\n                raise ValueError(\n                    \"tolerance argument only valid if using pad, \"\n                    \"backfill or nearest lookups\"\n                )\n            casted_key = self._maybe_cast_indexer(key)\n            try:\n                return self._engine.get_loc(casted_key)\n            except KeyError as err:\n>               raise KeyError(key) from err\nE               KeyError: 'Features'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\indexes\\base.py:3363: KeyError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - KeyError: 'Feat...\nFAILED test_pipeline.py::TestPipeline::test_train_model - KeyError: 'Features'\n3 failed in 6.91s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "KeyError: 'Features'"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 2 import(s): import pandas as pd; from sklearn.model_selection import train_test_split",
+        "pipeline: colonne fictive 'Features' remplac\u00e9e par la liste des features du sch\u00e9ma"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "y_train = 9069    0\n2603    0\n7738    0\n1579    0\n5058    0\n       ..\n5734    0\n5191    0\n5390    0\n860     0\n7270    0\nName: Class, Length: 7000, dtype: int64\n\n    def train_model(X_train, y_train):\n        with mlflow.start_run():\n            model = RandomForestClassifier(random_state=42)\n            model.fit(X_train, y_train)\n            mlflow.sklearn.log_model(model, 'random_forest')\n>           run_id = mlflow.get_run_id()\nE           AttributeError: module 'mlflow' has no attribute 'get_run_id'\n\npipeline.py:19: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: mod...\n1 failed, 2 passed in 19.04s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: module 'mlflow' has no attribute 'get_run_id'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "pipeline: mlflow.get_run_id n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "...                                                                      [100%]\n3 passed in 14.73s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "AttributeError: 'NoneType' object has no attribute 'predict'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

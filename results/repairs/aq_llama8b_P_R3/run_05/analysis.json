@@ -1,0 +1,141 @@
+{
+  "run": 5,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "assertion",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\n    def test_preprocess_data(self):\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n>       self.assertIsInstance(X_train, np.ndarray)\nE       NameError: name 'np' is not defined\n\ntest_pipeline.py:12: NameError\n________________________ TestPipeline.test_train_model ________________________\n\nself = <test_pipeline.TestPipeline testMethod=test_train_model>\n\n    def test_train_model(self):\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        model = train_model(X_train, y_train)\n>       self.assertIsInstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:19: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_load_data - NameError: name 'pd' ...\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'Ra...\n3 failed in 12.20s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 3 import(s): from sklearn.ensemble import RandomForestClassifier; import numpy as np; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def test_preprocess_data(self):\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        self.assertIsInstance(X_train, np.ndarray)\n>       self.assertIsInstance(y_train, np.ndarray)\nE       AssertionError: 4761    0\nE       5110    1\nE       1894    0\nE       3796    0\nE       864     1\nE              ..\nE       3772    0\nE       5191    0\nE       5226    0\nE       5390    0\nE       860     0\nE       Name: Anomaly, Length: 5806, dtype: int64 is not an instance of <class 'numpy.ndarray'>\n\ntest_pipeline.py:16: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - AssertionError:...\n1 failed, 2 passed in 11.89s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\nself = <test_pipeline.TestPipeline testMethod=test_preprocess_data>\n\n    def test_preprocess_data(self):\n        data = load_data('data/air_quality.csv')\n        X_train, X_test, y_train, y_test = preprocess_data(data)\n        self.assertIsInstance(X_train, np.ndarray)\n>       self.assertIsInstance(y_train, np.ndarray)\nE       AssertionError: 4761    0\nE       5110    1\nE       1894    0\nE       3796    0\nE       864     1\nE              ..\nE       3772    0\nE       5191    0\nE       5226    0\nE       5390    0\nE       860     0\nE       Name: Anomaly, Length: 5806, dtype: int64 is not an instance of <class 'numpy.ndarray'>\n\ntest_pipeline.py:16: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - AssertionError:...\n1 failed, 2 passed in 11.89s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

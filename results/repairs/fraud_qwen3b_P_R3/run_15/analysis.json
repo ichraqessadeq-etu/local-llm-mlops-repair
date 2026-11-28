@@ -1,0 +1,142 @@
+{
+  "run": 15,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        try:\n            with mlflow.start_run():\n                model = RandomForestClassifier(n_estimators=100, random_state=42)\n                model.fit(X_train, y_train)\n    \n                # Log the model\n                mlflow.sklearn.log_model(model, \"model\")\n    \n                # Log metrics\n                y_pred = model.predict(X_test)\n                accuracy = accuracy_score(y_test, y_pred)\n                mlflow.log_metric(\"accuracy\", accuracy)\n    \n                return model\n        except Exception as e:\n>           mlflow.log_exception(e)\nE           AttributeError: module 'mlflow' has no attribute 'log_exception'\n\npipeline.py:44: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - AttributeError: module 'mlflow' h...\nFAILED test_pipeline.py::test_predict - AttributeError: module 'mlflow' has n...\n4 failed in 16.77s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 3 import(s): from sklearn.ensemble import RandomForestClassifier; import numpy as np; import pandas as pd",
+        "pipeline: mlflow.log_exception n'existe pas dans l'environnement : import retir\u00e9, 2 appel(s) neutralis\u00e9(s)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def check_consistent_length(*arrays):\n        \"\"\"Check that all arrays have consistent first dimensions.\n    \n        Checks whether all objects in arrays have the same shape or length.\n    \n        Parameters\n        ----------\n        *arrays : list or tuple of input objects.\n            Objects that will be checked for consistent length.\n        \"\"\"\n    \n        lengths = [_num_samples(X) for X in arrays if X is not None]\n        uniques = np.unique(lengths)\n        if len(uniques) > 1:\n            raise ValueError(\n                \"Found input variables with inconsistent numbers of samples: %r\"\n>               % [int(l) for l in lengths]\n            )\nE           ValueError: Found input variables with inconsistent numbers of samples: [8000, 2000]\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:334: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'X_test' is not d...\nFAILED test_pipeline.py::test_predict - ValueError: Found input variables wit...\n2 failed, 2 passed in 16.20s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def check_consistent_length(*arrays):\n        \"\"\"Check that all arrays have consistent first dimensions.\n    \n        Checks whether all objects in arrays have the same shape or length.\n    \n        Parameters\n        ----------\n        *arrays : list or tuple of input objects.\n            Objects that will be checked for consistent length.\n        \"\"\"\n    \n        lengths = [_num_samples(X) for X in arrays if X is not None]\n        uniques = np.unique(lengths)\n        if len(uniques) > 1:\n            raise ValueError(\n                \"Found input variables with inconsistent numbers of samples: %r\"\n>               % [int(l) for l in lengths]\n            )\nE           ValueError: Found input variables with inconsistent numbers of samples: [8000, 2000]\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:334: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'X_test' is not d...\nFAILED test_pipeline.py::test_predict - ValueError: Found input variables wit...\n2 failed, 2 passed in 16.20s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 7
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

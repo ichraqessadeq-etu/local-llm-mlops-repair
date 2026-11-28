@@ -1,0 +1,15 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -22,3 +22,3 @@
+         rf_model.fit(X_train, y_train)
+-        mlflow.log_model(rf_model, "random_forest_model")
++        mlflow.sklearn.log_model(rf_model, "random_forest_model")
+         mlflow.log_param("n_estimators", 100)
+@@ -31 +31,2 @@
+         return rf_model
++
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -27 +27,2 @@
+     assert isinstance(model, RandomForestClassifier)
++

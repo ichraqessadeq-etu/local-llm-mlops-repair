@@ -1,0 +1,194 @@
+{
+  "run": 4,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 2,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "file_or_path",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "FileNotFoundError: [Errno 2] No such file or directory: 'model.pkl'"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 15
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "\n    def test_train_model(self):\n        data = load_data('data/air_quality.csv')\n>       X, y = preprocess_data(data)\n\ntest_pipeline.py:16: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ndata =       PT08.S1(CO)  PT08.S2(NMHC)  PT08.S3(NOx)  ...  DayOfWeek  Month  Anomaly\n0          1360.0         1046.0       ...    4        0\n7257       1071.0         1047.0         654.0  ...          0      4        0\n\n[7258 rows x 14 columns]\n\n    def preprocess_data(data):\n        # Preprocessing steps like normalization, encoding, etc.\n        # For simplicity, let's assume no preprocessing is needed\n>       return data[Features], data['Anomaly']\nE       NameError: name 'Features' is not defined\n\npipeline.py:11: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_preprocess_data - NameError: name...\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'Fe...\n2 failed, 1 passed in 5.13s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "NameError: name 'Features' is not defined"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits",
+        "pipeline: d\u00e9fini Features depuis le sch\u00e9ma"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "[7258 rows x 13 columns]\ny_train = 0       0\n1       0\n2       0\n3       0\n4       0\n       ..\n7253    0\n7254    0\n7255    0\n7256    0\n7257    0\nName: Anomaly, Length: 7258, dtype: int64\n\n    def train_model(X_train, y_train):\n        with mlflow.start_run():\n            model = RandomForestClassifier(random_state=42)\n            model.fit(X_train, y_train)\n>           mlflow.log_artifact(artifact=f'model_{mlflow.active_run().info.run_id}.pkl', local_path=f'model.pkl')\nE           TypeError: log_artifact() got an unexpected keyword argument 'artifact'\n\npipeline.py:16: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - TypeError: log_arti...\n1 failed, 2 passed in 9.03s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: log_artifact() got an unexpected keyword argument 'artifact'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "pipeline: mot-cl\u00e9 'artifact' retir\u00e9 de 1 appel(s) \u00e0 log_artifact()"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        \"\"\"\n        if _samefile(src, dst):\n            raise SameFileError(\"{!r} and {!r} are the same file\".format(src, dst))\n    \n        for fn in [src, dst]:\n            try:\n                st = os.stat(fn)\n            except OSError:\n                # File most likely does not exist\n                pass\n            else:\n                # XXX What about other special files? (sockets, devices...)\n                if stat.S_ISFIFO(st.st_mode):\n                    raise SpecialFileError(\"`%s` is a named pipe\" % fn)\n    \n        if not follow_symlinks and os.path.islink(src):\n            os.symlink(os.readlink(src), dst)\n        else:\n>           with open(src, 'rb') as fsrc:\nE           FileNotFoundError: [Errno 2] No such file or directory: 'model.pkl'\n\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\shutil.py:120: FileNotFoundError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - FileNotFoundError: ...\n1 failed, 2 passed in 6.66s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "FileNotFoundError: [Errno 2] No such file or directory: 'model.pkl'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "        \"\"\"\n        if _samefile(src, dst):\n            raise SameFileError(\"{!r} and {!r} are the same file\".format(src, dst))\n    \n        for fn in [src, dst]:\n            try:\n                st = os.stat(fn)\n            except OSError:\n                # File most likely does not exist\n                pass\n            else:\n                # XXX What about other special files? (sockets, devices...)\n                if stat.S_ISFIFO(st.st_mode):\n                    raise SpecialFileError(\"`%s` is a named pipe\" % fn)\n    \n        if not follow_symlinks and os.path.islink(src):\n            os.symlink(os.readlink(src), dst)\n        else:\n>           with open(src, 'rb') as fsrc:\nE           FileNotFoundError: [Errno 2] No such file or directory: 'model.pkl'\n\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\shutil.py:120: FileNotFoundError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - FileNotFoundError: ...\n1 failed, 2 passed in 6.66s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "FileNotFoundError: [Errno 2] No such file or directory: 'model.pkl'"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

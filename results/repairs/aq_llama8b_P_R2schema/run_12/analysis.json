@@ -1,0 +1,96 @@
+{
+  "run": 12,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 0,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+  },
+  "repair_seconds": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "7253   NaN\n7254   NaN\n7255   NaN\n7256   NaN\n7257   NaN\nName: Anomaly, Length: 7258, dtype: float64\n\n    def train_model(X_train, y_train):\n        try:\n            # Train model\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n    \n            # Log model to MLflow\n            mlflow.sklearn.log_model(model, \"random_forest\")\n    \n            return model\n        except Exception as e:\n>           mlflow.log_error(f\"Error training model: {e}\")\nE           AttributeError: module 'mlflow' has no attribute 'log_error'\n\npipeline.py:44: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: mod...\n1 failed, 2 passed in 5.71s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "7253   NaN\n7254   NaN\n7255   NaN\n7256   NaN\n7257   NaN\nName: Anomaly, Length: 7258, dtype: float64\n\n    def train_model(X_train, y_train):\n        try:\n            # Train model\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n    \n            # Log model to MLflow\n            mlflow.sklearn.log_model(model, \"random_forest\")\n    \n            return model\n        except Exception as e:\n>           mlflow.log_error(f\"Error training model: {e}\")\nE           AttributeError: module 'mlflow' has no attribute 'log_error'\n\npipeline.py:44: AttributeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - AttributeError: mod...\n1 failed, 2 passed in 5.71s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64')."
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

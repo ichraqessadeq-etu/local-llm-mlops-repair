@@ -1,0 +1,25 @@
+--- round_0/pipeline.py
++++ round_2/pipeline.py
+@@ -1 +1,2 @@
++# pipeline.py
+ import pandas as pd
+@@ -19,8 +20,3 @@
+         # Drop unnecessary columns
+-        data.drop(['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'AH'], axis=1, inplace=True)
+-        
+-        # Convert categorical features to numerical
+-        data['Hour'] = pd.Categorical(data['Hour']).codes
+-        data['DayOfWeek'] = pd.Categorical(data['DayOfWeek']).codes
+-        data['Month'] = pd.Categorical(data['Month']).codes
++        data.drop(['AH', 'Hour', 'DayOfWeek', 'Month'], axis=1, inplace=True)
+         
+@@ -28,3 +24,3 @@
+         scaler = StandardScaler()
+-        X = scaler.fit_transform(data[['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH', 'Hour', 'DayOfWeek', 'Month']])
++        X = scaler.fit_transform(data[['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH']])
+         
+--- round_0/test_pipeline.py
++++ round_2/test_pipeline.py
+@@ -1 +1,2 @@
++# test_pipeline.py
+ import pytest

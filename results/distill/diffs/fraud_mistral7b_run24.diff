@@ -1,0 +1,19 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -1 +1,2 @@
++# pipeline.py
+ import mlflow
+@@ -4,3 +5,2 @@
+ from sklearn.ensemble import RandomForestClassifier
+-from mlflow import log_artifact, pyfunc, track
+ 
+@@ -20,3 +20,3 @@
+         mlflow.log_artifact('model.pkl', 'model')
+-        track(f'Training loss: {model.loss_}')
+-        track(f'Training accuracy: {model.score(X_train, y_train)}')+        mlflow.log_metric('training loss', model.loss_)
++        mlflow.log_metric('training accuracy', model.score(X_train, y_train))
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -1 +1,2 @@
++# test_pipeline.py
+ import pandas as pd

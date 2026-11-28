@@ -1,0 +1,8 @@
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -26,4 +26,3 @@
+     assert y.shape == (3,)
+-    assert X.columns.tolist() == ['V1']
+-    assert y.tolist() == [0, 1, 0]
++    assert X.columns.tolist() == ['Time', 'V1']
+ 

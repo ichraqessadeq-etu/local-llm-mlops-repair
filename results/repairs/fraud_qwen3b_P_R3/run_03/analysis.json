@@ -1,0 +1,149 @@
+{
+  "run": 3,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "other",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9071,
+    "f1": 0.9,
+    "n_test": 2000
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".FFF                                                                     [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\nFixture \"data\" called directly. Fixtures are not meant to be called directly,\nbut are created automatically when test functions request them as parameters.\nSee https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and\nhttps://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.\n______________________________ test_train_model _______________________________\nFixture \"data\" called directly. Fixtures are not meant to be called directly,\nbut are created automatically when test functions request them as parameters.\nSee https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and\nhttps://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.\n_____________________________ test_evaluate_model _____________________________\nFixture \"data\" called directly. Fixtures are not meant to be called directly,\nbut are created automatically when test functions request them as parameters.\nSee https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and\nhttps://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - Failed: Fixture \"data\" called...\nFAILED test_pipeline.py::test_train_model - Failed: Fixture \"data\" called dir...\nFAILED test_pipeline.py::test_evaluate_model - Failed: Fixture \"data\" called ...\n3 failed, 1 passed in 5.02s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".FFF                                                                     [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\nFixture \"data\" called directly. Fixtures are not meant to be called directly,\nbut are created automatically when test functions request them as parameters.\nSee https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and\nhttps://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.\n______________________________ test_train_model _______________________________\nFixture \"data\" called directly. Fixtures are not meant to be called directly,\nbut are created automatically when test functions request them as parameters.\nSee https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and\nhttps://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.\n_____________________________ test_evaluate_model _____________________________\nFixture \"data\" called directly. Fixtures are not meant to be called directly,\nbut are created automatically when test functions request them as parameters.\nSee https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and\nhttps://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - Failed: Fixture \"data\" called...\nFAILED test_pipeline.py::test_train_model - Failed: Fixture \"data\" called dir...\nFAILED test_pipeline.py::test_evaluate_model - Failed: Fixture \"data\" called ...\n3 failed, 1 passed in 5.50s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".FFF                                                                     [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\nFixture \"data\" called directly. Fixtures are not meant to be called directly,\nbut are created automatically when test functions request them as parameters.\nSee https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and\nhttps://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.\n______________________________ test_train_model _______________________________\nFixture \"data\" called directly. Fixtures are not meant to be called directly,\nbut are created automatically when test functions request them as parameters.\nSee https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and\nhttps://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.\n_____________________________ test_evaluate_model _____________________________\nFixture \"data\" called directly. Fixtures are not meant to be called directly,\nbut are created automatically when test functions request them as parameters.\nSee https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and\nhttps://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - Failed: Fixture \"data\" called...\nFAILED test_pipeline.py::test_train_model - Failed: Fixture \"data\" called dir...\nFAILED test_pipeline.py::test_evaluate_model - Failed: Fixture \"data\" called ...\n3 failed, 1 passed in 5.50s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

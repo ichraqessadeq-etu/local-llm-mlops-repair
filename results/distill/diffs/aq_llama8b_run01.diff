@@ -1,0 +1,32 @@
+--- round_d1/pipeline.py
++++ round_2/pipeline.py
+@@ -5,4 +5,2 @@
+ from sklearn.preprocessing import StandardScaler
+-from mlflow import logging
+-from mlflow.tracking import MlflowClient
+ 
+@@ -13,3 +11,3 @@
+     except Exception as e:
+-        logging.error(f"Error loading data: {e}")
++        print(f"Error loading data: {e}")
+         raise
+@@ -30,3 +28,3 @@
+     except Exception as e:
+-        logging.error(f"Error preprocessing data: {e}")
++        print(f"Error preprocessing data: {e}")
+         raise
+@@ -44,3 +42,4 @@
+     except Exception as e:
+-        logging.error(f"Error training model: {e}")
++        print(f"Error training model: {e}")
+         raise
++
+--- round_d1/test_pipeline.py
++++ round_2/test_pipeline.py
+@@ -1,2 +1,3 @@
+ import pytest
++import mlflow
+ from pipeline import load_data, preprocess_data, train_model
+@@ -18 +19,2 @@
+     assert model is not None
++

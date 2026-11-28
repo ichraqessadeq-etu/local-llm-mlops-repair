@@ -1,0 +1,151 @@
+{
+  "run": 12,
+  "pass_round0": false,
+  "pass_final": true,
+  "rounds_used": 2,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": null,
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.828,
+    "f1": 0.7614,
+    "n_test": 8113
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_qwen7b_P_R2schema\\run_12\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:5: in <module>\n    from mlflow import log_param, log_metric, log_model\nE   ImportError: cannot import name 'log_model' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 9.29s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ImportError: cannot import name 'log_model' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: moved log_model to mlflow.sklearn",
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =          temp  rain_1h  snow_1h  clouds_all  ... IsHoliday  Hour  DayOfWeek  Month\n5653   291.25     1.02      0.0    ...  4     11\n15795  295.89     0.00      0.0           1  ...         0    18          6      9\n\n[32451 rows x 9 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Rain'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - ValueError: could not convert str...\n1 failed, 2 passed in 9.80s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "pipeline: added schema shim (categorical encoding, imputation)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "...                                                                      [100%]\n3 passed in 24.50s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.828,
+        "f1": 0.7614,
+        "n_test": 8113
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "run": 2,
+  "pass_round0": false,
+  "pass_final": true,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": null,
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.8288,
+    "f1": 0.7633,
+    "n_test": 8113
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 5,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "            pass\n        elif is_float:\n            msg_err = \"Input contains {} or a value too large for {!r}.\"\n            if (\n                allow_nan\n                and np.isinf(X).any()\n                or not allow_nan\n                and not np.isfinite(X).all()\n            ):\n                type_err = \"infinity\" if allow_nan else \"NaN, infinity\"\n                raise ValueError(\n                    msg_err.format(\n>                       type_err, msg_dtype if msg_dtype is not None else X.dtype\n                    )\n                )\nE               ValueError: Input contains NaN, infinity or a value too large for dtype('float32').\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:116: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - ValueError: Input contains NaN, i...\nFAILED test_pipeline.py::test_evaluate_model - ValueError: Input contains NaN...\nFAILED test_pipeline.py::test_run_pipeline - ValueError: Input contains NaN, ...\n5 failed in 8.81s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: Input contains NaN, infinity or a value too large for dtype('float32')."
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd",
+        "pipeline: added schema shim (categorical encoding, imputation)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 5,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": ".....                                                                    [100%]\n5 passed in 20.78s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.8288,
+        "f1": 0.7633,
+        "n_test": 8113
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

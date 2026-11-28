@@ -1,0 +1,2948 @@
+[
+ {
+  "task": "aq",
+  "model": "qwen3b",
+  "run": 11,
+  "n_llm_rounds": 1,
+  "llm_seconds": 205.7,
+  "weakened": true,
+  "functional": true,
+  "start_errors": [
+   "Failed: DID NOT RAISE <class 'FileNotFoundError'>"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     60,
+     60
+    ],
+    "similarity": 0.98,
+    "imports_added": [
+     "pytest"
+    ],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": [
+     "__main__",
+     "data/air_quality.csv"
+    ]
+   },
+   "test_pipeline.py": {
+    "loc": [
+     54,
+     53
+    ],
+    "similarity": 0.92,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "An error occurred: "
+    ],
+    "strs_removed": [
+     "nonexistent_file.csv"
+    ]
+   }
+  },
+  "diff_file": "aq_qwen3b_run11.diff",
+  "diff_lines": 10
+ },
+ {
+  "task": "aq",
+  "model": "qwen3b",
+  "run": 14,
+  "n_llm_rounds": 1,
+  "llm_seconds": 202.8,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "NameError: name 'features' is not defined"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     66,
+     71
+    ],
+    "similarity": 0.94,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "AH",
+     "C6H6(GT)",
+     "DayOfWeek",
+     "Hour",
+     "Month",
+     "NOx(GT)",
+     "PT08.S1(CO)",
+     "PT08.S2(NMHC)",
+     "PT08.S3(NOx)",
+     "PT08.S4(NO2)",
+     "PT08.S5(O3)",
+     "RH"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     37,
+     37
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "aq_qwen3b_run14.diff",
+  "diff_lines": 7
+ },
+ {
+  "task": "aq",
+  "model": "qwen7b",
+  "run": 1,
+  "n_llm_rounds": 1,
+  "llm_seconds": 191.2,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "assert None == 5",
+   "+ where None = RandomForestClassifier(random_state=42).max_depth"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     28,
+     29
+    ],
+    "similarity": 0.99,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     29,
+     29
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "aq_qwen7b_run01.diff",
+  "diff_lines": 3
+ },
+ {
+  "task": "aq",
+  "model": "qwen7b",
+  "run": 5,
+  "n_llm_rounds": 1,
+  "llm_seconds": 175.0,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "AttributeError: 'numpy.ndarray' object has no attribute 'empty'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     35,
+     36
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     31,
+     31
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [
+     "not predictions.empty"
+    ],
+    "asserts_added": [
+     "len(predictions) > 0"
+    ],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "aq_qwen7b_run05.diff",
+  "diff_lines": 3
+ },
+ {
+  "task": "aq",
+  "model": "qwen7b",
+  "run": 6,
+  "n_llm_rounds": 1,
+  "llm_seconds": 161.3,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "assert 13 == 14"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     33,
+     34
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     23,
+     24
+    ],
+    "similarity": 0.99,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [
+     "X.shape[1] == 14"
+    ],
+    "asserts_added": [
+     "X.shape[1] == 13"
+    ],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "aq_qwen7b_run06.diff",
+  "diff_lines": 4
+ },
+ {
+  "task": "aq",
+  "model": "qwen7b",
+  "run": 20,
+  "n_llm_rounds": 1,
+  "llm_seconds": 416.4,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "assert (2, 13) == (2, 14)",
+   "At index 1 diff: 13 != 14",
+   "Use -v to get more diff"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     46,
+     47
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     52,
+     53
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [
+     "X.shape == (2, 14)"
+    ],
+    "asserts_added": [
+     "X.shape == (2, 13)"
+    ],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "aq_qwen7b_run20.diff",
+  "diff_lines": 4
+ },
+ {
+  "task": "aq",
+  "model": "llama8b",
+  "run": 1,
+  "n_llm_rounds": 2,
+  "llm_seconds": 529.7,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "ImportError: cannot import name 'logging' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     46,
+     45
+    ],
+    "similarity": 0.96,
+    "imports_added": [],
+    "imports_removed": [
+     "mlflow.logging",
+     "mlflow.tracking.MlflowClient"
+    ],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     18,
+     20
+    ],
+    "similarity": 0.98,
+    "imports_added": [
+     "mlflow"
+    ],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "aq_llama8b_run01.diff",
+  "diff_lines": 11
+ },
+ {
+  "task": "aq",
+  "model": "llama8b",
+  "run": 2,
+  "n_llm_rounds": 2,
+  "llm_seconds": 729.2,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "TypeError: cannot unpack non-iterable NoneType object"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     54,
+     59
+    ],
+    "similarity": 0.94,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {
+     "preprocess_data": [
+      [
+       "(X_train, X_test, y_train, y_test)",
+       "None"
+      ],
+      [
+       "(X_train, X_test, y_train, y_test)",
+       "(None, None, None, None)"
+      ]
+     ],
+     "train_model": [
+      [
+       "model",
+       "None"
+      ],
+      [
+       "model",
+       "None",
+       "None"
+      ]
+     ]
+    },
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "AH",
+     "C6H6(GT)",
+     "NOx(GT)",
+     "PT08.S1(CO)",
+     "PT08.S2(NMHC)",
+     "PT08.S3(NOx)",
+     "PT08.S4(NO2)",
+     "PT08.S5(O3)",
+     "RH",
+     "T"
+    ],
+    "strs_removed": [
+     "AH_mean",
+     "C6H6(GT)_mean",
+     "NOx(GT)_mean",
+     "PT08.S1(CO)_mean",
+     "PT08.S2(NMHC)_mean",
+     "PT08.S3(NOx)_mean",
+     "PT08.S4(NO2)_mean",
+     "PT08.S5(O3)_mean",
+     "RH_mean",
+     "T_mean"
+    ]
+   },
+   "test_pipeline.py": {
+    "loc": [
+     17,
+     18
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "aq_llama8b_run02.diff",
+  "diff_lines": 22
+ },
+ {
+  "task": "aq",
+  "model": "llama8b",
+  "run": 13,
+  "n_llm_rounds": 2,
+  "llm_seconds": 576.4,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "KeyError: \"['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)'] not in index\""
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     50,
+     46
+    ],
+    "similarity": 0.78,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     18,
+     19
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "aq_llama8b_run13.diff",
+  "diff_lines": 11
+ },
+ {
+  "task": "aq",
+  "model": "mistral7b",
+  "run": 1,
+  "n_llm_rounds": 1,
+  "llm_seconds": 232.4,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "NameError: name 'Features' is not defined"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     17,
+     21
+    ],
+    "similarity": 0.86,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "AH",
+     "C6H6(GT)",
+     "DayOfWeek",
+     "Hour",
+     "Month",
+     "NOx(GT)",
+     "PT08.S1(CO)",
+     "PT08.S2(NMHC)",
+     "PT08.S3(NOx)",
+     "PT08.S4(NO2)",
+     "PT08.S5(O3)",
+     "RH"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     16,
+     14
+    ],
+    "similarity": 0.95,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": [
+     "__main__"
+    ]
+   }
+  },
+  "diff_file": "aq_mistral7b_run01.diff",
+  "diff_lines": 8
+ },
+ {
+  "task": "aq",
+  "model": "mistral7b",
+  "run": 10,
+  "n_llm_rounds": 1,
+  "llm_seconds": 183.3,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     17,
+     18
+    ],
+    "similarity": 0.92,
+    "imports_added": [],
+    "imports_removed": [
+     "mlflow.log_artifact",
+     "mlflow.pyfunc",
+     "mlflow.track"
+    ],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "version"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     13,
+     13
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "aq_mistral7b_run10.diff",
+  "diff_lines": 3
+ },
+ {
+  "task": "aq",
+  "model": "mistral7b",
+  "run": 11,
+  "n_llm_rounds": 1,
+  "llm_seconds": 152.2,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     17,
+     19
+    ],
+    "similarity": 0.89,
+    "imports_added": [],
+    "imports_removed": [
+     "mlflow.log_artifact",
+     "mlflow.pyfunc",
+     "mlflow.track"
+    ],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "model_training_time"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     13,
+     14
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "aq_mistral7b_run11.diff",
+  "diff_lines": 5
+ },
+ {
+  "task": "aq",
+  "model": "mistral7b",
+  "run": 12,
+  "n_llm_rounds": 1,
+  "llm_seconds": 156.1,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "NameError: name 'Features' is not defined"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     16,
+     20
+    ],
+    "similarity": 0.84,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "AH",
+     "C6H6(GT)",
+     "DayOfWeek",
+     "Hour",
+     "Month",
+     "NOx(GT)",
+     "PT08.S1(CO)",
+     "PT08.S2(NMHC)",
+     "PT08.S3(NOx)",
+     "PT08.S4(NO2)",
+     "PT08.S5(O3)",
+     "RH"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     14,
+     12
+    ],
+    "similarity": 0.92,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": [
+     "__main__"
+    ]
+   }
+  },
+  "diff_file": "aq_mistral7b_run12.diff",
+  "diff_lines": 8
+ },
+ {
+  "task": "aq",
+  "model": "mistral7b",
+  "run": 13,
+  "n_llm_rounds": 1,
+  "llm_seconds": 229.9,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ImportError: cannot import name 'traceback' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     19,
+     22
+    ],
+    "similarity": 0.89,
+    "imports_added": [],
+    "imports_removed": [
+     "mlflow.log_artifact",
+     "mlflow.pyfunc",
+     "mlflow.traceback"
+    ],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "Error while logging model: "
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     25,
+     24
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "aq_mistral7b_run13.diff",
+  "diff_lines": 6
+ },
+ {
+  "task": "aq",
+  "model": "mistral7b",
+  "run": 14,
+  "n_llm_rounds": 1,
+  "llm_seconds": 181.3,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "NameError: name 'features' is not defined"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     16,
+     20
+    ],
+    "similarity": 0.84,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "AH",
+     "C6H6(GT)",
+     "DayOfWeek",
+     "Hour",
+     "Month",
+     "NOx(GT)",
+     "PT08.S1(CO)",
+     "PT08.S2(NMHC)",
+     "PT08.S3(NOx)",
+     "PT08.S4(NO2)",
+     "PT08.S5(O3)",
+     "RH"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     12,
+     15
+    ],
+    "similarity": 0.79,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "AH",
+     "C6H6(GT)",
+     "DayOfWeek",
+     "Hour",
+     "Month",
+     "NOx(GT)",
+     "PT08.S1(CO)",
+     "PT08.S2(NMHC)",
+     "PT08.S3(NOx)",
+     "PT08.S4(NO2)",
+     "PT08.S5(O3)",
+     "RH"
+    ],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "aq_mistral7b_run14.diff",
+  "diff_lines": 7
+ },
+ {
+  "task": "fraud",
+  "model": "qwen3b",
+  "run": 12,
+  "n_llm_rounds": 1,
+  "llm_seconds": 110.4,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "assert (3, 2) == (3, 1)",
+   "At index 1 diff: 2 != 1",
+   "Use -v to get more diff"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     44,
+     44
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     45,
+     45
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [
+     "X.shape == (3, 1)"
+    ],
+    "asserts_added": [
+     "X.shape == (3, 2)"
+    ],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_qwen3b_run12.diff",
+  "diff_lines": 2
+ },
+ {
+  "task": "fraud",
+  "model": "qwen3b",
+  "run": 19,
+  "n_llm_rounds": 2,
+  "llm_seconds": 363.2,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "NameError: name 'y_pred' is not defined"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     85,
+     87
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     50,
+     51
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_qwen3b_run19.diff",
+  "diff_lines": 3
+ },
+ {
+  "task": "fraud",
+  "model": "qwen3b",
+  "run": 21,
+  "n_llm_rounds": 1,
+  "llm_seconds": 109.8,
+  "weakened": true,
+  "functional": true,
+  "start_errors": [
+   "AssertionError: assert ['Time', 'V1'] == ['V1']",
+   "At index 0 diff: 'Time' != 'V1'",
+   "Left contains one more item: 'V1'",
+   "Use -v to get more diff"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     45,
+     45
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     47,
+     46
+    ],
+    "similarity": 0.75,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [
+     "X.columns.tolist() == ['V1']",
+     "y.tolist() == [0, 1, 0]"
+    ],
+    "asserts_added": [
+     "X.columns.tolist() == ['Time', 'V1']"
+    ],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_qwen3b_run21.diff",
+  "diff_lines": 3
+ },
+ {
+  "task": "fraud",
+  "model": "qwen3b",
+  "run": 29,
+  "n_llm_rounds": 3,
+  "llm_seconds": 552.9,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "TypeError: train_model() takes 2 positional arguments but 4 were given"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     87,
+     87
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     26,
+     44
+    ],
+    "similarity": 0.64,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {
+     "test_train_model": [
+      [
+       "data"
+      ],
+      []
+     ],
+     "test_evaluate_model": [
+      [
+       "data"
+      ],
+      []
+     ]
+    },
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [
+     "isinstance(model, RandomForestClassifier)"
+    ],
+    "asserts_added": [
+     "model is not None"
+    ],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_qwen3b_run29.diff",
+  "diff_lines": 30
+ },
+ {
+  "task": "fraud",
+  "model": "qwen7b",
+  "run": 4,
+  "n_llm_rounds": 1,
+  "llm_seconds": 214.2,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "Exception: Failed to train model: module 'mlflow' has no attribute 'log_model'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     41,
+     42
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     27,
+     28
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_qwen7b_run04.diff",
+  "diff_lines": 4
+ },
+ {
+  "task": "fraud",
+  "model": "qwen7b",
+  "run": 7,
+  "n_llm_rounds": 2,
+  "llm_seconds": 283.2,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "AttributeError: module 'mlflow' has no attribute 'log_model'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     26,
+     27
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     26,
+     26
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [
+     "X.shape[1] == 29"
+    ],
+    "asserts_added": [
+     "X.shape[1] == 30"
+    ],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_qwen7b_run07.diff",
+  "diff_lines": 5
+ },
+ {
+  "task": "fraud",
+  "model": "qwen7b",
+  "run": 8,
+  "n_llm_rounds": 3,
+  "llm_seconds": 461.7,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "AssertionError: assert False",
+   "+ where False = isinstance(array([0, 0, 0, ..., 0, 0, 0], dtype=int64), <class 'pandas.core.series.Series'>)",
+   "+ where <class 'pandas.core.series.Series'> = pd.Series"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     30,
+     31
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     30,
+     32
+    ],
+    "similarity": 0.95,
+    "imports_added": [
+     "numpy"
+    ],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [
+     "isinstance(predictions, pd.Series)",
+     "not predictions.empty"
+    ],
+    "asserts_added": [
+     "isinstance(predictions, np.ndarray)",
+     "len(predictions) > 0"
+    ],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_qwen7b_run08.diff",
+  "diff_lines": 7
+ },
+ {
+  "task": "fraud",
+  "model": "qwen7b",
+  "run": 9,
+  "n_llm_rounds": 2,
+  "llm_seconds": 319.6,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "AttributeError: 'RandomForestClassifier' object has no attribute 'is_fitted'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     45,
+     46
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     26,
+     28
+    ],
+    "similarity": 0.91,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [
+     "model.is_fitted()"
+    ],
+    "asserts_added": [
+     "not model.feature_importances_.size == 0"
+    ],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_qwen7b_run09.diff",
+  "diff_lines": 5
+ },
+ {
+  "task": "fraud",
+  "model": "qwen7b",
+  "run": 16,
+  "n_llm_rounds": 1,
+  "llm_seconds": 207.5,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "Exception: Error training model: module 'mlflow' has no attribute 'log_model'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     35,
+     36
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     29,
+     30
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_qwen7b_run16.diff",
+  "diff_lines": 4
+ },
+ {
+  "task": "fraud",
+  "model": "qwen7b",
+  "run": 22,
+  "n_llm_rounds": 1,
+  "llm_seconds": 156.3,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "AttributeError: module 'mlflow' has no attribute 'log_model'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     31,
+     32
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     27,
+     28
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_qwen7b_run22.diff",
+  "diff_lines": 4
+ },
+ {
+  "task": "fraud",
+  "model": "qwen7b",
+  "run": 28,
+  "n_llm_rounds": 1,
+  "llm_seconds": 176.6,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "AttributeError: module 'mlflow' has no attribute 'log_model'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     28,
+     28
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     25,
+     25
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_qwen7b_run28.diff",
+  "diff_lines": 2
+ },
+ {
+  "task": "fraud",
+  "model": "llama8b",
+  "run": 8,
+  "n_llm_rounds": 3,
+  "llm_seconds": 803.1,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "AttributeError: module 'mlflow.sklearn' has no attribute 'log_params'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     40,
+     43
+    ],
+    "similarity": 0.89,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {
+     "train_model": [
+      [
+       "X_train",
+       "y_train"
+      ],
+      [
+       "X_train",
+       "y_train",
+       "X_test",
+       "y_test"
+      ]
+     ]
+    },
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "accuracy",
+     "n_estimators",
+     "random_state"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     20,
+     21
+    ],
+    "similarity": 0.97,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {
+     "test_train_model": [
+      [],
+      [
+       "tmpdir"
+      ]
+     ]
+    },
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_llama8b_run08.diff",
+  "diff_lines": 12
+ },
+ {
+  "task": "fraud",
+  "model": "mistral7b",
+  "run": 4,
+  "n_llm_rounds": 1,
+  "llm_seconds": 266.5,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ValueError: Unknown label type: 'continuous'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     17,
+     45
+    ],
+    "similarity": 0.56,
+    "imports_added": [
+     "sklearn.utils.multiclass.type_of_target"
+    ],
+    "imports_removed": [],
+    "calls_added": [
+     "astype"
+    ],
+    "calls_removed": [],
+    "ret_changed": {
+     "preprocess_data": [
+      [
+       "(data, data['Amount'])"
+      ],
+      [
+       "(data, data['Amount'].astype(int))"
+      ]
+     ]
+    },
+    "sig_changed": {},
+    "funcs_added": [
+     "type_of_target"
+    ],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "Unknown label type: %r",
+     "continuous",
+     "float16",
+     "float32",
+     "float64",
+     "int16",
+     "int32",
+     "int64",
+     "int8",
+     "multiclass",
+     "uint16",
+     "uint32"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     23,
+     25
+    ],
+    "similarity": 0.9,
+    "imports_added": [
+     "pipeline.type_of_target"
+    ],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [
+     "test_type_of_target"
+    ],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [
+     "type_of_target(y) == 'multiclass'"
+    ],
+    "strs_added": [
+     "multiclass"
+    ],
+    "strs_removed": [
+     "-v"
+    ]
+   }
+  },
+  "diff_file": "fraud_mistral7b_run04.diff",
+  "diff_lines": 38
+ },
+ {
+  "task": "fraud",
+  "model": "mistral7b",
+  "run": 14,
+  "n_llm_rounds": 1,
+  "llm_seconds": 237.8,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     19,
+     20
+    ],
+    "similarity": 0.84,
+    "imports_added": [],
+    "imports_removed": [
+     "mlflow.log_artifact",
+     "mlflow.pyfunc",
+     "mlflow.track"
+    ],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "feature_importances"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     25,
+     25
+    ],
+    "similarity": 0.99,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_mistral7b_run14.diff",
+  "diff_lines": 7
+ },
+ {
+  "task": "fraud",
+  "model": "mistral7b",
+  "run": 15,
+  "n_llm_rounds": 1,
+  "llm_seconds": 262.6,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ValueError: Unknown label type: 'continuous'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     17,
+     31
+    ],
+    "similarity": 0.64,
+    "imports_added": [
+     "sklearn.utils.multiclass.type_of_target"
+    ],
+    "imports_removed": [],
+    "calls_added": [
+     "astype"
+    ],
+    "calls_removed": [],
+    "ret_changed": {
+     "preprocess_data": [
+      [
+       "(data, data['Amount'])"
+      ],
+      [
+       "(data, data['Amount'].astype(int))"
+      ]
+     ]
+    },
+    "sig_changed": {},
+    "funcs_added": [
+     "type_of_target"
+    ],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "Unknown label type: %r",
+     "binary",
+     "continuous",
+     "multiclass",
+     "multiclass-multioutput"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     21,
+     21
+    ],
+    "similarity": 0.99,
+    "imports_added": [
+     "pipeline.type_of_target"
+    ],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_mistral7b_run15.diff",
+  "diff_lines": 18
+ },
+ {
+  "task": "fraud",
+  "model": "mistral7b",
+  "run": 18,
+  "n_llm_rounds": 3,
+  "llm_seconds": 970.1,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ValueError: Unknown label type: 'continuous'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     18,
+     20
+    ],
+    "similarity": 0.95,
+    "imports_added": [
+     "sklearn.utils.multiclass.type_of_target"
+    ],
+    "imports_removed": [],
+    "calls_added": [
+     "astype"
+    ],
+    "calls_removed": [],
+    "ret_changed": {
+     "preprocess_data": [
+      [
+       "(data, data['Amount'])"
+      ],
+      [
+       "(data, data['Amount'].astype(int))"
+      ]
+     ]
+    },
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     22,
+     28
+    ],
+    "similarity": 0.73,
+    "imports_added": [
+     "sklearn.utils.multiclass.type_of_target"
+    ],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "binary",
+     "continuous",
+     "multiclass",
+     "multiclass-multioutput",
+     "multilabel-indicator",
+     "multilabel-sequences"
+    ],
+    "strs_removed": [
+     "__main__"
+    ]
+   }
+  },
+  "diff_file": "fraud_mistral7b_run18.diff",
+  "diff_lines": 20
+ },
+ {
+  "task": "fraud",
+  "model": "mistral7b",
+  "run": 20,
+  "n_llm_rounds": 1,
+  "llm_seconds": 176.5,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     19,
+     20
+    ],
+    "similarity": 0.79,
+    "imports_added": [],
+    "imports_removed": [
+     "mlflow.log_artifact",
+     "mlflow.pyfunc",
+     "mlflow.track"
+    ],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     18,
+     19
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_mistral7b_run20.diff",
+  "diff_lines": 8
+ },
+ {
+  "task": "fraud",
+  "model": "mistral7b",
+  "run": 23,
+  "n_llm_rounds": 2,
+  "llm_seconds": 594.0,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "KeyError: 'Features'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     17,
+     20
+    ],
+    "similarity": 0.8,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {
+     "preprocess_data": [
+      [
+       "(data['Features'], data['Class'])"
+      ],
+      [
+       "(features, target)"
+      ]
+     ]
+    },
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "Amount",
+     "V1",
+     "V10",
+     "V11",
+     "V12",
+     "V13",
+     "V14",
+     "V15",
+     "V16",
+     "V17",
+     "V18",
+     "V19"
+    ],
+    "strs_removed": [
+     "Features"
+    ]
+   },
+   "test_pipeline.py": {
+    "loc": [
+     25,
+     22
+    ],
+    "similarity": 0.97,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": [
+     "__main__"
+    ]
+   }
+  },
+  "diff_file": "fraud_mistral7b_run23.diff",
+  "diff_lines": 8
+ },
+ {
+  "task": "fraud",
+  "model": "mistral7b",
+  "run": 24,
+  "n_llm_rounds": 1,
+  "llm_seconds": 202.7,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     21,
+     22
+    ],
+    "similarity": 0.86,
+    "imports_added": [],
+    "imports_removed": [
+     "mlflow.log_artifact",
+     "mlflow.pyfunc",
+     "mlflow.track"
+    ],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "training accuracy",
+     "training loss"
+    ],
+    "strs_removed": [
+     "Training accuracy: ",
+     "Training loss: "
+    ]
+   },
+   "test_pipeline.py": {
+    "loc": [
+     19,
+     20
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "fraud_mistral7b_run24.diff",
+  "diff_lines": 6
+ },
+ {
+  "task": "traffic",
+  "model": "qwen3b",
+  "run": 23,
+  "n_llm_rounds": 3,
+  "llm_seconds": 718.9,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "AttributeError: module 'mlflow' has no attribute 'log_exception'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     49,
+     49
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {
+     "train_model": [
+      [
+       "X_train",
+       "y_train"
+      ],
+      [
+       "X_train",
+       "y_train",
+       "X_test",
+       "y_test"
+      ]
+     ]
+    },
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "exception"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     48,
+     48
+    ],
+    "similarity": 0.99,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "traffic_qwen3b_run23.diff",
+  "diff_lines": 6
+ },
+ {
+  "task": "traffic",
+  "model": "qwen7b",
+  "run": 4,
+  "n_llm_rounds": 1,
+  "llm_seconds": 169.2,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "AttributeError: module 'mlflow' has no attribute 'log_model'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     41,
+     42
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     27,
+     28
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "traffic_qwen7b_run04.diff",
+  "diff_lines": 4
+ },
+ {
+  "task": "traffic",
+  "model": "qwen7b",
+  "run": 10,
+  "n_llm_rounds": 2,
+  "llm_seconds": 489.2,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ValueError: could not convert string to float: 'Rain'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     60,
+     63
+    ],
+    "similarity": 0.97,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [
+     "astype"
+    ],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "category",
+     "weather_main"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     31,
+     31
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [
+     "not y_pred.empty"
+    ],
+    "asserts_added": [
+     "len(y_pred) > 0"
+    ],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "traffic_qwen7b_run10.diff",
+  "diff_lines": 5
+ },
+ {
+  "task": "traffic",
+  "model": "llama8b",
+  "run": 8,
+  "n_llm_rounds": 2,
+  "llm_seconds": 642.3,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [
+   "ValueError: could not convert string to float: 'Afternoon'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     49,
+     55
+    ],
+    "similarity": 0.87,
+    "imports_added": [
+     "pandas.api.types"
+    ],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [
+     "map"
+    ],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "X has non-numeric columns"
+    ],
+    "strs_removed": [
+     "Afternoon",
+     "Clear",
+     "Clouds",
+     "Evening",
+     "Morning",
+     "Night",
+     "Rain",
+     "Snow"
+    ]
+   },
+   "test_pipeline.py": {
+    "loc": [
+     18,
+     19
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "traffic_llama8b_run08.diff",
+  "diff_lines": 11
+ },
+ {
+  "task": "traffic",
+  "model": "llama8b",
+  "run": 18,
+  "n_llm_rounds": 2,
+  "llm_seconds": 614.4,
+  "weakened": false,
+  "functional": true,
+  "start_errors": [],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     50,
+     57
+    ],
+    "similarity": 0.7,
+    "imports_added": [
+     "sklearn.impute.SimpleImputer",
+     "sklearn.preprocessing.OneHotEncoder"
+    ],
+    "imports_removed": [],
+    "calls_added": [
+     "OneHotEncoder",
+     "SimpleImputer"
+    ],
+    "calls_removed": [
+     "fillna",
+     "map"
+    ],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "DayOfWeek",
+     "Hour",
+     "clouds_all",
+     "ignore",
+     "mean",
+     "rain_1h",
+     "snow_1h",
+     "temp"
+    ],
+    "strs_removed": [
+     "Apr",
+     "Aug",
+     "Clear",
+     "Clouds",
+     "Dec",
+     "Feb",
+     "Jan",
+     "Jul",
+     "Jun",
+     "Mar",
+     "May",
+     "Nov"
+    ]
+   },
+   "test_pipeline.py": {
+    "loc": [
+     18,
+     18
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "traffic_llama8b_run18.diff",
+  "diff_lines": 13
+ },
+ {
+  "task": "traffic",
+  "model": "mistral7b",
+  "run": 3,
+  "n_llm_rounds": 1,
+  "llm_seconds": 181.0,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ImportError: cannot import name 'trace_experiment' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     18,
+     18
+    ],
+    "similarity": 0.72,
+    "imports_added": [
+     "mlflow.pyfunc.PyFuncModel"
+    ],
+    "imports_removed": [
+     "mlflow.log_artifact",
+     "mlflow.log_param",
+     "mlflow.pyfunc",
+     "mlflow.trace_experiment"
+    ],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "model"
+    ],
+    "strs_removed": [
+     "RandomForestCongestionDetector",
+     "model.pkl"
+    ]
+   },
+   "test_pipeline.py": {
+    "loc": [
+     13,
+     13
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "traffic_mistral7b_run03.diff",
+  "diff_lines": 8
+ },
+ {
+  "task": "traffic",
+  "model": "mistral7b",
+  "run": 4,
+  "n_llm_rounds": 1,
+  "llm_seconds": 156.9,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ModuleNotFoundError: No module named 'randomforest'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     17,
+     18
+    ],
+    "similarity": 0.93,
+    "imports_added": [
+     "sklearn.ensemble.RandomForestClassifier"
+    ],
+    "imports_removed": [
+     "randomforest"
+    ],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     14,
+     14
+    ],
+    "similarity": 1.0,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "traffic_mistral7b_run04.diff",
+  "diff_lines": 5
+ },
+ {
+  "task": "traffic",
+  "model": "mistral7b",
+  "run": 11,
+  "n_llm_rounds": 1,
+  "llm_seconds": 164.9,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     18,
+     20
+    ],
+    "similarity": 0.95,
+    "imports_added": [
+     "mlflow.log_metric"
+    ],
+    "imports_removed": [
+     "mlflow.track"
+    ],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "train_score"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     13,
+     14
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "traffic_mistral7b_run11.diff",
+  "diff_lines": 7
+ },
+ {
+  "task": "traffic",
+  "model": "mistral7b",
+  "run": 12,
+  "n_llm_rounds": 1,
+  "llm_seconds": 216.0,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "KeyError: 'Features'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     24,
+     29
+    ],
+    "similarity": 0.8,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {
+     "load_data": [
+      [
+       "pd.read_csv(file_path)"
+      ],
+      [
+       "data"
+      ]
+     ],
+     "preprocess_data": [
+      [
+       "(data['Features'], data['Congestion'])"
+      ],
+      [
+       "(X, y)"
+      ]
+     ]
+    },
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "DayOfWeek",
+     "Hour",
+     "IsHoliday",
+     "Month",
+     "clouds_all",
+     "rain_1h",
+     "snow_1h",
+     "temp",
+     "weather_main"
+    ],
+    "strs_removed": [
+     "Features"
+    ]
+   },
+   "test_pipeline.py": {
+    "loc": [
+     19,
+     19
+    ],
+    "similarity": 0.99,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "traffic_mistral7b_run12.diff",
+  "diff_lines": 13
+ },
+ {
+  "task": "traffic",
+  "model": "mistral7b",
+  "run": 15,
+  "n_llm_rounds": 1,
+  "llm_seconds": 224.0,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     25,
+     28
+    ],
+    "similarity": 0.91,
+    "imports_added": [
+     "mlflow.log_params"
+    ],
+    "imports_removed": [
+     "mlflow.track"
+    ],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "temp",
+     "temp_max",
+     "temp_min"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     17,
+     18
+    ],
+    "similarity": 0.98,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "traffic_mistral7b_run15.diff",
+  "diff_lines": 6
+ },
+ {
+  "task": "traffic",
+  "model": "mistral7b",
+  "run": 16,
+  "n_llm_rounds": 2,
+  "llm_seconds": 435.4,
+  "weakened": false,
+  "functional": false,
+  "start_errors": [
+   "ModuleNotFoundError: No module named 'random_forest'"
+  ],
+  "files": {
+   "pipeline.py": {
+    "loc": [
+     17,
+     19
+    ],
+    "similarity": 0.83,
+    "imports_added": [
+     "sklearn.ensemble.RandomForestClassifier"
+    ],
+    "imports_removed": [
+     "random_forest",
+     "sklearn.model_selection.train_test_split"
+    ],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "DayOfWeek",
+     "Hour",
+     "IsHoliday",
+     "Month",
+     "clouds_all",
+     "rain_1h",
+     "snow_1h",
+     "temp",
+     "weather_main"
+    ],
+    "strs_removed": []
+   },
+   "test_pipeline.py": {
+    "loc": [
+     19,
+     21
+    ],
+    "similarity": 0.91,
+    "imports_added": [],
+    "imports_removed": [],
+    "calls_added": [],
+    "calls_removed": [],
+    "ret_changed": {},
+    "sig_changed": {},
+    "funcs_added": [],
+    "funcs_removed": [],
+    "asserts_removed": [],
+    "asserts_added": [],
+    "strs_added": [
+     "DayOfWeek",
+     "Hour",
+     "IsHoliday",
+     "Month",
+     "clouds_all",
+     "rain_1h",
+     "snow_1h",
+     "temp",
+     "weather_main"
+    ],
+    "strs_removed": []
+   }
+  },
+  "diff_file": "traffic_mistral7b_run16.diff",
+  "diff_lines": 10
+ }
+]

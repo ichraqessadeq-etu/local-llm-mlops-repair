@@ -1,0 +1,28 @@
+--- round_0/pipeline.py
++++ round_2/pipeline.py
+@@ -1 +1,2 @@
++# pipeline.py
+ import pandas as pd
+@@ -6,2 +7,3 @@
+ import mlflow
++import pandas.api.types as pdtypes
+ 
+@@ -18,4 +20,4 @@
+         # Convert categorical variables to numerical
+-        data['weather_main'] = data['weather_main'].map({'Clear': 0, 'Clouds': 1, 'Rain': 2, 'Snow': 3})
+-        data['Hour'] = pd.cut(data['Hour'], bins=[0, 6, 12, 18, 24], labels=['Morning', 'Afternoon', 'Evening', 'Night'])
++        data['weather_main'] = pd.Categorical(data['weather_main']).codes
++        data['Hour'] = pd.Categorical(data['Hour']).codes
+         data['DayOfWeek'] = pd.Categorical(data['DayOfWeek']).codes
+@@ -30,2 +32,6 @@
+         y = data['Congestion']
++
++        # Check if X has any non-numeric columns
++        if pdtypes.is_object_dtype(X):
++            raise ValueError("X has non-numeric columns")
+ 
+--- round_0/test_pipeline.py
++++ round_2/test_pipeline.py
+@@ -1 +1,2 @@
++# test_pipeline.py
+ import pytest

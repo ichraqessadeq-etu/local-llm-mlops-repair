@@ -1,0 +1,150 @@
+{
+  "run": 7,
+  "pass_round0": false,
+  "pass_final": true,
+  "rounds_used": 2,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": null,
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.828,
+    "f1": 0.7614,
+    "n_test": 8113
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        \"\"\"Test evaluating the model.\"\"\"\n>       data = pd.DataFrame({\n            'temp': [20, 22, 18],\n            'rain_1h': [0.1, 0.2, 0.0],\n            'snow_1h': [0.0, 0.0, 0.0],\n            'clouds_all': [50, 60, 70],\n            'weather_main': ['sunny', 'rainy', 'cloudy'],\n            'IsHoliday': [False, True, False],\n            'Hour': [9, 14, 18],\n            'DayOfWeek': [1, 2, 3],\n            'Month': [1, 2, 3],\n            'Congestion': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:48: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not de...\n4 failed in 11.02s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "MlflowException: Error training model: could not convert string to float: 'Clouds'"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "X_train =    temp  rain_1h  snow_1h  clouds_all  ... IsHoliday  Hour  DayOfWeek  Month\n0    20      0.1      0.0          50  .....14          2      2\n2    18      0.0      0.0          70  ...     False    18          3      3\n\n[3 rows x 9 columns]\ny_train = 0    0\n1    1\n2    0\nName: Congestion, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest model.\"\"\"\n        try:\n            model = RandomForestClassifier(n_estimators=100, random_state=42)\n            model.fit(X_train, y_train)\n            return model\n        except Exception as e:\n>           raise MlflowException(f\"Error training model: {e}\")\nE           mlflow.exceptions.MlflowException: Error training model: could not convert string to float: 'sunny'\n\npipeline.py:30: MlflowException\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - mlflow.exceptions.MlflowException...\nFAILED test_pipeline.py::test_evaluate_model - mlflow.exceptions.MlflowExcept...\n2 failed, 2 passed in 10.17s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "MlflowException: Error training model: could not convert string to float: 'Clouds'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "pipeline: added schema shim (categorical encoding, imputation)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 4,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "....                                                                     [100%]\n4 passed in 9.11s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.828,
+        "f1": 0.7614,
+        "n_test": 8113
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

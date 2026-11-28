@@ -1,0 +1,17 @@
+--- round_d1/pipeline.py
++++ round_2/pipeline.py
+@@ -22,3 +22,3 @@
+         model.fit(X_train, y_train)
+-        mlflow.log_model(model, 'random_forest_model')
++        mlflow.sklearn.log_model(model, 'random_forest_model')
+         mlflow.log_param('n_estimators', 100)
+@@ -26,2 +26,2 @@
+         mlflow.log_metric('accuracy', accuracy_score(y_train, model.predict(X_train)))
+-        return model+        return model
+--- round_d1/test_pipeline.py
++++ round_2/test_pipeline.py
+@@ -15,3 +15,3 @@
+     X, y = preprocess_data(data)
+-    assert X.shape[1] == 29  # 29 features
++    assert X.shape[1] == 30  # 30 features
+     assert y.shape[0] == X.shape[0]  # Same number of samples

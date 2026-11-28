@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this code or data, please cite it as below."
-title: "Execution-Guided Self-Healing of LLM-Generated MLOps Pipelines with Locally Run Open-Weight Models (code and data)"
+title: "From Model Repairs to Rules: Execution-Guided Self-Healing of LLM-Generated MLOps Pipelines with Locally Run Open-Weight Models (code and data)"
 authors:
   - family-names: Essadeq
     given-names: Ichraq

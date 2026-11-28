@@ -1,0 +1,186 @@
+{
+  "run": 4,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 2,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "ValueError: too many values to unpack (expected 2)"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "test_pipeline.py:11: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test training the model.\"\"\"\n>       data = pd.DataFrame({\n            'temp': [20, 22, 18],\n            'rain_1h': [0, 1, 0],\n            'snow_1h': [0, 0, 1],\n            'clouds_all': [50, 60, 70],\n            'weather_main': ['sunny', 'rainy', 'snowy'],\n            'IsHoliday': [0, 1, 0],\n            'Hour': [10, 14, 18],\n            'DayOfWeek': ['Monday', 'Wednesday', 'Friday'],\n            'Month': [1, 4, 7],\n            'Congestion': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:30: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\n3 failed in 9.29s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest model.\"\"\"\n        try:\n            with mlflow.start_run():\n                model = RandomForestClassifier(n_estimators=100, random_state=42)\n                model.fit(X_train, y_train)\n    \n                # Log model\n                mlflow.sklearn.log_model(model, \"congestion_detector\")\n    \n                # Log metrics\n                y_pred = model.predict(X_test)\n                accuracy = accuracy_score(y_test, y_pred)\n                mlflow.log_metric(\"accuracy\", accuracy)\n    \n                return model\n        except Exception as e:\n>           raise Exception(f\"An error occurred during training: {e}\")\nE           Exception: An error occurred during training: could not convert string to float: 'rainy'\n\npipeline.py:52: Exception\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - KeyError: \"Missing column(s):...\nFAILED test_pipeline.py::test_train_model - Exception: An error occurred duri...\n2 failed, 1 passed in 9.75s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "pipeline: added schema shim (categorical encoding, imputation)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest model.\"\"\"\n        try:\n            with mlflow.start_run():\n                model = RandomForestClassifier(n_estimators=100, random_state=42)\n                model.fit(X_train, y_train)\n    \n                # Log model\n                mlflow.sklearn.log_model(model, \"congestion_detector\")\n    \n                # Log metrics\n                y_pred = model.predict(X_test)\n                accuracy = accuracy_score(y_test, y_pred)\n                mlflow.log_metric(\"accuracy\", accuracy)\n    \n                return model\n        except Exception as e:\n>           raise Exception(f\"An error occurred during training: {e}\")\nE           Exception: An error occurred during training: name 'X_test' is not defined\n\npipeline.py:52: Exception\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - KeyError: \"Missing column(s):...\nFAILED test_pipeline.py::test_train_model - Exception: An error occurred duri...\n2 failed, 1 passed in 20.22s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForest model.\"\"\"\n        try:\n            with mlflow.start_run():\n                model = RandomForestClassifier(n_estimators=100, random_state=42)\n                model.fit(X_train, y_train)\n    \n                # Log model\n                mlflow.sklearn.log_model(model, \"congestion_detector\")\n    \n                # Log metrics\n                y_pred = model.predict(X_test)\n                accuracy = accuracy_score(y_test, y_pred)\n                mlflow.log_metric(\"accuracy\", accuracy)\n    \n                return model\n        except Exception as e:\n>           raise Exception(f\"An error occurred during training: {e}\")\nE           Exception: An error occurred during training: name 'X_test' is not defined\n\npipeline.py:52: Exception\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - KeyError: \"Missing column(s):...\nFAILED test_pipeline.py::test_train_model - Exception: An error occurred duri...\n2 failed, 1 passed in 20.22s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: too many values to unpack (expected 2)"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

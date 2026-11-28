@@ -1,0 +1,21 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -1 +1,2 @@
++# pipeline.py
+ import mlflow
+@@ -5,3 +6,2 @@
+ from sklearn.ensemble import RandomForestClassifier
+-from mlflow import log_artifact, pyfunc, track
+ 
+@@ -17,4 +17,4 @@
+         model.fit(X_train, y_train)
+-        mlflow.pyfunc.log_model(model, 'model')
+-        track(model)
+-        return model+        mlflow.pyfunc.log_model(model, "model")
++        # mlflow.tracking.log_param("learning_rate", 0.1) # Uncomment this line if you want to log a parameter
++        return model
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -1 +1,2 @@
++# test_pipeline.py
+ import unittest

@@ -1,0 +1,149 @@
+{
+  "run": 3,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "import_or_missing_name",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.1446,
+    "f1": 0.24,
+    "n_test": 1452
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "..FF                                                                     [100%]\n================================== FAILURES ===================================\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        data = load_data('data/air_quality.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:17: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        data = load_data('data/air_quality.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:24: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'train_test_sp...\n2 failed, 2 passed in 5.29s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.1446,
+        "f1": 0.24,
+        "n_test": 1452
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 1 import(s): from sklearn.model_selection import train_test_split"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "6385       1089.0          916.0         7...         4      8\n3832       1247.0         1315.0         544.0  ...    18          2     10\n\n[1452 rows x 13 columns]\ny_test = 6385    0\n737     0\n2902    0\n4434    0\n4801    0\n       ..\n1916    0\n4630    0\n4786    0\n2876    0\n3832    0\nName: Anomaly, Length: 1452, dtype: int64\n\n    def evaluate_model(model, X_test, y_test):\n>       X_test_scaled = scaler.transform(X_test)\nE       NameError: name 'scaler' is not defined\n\npipeline.py:35: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'scaler' is no...\n1 failed, 3 passed in 19.28s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.1446,
+        "f1": 0.24,
+        "n_test": 1452
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 3,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "6385       1089.0          916.0         7...         4      8\n3832       1247.0         1315.0         544.0  ...    18          2     10\n\n[1452 rows x 13 columns]\ny_test = 6385    0\n737     0\n2902    0\n4434    0\n4801    0\n       ..\n1916    0\n4630    0\n4786    0\n2876    0\n3832    0\nName: Anomaly, Length: 1452, dtype: int64\n\n    def evaluate_model(model, X_test, y_test):\n>       X_test_scaled = scaler.transform(X_test)\nE       NameError: name 'scaler' is not defined\n\npipeline.py:35: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'scaler' is no...\n1 failed, 3 passed in 19.28s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.1446,
+        "f1": 0.24,
+        "n_test": 1452
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 4,
+        "asserts": 5
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

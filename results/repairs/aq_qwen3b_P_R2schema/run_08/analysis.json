@@ -1,0 +1,165 @@
+{
+  "run": 8,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9406,
+    "f1": 0.8632,
+    "n_test": 1452
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 25
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 28
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 6,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "E       NameError: name 'pd' is not defined\n\ntest_pipeline.py:17: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n>       X, y = pd.DataFrame(), pd.Series()\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:22: NameError\n_____________________________ test_evaluate_model _____________________________\n\n    def test_evaluate_model():\n        \"\"\"Test the evaluate_model function.\"\"\"\n>       model = RandomForestClassifier()\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:28: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'RandomForestC...\n4 failed, 1 passed in 15.95s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9421,
+        "f1": 0.8541,
+        "n_test": 1452
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd",
+        "test: injected random_state into estimators/splits"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 6,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def evaluate_model(model, X_test, y_test):\n        \"\"\"Evaluate the model's performance.\"\"\"\n        try:\n            y_pred = model.predict(X_test)\n            accuracy = accuracy_score(y_test, y_pred)\n            return accuracy\n        except Exception as e:\n>           raise MlflowException(f'Error evaluating model: {e}')\nE           mlflow.exceptions.MlflowException: Error evaluating model: This RandomForestClassifier instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.\n\npipeline.py:38: MlflowException\n============================== warnings summary ===============================\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_qwen3b_P_R2schema\\run_08\\round_1\\test_pipeline.py:24: DeprecationWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.\n    X, y = (pd.DataFrame(), pd.Series())\n\ntest_pipeline.py::test_evaluate_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_qwen3b_P_R2schema\\run_08\\round_1\\test_pipeline.py:31: DeprecationWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.\n    X, y = (pd.DataFrame(), pd.Series())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - mlflow.exceptions.MlflowException...\nFAILED test_pipeline.py::test_evaluate_model - mlflow.exceptions.MlflowExcept...\n2 failed, 3 passed, 2 warnings in 16.21s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 3,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def evaluate_model(model, X_test, y_test):\n        \"\"\"Evaluate the model's performance.\"\"\"\n        try:\n            y_pred = model.predict(X_test)\n            accuracy = accuracy_score(y_test, y_pred)\n            return accuracy\n        except Exception as e:\n>           raise MlflowException(f'Error evaluating model: {e}')\nE           mlflow.exceptions.MlflowException: Error evaluating model: This RandomForestClassifier instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.\n\npipeline.py:38: MlflowException\n============================== warnings summary ===============================\ntest_pipeline.py::test_train_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_qwen3b_P_R2schema\\run_08\\round_1\\test_pipeline.py:24: DeprecationWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.\n    X, y = (pd.DataFrame(), pd.Series())\n\ntest_pipeline.py::test_evaluate_model\n  C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_qwen3b_P_R2schema\\run_08\\round_1\\test_pipeline.py:31: DeprecationWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.\n    X, y = (pd.DataFrame(), pd.Series())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - mlflow.exceptions.MlflowException...\nFAILED test_pipeline.py::test_evaluate_model - mlflow.exceptions.MlflowExcept...\n2 failed, 3 passed, 2 warnings in 16.21s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 6,
+        "asserts": 6
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

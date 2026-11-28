@@ -1,0 +1,15 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -2,3 +2,3 @@
+ import mlflow
+-import randomforest as rf
++from sklearn.ensemble import RandomForestClassifier
+ from sklearn.model_selection import train_test_split
+@@ -13,3 +13,3 @@
+     with mlflow.start_run():
+-        model = rf.RandomForestClassifier(random_state=42)
++        model = RandomForestClassifier(random_state=42)
+         model.fit(X_train, y_train)
+@@ -17,2 +17,2 @@
+         mlflow.log_metric('train_loss', model.fit(X_train, y_train).loss_)
+-    return model+    return model

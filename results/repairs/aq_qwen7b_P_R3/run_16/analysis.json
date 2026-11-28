@@ -1,0 +1,151 @@
+{
+  "run": 16,
+  "pass_round0": false,
+  "pass_final": true,
+  "rounds_used": 2,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": null,
+  "weakened_final": false,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9406,
+    "f1": 0.8632,
+    "n_test": 1452
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_qwen7b_P_R3\\run_16\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:6: in <module>\n    from mlflow import log_param, log_metric, mlflow\nE   ImportError: cannot import name 'mlflow' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 4.95s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ImportError: cannot import name 'mlflow' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.model_selection import train_test_split",
+        "pipeline: mlflow.mlflow n'existe pas dans l'environnement : import retir\u00e9, 0 appel(s) neutralis\u00e9(s)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "860    846.000000     557.000000   1385.000000  ...     2          1      4\n\n[5806 rows x 13 columns]\ny_train = 4761    0\n5110    1\n1894    0\n3796    0\n864     1\n       ..\n3772    0\n5191    0\n5226    0\n5390    0\n860     0\nName: Anomaly, Length: 5806, dtype: int64\n\n    def train_model(X_train, y_train):\n        \"\"\"Train a RandomForestClassifier on the training data.\"\"\"\n>       with mlflow.start_run():\nE       NameError: name 'mlflow' is not defined\n\npipeline.py:20: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_train_model - NameError: name 'mlflow' is not d...\n1 failed, 2 passed in 6.18s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "NameError: name 'mlflow' is not defined"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "pipeline: added 1 import(s): import mlflow"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 3,
+        "failed": 0,
+        "errors": 0,
+        "returncode": 0,
+        "tail": "...                                                                      [100%]\n3 passed in 13.19s",
+        "all_pass": true
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    }
+  ]
+}

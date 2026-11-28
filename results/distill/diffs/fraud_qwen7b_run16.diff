@@ -1,0 +1,15 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -29,3 +29,3 @@
+             model.fit(X_train, y_train)
+-            mlflow.log_model(model, 'random_forest_model')
++            mlflow.sklearn.log_model(model, 'random_forest_model')
+             mlflow.log_param('n_estimators', 100)
+@@ -35,2 +35,2 @@
+     except Exception as e:
+-        raise Exception(f'Error training model: {e}')+        raise Exception(f'Error training model: {e}')
+--- round_d1/test_pipeline.py
++++ round_1/test_pipeline.py
+@@ -29 +29,2 @@
+     assert isinstance(y_pred, np.ndarray)
++

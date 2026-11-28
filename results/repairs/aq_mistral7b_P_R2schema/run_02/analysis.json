@@ -1,0 +1,149 @@
+{
+  "run": 2,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "TypeError: log_model() got multiple values for argument 'artifact_path'"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 15
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "0          1360.0         1046.0       ...    4        0\n7257       1071.0         1047.0         654.0  ...          0      4        0\n\n[7258 rows x 14 columns]\ny_train = 0       0\n1       0\n2       0\n3       0\n4       0\n       ..\n7253    0\n7254    0\n7255    0\n7256    0\n7257    0\nName: Anomaly, Length: 7258, dtype: int64\n\n    def train_model(X_train, y_train):\n>       with mlflow.start_run():\nE       NameError: name 'mlflow' is not defined\n\npipeline.py:13: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - NameError: name 'ml...\n1 failed in 4.95s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "NameError: name 'mlflow' is not defined"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: added 1 import(s): import mlflow",
+        "pipeline: injected random_state into estimators/splits"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "y_train = 0       0\n1       0\n2       0\n3       0\n4       0\n       ..\n7253    0\n7254    0\n7255    0\n7256    0\n7257    0\nName: Anomaly, Length: 7258, dtype: int64\n\n    def train_model(X_train, y_train):\n        with mlflow.start_run():\n            mlflow_run_id = mlflow.active_run().info.run_id\n            model = RandomForestClassifier(random_state=42)\n            model.fit(X_train, y_train)\n>           pyfunc.log_model(model, artifact_path='model', registered_model_name='AnomalyDetector')\nE           TypeError: log_model() got multiple values for argument 'artifact_path'\n\npipeline.py:18: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - TypeError: log_mode...\n1 failed in 5.64s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: log_model() got multiple values for argument 'artifact_path'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "y_train = 0       0\n1       0\n2       0\n3       0\n4       0\n       ..\n7253    0\n7254    0\n7255    0\n7256    0\n7257    0\nName: Anomaly, Length: 7258, dtype: int64\n\n    def train_model(X_train, y_train):\n        with mlflow.start_run():\n            mlflow_run_id = mlflow.active_run().info.run_id\n            model = RandomForestClassifier(random_state=42)\n            model.fit(X_train, y_train)\n>           pyfunc.log_model(model, artifact_path='model', registered_model_name='AnomalyDetector')\nE           TypeError: log_model() got multiple values for argument 'artifact_path'\n\npipeline.py:18: TypeError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - TypeError: log_mode...\n1 failed in 5.64s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "TypeError: log_model() got multiple values for argument 'artifact_path'"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

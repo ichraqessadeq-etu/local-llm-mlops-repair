@@ -1,0 +1,195 @@
+{
+  "run": 8,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 2,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "other",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 14
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\traffic_mistral7b_P_R3\\run_08\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model\npipeline.py:4: in <module>\n    from mlflow import log_artifact, pyfunc, track\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 7.42s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: added 1 import(s): import mlflow",
+        "pipeline: injected random_state into estimators/splits",
+        "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\ensemble\\_forest.py:328: in fit\n    X, y, multi_output=True, accept_sparse=\"csc\", dtype=DTYPE\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\base.py:581: in _validate_data\n    X, y = check_X_y(X, y, **check_params)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:976: in check_X_y\n    estimator=estimator,\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\sklearn\\utils\\validation.py:746: in check_array\n    array = np.asarray(array, order=order, dtype=dtype)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself =          temp  rain_1h  snow_1h  clouds_all  ... Hour  DayOfWeek  Month  Congestion\n0      288.28      0.0      0.0   ...       0\n40563  282.12      0.0      0.0          90  ...   23          6      9           0\n\n[40564 rows x 10 columns]\ndtype = dtype('float32')\n\n    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:\n>       return np.asarray(self._values, dtype=dtype)\nE       ValueError: could not convert string to float: 'Clouds'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\core\\generic.py:1993: ValueError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - ValueError: could n...\n1 failed in 7.98s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ValueError: could not convert string to float: 'Clouds'"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "notes": [
+        "pipeline: added schema shim (categorical encoding, imputation)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\__init__.py:241: in dump_all\n    dumper.represent(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:27: in represent\n    node = self.represent_data(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:48: in represent_data\n    node = self.yaml_representers[data_types[0]](self, data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:207: in represent_dict\n    return self.represent_mapping('tag:yaml.org,2002:map', data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:118: in represent_mapping\n    node_value = self.represent_data(item_value)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:58: in represent_data\n    node = self.yaml_representers[None](self, data)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <yaml.dumper.SafeDumper object at 0x0000020EE0F7DF88>\ndata = RandomForestClassifier(random_state=42)\n\n    def represent_undefined(self, data):\n>       raise RepresenterError(\"cannot represent an object\", data)\nE       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:231: RepresenterError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...\n1 failed in 9.87s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 3,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 0,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\__init__.py:241: in dump_all\n    dumper.represent(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:27: in represent\n    node = self.represent_data(data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:48: in represent_data\n    node = self.yaml_representers[data_types[0]](self, data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:207: in represent_dict\n    return self.represent_mapping('tag:yaml.org,2002:map', data)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:118: in represent_mapping\n    node_value = self.represent_data(item_value)\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:58: in represent_data\n    node = self.yaml_representers[None](self, data)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <yaml.dumper.SafeDumper object at 0x0000020EE0F7DF88>\ndata = RandomForestClassifier(random_state=42)\n\n    def represent_undefined(self, data):\n>       raise RepresenterError(\"cannot represent an object\", data)\nE       yaml.representer.RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\yaml\\representer.py:231: RepresenterError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_train_model - yaml.representer.Re...\n1 failed in 9.87s",
+        "all_pass": false,
+        "failure_hint": "other"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "RepresenterError: ('cannot represent an object', RandomForestClassifier(random_state=42))"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 1,
+        "asserts": 0
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

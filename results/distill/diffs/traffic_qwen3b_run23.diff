@@ -1,0 +1,19 @@
+--- round_d1/pipeline.py
++++ round_3/pipeline.py
+@@ -30,3 +30,3 @@
+ 
+-def train_model(X_train, y_train):
++def train_model(X_train, y_train, X_test, y_test):
+     """Train the RandomForest model."""
+@@ -47,3 +47,3 @@
+     except Exception as e:
+-        mlflow.log_exception(e)
++        mlflow.log_metric("exception", str(e))
+         raise e
+--- round_d1/test_pipeline.py
++++ round_3/test_pipeline.py
+@@ -46,3 +46,3 @@
+     X_train, X_test, y_train, y_test = preprocess_data(data)
+-    model = train_model(X_train, y_train)
++    model = train_model(X_train, y_train, X_test, y_test)
+     assert isinstance(model, RandomForestClassifier)

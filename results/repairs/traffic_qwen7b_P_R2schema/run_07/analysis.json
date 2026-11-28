@@ -1,0 +1,149 @@
+{
+  "run": 7,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "assertion",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.8351,
+    "f1": 0.5861,
+    "n_test": 8113
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def test_preprocess_data():\n        \"\"\"Test preprocessing data.\"\"\"\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n        assert not X.empty\n        assert not y.empty\n>       assert 'weather_main' not in X.columns\nE       AssertionError: assert 'weather_main' not in Index(['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday',\\n       'Hour', 'DayOfWeek', 'Month'],\\n      dtype='object')\nE        +  where Index(['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday',\\n       'Hour', 'DayOfWeek', 'Month'],\\n      dtype='object') =          temp  rain_1h  snow_1h  clouds_all  ...  IsHoliday  Hour  DayOfWeek  Month\\n0      288.28      0.0      0.0   ... 6      9\\n40563  282.12      0.0      0.0          90  ...          0    23          6      9\\n\\n[40564 rows x 9 columns].columns\n\ntest_pipeline.py:16: AssertionError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test training the model.\"\"\"\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n>       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nE       NameError: name 'train_test_split' is not defined\n\ntest_pipeline.py:23: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert 'weath...\nFAILED test_pipeline.py::test_train_model - NameError: name 'train_test_split...\n2 failed, 1 passed in 8.32s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.8351,
+        "f1": 0.5861,
+        "n_test": 8113
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 3 import(s): from sklearn.ensemble import RandomForestClassifier; from sklearn.metrics import accuracy_score; from sklearn.model_selection import train_test_split"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        \"\"\"Test preprocessing data.\"\"\"\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n        assert not X.empty\n        assert not y.empty\n>       assert 'weather_main' not in X.columns\nE       AssertionError: assert 'weather_main' not in Index(['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday',\\n       'Hour', 'DayOfWeek', 'Month'],\\n      dtype='object')\nE        +  where Index(['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday',\\n       'Hour', 'DayOfWeek', 'Month'],\\n      dtype='object') =          temp  rain_1h  snow_1h  clouds_all  ...  IsHoliday  Hour  DayOfWeek  Month\\n0      288.28      0.0      0.0   ... 6      9\\n40563  282.12      0.0      0.0          90  ...          0    23          6      9\\n\\n[40564 rows x 9 columns].columns\n\ntest_pipeline.py:19: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert 'weath...\n1 failed, 2 passed in 21.00s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.8351,
+        "f1": 0.5861,
+        "n_test": 8113
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        \"\"\"Test preprocessing data.\"\"\"\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n        assert not X.empty\n        assert not y.empty\n>       assert 'weather_main' not in X.columns\nE       AssertionError: assert 'weather_main' not in Index(['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday',\\n       'Hour', 'DayOfWeek', 'Month'],\\n      dtype='object')\nE        +  where Index(['temp', 'rain_1h', 'snow_1h', 'clouds_all', 'weather_main', 'IsHoliday',\\n       'Hour', 'DayOfWeek', 'Month'],\\n      dtype='object') =          temp  rain_1h  snow_1h  clouds_all  ...  IsHoliday  Hour  DayOfWeek  Month\\n0      288.28      0.0      0.0   ... 6      9\\n40563  282.12      0.0      0.0          90  ...          0    23          6      9\\n\\n[40564 rows x 9 columns].columns\n\ntest_pipeline.py:19: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert 'weath...\n1 failed, 2 passed in 21.00s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.8351,
+        "f1": 0.5861,
+        "n_test": 8113
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 8
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

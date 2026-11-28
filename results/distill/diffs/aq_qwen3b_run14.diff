@@ -1,0 +1,17 @@
+--- round_d1/pipeline.py
++++ round_1/pipeline.py
+@@ -10,2 +10,6 @@
+ logging.basicConfig(level=logging.INFO)
++
++# Define features and target column
++features = ['PT08.S1(CO)', 'PT08.S2(NMHC)', 'PT08.S3(NOx)', 'PT08.S4(NO2)', 'PT08.S5(O3)', 'NOx(GT)', 'C6H6(GT)', 'T', 'RH', 'AH', 'Hour', 'DayOfWeek', 'Month']
++target = 'Anomaly'
+ 
+@@ -29,3 +33,3 @@
+         X = data[features]
+-        y = data['Anomaly']
++        y = data[target]
+         
+@@ -66 +70,2 @@
+         raise
++

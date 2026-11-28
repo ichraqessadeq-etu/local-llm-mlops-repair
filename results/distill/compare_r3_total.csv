@@ -1,0 +1,7 @@
+strategie,passent,fonctionnent,heures_LLM,tests_affaiblis
+Correcteur + schéma (MLWA),175,134,0.0,0
+LLM seul (R1full),134,129,58.3,7
+Hybride R2 -> LLM,198,131,28.7,4
+Cascade R2schema -> LLM (MLWA),220,145,24.5,4
+R3 règles distillées (sans LLM),223,163,0.0,0
+Cascade R3 -> LLM,244,160,16.9,4

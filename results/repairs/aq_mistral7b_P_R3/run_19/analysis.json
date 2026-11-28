@@ -1,0 +1,158 @@
+{
+  "run": 19,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "file_or_path",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9406,
+    "f1": 0.8632,
+    "n_test": 1452
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 14
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 2,
+        "asserts": 2
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 1,
+        "returncode": 2,
+        "tail": "\n=================================== ERRORS ====================================\n______________________ ERROR collecting test_pipeline.py ______________________\nImportError while importing test module 'C:\\Users\\ADMIN\\Desktop\\maThese\\REVUE_SelfHealing_Local\\code\\repairs\\aq_mistral7b_P_R3\\run_19\\round_0\\test_pipeline.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nC:\\Program Files\\Odoo 16.0.20230507\\python\\lib\\importlib\\__init__.py:127: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\ntest_pipeline.py:2: in <module>\n    from pipeline import load_data, preprocess_data, train_model, save_model_and_data\npipeline.py:5: in <module>\n    from mlflow import log_artifact, track, pyfunc, save_model, load_model\nE   ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)\n=========================== short test summary info ===========================\nERROR test_pipeline.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 4.91s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "ImportError: cannot import name 'track' from 'mlflow' (C:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\mlflow\\__init__.py)"
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: moved save_model to mlflow.sklearn",
+        "pipeline: moved load_model to mlflow.sklearn",
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 1 import(s): import os",
+        "pipeline: mlflow.track n'existe pas dans l'environnement : import retir\u00e9, 1 appel(s) neutralis\u00e9(s)"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 2,
+        "asserts": 2
+      },
+      "pytest": {
+        "passed": 0,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "                msg = f\"Unrecognized compression type: {compression}\"\n                raise ValueError(msg)\n    \n            assert not isinstance(handle, str)\n            handles.append(handle)\n    \n        elif isinstance(handle, str):\n            # Check whether the filename is to be opened in binary mode.\n            # Binary mode does not support 'encoding' and 'newline'.\n            if ioargs.encoding and \"b\" not in ioargs.mode:\n                # Encoding\n                handle = open(\n                    handle,\n                    ioargs.mode,\n                    encoding=ioargs.encoding,\n                    errors=errors,\n>                   newline=\"\",\n                )\nE               FileNotFoundError: [Errno 2] No such file or directory: 'test_data/air_quality.csv'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\io\\common.py:707: FileNotFoundError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_save_model_and_data - TypeError: ...\nFAILED test_pipeline.py::TestPipeline::test_train_model - FileNotFoundError: ...\n2 failed in 7.87s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 0,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "                msg = f\"Unrecognized compression type: {compression}\"\n                raise ValueError(msg)\n    \n            assert not isinstance(handle, str)\n            handles.append(handle)\n    \n        elif isinstance(handle, str):\n            # Check whether the filename is to be opened in binary mode.\n            # Binary mode does not support 'encoding' and 'newline'.\n            if ioargs.encoding and \"b\" not in ioargs.mode:\n                # Encoding\n                handle = open(\n                    handle,\n                    ioargs.mode,\n                    encoding=ioargs.encoding,\n                    errors=errors,\n>                   newline=\"\",\n                )\nE               FileNotFoundError: [Errno 2] No such file or directory: 'test_data/air_quality.csv'\n\nC:\\Users\\ADMIN\\AppData\\Roaming\\Python\\Python37\\site-packages\\pandas\\io\\common.py:707: FileNotFoundError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::TestPipeline::test_save_model_and_data - TypeError: ...\nFAILED test_pipeline.py::TestPipeline::test_train_model - FileNotFoundError: ...\n2 failed in 7.87s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9406,
+        "f1": 0.8632,
+        "n_test": 1452
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 2,
+        "asserts": 2
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

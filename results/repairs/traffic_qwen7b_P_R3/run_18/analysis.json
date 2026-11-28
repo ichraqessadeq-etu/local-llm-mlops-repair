@@ -1,0 +1,141 @@
+{
+  "run": 18,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "assertion",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": false,
+    "error": "MlflowException: Path 'model' already exists and is not empty"
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        \"\"\"Test the preprocess_data function.\"\"\"\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n>       assert isinstance(X, np.ndarray)\nE       NameError: name 'np' is not defined\n\ntest_pipeline.py:14: NameError\n______________________________ test_train_model _______________________________\n\n    def test_train_model():\n        \"\"\"Test the train_model function.\"\"\"\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n        model = train_model(X, y)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:23: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'np' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n2 failed, 1 passed in 29.49s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "MlflowException: Path 'model' already exists and is not empty"
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import numpy as np"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        \"\"\"Test the preprocess_data function.\"\"\"\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n        assert isinstance(X, np.ndarray)\n>       assert isinstance(y, np.ndarray)\nE       AssertionError: assert False\nE        +  where False = isinstance(0        0\\n1        0\\n2        0\\n3        0\\n4        0\\n        ..\\n40559    0\\n40560    0\\n40561    0\\n40562    0\\n40563    0\\nName: Congestion, Length: 40564, dtype: int64, <class 'numpy.ndarray'>)\nE        +    where <class 'numpy.ndarray'> = np.ndarray\n\ntest_pipeline.py:17: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 29.17s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "MlflowException: Path 'model' already exists and is not empty"
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": ".F.                                                                      [100%]\n================================== FAILURES ===================================\n____________________________ test_preprocess_data _____________________________\n\n    def test_preprocess_data():\n        \"\"\"Test the preprocess_data function.\"\"\"\n        data = load_data('data/traffic.csv')\n        X, y = preprocess_data(data)\n        assert isinstance(X, np.ndarray)\n>       assert isinstance(y, np.ndarray)\nE       AssertionError: assert False\nE        +  where False = isinstance(0        0\\n1        0\\n2        0\\n3        0\\n4        0\\n        ..\\n40559    0\\n40560    0\\n40561    0\\n40562    0\\n40563    0\\nName: Congestion, Length: 40564, dtype: int64, <class 'numpy.ndarray'>)\nE        +    where <class 'numpy.ndarray'> = np.ndarray\n\ntest_pipeline.py:17: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - AssertionError: assert False\n1 failed, 2 passed in 29.17s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": false,
+        "error": "MlflowException: Path 'model' already exists and is not empty"
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 3,
+        "asserts": 8
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

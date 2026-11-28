@@ -1,0 +1,25 @@
+tâche test,politique,passent,fonctionnent,heures LLM,appels LLM
+aq,jamais (R2schema seul),46,33,0.0,0
+aq,toujours (cascade MLWA),61,46,4.872805555555555,34
+aq,oracle,61,43,1.2008055555555557,15
+aq,arbre seuil 0.3,53,39,2.484138888888889,18
+aq,arbre seuil 0.4,53,39,2.484138888888889,18
+aq,arbre seuil 0.5,53,39,2.484138888888889,18
+aq,arbre seuil 0.6,49,35,0.41061111111111115,5
+aq,arbre seuil 0.7,49,35,0.41061111111111115,5
+fraud,jamais (R2schema seul),68,29,0.0,0
+fraud,toujours (cascade MLWA),87,49,8.982444444444445,52
+fraud,oracle,87,40,1.796861111111111,19
+fraud,arbre seuil 0.3,80,44,4.0965,28
+fraud,arbre seuil 0.4,80,44,4.0965,28
+fraud,arbre seuil 0.5,80,44,4.0965,28
+fraud,arbre seuil 0.6,70,29,1.2985555555555555,7
+fraud,arbre seuil 0.7,68,29,0.19672222222222224,1
+traffic,jamais (R2schema seul),61,42,0.0,0
+traffic,toujours (cascade MLWA),72,50,10.603333333333333,59
+traffic,oracle,72,45,1.1145,11
+traffic,arbre seuil 0.3,69,44,6.326694444444445,35
+traffic,arbre seuil 0.4,68,43,3.904666666666667,23
+traffic,arbre seuil 0.5,68,43,3.904666666666667,23
+traffic,arbre seuil 0.6,62,43,0.047,1
+traffic,arbre seuil 0.7,62,43,0.047,1

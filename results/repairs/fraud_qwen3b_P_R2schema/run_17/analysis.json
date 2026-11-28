@@ -1,0 +1,157 @@
+{
+  "run": 17,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "assertion",
+  "weakened_final": null,
+  "rvh_round0": true,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9071,
+    "f1": 0.9,
+    "n_test": 2000
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": true,
+          "rvh_violations": [
+            {
+              "kind": "RVH",
+              "rule": "unseeded_estimator",
+              "detail": "RandomForestClassifier(...) called without random_state",
+              "lineno": 26
+            }
+          ],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 3,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "E       assert (3, 3) == (3, 2)\nE         At index 1 diff: 3 != 2\nE         Use -v to get more diff\n\ntest_pipeline.py:26: AssertionError\n______________________________ test_train_model _______________________________\n\ntest_data =    Time  V1  V2  Class\n0     1   4   7      0\n1     2   5   8      1\n2     3   6   9      0\n\n    def test_train_model(test_data):\n        \"\"\"Test training the model.\"\"\"\n        X, y = preprocess_data(test_data)\n        model = train_model(X, y)\n>       assert isinstance(model, RandomForestClassifier)\nE       NameError: name 'RandomForestClassifier' is not defined\n\ntest_pipeline.py:33: NameError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - assert False\nFAILED test_pipeline.py::test_preprocess_data - assert (3, 3) == (3, 2)\nFAILED test_pipeline.py::test_train_model - NameError: name 'RandomForestClas...\n3 failed, 1 passed in 11.52s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.909,
+        "f1": 0.905,
+        "n_test": 2000
+      },
+      "is_rvh": true,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "pipeline: injected random_state into estimators/splits",
+        "test: added 1 import(s): from sklearn.ensemble import RandomForestClassifier"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 8
+      },
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "E        +    where <bound method NDFrame.equals of           Time        V1        V2        V3  ...       V27       V28  Amount  Class\\n0...     0\\n9999   55505.0  1.217761  0.362682  0.440734  ... -0.021877  0.036317    9.99      0\\n\\n[10000 rows x 31 columns]> =           Time        V1        V2        V3  ...       V27       V28  Amount  Class\\n0      81072.0  0.152504 -0.52987...      0\\n9999   55505.0  1.217761  0.362682  0.440734  ... -0.021877  0.036317    9.99      0\\n\\n[10000 rows x 31 columns].equals\n\ntest_pipeline.py:20: AssertionError\n____________________________ test_preprocess_data _____________________________\n\ntest_data =    Time  V1  V2  Class\n0     1   4   7      0\n1     2   5   8      1\n2     3   6   9      0\n\n    def test_preprocess_data(test_data):\n        \"\"\"Test preprocessing the data.\"\"\"\n        X, y = preprocess_data(test_data)\n        assert isinstance(X, pd.DataFrame)\n        assert isinstance(y, pd.Series)\n>       assert X.shape == (3, 2)\nE       assert (3, 3) == (3, 2)\nE         At index 1 diff: 3 != 2\nE         Use -v to get more diff\n\ntest_pipeline.py:27: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - assert False\nFAILED test_pipeline.py::test_preprocess_data - assert (3, 3) == (3, 2)\n2 failed, 2 passed in 11.72s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 2,
+        "failed": 2,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "E        +    where <bound method NDFrame.equals of           Time        V1        V2        V3  ...       V27       V28  Amount  Class\\n0...     0\\n9999   55505.0  1.217761  0.362682  0.440734  ... -0.021877  0.036317    9.99      0\\n\\n[10000 rows x 31 columns]> =           Time        V1        V2        V3  ...       V27       V28  Amount  Class\\n0      81072.0  0.152504 -0.52987...      0\\n9999   55505.0  1.217761  0.362682  0.440734  ... -0.021877  0.036317    9.99      0\\n\\n[10000 rows x 31 columns].equals\n\ntest_pipeline.py:20: AssertionError\n____________________________ test_preprocess_data _____________________________\n\ntest_data =    Time  V1  V2  Class\n0     1   4   7      0\n1     2   5   8      1\n2     3   6   9      0\n\n    def test_preprocess_data(test_data):\n        \"\"\"Test preprocessing the data.\"\"\"\n        X, y = preprocess_data(test_data)\n        assert isinstance(X, pd.DataFrame)\n        assert isinstance(y, pd.Series)\n>       assert X.shape == (3, 2)\nE       assert (3, 3) == (3, 2)\nE         At index 1 diff: 3 != 2\nE         Use -v to get more diff\n\ntest_pipeline.py:27: AssertionError\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_load_data - assert False\nFAILED test_pipeline.py::test_preprocess_data - assert (3, 3) == (3, 2)\n2 failed, 2 passed in 11.72s",
+        "all_pass": false,
+        "failure_hint": "assertion"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 8
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}

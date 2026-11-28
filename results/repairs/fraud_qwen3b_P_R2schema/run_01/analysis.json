@@ -1,0 +1,149 @@
+{
+  "run": 1,
+  "pass_round0": false,
+  "pass_final": false,
+  "rounds_used": 1,
+  "pass_after_R2_phase": null,
+  "hint_round0": "import_or_missing_name",
+  "hint_final": "file_or_path",
+  "weakened_final": null,
+  "rvh_round0": false,
+  "rvh_final": false,
+  "functional_final": {
+    "functional_ok": true,
+    "auprc": 0.9071,
+    "f1": 0.9,
+    "n_test": 2000
+  },
+  "repair_seconds": 0.0,
+  "rounds": [
+    {
+      "round": 0,
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 1,
+        "failed": 4,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "    def test_evaluate_model():\n>       data = pd.DataFrame({\n            'Time': [1, 2, 3],\n            'V1': [4, 5, 6],\n            'Class': [0, 1, 0]\n        })\nE       NameError: name 'pd' is not defined\n\ntest_pipeline.py:29: NameError\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        with pytest.raises(FileNotFoundError):\n>           run_pipeline(\"non_existent_file.csv\")\nE           Failed: DID NOT RAISE <class 'FileNotFoundError'>\n\ntest_pipeline.py:41: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline failed: File non_existent_file.csv not found.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_preprocess_data - NameError: name 'pd' is not d...\nFAILED test_pipeline.py::test_train_model - NameError: name 'pd' is not defined\nFAILED test_pipeline.py::test_evaluate_model - NameError: name 'pd' is not de...\nFAILED test_pipeline.py::test_run_pipeline - Failed: DID NOT RAISE <class 'Fi...\n4 failed, 1 passed in 5.92s",
+        "all_pass": false,
+        "failure_hint": "import_or_missing_name"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false
+    },
+    {
+      "round": 1,
+      "notes": [
+        "test: added 2 import(s): from sklearn.ensemble import RandomForestClassifier; import pandas as pd"
+      ],
+      "cost": {
+        "seconds": 0.0
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 6
+      },
+      "pytest": {
+        "passed": 4,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "....F                                                                    [100%]\n================================== FAILURES ===================================\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        with pytest.raises(FileNotFoundError):\n>           run_pipeline(\"non_existent_file.csv\")\nE           Failed: DID NOT RAISE <class 'FileNotFoundError'>\n\ntest_pipeline.py:43: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline failed: File non_existent_file.csv not found.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_run_pipeline - Failed: DID NOT RAISE <class 'Fi...\n1 failed, 4 passed in 5.22s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "is_rvh": false,
+      "is_iih": false,
+      "weakened": false
+    },
+    {
+      "round": 2,
+      "stopped": "no_applicable_fix",
+      "pytest": {
+        "passed": 4,
+        "failed": 1,
+        "errors": 0,
+        "returncode": 1,
+        "tail": "....F                                                                    [100%]\n================================== FAILURES ===================================\n______________________________ test_run_pipeline ______________________________\n\n    def test_run_pipeline():\n        with pytest.raises(FileNotFoundError):\n>           run_pipeline(\"non_existent_file.csv\")\nE           Failed: DID NOT RAISE <class 'FileNotFoundError'>\n\ntest_pipeline.py:43: Failed\n---------------------------- Captured stdout call -----------------------------\nPipeline failed: File non_existent_file.csv not found.\n=========================== short test summary info ===========================\nFAILED test_pipeline.py::test_run_pipeline - Failed: DID NOT RAISE <class 'Fi...\n1 failed, 4 passed in 5.22s",
+        "all_pass": false,
+        "failure_hint": "file_or_path"
+      },
+      "functional": {
+        "functional_ok": true,
+        "auprc": 0.9071,
+        "f1": 0.9,
+        "n_test": 2000
+      },
+      "static": {
+        "pipeline": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        },
+        "test": {
+          "parses": true,
+          "is_rvh": false,
+          "rvh_violations": [],
+          "is_iih": false,
+          "iih_violations": []
+        }
+      },
+      "strength": {
+        "tests": 5,
+        "asserts": 6
+      },
+      "is_rvh": false,
+      "is_iih": false
+    }
+  ]
+}
